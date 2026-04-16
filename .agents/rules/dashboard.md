@@ -29,8 +29,16 @@ trigger: always_on
 ## 4. The Z-Model Data Architecture (8 Modules)
 When tasked to build or update a section, strictly adhere to these specific data mappings:
 1. **Economy:** ECharts 3D graphs (positive/negative trends) + Int'l Economic KPIs.
-2. **Investment:** "Best Country" 24/7 indicator + Top 3 Global Opportunities + KPI table.
-3. **Political:** Deck.gl map overlay for "Top Cases" + UAE/Regional crises list.
+## 2. Tech Stack & Spatial Architecture
+- **Core Engine:** React Three Fiber (`@react-three/fiber`) and Drei (`@react-three/drei`).
+- **State Management:** Zustand (Crucial for sharing state between the DOM clicks and the WebGL canvas camera).
+- **Map Data:** GeoJSON mapped to custom 3D BufferGeometries. Do NOT use `deck.gl` or `react-globe.gl` anymore.
+- **UI Architecture:** All Shadcn UI modules must be rendered inside the R3F Canvas using Drei's `<Html>` component so they exist in 3D spatial coordinates.
+
+## 3. The Orbital Interaction Model
+- **Centerpiece:** A glowing, high-end holographic 3D Earth at the origin `[0, 0, 0]`.
+- **The Orbits:** The 8 Z-Model modules orbit the Earth. 
+- **Interaction:** Clicking a module expands it. Selecting data inside the module updates the Zustand store. The R3F Canvas listens to this store to trigger camera fly-to animations, highlight country meshes, and extrude 3D data (like charts or conflict arcs) directly from the globe's surface.
 4. **Media:** Shadcn ScrollArea ticker for Breaking/Trending News + Local/Regional tabs.
 5. **Groups & Companies:** Shadcn grid cards for IHC, Royal Group, G42, Adia (Financials, Auditing, Projects).
 6. **Master B. Observer:** Task list for Follow-ups, Directions, and Main Projects.

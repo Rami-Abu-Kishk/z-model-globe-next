@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  transpilePackages: ['echarts', 'echarts-gl', 'zrender', 'three', 'react-globe.gl', 'maplibre-gl'],
 };
 
 export default nextConfig;

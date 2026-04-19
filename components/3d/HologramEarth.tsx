@@ -171,6 +171,22 @@ export const HologramEarth = forwardRef((props, ref) => {
   const pointsData = useMemo(() => activeModule === 'investment' ? investmentGlobePoints : [], [activeModule]);
   const ringsData = useMemo(() => activeModule === 'political' ? politicalCrisisRings : [], [activeModule]);
   const labelsData = useMemo(() => [], []);
+  const selectionLabelData = useMemo(() => {
+    if (!selectedCountry) return [];
+    const country = searchableCountries.find(c => c.iso === selectedCountry);
+    if (!country) return [];
+    
+    return [{
+      lat: country.lat,
+      lng: country.lng,
+      label: country.name,
+      iso: country.iso,
+      type: 'selection'
+    }];
+  }, [selectedCountry]);
+
+  // Combine intelligence points and the active selection label
+  const combinedHtmlData = useMemo(() => [...pointsData, ...selectionLabelData], [pointsData, selectionLabelData]);
 
   const arcsData = useMemo(() => {
     if (activeModule === 'groups') return groupsArcs;
@@ -255,35 +271,66 @@ export const HologramEarth = forwardRef((props, ref) => {
         pointColor="color"
         pointRadius={0.5}
 
-        htmlElementsData={pointsData}
-        htmlAltitude={(d: any) => (d.size || 1) * 0.1 + 0.02} // Position slightly above the bar
+        htmlElementsData={combinedHtmlData}
+        htmlAltitude={(d: any) => d.type === 'selection' ? 0.15 : (d.size || 1) * 0.1 + 0.02}
         htmlElement={(d: any) => {
           const el = document.createElement('div');
-          // Sleek, glassmorphic label matching your new UI
-          el.innerHTML = `
-            <div style="
-              background: rgba(15, 23, 42, 0.85);
-              backdrop-filter: blur(8px);
-              border: 1px solid ${d.color || '#10b981'};
-              border-radius: 6px;
-              padding: 4px 8px;
-              color: white;
-              font-family: sans-serif;
-              font-size: 10px;
-              font-weight: bold;
-              white-space: nowrap;
-              transform: translate(-50%, -100%);
-              box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-              display: flex;
-              align-items: center;
-              gap: 6px;
-              pointer-events: none;
-            ">
-              <span style="display:block; width:6px; height:6px; border-radius:50%; background:${d.color || '#10b981'};"></span>
-              ${d.label || 'Data Point'}
-              <span style="color: ${d.color || '#10b981'}; margin-left: 4px;">${d.size * 10}%</span>
-            </div>
-          `;
+          
+          if (d.type === 'selection') {
+            // Minimalist "Selected" Label with Flag
+            const flagCode = (d.iso || '').toLowerCase();
+            el.innerHTML = `
+              <div style="
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 1);
+                border-radius: 40px;
+                padding: 6px 14px 6px 10px;
+                color: #0f172a;
+                font-family: sans-serif;
+                font-size: 11px;
+                font-weight: 900;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                white-space: nowrap;
+                transform: translate(-50%, -50%);
+                box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+                pointer-events: none;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+              ">
+                <img src="https://flagcdn.com/w40/${flagCode}.png" style="width: 18px; height: 12px; border-radius: 2px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" />
+                ${d.label}
+              </div>
+            `;
+          } else {
+            // Sleek, glassmorphic data label
+            el.innerHTML = `
+              <div style="
+                background: rgba(15, 23, 42, 0.85);
+                backdrop-filter: blur(8px);
+                border: 1px solid ${d.color || '#10b981'};
+                border-radius: 6px;
+                padding: 4px 8px;
+                color: white;
+                font-family: sans-serif;
+                font-size: 10px;
+                font-weight: bold;
+                white-space: nowrap;
+                transform: translate(-50%, -100%);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                pointer-events: none;
+              ">
+                <span style="display:block; width:6px; height:6px; border-radius:50%; background:${d.color || '#10b981'};"></span>
+                ${d.label || 'Data Point'}
+                <span style="color: ${d.color || '#10b981'}; margin-left: 4px;">${d.size * 10}%</span>
+              </div>
+            `;
+          }
           return el;
         }}
 
@@ -420,21 +467,52 @@ export const HologramEarth = forwardRef((props, ref) => {
           let flagCode = iso.toLowerCase();
           let displayIso = iso;
 
-          // Sovereign Override for specific regional designation
+          // Sovereign Override
           if (iso === 'IL') {
             name = 'Occupied Palestinian Territories';
             flagCode = 'ps';
             displayIso = 'PS';
           }
 
-          return `<div class="px-3 py-2 bg-slate-900/90 backdrop-blur-md border border-slate-700 rounded-lg text-white shadow-2xl flex items-center gap-3">
-            <div class="w-7 h-4.5 overflow-hidden rounded-sm border border-slate-600 bg-slate-800 flex-shrink-0 flex items-center justify-center">
-              <img src="https://flagcdn.com/w40/${flagCode}.png" class="w-full h-full object-contain" />
+          // --- ECONOMY INTELLIGENCE OVERLAY ---
+          const ecoData = economyGlobeData[iso];
+          const countryMeta = searchableCountries.find(c => c.iso === iso);
+          let intelligenceHtml = '';
+
+          if (activeModule === 'economy' && ecoData) {
+            const isPos = ecoData.status === 'positive';
+            intelligenceHtml = `
+              <div class="mt-3 pt-3 border-t border-slate-200/50 flex items-center justify-between gap-6">
+                <div class="flex flex-col">
+                  <span class="text-[8px] text-slate-600 uppercase font-black tracking-[0.15em] mb-0.5">Real GDP Growth</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm font-black ${isPos ? 'text-emerald-600' : 'text-rose-600'}">
+                      ${isPos ? '↑' : '↓'} ${ecoData.growth > 0 ? '+' : ''}${ecoData.growth}%
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end">
+                   <span class="text-[8px] text-slate-400 uppercase font-black tracking-[0.15em] mb-0.5">Status</span>
+                   <div class="px-2 py-0.5 rounded-lg text-[8px] font-black uppercase ${isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}">
+                    ${countryMeta?.economyStatus || (isPos ? 'Expansion' : 'Contraction')}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+
+          return `
+          <div class="px-4 py-3.5 bg-white/90 backdrop-blur-2xl border border-white/80 rounded-2xl text-slate-800 shadow-[0_20px_40px_rgba(0,0,0,0.08)] flex flex-col min-w-[200px]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-6 overflow-hidden rounded-lg border border-slate-100 bg-white flex-shrink-0 flex items-center justify-center shadow-sm">
+                <img src="https://flagcdn.com/w40/${flagCode}.png" class="w-full h-full object-cover" />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-black text-[14px] leading-tight tracking-tight uppercase text-slate-900">${name}</span>
+                <span class="text-[9px] text-slate-400 font-mono tracking-widest uppercase font-bold">${displayIso}</span>
+              </div>
             </div>
-            <div class="flex flex-col">
-              <span class="font-bold text-[13px] leading-none">${name}</span>
-              ${displayIso ? `<span class="text-[9px] text-slate-400 font-mono mt-0.5 tracking-wider uppercase">${displayIso}</span>` : ''}
-            </div>
+            ${intelligenceHtml}
           </div>`;
         }}
         onPolygonHover={(d: any) => {

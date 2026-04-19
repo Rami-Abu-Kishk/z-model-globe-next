@@ -121,17 +121,20 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans scroll-smooth;
   }
-  
+
   /* Hide scrollbars for a cleaner UI */
   ::-webkit-scrollbar {
     display: none;
   }
+
   * {
     -ms-overflow-style: none;
     scrollbar-width: none;

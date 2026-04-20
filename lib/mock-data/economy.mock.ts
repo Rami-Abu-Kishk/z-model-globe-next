@@ -2,6 +2,7 @@ export interface TrendData {
   label: string;
   value: number;
   dataPoints: number[];
+  description?: string;
 }
 
 export interface KpiReport {
@@ -22,52 +23,140 @@ export interface EconomyData {
 export const economyDataStore: Record<string, EconomyData> = {
   GLOBAL: {
     positiveTrends: [
-      { label: "Global AI Sector Growth", value: 34.5, dataPoints: [10, 15, 22, 28, 34.5] },
-      { label: "Green Energy Investment", value: 18.2, dataPoints: [5, 8, 12, 15, 18.2] },
-      { label: "Emerging Markets Tech", value: 12.4, dataPoints: [2, 4, 7, 10, 12.4] }
+      { 
+        label: "Global AI Sector Growth", 
+        value: 34.5, 
+        dataPoints: [10, 15, 22, 28, 34.5],
+        description: "Exponential acceleration in LLM deployment and enterprise AI integration is driving unprecedented capital allocation. This vector represents the strongest productivity shift in the digital era."
+      },
+      { 
+        label: "Green Energy Investment", 
+        value: 18.2, 
+        dataPoints: [5, 8, 12, 15, 18.2],
+        description: "Decarbonization mandates are fueling a massive transition toward renewable infrastructure. Sovereign funds are pivoting heavily toward sustainable assets to hedge against long-term climate risk."
+      },
+      { 
+        label: "Emerging Markets Tech", 
+        value: 12.4, 
+        dataPoints: [2, 4, 7, 10, 12.4],
+        description: "Rapid digitization in Southeast Asia and Africa is creating new consumer markets. Local fintech and logistics startups are capturing significant share from traditional global incumbents."
+      }
     ],
     negativeTrends: [
-      { label: "Commercial Real Estate", value: -8.5, dataPoints: [0, -2, -4, -6, -8.5] },
-      { label: "Legacy Supply Chain", value: -4.2, dataPoints: [-1, -2, -3, -4, -4.2] },
-      { label: "Global Inflation Drag", value: -2.1, dataPoints: [-0.5, -1, -1.5, -2, -2.1] }
+      { 
+        label: "Commercial Real Estate", 
+        value: -8.5, 
+        dataPoints: [0, -2, -4, -6, -8.5],
+        description: "The remote work paradigm shift continues to erode office valuations in major financial hubs. Debt restructuring in this sector remains a significant systemic risk for regional banks."
+      },
+      { 
+        label: "Legacy Supply Chain", 
+        value: -4.2, 
+        dataPoints: [-1, -2, -3, -4, -4.2],
+        description: "Traditional logistical frameworks are struggling with rising fuel costs and geopolitical friction. Decoupling from high-risk manufacturing nodes is causing short-term friction and margin compression."
+      },
+      { 
+        label: "Global Inflation Drag", 
+        value: -2.1, 
+        dataPoints: [-0.5, -1, -1.5, -2, -2.1],
+        description: "Persistent core inflation is forcing central banks to maintain restrictive monetary policies. This sustained high-rate environment is dampening consumer demand and stretching corporate balance sheets."
+      }
     ],
     kpisAndReports: [
       { title: "Global GDP Growth", impact: "High", value: "2.9%", rep: "Kristalina Georgieva", org: "IMF" },
       { title: "Trade Volume Index", impact: "Medium", value: "104.5", rep: "Ngozi Okonjo-Iweala", org: "WTO" },
       { title: "Global Poverty Reduction Rate", impact: "High", value: "+1.2%", rep: "Ajay Banga", org: "World Bank" },
-      { title: "Cross-Border FDI", impact: "Medium", value: "$1.3T", rep: "Rebeca Grynspan", org: "UNCTAD" },
-      { title: "Estimated GDP: 5-Year Growth Acceleration", impact: "High", value: "$4.8T", rep: "Z-Model Engine", org: "AI MODEL" }
+      { title: "Cross-Border FDI", impact: "Medium", value: "$1.3T", rep: "Rebeca Grynspan", org: "UNCTAD" }
     ]
   },
   AE: { // United Arab Emirates Specific Data
     positiveTrends: [
-      { label: "Non-Oil GDP Surge", value: 45.2, dataPoints: [20, 25, 30, 40, 45.2] },
-      { label: "FDI Tech Inflows", value: 28.4, dataPoints: [10, 15, 20, 25, 28.4] },
-      { label: "Tourism Revenue", value: 15.6, dataPoints: [8, 10, 12, 14, 15.6] }
+      { 
+        label: "Non-Oil GDP Surge", 
+        value: 45.2, 
+        dataPoints: [20, 25, 30, 40, 45.2],
+        description: "Massive diversification efforts under Vision 2031 are yielding record results. The UAE is successfully repositioning as a global hub for aviation, logistics, and digital services."
+      },
+      { 
+        label: "FDI Tech Inflows", 
+        value: 28.4, 
+        dataPoints: [10, 15, 20, 25, 28.4],
+        description: "Business-friendly regulations and golden visa programs are attracting world-class AI and robotics firms. The 'We the UAE 2031' strategy is driving high-fidelity tech investments."
+      },
+      { 
+        label: "Tourism Revenue", 
+        value: 15.6, 
+        dataPoints: [8, 10, 12, 14, 15.6],
+        description: "Major global events and luxury hospitality expansion are driving double-digit growth. UAE remains the premier destination for regional and international high-net-worth travelers."
+      }
     ],
     negativeTrends: [
-      { label: "Legacy Retail Decline", value: -3.2, dataPoints: [0, -1, -2, -3, -3.2] },
-      { label: "Traditional Media Spend", value: -5.1, dataPoints: [-1, -2, -3, -4, -5.1] },
-      { label: "Unoptimized Logistics", value: -1.8, dataPoints: [-0.5, -1, -1.2, -1.5, -1.8] }
+      { 
+        label: "Legacy Retail Decline", 
+        value: -3.2, 
+        dataPoints: [0, -1, -2, -3, -3.2],
+        description: "Hyper-growth in e-commerce is putting pressure on traditional local malls. Retailers must adapt to omnichannel strategies to survive the digital-first consumer shift."
+      },
+      { 
+        label: "Traditional Media Spend", 
+        value: -5.1, 
+        dataPoints: [-1, -2, -3, -4, -5.1],
+        description: "Advertising budgets are migrating rapidly to social platforms and influencer marketing. Legacy print and television outlets are facing significant revenue headwinds."
+      },
+      { 
+        label: "Unoptimized Logistics", 
+        value: -1.8, 
+        dataPoints: [-0.5, -1, -1.2, -1.5, -1.8],
+        description: "Last-mile delivery inefficiencies in some regions are causing minor margin erosion. Strategic investments in AI-driven routing are required for optimization."
+      }
     ],
     kpisAndReports: [
       { title: "UAE Global Competitiveness", impact: "High", value: "Rank #10", rep: "World Bank Rep", org: "World Bank" },
       { title: "Digital Economy Contribution", impact: "High", value: "11.7%", rep: "Regional Director", org: "IMF" },
       { title: "Strategic Trade Corridor Growth", impact: "High", value: "+15.4%", rep: "Trade Envoy", org: "WTO" },
-      { title: "Innovation Index Surplus", impact: "Medium", value: "Top 5", rep: "Research Lead", org: "WIPO" },
-      { title: "Estimated GDP: 5-Year Growth Acceleration", impact: "High", value: "$850B", rep: "Z-Model Engine", org: "AI MODEL" }
+      { title: "Innovation Index Surplus", impact: "Medium", value: "Top 5", rep: "Research Lead", org: "WIPO" }
     ]
   },
   US: { // United States Specific Data
     positiveTrends: [
-      { label: "Domestic Semiconductor Mfg", value: 22.1, dataPoints: [5, 10, 15, 18, 22.1] },
-      { label: "AI Enterprise Adoption", value: 41.5, dataPoints: [15, 22, 30, 38, 41.5] },
-      { label: "Renewable Grid Expansion", value: 14.2, dataPoints: [6, 8, 10, 12, 14.2] }
+      { 
+        label: "Domestic Semiconductor Mfg", 
+        value: 22.1, 
+        dataPoints: [5, 10, 15, 18, 22.1],
+        description: "The CHIPS Act is triggering a massive resurgence in onshoring critical tech manufacturing. Billions in CAPEX are allocated to building leading-edge foundries on US soil."
+      },
+      { 
+        label: "AI Enterprise Adoption", 
+        value: 41.5, 
+        dataPoints: [15, 22, 30, 38, 41.5],
+        description: "S&P 500 companies are racing to integrate generative AI into core operations. This trend reflects a broad mandate for operational efficiency and automated discovery."
+      },
+      { 
+        label: "Renewable Grid Expansion", 
+        value: 14.2, 
+        dataPoints: [6, 8, 10, 12, 14.2],
+        description: "Federal tax incentives are accelerating the modernization of the energy grid. Large-scale utility solar and wind projects are reaching grid parity across the Midwest."
+      }
     ],
     negativeTrends: [
-      { label: "Downtown Office Occupancy", value: -15.4, dataPoints: [-5, -8, -10, -12, -15.4] },
-      { label: "Consumer Debt Default Rate", value: -4.8, dataPoints: [-1, -2, -3, -4, -4.8] },
-      { label: "Regional Bank Deposits", value: -6.2, dataPoints: [-2, -3, -4, -5, -6.2] }
+      { 
+        label: "Downtown Office Occupancy", 
+        value: -15.4, 
+        dataPoints: [-5, -8, -10, -12, -15.4],
+        description: "Major metropolitan areas are facing 'urban doom loop' risks as office vacancies remain at historic highs. Tax bases in cities like San Francisco and Chicago are under pressure."
+      },
+      { 
+        label: "Consumer Debt Default Rate", 
+        value: -4.8, 
+        dataPoints: [-1, -2, -3, -4, -4.8],
+        description: "Rising interest rates are beginning to stress household finances. Credit card and auto loan delinquencies are edging toward pre-pandemic norms, indicating potential cooling."
+      },
+      { 
+        label: "Regional Bank Deposits", 
+        value: -6.2, 
+        dataPoints: [-2, -3, -4, -5, -6.2],
+        description: "Competition for deposits from money market funds is squeezing bank margins. Smaller institutions are facing capital flight as clients seek higher-yield, low-risk alternatives."
+      }
     ],
     kpisAndReports: [
       { title: "US Federal Interest Rate", impact: "High", value: "5.25%", rep: "Jerome Powell", org: "Federal Reserve" },
@@ -76,12 +165,22 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   JO: {
     positiveTrends: [
-      { label: "Amman Tech Hub Growth", value: 18.5, dataPoints: [5, 8, 12, 15, 18.5] },
-      { label: "Tourism Resilience", value: 24.2, dataPoints: [10, 15, 18, 20, 24.2] }
+      { 
+        label: "Amman Tech Hub Growth", 
+        value: 18.5, 
+        dataPoints: [5, 8, 12, 15, 18.5],
+        description: "Jordan is emerging as a regional software development powerhouse. High talent density and competitive costs are attracting global tech outsourcing mandates."
+      },
+      { 
+        label: "Tourism Resilience", 
+        value: 24.2, 
+        dataPoints: [10, 15, 18, 20, 24.2],
+        description: "Post-pandemic travel surge to Petra and Wadi Rum remains strong. National marketing campaigns are successfully diversifying the visitor base beyond regional markets."
+      }
     ],
     negativeTrends: [
-      { label: "Energy Import Costs", value: -12.4, dataPoints: [-2, -5, -8, -10, -12.4] },
-      { label: "Water Scarcity Impact", value: -15.1, dataPoints: [-5, -8, -10, -12, -15.1] }
+      { label: "Energy Import Costs", value: -12.4, dataPoints: [-2, -5, -8, -10, -12.4], description: "Reliance on external energy sources creates budget vulnerability." },
+      { label: "Water Scarcity Impact", value: -15.1, dataPoints: [-5, -8, -10, -12, -15.1], description: "Severe water stress is impacting agricultural output and municipal planning." }
     ],
     kpisAndReports: [
       { title: "National Desalination Project", impact: "High", value: "Funding Secured", rep: "Minister for Water", org: "Gov of Jordan" },
@@ -90,12 +189,12 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   CN: {
     positiveTrends: [
-      { label: "EV Export Dominance", value: 52.1, dataPoints: [10, 20, 35, 45, 52.1] },
-      { label: "Clean Tech Capex", value: 38.6, dataPoints: [15, 20, 28, 32, 38.6] }
+      { label: "EV Export Dominance", value: 52.1, dataPoints: [10, 20, 35, 45, 52.1], description: "Unmatched scale in battery production is giving Chinese EV makers a decisive global cost advantage." },
+      { label: "Clean Tech Capex", value: 38.6, dataPoints: [15, 20, 28, 32, 38.6], description: "China continues to lead the world in solar and wind capacity additions to power its industrial core." }
     ],
     negativeTrends: [
-      { label: "Property Sector Drag", value: -18.4, dataPoints: [-5, -10, -12, -15, -18.4] },
-      { label: "Demographic Aging", value: -4.2, dataPoints: [-1, -2, -3, -4, -4.2] }
+      { label: "Property Sector Drag", value: -18.4, dataPoints: [-5, -10, -12, -15, -18.4], description: "Ongoing deleveraging in the real estate market is dampening consumer confidence and local gov revenue." },
+      { label: "Demographic Aging", value: -4.2, dataPoints: [-1, -2, -3, -4, -4.2], description: "A shrinking workforce is increasing labor costs and long-term social welfare obligations." }
     ],
     kpisAndReports: [
       { title: "PBOC Reserve Ratio", impact: "High", value: "0.5% Cut", rep: "Pan Gongsheng", org: "PBOC" },
@@ -104,12 +203,12 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   IN: {
     positiveTrends: [
-      { label: "Mobile Manufacturing", value: 42.5, dataPoints: [20, 25, 30, 38, 42.5] },
-      { label: "Service Export Surplus", value: 22.8, dataPoints: [10, 15, 18, 20, 22.8] }
+      { label: "Mobile Manufacturing", value: 42.5, dataPoints: [20, 25, 30, 38, 42.5], description: "The 'Make in India' initiative has transformed the country into the world's second-largest mobile producer." },
+      { label: "Service Export Surplus", value: 22.8, dataPoints: [10, 15, 18, 20, 22.8], description: "High-end software and consultancy exports are driving record-high service trade surpluses." }
     ],
     negativeTrends: [
-      { label: "Infrastructure Bottlenecks", value: -6.4, dataPoints: [-1, -2, -4, -5, -6.4] },
-      { label: "Air Quality Economic Loss", value: -3.8, dataPoints: [-0.5, -1, -2, -3, -3.8] }
+      { label: "Infrastructure Bottlenecks", value: -6.4, dataPoints: [-1, -2, -4, -5, -6.4], description: "Logistical delays and power grid inconsistencies are limiting industrial throughput in some corridors." },
+      { label: "Air Quality Economic Loss", value: -3.8, dataPoints: [-0.5, -1, -2, -3, -3.8], description: "High pollution levels in industrial hubs are causing health-related labor shortages and higher insurance costs." }
     ],
     kpisAndReports: [
       { title: "RBI Repo Rate", impact: "Medium", value: "6.50%", rep: "Shaktikanta Das", org: "RBI" },
@@ -118,11 +217,11 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   SA: {
     positiveTrends: [
-      { label: "Mining Sector Revenue", value: 31.2, dataPoints: [10, 15, 22, 28, 31.2] },
-      { label: "Gaming Hub Expansion", value: 14.5, dataPoints: [2, 5, 8, 12, 14.5] }
+      { label: "Mining Sector Revenue", value: 31.2, dataPoints: [10, 15, 22, 28, 31.2], description: "New mineral deposit discoveries are attracting massive FDI under the Vision 2030 mining framework." },
+      { label: "Gaming Hub Expansion", value: 14.5, dataPoints: [2, 5, 8, 12, 14.5], description: "Strategic investments in e-sports and game development are capturing the regional youth demographic." }
     ],
     negativeTrends: [
-      { label: "Global Oil Volatility", value: -8.2, dataPoints: [-2, -4, -6, -7, -8.2] }
+      { label: "Global Oil Volatility", value: -8.2, dataPoints: [-2, -4, -6, -7, -8.2], description: "Fluctuating Brent prices are creating uncertainty in projected fiscal surpluses for the next quarter." }
     ],
     kpisAndReports: [
       { title: "Non-Oil Sector Contribution", impact: "High", value: "52%", rep: "PIF Strategy Lead", org: "PIF" },
@@ -131,12 +230,12 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   RU: { // Russia Specific Data
     positiveTrends: [
-      { label: "Agricultural Self-Sufficiency", value: 12.4, dataPoints: [5, 7, 9, 11, 12.4] },
-      { label: "LNG Arctic Expansion", value: 18.2, dataPoints: [10, 12, 14, 16, 18.2] }
+      { label: "Agricultural Self-Sufficiency", value: 12.4, dataPoints: [5, 7, 9, 11, 12.4], description: "Massive state subsidies are driving a record-breaking harvest and food security autonomy." },
+      { label: "LNG Arctic Expansion", value: 18.2, dataPoints: [10, 12, 14, 16, 18.2], description: "New northern sea route infrastructure is enabling record LNG exports to Asian partners." }
     ],
     negativeTrends: [
-      { label: "SWIFT Disconnection Impact", value: -25.6, dataPoints: [-10, -15, -20, -22, -25.6] },
-      { label: "CBR Interest Rate Drag", value: -16.0, dataPoints: [-8, -10, -12, -14, -16.0] }
+      { label: "SWIFT Disconnection Impact", value: -25.6, dataPoints: [-10, -15, -20, -22, -25.6], description: "Isolation from global payment systems continues to increase transaction costs for import/export." },
+      { label: "CBR Interest Rate Drag", value: -16.0, dataPoints: [-8, -10, -12, -14, -16.0], description: "Emergency double-digit rates are suppressing domestic credit growth and automotive sales." }
     ],
     kpisAndReports: [
       { title: "Current Account Surplus", impact: "High", value: "$125B", rep: "Elvira Nabiullina", org: "CBR" },
@@ -145,14 +244,14 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   IR: { // Iran Specific Data
     positiveTrends: [
-      { label: "Eurasian Customs Pivot", value: 24.5, dataPoints: [8, 12, 16, 20, 24.5] },
-      { label: "Domestic Tech Self-Reliance", value: 15.2, dataPoints: [5, 8, 10, 12, 15.2] },
-      { label: "Regional Energy Corridor", value: 11.4, dataPoints: [2, 5, 8, 9, 11.4] }
+      { label: "Eurasian Customs Pivot", value: 24.5, dataPoints: [8, 12, 16, 20, 24.5], description: "New trade agreements with regional neighbors are opening alternative routes for industrial exports." },
+      { label: "Domestic Tech Self-Reliance", value: 15.2, dataPoints: [5, 8, 10, 12, 15.2], description: "Local startups are successfully cloning global platform models for the insulated domestic market." },
+      { label: "Regional Energy Corridor", value: 11.4, dataPoints: [2, 5, 8, 9, 11.4], description: "Increased gas exports to Iraq and Turkey are providing critical hard currency inflows." }
     ],
     negativeTrends: [
-      { label: "Exchange Rate Devaluation", value: -42.1, dataPoints: [-10, -20, -30, -38, -42.1] },
-      { label: "Capital Infrastructure Aging", value: -18.2, dataPoints: [-5, -8, -12, -15, -18.2] },
-      { label: "Cross-Border Banking Friction", value: -22.5, dataPoints: [-10, -15, -18, -20, -22.5] }
+      { label: "Exchange Rate Devaluation", value: -42.1, dataPoints: [-10, -20, -30, -38, -42.1], description: "Sustained inflationary pressure is eroding purchasing power for the middle class." },
+      { label: "Capital Infrastructure Aging", value: -18.2, dataPoints: [-5, -8, -12, -15, -18.2], description: "Limited access to international spare parts is causing maintenance backlogs in the aviation and energy sectors." },
+      { label: "Cross-Border Banking Friction", value: -22.5, dataPoints: [-10, -15, -18, -20, -22.5], description: "Non-standard payment channels are causing significant delays in settling international trade balances." }
     ],
     kpisAndReports: [
       { title: "Inflationary Pressure Index", impact: "High", value: "45.8%", rep: "Central Bank Lead", org: "CBI" },

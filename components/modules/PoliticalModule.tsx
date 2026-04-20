@@ -29,6 +29,8 @@ import {
   type RegionalCrisis 
 } from '@/lib/mock-data/political.mock';
 import { useZModelStore } from '@/lib/store';
+import { useAIChat } from '../context/AIChatContext';
+import { AiBadge } from '../shared/AiBadge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import dynamic from 'next/dynamic';
@@ -43,6 +45,17 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
   const setSelectedCountries = useZModelStore((s) => s.setSelectedCountries);
   
   const [selectedItem, setSelectedItem] = React.useState<PoliticalCase | RegionalCrisis | null>(null);
+  const { triggerChatFromCard } = useAIChat();
+
+  const handleAiTrigger = (e: React.MouseEvent, pc: PoliticalCase) => {
+    e.stopPropagation();
+    triggerChatFromCard({
+      module: 'Politics',
+      section: 'Strategic Files',
+      title: pc.name,
+      value: pc.severity
+    });
+  };
 
   const data = useMemo(() => 
     politicalDataStore[selectedCountry || 'GLOBAL'] || politicalDataStore['GLOBAL'],
@@ -199,7 +212,12 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                                 </Badge>
                               </TableCell>
                               <TableCell className="text-right">
-                                <div className="flex items-center justify-end gap-2">
+                                <div className="flex items-center justify-end gap-3 relative">
+                                  <AiBadge 
+                                    onClick={(e) => handleAiTrigger(e, pc)}
+                                    className="relative !w-7 !h-7 !static shadow-none border-slate-200 hover:bg-sky-50"
+                                    tooltipText="Geopolitical Briefing"
+                                  />
                                   <Download className="w-3.5 h-3.5 text-slate-300 group-hover:text-sky-500 transition-colors" />
                                 </div>
                               </TableCell>

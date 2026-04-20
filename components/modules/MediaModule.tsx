@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from '@/lib/utils';
 import { SharedArticleView } from '@/components/shared/SharedArticleView';
 import { useZModelStore } from '@/lib/store';
+import { useAIChat } from '../context/AIChatContext';
+import { AiBadge } from '../shared/AiBadge';
 
 import { 
   Newspaper, 
@@ -41,10 +43,22 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
     selectedCountry,
     mediaCategoryFilter,
     setMediaCategoryFilter,
-    setMediaActiveNewsId
+    mediaActiveNewsId,
+    setMediaActiveNewsId,
+    mediaSelectedArticle,
+    setMediaSelectedArticle
   } = useZModelStore();
+  const { triggerChatFromCard } = useAIChat();
   
-  const [selectedArticle, setSelectedArticle] = useState<NewsItem | null>(null);
+  const handleAiTrigger = (e: React.MouseEvent, news: NewsItem) => {
+    e.stopPropagation();
+    triggerChatFromCard({
+      module: 'Media',
+      section: 'Breaking News',
+      title: news.headline,
+      value: news.source
+    });
+  };
 
   const data = useMemo(() => 
     mediaDataStore[selectedCountry || 'GLOBAL'] || mediaDataStore['GLOBAL'],
@@ -66,12 +80,12 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
     
     // Only set selected article if we are in expanded view
     if (isExpanded) {
-      setSelectedArticle(news);
+      setMediaSelectedArticle(news);
     }
   };
 
   const handleBack = () => {
-    setSelectedArticle(null);
+    setMediaSelectedArticle(null);
     setMediaActiveNewsId(null);
   };
 
@@ -80,7 +94,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
       <div className="flex flex-col gap-8 pb-4 relative min-h-[700px]">
         {/* TOP: 3-Column Performance Grid - Hidden when an article is focused */}
         <AnimatePresence>
-          {!selectedArticle && (
+          {!mediaSelectedArticle && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -106,7 +120,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
         {/* MAIN: Intelligence Dashboard Grid */}
         <div className="relative flex-1">
           <AnimatePresence mode="wait">
-            {!selectedArticle ? (
+            {!mediaSelectedArticle ? (
               <motion.div 
                 key="grid"
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -141,11 +155,18 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                           className="p-5 rounded-2xl bg-white/60 border border-slate-100 hover:border-rose-200 hover:bg-white transition-all cursor-pointer group relative"
                         >
                           <div className="flex items-center justify-between mb-3">
-                            <div className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                              <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
-                            </div>
-                            <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-rose-500" />
+                             <div className="flex items-center gap-2">
+                               <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                               <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
+                             </div>
+                             <div className="flex items-center gap-2">
+                               <AiBadge 
+                                 onClick={(e) => handleAiTrigger(e, news)}
+                                 className="!relative !w-6 !h-6 !static border-rose-100 bg-rose-50/30 shadow-none hover:bg-rose-50 hover:scale-110"
+                                 tooltipText="Sentiment Audit"
+                               />
+                               <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-rose-500" />
+                             </div>
                           </div>
                           <h4 className="text-[15px] font-black text-slate-900 group-hover:text-rose-600 transition-colors leading-tight mb-3">
                             {news.headline}
@@ -267,19 +288,19 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
             ) : (
               <SharedArticleView
                 article={{
-                  title: selectedArticle.headline,
-                  subtitle: `${selectedArticle.time} • ${selectedArticle.category}`,
-                  category: selectedArticle.category,
-                  badgeText: selectedArticle.category === 'Breaking' ? 'Breaking Intelligence' : 'Sector Trending',
-                  badgeClassName: selectedArticle.category === 'Breaking' ? "bg-rose-500" : "bg-sky-500",
-                  imageUrl: selectedArticle.imageUrl,
-                  summary: selectedArticle.summary || "",
+                  title: mediaSelectedArticle.headline,
+                  subtitle: `${mediaSelectedArticle.time} • ${mediaSelectedArticle.category}`,
+                  category: mediaSelectedArticle.category,
+                  badgeText: mediaSelectedArticle.category === 'Breaking' ? 'Breaking Intelligence' : 'Sector Trending',
+                  badgeClassName: mediaSelectedArticle.category === 'Breaking' ? "bg-rose-500" : "bg-sky-500",
+                  imageUrl: mediaSelectedArticle.imageUrl,
+                  summary: mediaSelectedArticle.summary || "",
                   source: {
-                    name: selectedArticle.source,
+                    name: mediaSelectedArticle.source,
                     description: 'Primary Source',
-                    initial: selectedArticle.source[0]
+                    initial: mediaSelectedArticle.source[0]
                   },
-                  links: selectedArticle.links
+                  links: mediaSelectedArticle.links
                 }}
                 onBack={handleBack}
               />

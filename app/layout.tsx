@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: "Elite 3D-interactive financial and political data dashboard.",
 };
 
+import { AIChatProvider } from "@/components/context/AIChatContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,7 +26,9 @@ export default function RootLayout({
       style={{ colorScheme: 'light' }}
     >
       <body className="min-h-full flex flex-col bg-stone-50 text-slate-800 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-hidden">
-        {children}
+        <AIChatProvider>
+          {children}
+        </AIChatProvider>
       </body>
     </html>
   );

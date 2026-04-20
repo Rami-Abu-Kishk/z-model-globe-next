@@ -143,4 +143,13 @@
   .glass-card {
     @apply bg-white/40 backdrop-blur-xl border border-white/60 shadow-2xl rounded-2xl;
   }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
 }

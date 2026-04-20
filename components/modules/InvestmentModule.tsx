@@ -14,6 +14,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { searchableCountries } from '@/lib/mockData';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SharedArticleView } from '@/components/shared/SharedArticleView';
+import { useAIChat } from '../context/AIChatContext';
+import { AiBadge } from '../shared/AiBadge';
 
 const InvestmentCandlestickChart = dynamic(() => import('./InvestmentCandlestickChart'), { ssr: false });
 const InvestmentChart3D = dynamic(() => import('./InvestmentChart3D'), { ssr: false });
@@ -21,8 +23,25 @@ const InvestmentChart3D = dynamic(() => import('./InvestmentChart3D'), { ssr: fa
 // ── Shared Sub-Components ───────────────────────────────────────────
 
 function InvestmentKpiCard({ kpi }: { kpi: KpiReport }) {
+  const { triggerChatFromCard } = useAIChat();
+  
+  const handleAiTrigger = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    triggerChatFromCard({
+      module: 'Investment',
+      section: 'Sovereign KPIs',
+      title: kpi.title,
+      value: kpi.value
+    });
+  };
+
   return (
     <div className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl hover:shadow-2xl transition-all group overflow-hidden relative flex flex-col h-full">
+      <AiBadge 
+        onClick={handleAiTrigger}
+        className="top-4 right-4 !w-8 !h-8 opacity-0 group-hover:opacity-100 transition-opacity"
+        tooltipText="Investment Thesis"
+      />
       <div className="absolute -top-4 -right-4 p-2 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none">
         <Briefcase className="w-24 h-24 text-slate-900" />
       </div>
@@ -50,6 +69,18 @@ function InvestmentKpiCard({ kpi }: { kpi: KpiReport }) {
 }
 
 function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => void }) {
+  const { triggerChatFromCard } = useAIChat();
+
+  const handleAiTrigger = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    triggerChatFromCard({
+      module: 'Investment',
+      section: 'Strategic Opportunities',
+      title: op.title,
+      value: op.region
+    });
+  };
+
   return (
     <div
       className={`flex flex-col bg-white/60 backdrop-blur-md rounded-2xl border border-white/80 overflow-hidden shadow-sm hover:shadow-lg transition-all h-full group ${onClick ? 'cursor-pointer hover:border-emerald-300' : ''}`}
@@ -65,6 +96,12 @@ function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => voi
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+        
+        <AiBadge 
+          onClick={handleAiTrigger} 
+          className="top-3 right-3 !w-8 !h-8 opacity-0 group-hover:opacity-100 transition-opacity"
+          tooltipText="Generate Thesis"
+        />
       </div>
       <div className="p-5 flex flex-col flex-1">
         <div className="flex justify-between items-start mb-4">
@@ -76,9 +113,6 @@ function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => voi
               <Globe className="w-2 h-2" /> {op.region}
             </p>
           </div>
-          <Badge className="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-black px-2 shadow-sm whitespace-nowrap">
-            {op.expectedReturn}
-          </Badge>
         </div>
         <p className="text-[11px] text-slate-600 leading-relaxed font-medium line-clamp-3">
           {op.description}
@@ -97,7 +131,11 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
   const selectedCountry = useZModelStore((s) => s.selectedCountry);
   const setViewState = useZModelStore((s) => s.setViewState);
   const viewState = useZModelStore((s) => s.viewState);
-  const [showUaeFocus, setShowUaeFocus] = useState(false);
+  
+  const investmentActiveDetail = useZModelStore((s) => s.investmentActiveDetail);
+  const setInvestmentActiveDetail = useZModelStore((s) => s.setInvestmentActiveDetail);
+  const investmentSelectedOpportunity = useZModelStore((s) => s.investmentSelectedOpportunity);
+  const setInvestmentSelectedOpportunity = useZModelStore((s) => s.setInvestmentSelectedOpportunity);
 
   const currentDataKey = useMemo(() =>
     selectedCountry && investmentDataStore[selectedCountry] ? selectedCountry : 'GLOBAL',
@@ -113,7 +151,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
       setSelectedCountries([data.bestTarget.iso]);
       
       if (isExpanded) {
-        setShowUaeFocus(true);
+        setInvestmentSelectedOpportunity(null);
+        setInvestmentActiveDetail('UAE');
       }
     }
   };
@@ -132,6 +171,11 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
           lng: country.lng,
           zoomLevel: 1.8
         });
+      }
+
+      if (isExpanded) {
+        setInvestmentActiveDetail('OPPORTUNITY');
+        setInvestmentSelectedOpportunity(op);
       }
     }
   };
@@ -167,7 +211,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
     return (
       <div className="flex flex-col gap-6 md:gap-10 pb-12 w-full max-w-full overflow-x-hidden relative min-h-[800px]">
         <AnimatePresence mode="wait">
-          {!showUaeFocus ? (
+          {investmentActiveDetail === 'NONE' ? (
             <motion.div
               key="main-view"
               initial={{ opacity: 0, scale: 0.98 }}
@@ -333,10 +377,10 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               </div>
             </motion.div>
-          ) : (
+          ) : investmentActiveDetail === 'UAE' ? (
             <div className="w-full">
               <SharedArticleView
-                onBack={() => setShowUaeFocus(false)}
+                onBack={() => setInvestmentActiveDetail('NONE')}
                 article={{
                   title: "United Arab Emirates: The Global Alpha Hub",
                   subtitle: "Sovereign Strategic Briefing • 2026",
@@ -362,6 +406,50 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                           </div>
                         </div>
                       ))}
+                    </div>
+                  )
+                }}
+              />
+            </div>
+          ) : (
+            <div className="w-full">
+              <SharedArticleView
+                onBack={() => {
+                  setInvestmentActiveDetail('NONE');
+                  setInvestmentSelectedOpportunity(null);
+                }}
+                article={{
+                  title: investmentSelectedOpportunity!.title,
+                  subtitle: `Strategic Opportunity • ${investmentSelectedOpportunity!.region}`,
+                  category: "Strategic Investment",
+                  badgeText: "STRETEGIC ALPHA TARGET",
+                  badgeClassName: "bg-indigo-600",
+                  imageUrl: investmentSelectedOpportunity!.imageUrl,
+                  summary: investmentSelectedOpportunity!.description,
+                  content: (
+                    <div className="space-y-10 mt-12">
+                      <div className="flex gap-6 group">
+                        <div className="w-2 h-2 rounded-full bg-indigo-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(79,70,229,0.5)]" />
+                        <div>
+                          <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-2">Alpha Strategic Positioning</h4>
+                          <p className="text-[16px] text-slate-600 font-medium leading-loose">
+                            This opportunity represents a cornerstore of the current sovereign investment landscape in {investmentSelectedOpportunity!.region}. 
+                            Our real-time intelligence suggests that the underlying assets are entering a period of significant appreciation 
+                            driven by favorable regulatory shifts and institutional capital rotation.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-6 group">
+                        <div className="w-2 h-2 rounded-full bg-indigo-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(79,70,229,0.5)]" />
+                        <div>
+                          <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-2">Institutional Sentiment & Liquidity</h4>
+                          <p className="text-[16px] text-slate-600 font-medium leading-loose">
+                            Major global SWFs and institutional allocators have identified this sector as a primary growth vector. 
+                            The expected liquidity profile remains robust, offering a high-conviction entry point for tactical asset allocation 
+                            targeting long-term sovereign wealth preservation and growth.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   )
                 }}
@@ -396,7 +484,6 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">{op.title}</span>
-                    <span className="text-xs font-black text-emerald-600">{op.expectedReturn}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-[9px] text-slate-400 font-bold uppercase">{op.region}</span>

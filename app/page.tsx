@@ -26,6 +26,8 @@ function CanvasLoader() {
 // Removed ArrowControls function
 
 
+import { AIChatBot } from '@/components/chat/AIChatBot';
+
 export default function Home() {
   return (
     <main className="fixed inset-0 w-screen h-screen bg-[#faf9f6] overflow-hidden">
@@ -65,10 +67,9 @@ export default function Home() {
       <ModuleNav />
       <GlobeControls />
       <SearchBar />
-
       <ReturnHUD />
 
-      {/* ── LAYER 4: Non-Interactive Info Overlays (z-50) ── */}
+      {/* ── LAYER 4: Non-Interactive Info Overlays (z-30) ── */}
       <div className="absolute inset-0 z-30 pointer-events-none">
         <DetailDrawer />
         <ExpandedDataPanel />
@@ -91,20 +92,13 @@ export default function Home() {
             V3.0 · Spatial Interface · Live
           </span>
         </div>
+      </div>
 
-        {/* Removed ArrowControls */}
-
-
-        {/* --- TEST COMPONENT --- */}
-        {/* <div className="absolute bottom-8 right-8 pointer-events-auto">
-          <DummyFocusSection />
-        </div> */}
-
-        {/* <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none select-none">
-          <p className="text-[10px] text-slate-400 font-medium tracking-widest uppercase">
-            Use arrows to navigate modules · Predictive Intelligence Active
-          </p>
-        </div> */}
+      {/* ── AI ChatBot ── */}
+      <div className="fixed inset-0 z-[10000] pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none">
+           <AIChatBot />
+        </div>
       </div>
     </main>
   );

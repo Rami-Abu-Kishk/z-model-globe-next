@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
-import { X, Layers, Search, ChevronDown } from 'lucide-react';
+import { X, Layers, Search, ChevronDown, Minimize2 } from 'lucide-react';
 import { searchableCountries } from '@/lib/mockData';
 
 import { EconomyModule } from '@/components/modules/EconomyModule';
@@ -53,6 +53,27 @@ export function ExpandedDataPanel() {
   const setActiveCountry = useZModelStore(s => s.setActiveCountry);
   const setActiveTarget = useZModelStore(s => s.setActiveTarget);
   const setViewState = useZModelStore(s => s.setViewState);
+
+  // Detail states for back button
+  const investmentActiveDetail = useZModelStore(s => s.investmentActiveDetail);
+  const setInvestmentActiveDetail = useZModelStore(s => s.setInvestmentActiveDetail);
+  const setInvestmentSelectedOpportunity = useZModelStore(s => s.setInvestmentSelectedOpportunity);
+  const mediaActiveNewsId = useZModelStore(s => s.mediaActiveNewsId);
+  const setMediaActiveNewsId = useZModelStore(s => s.setMediaActiveNewsId);
+  const setMediaSelectedArticle = useZModelStore(s => s.setMediaSelectedArticle);
+
+  const showBackButton = (focusedCardId === 'investment' && investmentActiveDetail !== 'NONE') || 
+                       (focusedCardId === 'media' && mediaActiveNewsId !== null);
+
+  const handleModuleBack = () => {
+    if (focusedCardId === 'investment') {
+      setInvestmentActiveDetail('NONE');
+      setInvestmentSelectedOpportunity(null);
+    } else if (focusedCardId === 'media') {
+      setMediaActiveNewsId(null);
+      setMediaSelectedArticle(null);
+    }
+  };
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [localQuery, setLocalQuery] = useState('');
@@ -154,6 +175,23 @@ export function ExpandedDataPanel() {
 
               {/* Right: Search & Close */}
               <div className="flex items-center gap-3">
+                
+                {/* Unified Back Button */}
+                <AnimatePresence>
+                  {showBackButton && (
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0.8, x: 10 }}
+                      animate={{ opacity: 1, scale: 1, x: 0 }}
+                      exit={{ opacity: 0, scale: 0.8, x: 10 }}
+                      onClick={handleModuleBack}
+                      className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm"
+                      aria-label="Go back"
+                    >
+                      <Minimize2 className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+
                 <div ref={searchContainerRef} className="relative">
                   <motion.div
                     animate={{ 

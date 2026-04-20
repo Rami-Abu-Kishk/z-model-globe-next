@@ -5,6 +5,7 @@ export interface Opportunity {
   status: 'up' | 'down' | 'stable';
   description: string;
   isoCodes?: string[]; // New: For globe highlights
+  imageUrl?: string; // New: For opportunity cards
 }
 
 export interface KpiReport {
@@ -23,6 +24,7 @@ export interface InvestmentData {
     details: string;
     timestamp: string;
     iso?: string; // Used to fly the camera
+    imageUrl?: string; // New: For hero target
   };
   topOpportunities: Opportunity[];
   kpisAndReports: KpiReport[];
@@ -44,32 +46,36 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       iso: "AE",
       score: 98.5,
       details: "Top FDI destination driven by zero corporate tax zones, golden visa programs, and massive infrastructure spending.",
-      timestamp: "Updated: Live 24/7"
+      timestamp: "Updated: Live 24/7",
+      imageUrl: "/assets/images/mock/uae_investment_hero.png"
     },
     topOpportunities: [
-      { 
-        title: "Sovereign Green Bonds", 
-        region: "Middle East", 
-        expectedReturn: "6.5% APY", 
-        status: "up", 
+      {
+        title: "Sovereign Green Bonds",
+        region: "Middle East",
+        expectedReturn: "6.5% APY",
+        status: "up",
         description: "High-yield government-backed green energy transition bonds.",
-        isoCodes: ["SA", "AE", "QA"]
+        isoCodes: ["SA", "AE", "QA"],
+        imageUrl: "/assets/images/mock/green_energy_bonds.png"
       },
-      { 
-        title: "Semiconductor Infrastructure", 
-        region: "North America", 
-        expectedReturn: "12.0% IRR", 
-        status: "up", 
+      {
+        title: "Semiconductor Infrastructure",
+        region: "North America",
+        expectedReturn: "12.0% IRR",
+        status: "up",
         description: "Subsidized fab construction and supply chain logistics.",
-        isoCodes: ["US", "CA"]
+        isoCodes: ["US", "CA"],
+        imageUrl: "/assets/images/mock/semiconductor_fab.png"
       },
-      { 
-        title: "Lithium Supply Chain", 
-        region: "South America", 
-        expectedReturn: "18.5% IRR", 
-        status: "stable", 
+      {
+        title: "Lithium Supply Chain",
+        region: "South America",
+        expectedReturn: "18.5% IRR",
+        status: "stable",
         description: "Direct extraction technologies and processing plants.",
-        isoCodes: ["CL", "AR", "BO"]
+        isoCodes: ["CL", "AR", "BO"],
+        imageUrl: "/assets/images/mock/lithium_mining.png"
       }
     ],
     kpisAndReports: [
@@ -90,30 +96,33 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       name: "AI & Sovereign Data Centers",
       score: 99.1,
       details: "Massive influx of capital into sovereign cloud infrastructure and localized large language model training facilities.",
-      timestamp: "Updated: Live 24/7"
+      timestamp: "Updated: Live 24/7",
+      imageUrl: "/assets/images/mock/uae_investment_hero.png"
     },
     topOpportunities: [
-      { 
-        title: "Abu Dhabi Sovereign Cloud", 
-        region: "Abu Dhabi", 
-        expectedReturn: "14.2% IRR", 
-        status: "up", 
+      {
+        title: "Abu Dhabi Sovereign Cloud",
+        region: "Abu Dhabi",
+        expectedReturn: "14.2% IRR",
+        status: "up",
         description: "Tier 4 data center expansion funded by public-private partnerships.",
-        isoCodes: ["AE"]
+        isoCodes: ["AE"],
+        imageUrl: "/assets/images/mock/uae_ai_datacenter.png"
       },
-      { 
-        title: "Clean Energy Grids", 
-        region: "Dubai / AD", 
-        expectedReturn: "8.5% APY", 
-        status: "up", 
+      {
+        title: "Clean Energy Grids",
+        region: "Dubai / AD",
+        expectedReturn: "8.5% APY",
+        status: "up",
         description: "Solar and hydrogen transition infrastructure projects.",
-        isoCodes: ["AE"]
+        isoCodes: ["AE"],
+        imageUrl: "/assets/images/mock/green_energy_bonds.png"
       },
-      { 
-        title: "Luxury Real Estate", 
-        region: "Dubai", 
-        expectedReturn: "11.0% ROI", 
-        status: "stable", 
+      {
+        title: "Luxury Real Estate",
+        region: "Dubai",
+        expectedReturn: "11.0% ROI",
+        status: "stable",
         description: "Ultra-prime waterfront and branded residence developments.",
         isoCodes: ["AE"]
       }
@@ -139,29 +148,31 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       timestamp: "Updated: Live 24/7"
     },
     topOpportunities: [
-      { 
-        title: "AI Chip Fabrication", 
-        region: "Arizona", 
-        expectedReturn: "15.0% IRR", 
-        status: "up", 
+      {
+        title: "AI Chip Fabrication",
+        region: "Arizona",
+        expectedReturn: "15.0% IRR",
+        status: "up",
         description: "Domestic semiconductor manufacturing and advanced packaging.",
-        isoCodes: ["US"]
+        isoCodes: ["US"],
+        imageUrl: "/assets/images/mock/semiconductor_fab.png"
       },
-      { 
-        title: "Boutique Life Sciences", 
-        region: "Massachusetts", 
-        expectedReturn: "22.0% IRR", 
-        status: "up", 
+      {
+        title: "Boutique Life Sciences",
+        region: "Massachusetts",
+        expectedReturn: "22.0% IRR",
+        status: "up",
         description: "Early-stage biotech and genomic research facilities.",
         isoCodes: ["US"]
       },
-      { 
-        title: "Renewable Grid Storage", 
-        region: "Texas", 
-        expectedReturn: "9.5% APY", 
-        status: "stable", 
+      {
+        title: "Renewable Grid Storage",
+        region: "Texas",
+        expectedReturn: "9.5% APY",
+        status: "stable",
         description: "Large-scale battery storage and transmission upgrades.",
-        isoCodes: ["US"]
+        isoCodes: ["US"],
+        imageUrl: "/assets/images/mock/green_energy_bonds.png"
       }
     ],
     kpisAndReports: [
@@ -184,27 +195,27 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       timestamp: "Updated: Live 24/7"
     },
     topOpportunities: [
-      { 
-        title: "Electric Vehicle Ecosystem", 
-        region: "Shenzhen", 
-        expectedReturn: "13.0% IRR", 
-        status: "up", 
+      {
+        title: "Electric Vehicle Ecosystem",
+        region: "Shenzhen",
+        expectedReturn: "13.0% IRR",
+        status: "up",
         description: "Battery manufacturing and charging infrastructure dominance.",
         isoCodes: ["CN"]
       },
-      { 
-        title: "Digital Renminbi Expansion", 
-        region: "Shanghai", 
-        expectedReturn: "N/A (Strategic)", 
-        status: "stable", 
+      {
+        title: "Digital Renminbi Expansion",
+        region: "Shanghai",
+        expectedReturn: "N/A (Strategic)",
+        status: "stable",
         description: "Cross-border payment systems and fintech integration.",
         isoCodes: ["CN"]
       },
-      { 
-        title: "Solar Photovoltaic Export", 
-        region: "Qinghai", 
-        expectedReturn: "10.0% IRR", 
-        status: "up", 
+      {
+        title: "Solar Photovoltaic Export",
+        region: "Qinghai",
+        expectedReturn: "10.0% IRR",
+        status: "up",
         description: "Mass-scale solar panel production for global markets.",
         isoCodes: ["CN"]
       }
@@ -229,21 +240,22 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       timestamp: "Updated: Weekly"
     },
     topOpportunities: [
-      { 
-        title: "Dead Sea Hospitality", 
-        region: "Jordan Valley", 
-        expectedReturn: "9.5% ROI", 
-        status: "stable", 
+      {
+        title: "Dead Sea Hospitality",
+        region: "Jordan Valley",
+        expectedReturn: "9.5% ROI",
+        status: "stable",
         description: "Boutique eco-resorts and wellness infrastructure.",
         isoCodes: ["JO"]
       },
-      { 
-        title: "National Water Carrier", 
-        region: "Amman/Aqaba", 
-        expectedReturn: "7.2% Yield", 
-        status: "up", 
+      {
+        title: "National Water Carrier",
+        region: "Amman/Aqaba",
+        expectedReturn: "7.2% Yield",
+        status: "up",
         description: "Public-private partnership for long-term water security infrastructure.",
-        isoCodes: ["JO"]
+        isoCodes: ["JO"],
+        imageUrl: "/assets/images/mock/jordan_desalination.png"
       }
     ],
     kpisAndReports: [
@@ -264,19 +276,20 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       timestamp: "Updated: Daily"
     },
     topOpportunities: [
-      { 
-        title: "Tech Infrastructure (BLR/HYD)", 
-        region: "South India", 
-        expectedReturn: "18.0% IRR", 
-        status: "up", 
+      {
+        title: "Tech Infrastructure (BLR/HYD)",
+        region: "South India",
+        expectedReturn: "18.0% IRR",
+        status: "up",
         description: "Cloud and AI data centers for global enterprise service export.",
-        isoCodes: ["IN"]
+        isoCodes: ["IN"],
+        imageUrl: "/assets/images/mock/india_tech_hub.png"
       },
-      { 
-        title: "Fintech Ecosystems", 
-        region: "National", 
-        expectedReturn: "25.0% IRR", 
-        status: "up", 
+      {
+        title: "Fintech Ecosystems",
+        region: "National",
+        expectedReturn: "25.0% IRR",
+        status: "up",
         description: "Scaling UPI-integrated consumer and merchant services.",
         isoCodes: ["IN"]
       }
@@ -299,21 +312,22 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       timestamp: "Updated: Live 24/7"
     },
     topOpportunities: [
-      { 
-        title: "Entertainment & Sports", 
-        region: "Qiddiya", 
-        expectedReturn: "14.5% IRR", 
-        status: "up", 
+      {
+        title: "Entertainment & Sports",
+        region: "Qiddiya",
+        expectedReturn: "14.5% IRR",
+        status: "up",
         description: "Massive scale theme parks and sports city developments.",
         isoCodes: ["SA"]
       },
-      { 
-        title: "Mining & Mineral Ext.", 
-        region: "Western Region", 
-        expectedReturn: "11.0% IRR", 
-        status: "up", 
+      {
+        title: "Mining & Mineral Ext.",
+        region: "Western Region",
+        expectedReturn: "11.0% IRR",
+        status: "up",
         description: "Extraction of critical minerals for EV supply chains.",
-        isoCodes: ["SA"]
+        isoCodes: ["SA"],
+        imageUrl: "/assets/images/mock/lithium_mining.png"
       }
     ],
     kpisAndReports: [
@@ -334,11 +348,11 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       timestamp: "Updated: Monthly"
     },
     topOpportunities: [
-      { 
-        title: "Import Substitution Tech", 
-        region: "Moscow/SPB", 
-        expectedReturn: "N/A (Sovereign)", 
-        status: "stable", 
+      {
+        title: "Import Substitution Tech",
+        region: "Moscow/SPB",
+        expectedReturn: "N/A (Sovereign)",
+        status: "stable",
         description: "Localized software and hardware development for state-critical infra.",
         isoCodes: ["RU"]
       }

@@ -62,6 +62,7 @@ export const HologramEarth = forwardRef((props, ref) => {
   const setActiveCountry = useZModelStore(s => s.setActiveCountry);
   const mediaCategoryFilter = useZModelStore(s => s.mediaCategoryFilter);
   const mediaActiveNewsId = useZModelStore(s => s.mediaActiveNewsId);
+  const autoRotate = useZModelStore(s => s.autoRotate);
   const isEarthFocus = viewState === 'EARTH_FOCUS';
   const isCardFocus = viewState === 'CARD_FOCUS';
   const [isFocused, setIsFocused] = useState(false);
@@ -116,7 +117,7 @@ export const HologramEarth = forwardRef((props, ref) => {
     const controls = globeRef.current?.controls();
     if (!controls) return false;
     Object.assign(controls, {
-      autoRotate: !isEarthFocus && !activeTarget && selectedCountries.length === 0,
+      autoRotate: autoRotate && !isEarthFocus && !activeTarget && selectedCountries.length === 0,
       autoRotateSpeed: 0.5,
       enableZoom: true,
       enablePan: true,
@@ -160,7 +161,7 @@ export const HologramEarth = forwardRef((props, ref) => {
       const interval = setInterval(() => syncControls() && clearInterval(interval), 100);
       return () => clearInterval(interval);
     }
-  }, [viewState, mounted, ORBITAL_ALTITUDE, FOCUS_ALTITUDE, activeTarget, selectedCountries]);
+  }, [viewState, mounted, ORBITAL_ALTITUDE, FOCUS_ALTITUDE, activeTarget, selectedCountries, autoRotate]);
 
   useImperativeHandle(ref, () => ({
     flyTo: (lat: number, lng: number, altitude = FOCUS_ALTITUDE) =>

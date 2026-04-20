@@ -52,7 +52,7 @@ export function ModuleNav() {
                 setViewState(newId ? 'CARD_FOCUS' : 'ORBITAL');
               }}
               className={`
-                group relative flex flex-col items-center justify-center w-16 h-16 rounded-2xl transition-all duration-300
+                cursor-pointer group relative flex flex-col items-center justify-center w-16 h-16 rounded-2xl transition-all duration-300
                 ${isActive ? 'text-slate-900' : 'text-slate-500 hover:text-slate-700 hover:bg-white/20'}
               `}
             >

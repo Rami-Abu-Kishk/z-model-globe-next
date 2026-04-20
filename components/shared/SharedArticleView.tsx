@@ -59,17 +59,14 @@ export function SharedArticleView({
     >
       {/* Hero Section */}
       <div className="w-full lg:w-1/2 h-[300px] lg:h-auto relative bg-slate-100">
-        {article.imageUrl ? (
-          <img 
-            src={article.imageUrl} 
-            alt={article.title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-slate-50">
-            <Newspaper className="w-20 h-20 text-slate-200" />
-          </div>
-        )}
+        <img 
+          src={article.imageUrl || "/assets/images/branding/fallback.png"} 
+          alt={article.title}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/assets/images/branding/fallback.png";
+          }}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
         <div className="absolute bottom-0 left-0 p-10">
           <Badge className={cn(

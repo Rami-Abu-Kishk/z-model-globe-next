@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import * as echarts from 'echarts';
 import { motion } from 'framer-motion';
 import { SectionHeader } from '@/components/shared/SectionHeader';
-import { TrendingUp, TrendingDown, LayoutGrid, BarChart3, Globe, Briefcase, Zap } from 'lucide-react';
+import { TrendingUp, TrendingDown, LayoutGrid, BarChart3, Globe, Briefcase, Zap, Brain, Clock } from 'lucide-react';
 import { economyDataStore, TrendData, KpiReport } from '@/lib/mock-data/economy.mock';
 import { useZModelStore } from '@/lib/store';
 import dynamic from 'next/dynamic';
@@ -83,15 +83,18 @@ function KpiReportCard({ kpi }: { kpi: KpiReport }) {
       </div>
       
       <div className="flex justify-between items-start mb-6 relative z-10">
-        <Badge variant="outline" className={`${kpi.impact === 'High' ? 'border-rose-200 text-rose-600 bg-rose-50/50' : 'border-sky-200 text-sky-600 bg-sky-50/50'} text-[9px] font-black uppercase tracking-widest`}>
-          {kpi.impact} Impact
-        </Badge>
+        <div className="flex items-center gap-1.5 opacity-60">
+          <Clock className="w-3 h-3 text-slate-400" />
+          <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none">Last Update: 2h ago</span>
+        </div>
         <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{kpi.org}</span>
       </div>
 
       <div className="flex-1 relative z-10">
         <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">{kpi.value}</h3>
-        <p className="text-[12px] font-bold text-slate-600 leading-snug mb-6 uppercase tracking-tight">{kpi.title}</p>
+        <p className="text-[12px] font-bold text-slate-600 leading-snug mb-6 uppercase tracking-tight">
+          {kpi.title.replace(/\s*Forecast\s*/gi, '')}
+        </p>
       </div>
 
       <div className="pt-4 border-t border-slate-200/60 flex items-center justify-between relative z-10">
@@ -101,7 +104,7 @@ function KpiReportCard({ kpi }: { kpi: KpiReport }) {
           </div>
           <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{kpi.rep}</p>
         </div>
-        <Briefcase className="w-3 h-3 text-slate-300" />
+        {kpi.org === 'AI MODEL' ? <Brain className="w-4 h-4 text-emerald-500 animate-pulse" /> : <Briefcase className="w-3 h-3 text-slate-300" />}
       </div>
     </div>
   );
@@ -138,8 +141,11 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
                 <TrendingUp className="w-4 h-4 text-emerald-600" />
               </div>
               <div>
-                <h4 className="text-[12px] font-black text-emerald-600 uppercase tracking-[0.2em] leading-none">Growth Acceleration Vectors</h4>
-                <p className="text-[9px] text-slate-400 font-bold uppercase mt-1">Sectors currently exceeding historical CAGR benchmarks</p>
+                <h4 className="text-[12px] font-black text-emerald-600 uppercase tracking-[0.2em] leading-none">Positive Trends</h4>
+                <div className="flex items-center gap-2 mt-1">
+                  <p className="text-[9px] text-slate-400 font-bold uppercase">Sectors currently exceeding historical CAGR benchmarks</p>
+                  <span className="text-[8px] text-slate-300 font-black uppercase tracking-widest ml-2">• Last update: 2 hours ago</span>
+                </div>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -154,8 +160,11 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
                 <TrendingDown className="w-4 h-4 text-rose-600" />
               </div>
               <div>
-                <h4 className="text-[12px] font-black text-rose-600 uppercase tracking-[0.2em] leading-none">Market Contraction Constraints</h4>
-                <p className="text-[9px] text-slate-400 font-bold uppercase mt-1">High-pressure indicators requiring strategic mediation</p>
+                <h4 className="text-[12px] font-black text-rose-600 uppercase tracking-[0.2em] leading-none">Negative Trends</h4>
+                <div className="flex items-center gap-2 mt-1">
+                  <p className="text-[9px] text-slate-400 font-bold uppercase">High-pressure indicators requiring strategic mediation</p>
+                  <span className="text-[8px] text-slate-300 font-black uppercase tracking-widest ml-2">• Last update: 2 hours ago</span>
+                </div>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -171,7 +180,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             icon={LayoutGrid} 
             subtitle="Real-time audits from IMF, World Bank, and WTO delegates"
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6">
             {data.kpisAndReports.map((k, i) => <KpiReportCard key={i} kpi={k} />)}
           </div>
         </div>
@@ -212,9 +221,12 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
              </div>
           </div>
 
-          {/* KPI Summary Strip */}
-          <div className="space-y-4 pt-2">
-            <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.1em] px-1">Institutional Pulse</span>
+           {/* KPI Summary Strip */}
+           <div className="space-y-4 pt-2">
+             <div className="flex justify-between items-center px-1">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.1em]">Institutional Pulse</span>
+                <span className="text-[8px] text-slate-300 font-bold uppercase tracking-tighter">Updated 2h ago</span>
+             </div>
             <div className="space-y-3">
               {data.kpisAndReports.slice(0, 2).map((k, i) => (
                 <div key={i} className="flex flex-col p-4 bg-white/60 rounded-2xl border border-white shadow-sm">

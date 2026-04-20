@@ -11,6 +11,7 @@ import { ExpandedDataPanel } from '@/components/shared/ExpandedDataPanel';
 import { SearchBar } from '@/components/shared/SearchBar';
 import { DetailDrawer } from '@/components/shared/DetailDrawer';
 import { ModuleNav } from '@/components/shared/ModuleNav';
+import { GlobeControls } from '@/components/shared/GlobeControls';
 import { DummyFocusSection } from '@/components/ui-sections/DummyFocusSection';
 
 function CanvasLoader() {
@@ -62,6 +63,7 @@ export default function Home() {
 
       {/* ── LAYER 3: Interactive Overlays ── */}
       <ModuleNav />
+      <GlobeControls />
       <SearchBar />
 
       <ReturnHUD />
@@ -71,9 +73,12 @@ export default function Home() {
         <DetailDrawer />
         <ExpandedDataPanel />
 
-        <div className="absolute top-8 left-8 pointer-events-none select-none">
-          <h1 className="text-2xl font-black tracking-tighter text-slate-800 uppercase leading-none">
-            The Z Model<span className="text-slate-400 font-light"> | Orbital</span>
+        <div 
+          className="absolute top-8 left-8 pointer-events-auto select-none cursor-pointer"
+          onClick={() => useZModelStore.getState().resetView()}
+        >
+          <h1 className="text-3xl tracking-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 font-black uppercase leading-none">
+            Z-MODEL
           </h1>
           <p className="text-[10px] text-slate-500 tracking-[0.2em] font-semibold mt-1 uppercase">
             Executive Strategic Dashboard

@@ -28,9 +28,14 @@ export default function InvestmentChart3D() {
     const option = {
       tooltip: {},
       visualMap: {
+        min: 0,
         max: 10,
+        calculable: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
         inRange: {
-          color: ['#f1f5f9', '#94a3b8', '#10b981', '#059669']
+          color: ['#be123c', '#f59e0b', '#10b981'] // Muted Crimson -> Amber -> Emerald
         },
         show: false
       },

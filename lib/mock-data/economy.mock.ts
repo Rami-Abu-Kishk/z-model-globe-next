@@ -32,10 +32,11 @@ export const economyDataStore: Record<string, EconomyData> = {
       { label: "Global Inflation Drag", value: -2.1, dataPoints: [-0.5, -1, -1.5, -2, -2.1] }
     ],
     kpisAndReports: [
-      { title: "Global GDP Growth Forecast", impact: "High", value: "2.8%", rep: "Kristalina Georgieva", org: "IMF" },
+      { title: "Global GDP Growth", impact: "High", value: "2.9%", rep: "Kristalina Georgieva", org: "IMF" },
       { title: "Trade Volume Index", impact: "Medium", value: "104.5", rep: "Ngozi Okonjo-Iweala", org: "WTO" },
       { title: "Global Poverty Reduction Rate", impact: "High", value: "+1.2%", rep: "Ajay Banga", org: "World Bank" },
-      { title: "Cross-Border FDI", impact: "Medium", value: "$1.3T", rep: "Rebeca Grynspan", org: "UNCTAD" }
+      { title: "Cross-Border FDI", impact: "Medium", value: "$1.3T", rep: "Rebeca Grynspan", org: "UNCTAD" },
+      { title: "Estimated GDP: 5-Year Growth Acceleration", impact: "High", value: "$4.8T", rep: "Z-Model Engine", org: "AI MODEL" }
     ]
   },
   AE: { // United Arab Emirates Specific Data
@@ -51,7 +52,10 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     kpisAndReports: [
       { title: "UAE Global Competitiveness", impact: "High", value: "Rank #10", rep: "World Bank Rep", org: "World Bank" },
-      { title: "Digital Economy Contribution", impact: "High", value: "11.7%", rep: "Regional Director", org: "IMF" }
+      { title: "Digital Economy Contribution", impact: "High", value: "11.7%", rep: "Regional Director", org: "IMF" },
+      { title: "Strategic Trade Corridor Growth", impact: "High", value: "+15.4%", rep: "Trade Envoy", org: "WTO" },
+      { title: "Innovation Index Surplus", impact: "Medium", value: "Top 5", rep: "Research Lead", org: "WIPO" },
+      { title: "Estimated GDP: 5-Year Growth Acceleration", impact: "High", value: "$850B", rep: "Z-Model Engine", org: "AI MODEL" }
     ]
   },
   US: { // United States Specific Data

@@ -78,6 +78,10 @@ interface ZModelStore {
   ringRotationTarget: number;
   rotateRing: (direction: 1 | -1) => void;
 
+  // ── Globe Rotation ───────────────────────────────────────────────
+  autoRotate: boolean;
+  setAutoRotate: (active: boolean) => void;
+
   // ── Master reset ─────────────────────────────────────────────────
   resetView: () => void;
 }
@@ -151,6 +155,10 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       ringRotationTarget: state.ringRotationTarget + direction * (Math.PI / 4),
     })),
 
+  // ── Globe Rotation ───────────────────────────────────────────────
+  autoRotate: true,
+  setAutoRotate: (active) => set({ autoRotate: active }),
+
   // ── Master Reset ──────────────────────────────────────────────────
   resetView: () =>
     set({
@@ -166,5 +174,6 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       searchQuery: '',
       mediaCategoryFilter: 'all',
       mediaActiveNewsId: null,
+      autoRotate: true,
     }),
 }));

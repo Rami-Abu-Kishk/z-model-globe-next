@@ -75,7 +75,7 @@ function TrendCard({ trend, type }: { trend: TrendData, type: 'positive' | 'nega
         onClick={() => setIsExpanded(true)}
       >
         <AiBadge 
-          className="-bottom-4 left-1/2 -translate-x-1/2" 
+          className="-bottom-4 cursor-pointer left-1/2 -translate-x-1/2" 
           onClick={handleAiTrigger}
         />
         <div className="flex flex-col gap-2 mb-4">
@@ -143,7 +143,7 @@ function TrendCard({ trend, type }: { trend: TrendData, type: 'positive' | 'nega
               <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
                 <button
                   onClick={() => setIsExpanded(false)}
-                  className="px-6 py-2 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-slate-800 transition-colors"
+                  className="px-6 py-2 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-slate-800 transition-colors cursor-pointer"
                 >
                   Close Analysis
                 </button>
@@ -290,7 +290,7 @@ function KpiReportCard({ kpi }: { kpi: KpiReport }) {
    const FrontFace = (
     <div className="absolute inset-0 p-6 backdrop-blur-2xl border border-white/60 bg-white/40 rounded-2xl shadow-xl hover:shadow-2xl flex flex-col h-full transition-all duration-300 group-hover:bg-white/60">
       <AiBadge 
-        className="-bottom-4 left-1/2 -translate-x-1/2" 
+        className="-bottom-4 cursor-pointer left-1/2 -translate-x-1/2" 
         onClick={handleAiTrigger}
       />
 
@@ -429,7 +429,7 @@ function KpiReportCard({ kpi }: { kpi: KpiReport }) {
                   </div>
                   <button
                     onClick={(e) => { e.stopPropagation(); setIsFlipped(false); }}
-                    className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center hover:bg-indigo-100 border border-indigo-200 transition-colors shadow-sm"
+                    className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center hover:bg-indigo-100 border border-indigo-200 transition-colors shadow-sm cursor-pointer"
                   >
                     <Sparkle className="w-4 h-4 text-indigo-600" />
                   </button>

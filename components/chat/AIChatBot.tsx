@@ -20,6 +20,8 @@ import {
   History,
   Trash2,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
 
 export function AIChatBot() {
   const { 
@@ -37,6 +39,13 @@ export function AIChatBot() {
   const [showHistory, setShowHistory] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Monitor panel states to adjust position
+  const viewState = useZModelStore(s => s.viewState);
+  const focusedCardId = useZModelStore(s => s.focusedCardId);
+  const activeCountry = useZModelStore(s => s.activeCountry);
+
+  const isPanelOpen = (viewState === 'CARD_FOCUS' && focusedCardId !== null) || !!activeCountry;
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -180,11 +189,21 @@ export function AIChatBot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[9999] flex flex-col items-end pointer-events-auto">
+    <div 
+      className={cn(
+        "fixed bottom-6 z-[9999] flex flex-col pointer-events-auto transition-all duration-500 ease-in-out",
+        isPanelOpen ? "left-25 items-start" : "right-6 items-end"
+      )}
+    >
       <AnimatePresence>
         {isOpen && !isMinimized && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9, transformOrigin: 'bottom right' }}
+            initial={{ 
+              opacity: 0, 
+              y: 20, 
+              scale: 0.9, 
+              transformOrigin: isPanelOpen ? 'bottom left' : 'bottom right' 
+            }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             className="mb-4 w-[90vw] sm:w-[400px] h-[600px] bg-white/90 backdrop-blur-xl rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-white/40 overflow-hidden flex flex-col relative"

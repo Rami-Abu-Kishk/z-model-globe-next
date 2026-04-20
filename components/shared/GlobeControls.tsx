@@ -11,7 +11,11 @@ export function GlobeControls() {
   const viewState = useZModelStore((s) => s.viewState);
 
   // Don't show controls when in CARD_FOCUS to keep UI clean
-  if (viewState === 'CARD_FOCUS') return null;
+  //if (viewState === 'CARD_FOCUS') return null;
+  //  const activeCountry = useZModelStore((s) => s.activeCountry);
+
+  // Don't show controls when in CARD_FOCUS or when a country is selected to keep UI clean
+  // if (viewState === 'CARD_FOCUS' || !!activeCountry) return null;
 
   return (
     <motion.div
@@ -30,7 +34,7 @@ export function GlobeControls() {
             border border-white/60
             shadow-[0_8px_32px_rgba(0,0,0,0.1)]
             transition-all duration-300
-            hover:bg-white/60 hover:scale-105 active:scale-95
+            hover:bg-white/60 hover:scale-105 active:scale-95 cursor-pointer
           `}
           title={autoRotate ? "Disable Auto-Rotation" : "Enable Auto-Rotation"}
         >

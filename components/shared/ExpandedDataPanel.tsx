@@ -184,7 +184,7 @@ export function ExpandedDataPanel() {
                       animate={{ opacity: 1, scale: 1, x: 0 }}
                       exit={{ opacity: 0, scale: 0.8, x: 10 }}
                       onClick={handleModuleBack}
-                      className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm"
+                      className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm cursor-pointer"
                       aria-label="Go back"
                     >
                       <Minimize2 className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
@@ -202,7 +202,7 @@ export function ExpandedDataPanel() {
                   >
                     <button 
                       onClick={() => setIsSearchOpen(!isSearchOpen)}
-                      className="w-10 h-10 flex items-center justify-center text-slate-600 hover:text-slate-900 shrink-0"
+                      className="w-10 h-10 flex items-center justify-center text-slate-600 hover:text-slate-900 shrink-0 cursor-pointer"
                     >
                       <Search className="w-4 h-4" />
                     </button>
@@ -228,7 +228,7 @@ export function ExpandedDataPanel() {
                           <button
                             key={country.iso}
                             onClick={() => handleCountrySelect(country)}
-                            className="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 border-b border-slate-100 last:border-none transition-colors group"
+                            className="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 border-b border-slate-100 last:border-none transition-colors group cursor-pointer"
                           >
                             <div className="flex items-center gap-3">
                               <div className="w-6 h-4 overflow-hidden rounded-sm border border-slate-200/60 bg-slate-50 flex items-center justify-center p-0.5">
@@ -254,7 +254,7 @@ export function ExpandedDataPanel() {
 
                 <button
                   onClick={resetView}
-                  className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm"
+                  className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm cursor-pointer"
                   aria-label="Close panel"
                 >
                   <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />

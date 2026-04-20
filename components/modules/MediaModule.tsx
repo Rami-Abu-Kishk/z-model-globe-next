@@ -131,7 +131,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 {/* Bucket 1: Breaking News (Pulse) */}
                 <div 
                   className={cn(
-                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px]",
+                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px] cursor-pointer",
                     mediaCategoryFilter === 'Breaking' ? "border-rose-400 ring-2 ring-rose-400/20 scale-[1.01]" : "border-white/60"
                   )}
                   onClick={() => setMediaCategoryFilter('Breaking')}
@@ -188,7 +188,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 {/* Bucket 2: Most Trending (Impact Analytics) */}
                 <div 
                   className={cn(
-                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px]",
+                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px] cursor-pointer",
                     mediaCategoryFilter === 'Trending' ? "border-sky-400 ring-2 ring-sky-400/20 scale-[1.01]" : "border-white/60"
                   )}
                   onClick={() => setMediaCategoryFilter('Trending')}
@@ -241,7 +241,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 {/* Bucket 3: Local & Regional (Sovereign Focus) */}
                 <div 
                   className={cn(
-                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px]",
+                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px] cursor-pointer",
                     mediaCategoryFilter === 'Regional' ? "border-emerald-400 ring-2 ring-emerald-400/20 scale-[1.01]" : "border-white/60"
                   )}
                   onClick={() => setMediaCategoryFilter('Regional')}

@@ -35,6 +35,7 @@ export function ReturnHUD() {
               hover:bg-white/60 hover:scale-105
               active:scale-95
               transition-all duration-200
+              cursor-pointer
               group
             "
           >

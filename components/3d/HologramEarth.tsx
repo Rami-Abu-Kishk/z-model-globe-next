@@ -190,7 +190,7 @@ export const HologramEarth = forwardRef((props, ref) => {
   const combinedHtmlData = useMemo(() => [...pointsData, ...selectionLabelData], [pointsData, selectionLabelData]);
 
   const arcsData = useMemo(() => {
-    if (activeModule === 'groups') return groupsArcs;
+    if (activeModule === 'companies') return groupsArcs;
     if (activeModule === 'political') return politicalArcs;
     
     if (activeModule === 'media') {
@@ -229,7 +229,7 @@ export const HologramEarth = forwardRef((props, ref) => {
 
   // Handle Abu Dhabi Gov camera lock
   useEffect(() => {
-    if (activeModule === 'abuDhabiGov') {
+    if (activeModule === 'abudhabi') {
       setActiveTarget({ lat: 24.4539, lng: 54.3773, zoomLevel: 0.8 });
 
       // 2. Trigger the visual selection highlight

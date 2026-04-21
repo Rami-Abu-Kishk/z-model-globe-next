@@ -19,9 +19,9 @@ export default function DeepLinkedPage() {
       "political",
       "media",
       "research",
-      "groups",
+      "companies",
       "masterObserver",
-      "abuDhabiGov",
+      "abudhabi",
       "calendar",
     ];
 

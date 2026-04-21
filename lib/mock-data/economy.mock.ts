@@ -150,15 +150,6 @@ export const economyDataStore: Record<string, EconomyData> = {
         org: "World Bank",
         author: "Chief Economist Unit",
         date: "Jan 2026"
-      },
-      {
-        id: "econ-rep-2",
-        title: "Macroeconomic Resilience Strategy",
-        description: "Z-Model proprietary audit on building institutional buffers against global volatility and capital rotation.",
-        fileUrl: "/files/Accelerating-Investment.pdf",
-        org: "Z-Model Digital",
-        author: "Strategy Dept",
-        date: "Apr 2026"
       }
     ]
   },

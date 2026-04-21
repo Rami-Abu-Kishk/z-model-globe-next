@@ -31,10 +31,21 @@ export interface KpiReport {
   };
 }
 
+export interface InvestmentReport {
+  id: string;
+  title: string;
+  description: string;
+  fileUrl: string;
+  org: string;
+  author: string;
+  date: string;
+}
+
 export interface EconomyData {
   positiveTrends: TrendData[];
   negativeTrends: TrendData[];
   kpisAndReports: KpiReport[];
+  reports: InvestmentReport[];
 }
 
 // Dictionary keyed by ISO codes, with a fallback "GLOBAL" key
@@ -129,6 +140,26 @@ export const economyDataStore: Record<string, EconomyData> = {
       },
       { title: "Global Poverty Reduction Rate", impact: "High", value: "+1.2%", rep: "Ajay Banga", org: "World Bank" },
       { title: "Cross-Border FDI", impact: "Medium", value: "$1.3T", rep: "Rebeca Grynspan", org: "UNCTAD" }
+    ],
+    reports: [
+      {
+        id: "econ-rep-1",
+        title: "Global Economic Prospects, January 2026",
+        description: "Comprehensive analysis of global growth trajectories, downside risks, and sovereign policy recommendations for 2026-2028.",
+        fileUrl: "/files/Global Economic Prospects, January 2026.pdf",
+        org: "World Bank",
+        author: "Chief Economist Unit",
+        date: "Jan 2026"
+      },
+      {
+        id: "econ-rep-2",
+        title: "Macroeconomic Resilience Strategy",
+        description: "Z-Model proprietary audit on building institutional buffers against global volatility and capital rotation.",
+        fileUrl: "/files/Accelerating-Investment.pdf",
+        org: "Z-Model Digital",
+        author: "Strategy Dept",
+        date: "Apr 2026"
+      }
     ]
   },
   AE: { // United Arab Emirates Specific Data
@@ -177,6 +208,17 @@ export const economyDataStore: Record<string, EconomyData> = {
       { title: "Digital Economy Contribution", impact: "High", value: "11.7%", rep: "Regional Director", org: "IMF" },
       { title: "Strategic Trade Corridor Growth", impact: "High", value: "+15.4%", rep: "Trade Envoy", org: "WTO" },
       { title: "Innovation Index Surplus", impact: "Medium", value: "Top 5", rep: "Research Lead", org: "WIPO" }
+    ],
+    reports: [
+      {
+        id: "uae-econ-1",
+        title: "UAE Economic Vision 2031 Audit",
+        description: "Deep-dive assessment of non-oil GDP performance and diversification milestones in the Emirates.",
+        fileUrl: "/files/Report - Country Card for UAE.pdf",
+        org: "Z-Model Research",
+        author: "AI Analyst",
+        date: "Apr 2026"
+      }
     ]
   },
   US: { // United States Specific Data
@@ -221,9 +263,10 @@ export const economyDataStore: Record<string, EconomyData> = {
       }
     ],
     kpisAndReports: [
-      { title: "US Federal Interest Rate", impact: "High", value: "5.25%", rep: "Jerome Powell", org: "Federal Reserve" },
+      { title: "Federal Funds Rate", impact: "High", value: "5.25%", rep: "Jerome Powell", org: "Federal Reserve" },
       { title: "Tech Sector Job Growth", impact: "Medium", value: "+4.5%", rep: "Labor Stat Chief", org: "BLS" }
-    ]
+    ],
+    reports: []
   },
   JO: {
     positiveTrends: [
@@ -247,7 +290,8 @@ export const economyDataStore: Record<string, EconomyData> = {
     kpisAndReports: [
       { title: "National Desalination Project", impact: "High", value: "Funding Secured", rep: "Minister for Water", org: "Gov of Jordan" },
       { title: "UNESCO Corridor Revenue", impact: "Medium", value: "+12.1%", rep: "Director of Tourism", org: "JTB" }
-    ]
+    ],
+    reports: []
   },
   CN: {
     positiveTrends: [
@@ -261,7 +305,8 @@ export const economyDataStore: Record<string, EconomyData> = {
     kpisAndReports: [
       { title: "PBOC Reserve Ratio", impact: "High", value: "0.5% Cut", rep: "Pan Gongsheng", org: "PBOC" },
       { title: "Semiconductor Output", impact: "High", value: "+32%", rep: "MIIT Spokesperson", org: "MIIT" }
-    ]
+    ],
+    reports: []
   },
   IN: {
     positiveTrends: [
@@ -275,7 +320,8 @@ export const economyDataStore: Record<string, EconomyData> = {
     kpisAndReports: [
       { title: "RBI Repo Rate", impact: "Medium", value: "6.50%", rep: "Shaktikanta Das", org: "RBI" },
       { title: "India Stack Adoption", impact: "High", value: "450M Users", rep: "NPCI Chief", org: "NPCI" }
-    ]
+    ],
+    reports: []
   },
   SA: {
     positiveTrends: [
@@ -288,7 +334,8 @@ export const economyDataStore: Record<string, EconomyData> = {
     kpisAndReports: [
       { title: "Non-Oil Sector Contribution", impact: "High", value: "52%", rep: "PIF Strategy Lead", org: "PIF" },
       { title: "NEOM Capital Injection", impact: "High", value: "$40B", rep: "Project CEO", org: "NEOM" }
-    ]
+    ],
+    reports: []
   },
   RU: { // Russia Specific Data
     positiveTrends: [
@@ -302,7 +349,8 @@ export const economyDataStore: Record<string, EconomyData> = {
     kpisAndReports: [
       { title: "Current Account Surplus", impact: "High", value: "$125B", rep: "Elvira Nabiullina", org: "CBR" },
       { title: "Shadow Fleet Capacity", impact: "Medium", value: "Increased", rep: "Energy Minister", org: "Rosneft" }
-    ]
+    ],
+    reports: []
   },
   IR: { // Iran Specific Data
     positiveTrends: [
@@ -318,7 +366,8 @@ export const economyDataStore: Record<string, EconomyData> = {
     kpisAndReports: [
       { title: "Inflationary Pressure Index", impact: "High", value: "45.8%", rep: "Central Bank Lead", org: "CBI" },
       { title: "Petrochemical Output Margin", impact: "Medium", value: "+8.2%", rep: "Oil Ministry Rep", org: "NIOC" }
-    ]
+    ],
+    reports: []
   }
 };
 

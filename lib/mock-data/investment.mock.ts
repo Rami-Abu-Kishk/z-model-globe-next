@@ -82,7 +82,24 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       score: 98.5,
       details: "Top FDI destination driven by zero corporate tax zones, golden visa programs, and massive infrastructure spending.",
       timestamp: "Updated: Live 24/7",
-      imageUrl: "/assets/images/mock/uae_investment_hero.png"
+      imageUrl: "/assets/images/mock/uae_investment_hero.png",
+      pdfReportData: {
+        summary: "The United Arab Emirates (UAE) presents a highly attractive, affluent investment landscape characterized by strong government support, a low-tax environment, and world-class infrastructure. While the overall investment climate is robust, investors should diversify across sectors to mitigate localized risks such as slowing consumption and export growth.",
+        highlights: [
+          { title: "Macroeconomic Profile", detail: "GDP & Wealth: $504.17 Billion (Per Capita: ~$53,000) across a population of 9.52 Million. Growth & Stability: Projected GDP growth of 4.0% for 2024, supported by a highly stable inflation rate of 1.66% and low unemployment at 2.13%. Foreign Direct Investment (FDI): Strong international footprint with an FDI rate of 8.5%." },
+          { title: "Investment Climate & Key Trends", detail: "The UAE scores a strong 81.4 on the Investment Climate index, bolstered by perfect scores in transportation infrastructure, telecommunications, and tax burden. Positive KPI Trends: Significant improvements in Digitalization (↑13.75%) and massive drops in Crime (↓85.15%) and Government Debt Growth (↓99.48%). The Business Environment Index remains highly stable." },
+          { title: "Strategic Risks & Watch-Outs", detail: "The report warns of challenges regarding investment growth momentum and potential currency depreciation. Corresponding KPIs also show sharp declines in Consumption Growth (↓88.98%) and Export Growth (↓75.54%)." },
+          { title: "Top Strategic Opportunities", detail: "The highest-value sector for capital allocation is Financial Services, though high-yield opportunities span multiple industries. Industry & Manufacturing: EDB Industrial Mobilization Program — $16.34B pipeline | 8-14% ROI. Financial Services (Top Value Sector): EDB Industrial & Green Financing Pipeline — $16.30B | 5-9% ROI. UAE National Investment Fund — $10.00B | 6-12% ROI. Infrastructure: Abu Dhabi Multi-Project PPP — $12.80B | 5-12% ROI, Dubai Strategic Sewerage Tunnel — 6-10% ROI. Renewable Energy: Masdar + EWEC Solar PV + BESS Gigascale Project — 6-12% ROI." },
+          { title: "Strategic Takeaway", detail: "The UAE offers fertile ground for investors. Capitalizing on infrastructure and green financing pipelines while maintaining a diversified portfolio is the optimal strategy to navigate the slight dips in localized consumption and export momentum." }
+        ],
+        metrics: [
+          { label: "GDP growth", value: "4.0%", trend: "up" },
+          { label: "Inflation rate", value: "1.66%", trend: "stable" },
+          { label: "Unemployment", value: "2.13%", trend: "down" },
+          { label: "FDI Interest", value: "8.5%", trend: "up" }
+        ],
+        downloadUrl: "/files/Report - Country Card for UAE.pdf"
+      }
     },
     topOpportunities: [
       {

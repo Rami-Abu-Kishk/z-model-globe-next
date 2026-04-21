@@ -10,8 +10,10 @@ import {
   Globe,
   Zap, 
   Clock, 
+  Building2,
+  User,
 } from 'lucide-react';
-import { economyDataStore, TrendData, KpiReport } from '@/lib/mock-data/economy.mock';
+import { economyDataStore, TrendData, KpiReport, InvestmentReport } from '@/lib/mock-data/economy.mock';
 import { AiBadge } from '@/components/shared/AiBadge';
 import { useZModelStore } from '@/lib/store';
 import { useAIChat } from '../context/AIChatContext';
@@ -240,6 +242,37 @@ function KpiReportCard({ kpi, onOpen }: { kpi: KpiReport, onOpen: (kpi: KpiRepor
   );
 }
 
+function InvestmentReportCard({ report }: { report: InvestmentReport }) {
+  return (
+    <div
+      className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-lg hover:shadow-2xl transition-all group relative flex flex-col h-full cursor-pointer hover:border-emerald-300"
+      onClick={() => window.open(report.fileUrl, '_blank')}
+    >
+      <div className="flex justify-between items-start mb-4">
+        <span className="px-2 py-0.5 rounded-full border border-slate-200 text-slate-500 text-[9px] font-black uppercase tracking-widest">{report.org}</span>
+        <span className="text-[9px] font-black text-slate-400 uppercase">{report.date}</span>
+      </div>
+
+      <div className="flex-1">
+        <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-2 group-hover:text-emerald-700 transition-colors">{report.title}</h4>
+        <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 mb-4 font-medium italic">"{report.description}"</p>
+      </div>
+
+      <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+            <User className="w-2.5 h-2.5 text-slate-400" />
+          </div>
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{report.author}</p>
+        </div>
+        <div className="text-[10px] font-black text-emerald-600 uppercase tracking-widest flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          Open PDF <TrendingUp className="w-3 h-3" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
   const [selectedKpi, setSelectedKpi] = useState<KpiReport | null>(null);
   const selectedCountry = useZModelStore((s) => s.selectedCountry);
@@ -338,7 +371,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
         {/* Global Organization KPIs */}
         <div className="space-y-8 mt-4">
           <SectionHeader
-            title="Sovereign KPIs & Institutional Reports"
+            title="Sovereign KPIs"
             icon={LayoutGrid}
             subtitle="Real-time audits from IMF, World Bank, and WTO delegates"
           />
@@ -352,6 +385,22 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             ))}
           </div>
         </div>
+
+        {/* STRATEGIC REPORTS SECTION */}
+        {data.reports && data.reports.length > 0 && (
+          <div className="space-y-6">
+            <SectionHeader
+              title="Strategic Intelligence Reports"
+              icon={Building2}
+              subtitle="Proprietary and institutional deep-dive research documents available for review"
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {data.reports.map((report, idx) => (
+                <InvestmentReportCard key={idx} report={report} />
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Reusable KPI Deep-Dive Overlay */}
         <KpiInsightOverlay 
@@ -433,6 +482,30 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
               ))}
             </div>
           </div>
+
+          {/* Mini Reports Section */}
+          {data.reports && data.reports.length > 0 && (
+            <div className="space-y-4 pt-2">
+              <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Strategic Reports</h4>
+              <div className="space-y-3">
+                {data.reports.slice(0, 2).map((report, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col p-4 bg-white/60 rounded-2xl border border-white shadow-sm hover:border-emerald-200 transition-all cursor-pointer group"
+                    onClick={() => window.open(report.fileUrl, '_blank')}
+                  >
+                    <div className="flex justify-between items-start mb-1">
+                      <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight group-hover:text-emerald-700 transition-colors">{report.title}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[9px] text-slate-400 font-bold uppercase">{report.org}</span>
+                      <span className="text-[9px] text-emerald-600 font-black uppercase tracking-tighter">View PDF</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </ScrollArea>
 

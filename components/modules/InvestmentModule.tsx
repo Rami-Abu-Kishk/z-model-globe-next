@@ -470,13 +470,9 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                     variant="outline"
                     className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
                     onClick={() => {
-                      const link = document.createElement('a');
-                      link.href = data.bestTarget.pdfReportData?.downloadUrl || '';
-                      link.download = 'UAE_Country_Card.pdf';
-                      link.target = '_blank';
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
+                      if (data.bestTarget.pdfReportData?.downloadUrl) {
+                        window.open(data.bestTarget.pdfReportData.downloadUrl, '_blank');
+                      }
                     }}
                   >
                     <Download className="w-4 h-4" /> Download report

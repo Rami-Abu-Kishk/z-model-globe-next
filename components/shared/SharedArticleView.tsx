@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ChevronLeft, 
-  Minimize2, 
-  ExternalLink, 
-  FileText, 
+import {
+  ChevronLeft,
+  Minimize2,
+  ExternalLink,
+  FileText,
   Newspaper,
   Download
 } from 'lucide-react';
@@ -40,15 +40,15 @@ interface SharedArticleViewProps {
   className?: string;
 }
 
-export function SharedArticleView({ 
-  article, 
-  onBack, 
-  actions, 
-  extraContent, 
-  className 
+export function SharedArticleView({
+  article,
+  onBack,
+  actions,
+  extraContent,
+  className
 }: SharedArticleViewProps) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -59,8 +59,8 @@ export function SharedArticleView({
     >
       {/* Hero Section */}
       <div className="w-full lg:w-1/2 h-[300px] lg:h-auto relative bg-slate-100">
-        <img 
-          src={article.imageUrl || "/assets/images/branding/fallback.png"} 
+        <img
+          src={article.imageUrl || "/assets/images/branding/fallback.png"}
           alt={article.title}
           className="w-full h-full object-cover"
           onError={(e) => {
@@ -101,9 +101,9 @@ export function SharedArticleView({
                 </p>
               </div>
             </div>
-            <Button 
+            <Button
               onClick={onBack}
-              variant="ghost" 
+              variant="ghost"
               className="rounded-full w-12 h-12 hover:bg-slate-100 group transition-all"
             >
               <Minimize2 className="w-5 h-5 text-slate-400 group-hover:text-slate-900" />
@@ -143,9 +143,9 @@ export function SharedArticleView({
               <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Resources & External Intelligence</h5>
               <div className="flex flex-wrap gap-4">
                 {article.links.map((link, i) => (
-                  <a 
-                    key={i} 
-                    href={link.url} 
+                  <a
+                    key={i}
+                    href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-2xl hover:border-slate-900 hover:shadow-lg transition-all group"

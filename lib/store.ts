@@ -7,10 +7,12 @@ export type ModuleId =
   | 'political' 
   | 'media'
   | 'research'
-  | 'groups' 
+  | 'companies' 
   | 'masterObserver' 
-  | 'abuDhabiGov'
+  | 'abudhabi'
   | 'calendar';
+
+export type InvestmentDetailView = 'NONE' | 'UAE' | 'OPPORTUNITY';
 
 export type ViewState = 'ORBITAL' | 'EARTH_FOCUS' | 'CARD_FOCUS';
 
@@ -70,6 +72,9 @@ interface ZModelStore {
   mediaActiveNewsId: string | null;
   setMediaActiveNewsId: (id: string | null) => void;
 
+  mediaSelectedArticle: any | null; // Using any to avoid circular import with mock types
+  setMediaSelectedArticle: (article: any | null) => void;
+
   // ── Whether the Earth is in "analysis mode" ───────────────────────
   isAnalysisMode: boolean;
   setAnalysisMode: (active: boolean) => void;
@@ -77,6 +82,19 @@ interface ZModelStore {
   // ── Orbital ring Y-axis rotation target (radians) ────────────────
   ringRotationTarget: number;
   rotateRing: (direction: 1 | -1) => void;
+
+  // ── Globe Rotation ───────────────────────────────────────────────
+  autoRotate: boolean;
+  setAutoRotate: (active: boolean) => void;
+
+  // ── Investment Detail Focus ──────────────────────────────────────
+  investmentActiveDetail: InvestmentDetailView;
+  setInvestmentActiveDetail: (view: InvestmentDetailView) => void;
+  investmentSelectedOpportunity: any | null; // Using any to avoid circular import with mock types
+  setInvestmentSelectedOpportunity: (op: any | null) => void;
+
+  activeEconomyTrend: any | null;
+  setActiveEconomyTrend: (trend: any | null) => void;
 
   // ── Master reset ─────────────────────────────────────────────────
   resetView: () => void;
@@ -97,6 +115,7 @@ export const useZModelStore = create<ZModelStore>((set) => ({
     activeModule: id,
     selectedCountry: null,
     selectedCountries: [],
+    activeEconomyTrend: null,
     mediaActiveNewsId: null,
     mediaCategoryFilter: 'all',
     activeTarget: null,
@@ -140,6 +159,9 @@ export const useZModelStore = create<ZModelStore>((set) => ({
   mediaActiveNewsId: null,
   setMediaActiveNewsId: (id) => set({ mediaActiveNewsId: id }),
 
+  mediaSelectedArticle: null,
+  setMediaSelectedArticle: (article) => set({ mediaSelectedArticle: article }),
+
   // ── Analysis Mode ─────────────────────────────────────────────────
   isAnalysisMode: false,
   setAnalysisMode: (active) => set({ isAnalysisMode: active }),
@@ -150,6 +172,19 @@ export const useZModelStore = create<ZModelStore>((set) => ({
     set((state) => ({
       ringRotationTarget: state.ringRotationTarget + direction * (Math.PI / 4),
     })),
+
+  // ── Globe Rotation ───────────────────────────────────────────────
+  autoRotate: true,
+  setAutoRotate: (active) => set({ autoRotate: active }),
+
+  // ── Investment Detail Focus ──────────────────────────────────────
+  investmentActiveDetail: 'NONE',
+  setInvestmentActiveDetail: (view) => set({ investmentActiveDetail: view }),
+  investmentSelectedOpportunity: null,
+  setInvestmentSelectedOpportunity: (op) => set({ investmentSelectedOpportunity: op }),
+
+  activeEconomyTrend: null,
+  setActiveEconomyTrend: (trend) => set({ activeEconomyTrend: trend }),
 
   // ── Master Reset ──────────────────────────────────────────────────
   resetView: () =>
@@ -166,5 +201,10 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       searchQuery: '',
       mediaCategoryFilter: 'all',
       mediaActiveNewsId: null,
+      mediaSelectedArticle: null,
+      investmentActiveDetail: 'NONE',
+      investmentSelectedOpportunity: null,
+      activeEconomyTrend: null,
+      autoRotate: true,
     }),
 }));

@@ -23,8 +23,8 @@ const ORBITAL_CONFIG: Array<{ id: ModuleId; label: string; icon: any }> = [
   { id: 'political',   label: 'Political',   icon: ShieldAlert },
   { id: 'media',       label: 'Media',       icon: Newspaper },
   { id: 'research',    label: 'Research',    icon: FileText },
-  { id: 'groups',      label: 'Groups',      icon: Building2 },
-  { id: 'abuDhabiGov', label: 'AD Gov',      icon: Landmark },
+  { id: 'companies',   label: 'Groups',      icon: Building2 },
+  { id: 'abudhabi',    label: 'AD Gov',      icon: Landmark },
   { id: 'calendar',    label: 'Calendar',    icon: Calendar },
 ];
 

@@ -7,8 +7,8 @@ import { motion } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
 import { GlobeCameraController } from './GlobeCameraController';
 import { economyGlobeData, investmentGlobePoints, politicalCrisisRings, mediaNewsItems, groupsArcs, searchableCountries, politicalArcs } from '@/lib/mockData';
-import { 
-  breakingNews as mediaBreaking, 
+import {
+  breakingNews as mediaBreaking,
   trendingNews as mediaTrending,
   localRegionalNews as mediaRegional
 } from '@/lib/mock-data/media.mock';
@@ -62,6 +62,7 @@ export const HologramEarth = forwardRef((props, ref) => {
   const setActiveCountry = useZModelStore(s => s.setActiveCountry);
   const mediaCategoryFilter = useZModelStore(s => s.mediaCategoryFilter);
   const mediaActiveNewsId = useZModelStore(s => s.mediaActiveNewsId);
+  const autoRotate = useZModelStore(s => s.autoRotate);
   const isEarthFocus = viewState === 'EARTH_FOCUS';
   const isCardFocus = viewState === 'CARD_FOCUS';
   const [isFocused, setIsFocused] = useState(false);
@@ -78,7 +79,9 @@ export const HologramEarth = forwardRef((props, ref) => {
 
     // Set UI behavior
     setActiveCountry(country.name);
-    setViewState('EARTH_FOCUS');
+    if (!activeModule) {
+      setViewState('EARTH_FOCUS');
+    }
   };
 
 
@@ -116,7 +119,7 @@ export const HologramEarth = forwardRef((props, ref) => {
     const controls = globeRef.current?.controls();
     if (!controls) return false;
     Object.assign(controls, {
-      autoRotate: !isEarthFocus && !activeTarget && selectedCountries.length === 0,
+      autoRotate: autoRotate && !isEarthFocus && !activeTarget && selectedCountries.length === 0,
       autoRotateSpeed: 0.5,
       enableZoom: true,
       enablePan: true,
@@ -160,7 +163,7 @@ export const HologramEarth = forwardRef((props, ref) => {
       const interval = setInterval(() => syncControls() && clearInterval(interval), 100);
       return () => clearInterval(interval);
     }
-  }, [viewState, mounted, ORBITAL_ALTITUDE, FOCUS_ALTITUDE, activeTarget, selectedCountries]);
+  }, [viewState, mounted, ORBITAL_ALTITUDE, FOCUS_ALTITUDE, activeTarget, selectedCountries, autoRotate]);
 
   useImperativeHandle(ref, () => ({
     flyTo: (lat: number, lng: number, altitude = FOCUS_ALTITUDE) =>
@@ -168,25 +171,45 @@ export const HologramEarth = forwardRef((props, ref) => {
   }));
 
   // Memoize layer data to prevent WebGL stutters during typing in search
-  const pointsData = useMemo(() => activeModule === 'investment' ? investmentGlobePoints : [], [activeModule]);
+  const pointsData = useMemo(() => {
+    const isInvestment = activeModule === 'investment';
+    const hasSelection = selectedCountry || selectedCountries.length > 0;
+    return (isInvestment && !hasSelection) ? investmentGlobePoints : [];
+  }, [activeModule, selectedCountry, selectedCountries]);
   const ringsData = useMemo(() => activeModule === 'political' ? politicalCrisisRings : [], [activeModule]);
   const labelsData = useMemo(() => [], []);
+  const selectionLabelData = useMemo(() => {
+    if (!selectedCountry) return [];
+    const country = searchableCountries.find(c => c.iso === selectedCountry);
+    if (!country) return [];
+
+    return [{
+      lat: country.lat,
+      lng: country.lng,
+      label: country.name,
+      iso: country.iso,
+      type: 'selection'
+    }];
+  }, [selectedCountry]);
+
+  // Combine intelligence points and the active selection label
+  const combinedHtmlData = useMemo(() => [...pointsData, ...selectionLabelData], [pointsData, selectionLabelData]);
 
   const arcsData = useMemo(() => {
-    if (activeModule === 'groups') return groupsArcs;
+    if (activeModule === 'companies') return groupsArcs;
     if (activeModule === 'political') return politicalArcs;
-    
+
     if (activeModule === 'media') {
       // Generate "Intelligence Flow" arcs from news sources to Abu Dhabi
       const AD_LAT = 24.4539;
       const AD_LNG = 54.3773;
-      
+
       let newsItems = [...mediaBreaking, ...mediaTrending, ...mediaRegional];
 
       // Layer 1: Filter by specific active news ID (highest priority)
       if (mediaActiveNewsId) {
         newsItems = newsItems.filter(n => n.id === mediaActiveNewsId);
-      } 
+      }
       // Layer 2: Filter by category section (Breaking/Trending/Regional)
       else if (mediaCategoryFilter !== 'all') {
         newsItems = newsItems.filter(n => n.category === mediaCategoryFilter);
@@ -206,13 +229,13 @@ export const HologramEarth = forwardRef((props, ref) => {
           sentiment: news.sentiment
         }));
     }
-    
+
     return [];
   }, [activeModule, mediaCategoryFilter, mediaActiveNewsId]);
 
   // Handle Abu Dhabi Gov camera lock
   useEffect(() => {
-    if (activeModule === 'abuDhabiGov') {
+    if (activeModule === 'abudhabi') {
       setActiveTarget({ lat: 24.4539, lng: 54.3773, zoomLevel: 0.8 });
 
       // 2. Trigger the visual selection highlight
@@ -255,35 +278,66 @@ export const HologramEarth = forwardRef((props, ref) => {
         pointColor="color"
         pointRadius={0.5}
 
-        htmlElementsData={pointsData}
-        htmlAltitude={(d: any) => (d.size || 1) * 0.1 + 0.02} // Position slightly above the bar
+        htmlElementsData={combinedHtmlData}
+        htmlAltitude={(d: any) => d.type === 'selection' ? 0.15 : (d.size || 1) * 0.1 + 0.02}
         htmlElement={(d: any) => {
           const el = document.createElement('div');
-          // Sleek, glassmorphic label matching your new UI
-          el.innerHTML = `
-            <div style="
-              background: rgba(15, 23, 42, 0.85);
-              backdrop-filter: blur(8px);
-              border: 1px solid ${d.color || '#10b981'};
-              border-radius: 6px;
-              padding: 4px 8px;
-              color: white;
-              font-family: sans-serif;
-              font-size: 10px;
-              font-weight: bold;
-              white-space: nowrap;
-              transform: translate(-50%, -100%);
-              box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-              display: flex;
-              align-items: center;
-              gap: 6px;
-              pointer-events: none;
-            ">
-              <span style="display:block; width:6px; height:6px; border-radius:50%; background:${d.color || '#10b981'};"></span>
-              ${d.label || 'Data Point'}
-              <span style="color: ${d.color || '#10b981'}; margin-left: 4px;">${d.size * 10}%</span>
-            </div>
-          `;
+
+          if (d.type === 'selection') {
+            // Minimalist "Selected" Label with Flag
+            const flagCode = (d.iso || '').toLowerCase();
+            el.innerHTML = `
+              <div style="
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 1);
+                border-radius: 40px;
+                padding: 6px 14px 6px 10px;
+                color: #0f172a;
+                font-family: sans-serif;
+                font-size: 11px;
+                font-weight: 900;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                white-space: nowrap;
+                transform: translate(-50%, -50%);
+                box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+                pointer-events: none;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+              ">
+                <img src="https://flagcdn.com/w40/${flagCode}.png" style="width: 18px; height: 12px; border-radius: 2px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" />
+                ${d.label}
+              </div>
+            `;
+          } else {
+            // Sleek, glassmorphic data label
+            el.innerHTML = `
+              <div style="
+                background: rgba(15, 23, 42, 0.85);
+                backdrop-filter: blur(8px);
+                border: 1px solid ${d.color || '#10b981'};
+                border-radius: 6px;
+                padding: 4px 8px;
+                color: white;
+                font-family: sans-serif;
+                font-size: 10px;
+                font-weight: bold;
+                white-space: nowrap;
+                transform: translate(-50%, -100%);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                pointer-events: none;
+              ">
+                <span style="display:block; width:6px; height:6px; border-radius:50%; background:${d.color || '#10b981'};"></span>
+                ${d.label || 'Data Point'}
+                <span style="color: ${d.color || '#10b981'}; margin-left: 4px;">${d.size * 10}%</span>
+              </div>
+            `;
+          }
           return el;
         }}
 
@@ -308,15 +362,15 @@ export const HologramEarth = forwardRef((props, ref) => {
         arcColor={(d: any) => {
           const isHovered = hoveredArc && hoveredArc.id === d.id;
           const opacity = hoveredArc ? (isHovered ? 1.0 : 0.15) : 0.6;
-          
+
           const colors: string[] = Array.isArray(d.color) ? d.color : [d.color, d.color];
           // Modify alpha for each color in the gradient
           return colors.map((c: string) => {
             // Convert hex to rgba with our calculated opacity
-            return c === '#10b981' ? `rgba(16, 185, 129, ${opacity})` : 
-                   c === '#3b82f6' ? `rgba(59, 130, 246, ${opacity})` : 
-                   c === '#f43f5e' ? `rgba(244, 63, 94, ${opacity})` : 
-                   `rgba(255, 255, 255, ${opacity})`;
+            return c === '#10b981' ? `rgba(16, 185, 129, ${opacity})` :
+              c === '#3b82f6' ? `rgba(59, 130, 246, ${opacity})` :
+                c === '#f43f5e' ? `rgba(244, 63, 94, ${opacity})` :
+                  `rgba(255, 255, 255, ${opacity})`;
           });
         }}
         arcDashLength={0.4}
@@ -348,7 +402,7 @@ export const HologramEarth = forwardRef((props, ref) => {
 
         polygonAltitude={(d: any) => {
           const p = d.properties || {};
-          const getValid = (...vals: (string|null|undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
+          const getValid = (...vals: (string | null | undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
 
           const id = getValid(d.id, p.ISO_A3_EH, p.ADM0_ISO, p.ISO_A3, p.iso_a3, p.BRK_A3) || "";
           const name = String(p.NAME || p.name || p.ADMIN || "").toUpperCase();
@@ -377,7 +431,7 @@ export const HologramEarth = forwardRef((props, ref) => {
         polygonsTransitionDuration={300}
         polygonCapColor={(d: any) => {
           const p = d.properties || {};
-          const getValid = (...vals: (string|null|undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
+          const getValid = (...vals: (string | null | undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
 
           const id = getValid(d.id, p.ISO_A3_EH, p.ADM0_ISO, p.ISO_A3, p.iso_a3, p.BRK_A3) || "";
           const name = String(p.NAME || p.name || p.ADMIN || "").toUpperCase();
@@ -402,11 +456,11 @@ export const HologramEarth = forwardRef((props, ref) => {
             }
           }
 
-          if (activeModule === 'economy' && economyGlobeData[iso]) {
-            const info = economyGlobeData[iso];
-            if (info.status === 'positive') return 'rgba(16, 185, 129, 0.4)'; // Emerald 500 at 40%
-            return 'rgba(239, 68, 68, 0.4)'; // Rose 500 at 40%
-          }
+          // if (activeModule === 'economy' && economyGlobeData[iso]) {
+          //   const info = economyGlobeData[iso];
+          //   if (info.status === 'positive') return 'rgba(16, 185, 129, 0.4)'; // Emerald 500 at 40%
+          //   return 'rgba(239, 68, 68, 0.4)'; // Rose 500 at 40%
+          // }
 
           return 'rgba(51, 65, 85, 0.25)'; // Softer Slate/Navy countries
         }}
@@ -415,39 +469,95 @@ export const HologramEarth = forwardRef((props, ref) => {
         polygonLabel={(d: any) => {
           const p = d.properties;
           const iso = (p.ISO_A2 || p.iso_a2 || p['ISO3166-1-Alpha-2'] || '').toUpperCase();
-          
+
           let name = p.NAME || p.name || p.ADMIN || 'Unknown';
           let flagCode = iso.toLowerCase();
           let displayIso = iso;
 
-          // Sovereign Override for specific regional designation
+          // Sovereign Override
           if (iso === 'IL') {
             name = 'Occupied Palestinian Territories';
             flagCode = 'ps';
             displayIso = 'PS';
           }
 
-          return `<div class="px-3 py-2 bg-slate-900/90 backdrop-blur-md border border-slate-700 rounded-lg text-white shadow-2xl flex items-center gap-3">
-            <div class="w-7 h-4.5 overflow-hidden rounded-sm border border-slate-600 bg-slate-800 flex-shrink-0 flex items-center justify-center">
-              <img src="https://flagcdn.com/w40/${flagCode}.png" class="w-full h-full object-contain" />
+          // --- ECONOMY INTELLIGENCE OVERLAY ---
+          const ecoData = economyGlobeData[iso];
+          const countryMeta = searchableCountries.find(c => c.iso === iso);
+          const activeTrend = useZModelStore.getState().activeEconomyTrend;
+          let intelligenceHtml = '';
+
+          // Trend-specific impact (Priority 1)
+          if (activeModule === 'economy' && activeTrend && activeTrend.relatedCountries?.includes(iso)) {
+            const trendValue = activeTrend.countryValues?.[iso] || activeTrend.value;
+            const isPos = trendValue >= 0;
+            intelligenceHtml = `
+              <div class="mt-3 pt-3 border-t border-slate-200/50 flex items-center justify-between gap-6">
+                <div class="flex flex-col">
+                  <span class="text-[8px] text-slate-600 uppercase font-black tracking-[0.15em] mb-0.5">${activeTrend.label}</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm font-black ${isPos ? 'text-emerald-600' : 'text-rose-600'}">
+                      ${isPos ? '↑' : '↓'} ${trendValue > 0 ? '+' : ''}${trendValue}%
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end">
+                   <span class="text-[8px] text-slate-400 uppercase font-black tracking-[0.15em] mb-0.5">Focus</span>
+                   <div class="px-2 py-0.5 rounded-lg text-[8px] font-black uppercase ${isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}">
+                    ${isPos ? 'Advancing' : 'Under Pressure'}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+          // Standard GDP data (Priority 2)
+          else if (activeModule === 'economy' && ecoData) {
+            const isPos = ecoData.status === 'positive';
+            intelligenceHtml = `
+              <div class="mt-3 pt-3 border-t border-slate-200/50 flex items-center justify-between gap-6">
+                <div class="flex flex-col">
+                  <span class="text-[8px] text-slate-600 uppercase font-black tracking-[0.15em] mb-0.5">Real GDP Growth</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm font-black ${isPos ? 'text-emerald-600' : 'text-rose-600'}">
+                      ${isPos ? '↑' : '↓'} ${ecoData.growth > 0 ? '+' : ''}${ecoData.growth}%
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end">
+                   <span class="text-[8px] text-slate-400 uppercase font-black tracking-[0.15em] mb-0.5">Status</span>
+                   <div class="px-2 py-0.5 rounded-lg text-[8px] font-black uppercase ${isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}">
+                    ${countryMeta?.economyStatus || (isPos ? 'Expansion' : 'Contraction')}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+
+          return `
+          <div class="px-4 py-3.5 bg-white/90 backdrop-blur-2xl border border-white/80 rounded-2xl text-slate-800 shadow-[0_20px_40px_rgba(0,0,0,0.08)] flex flex-col min-w-[200px]">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-6 overflow-hidden rounded-lg border border-slate-100 bg-white flex-shrink-0 flex items-center justify-center shadow-sm">
+                <img src="https://flagcdn.com/w40/${flagCode}.png" class="w-full h-full object-cover" />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-black text-[14px] leading-tight tracking-tight uppercase text-slate-900">${name}</span>
+                <span class="text-[9px] text-slate-400 font-mono tracking-widest uppercase font-bold">${displayIso}</span>
+              </div>
             </div>
-            <div class="flex flex-col">
-              <span class="font-bold text-[13px] leading-none">${name}</span>
-              ${displayIso ? `<span class="text-[9px] text-slate-400 font-mono mt-0.5 tracking-wider uppercase">${displayIso}</span>` : ''}
-            </div>
+            ${intelligenceHtml}
           </div>`;
         }}
         onPolygonHover={(d: any) => {
           const p = d?.properties || {};
-          const getValid = (...vals: (string|null|undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
+          const getValid = (...vals: (string | null | undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
           const identifier = d ? (getValid(p.ISO_A2_EH, p.ISO_A2, p['ISO3166-1-Alpha-2'], p.NAME, p.ADMIN, d.id)) : null;
           setHoveredCountry(identifier || null);
           document.body.style.cursor = d ? 'pointer' : 'auto';
         }}
         onPolygonClick={(d: any, _e: any, { lat, lng }: any) => {
           const p = d.properties || {};
-          const getValid = (...vals: (string|null|undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
-          
+          const getValid = (...vals: (string | null | undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
+
           // 1. Get a reliable ISO code
           const iso = getValid(p.ISO_A2_EH, p.ISO_A2, p.iso_a2, p.POSTAL, p.ADM0_ISO, p['ISO3166-1-Alpha-2']) || "";
 
@@ -460,7 +570,9 @@ export const HologramEarth = forwardRef((props, ref) => {
             // Fallback logic if the country isn't in your searchable list
             setSelectedCountry(iso);
             setActiveTarget({ lat, lng, zoomLevel: FOCUS_ALTITUDE });
-            setViewState('EARTH_FOCUS');
+            if (!activeModule) {
+              setViewState('EARTH_FOCUS');
+            }
           }
         }}
       />

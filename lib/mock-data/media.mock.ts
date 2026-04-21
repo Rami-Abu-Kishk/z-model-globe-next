@@ -65,7 +65,7 @@ export const breakingNews: NewsItem[] = [
     summary: "Maritime insurance premiums spike as alternative routes add 10 days to standard delivery times for European imports.",
     countries: ["YE", "EG", "SA"],
     target: { lat: 15.0, lng: 42.0, zoomLevel: 1.8 },
-    imageUrl: "https://images.unsplash.com/photo-1544203102-f9035252066d?auto=format&fit=crop&q=80&w=1000",
+    imageUrl: "/assets/images/mock/red_sea_logistics.png",
     links: [
       { label: "Maritime Logistics Report", url: "#" },
       { label: "Trade Impact Analysis", url: "#" }
@@ -80,7 +80,8 @@ export const breakingNews: NewsItem[] = [
     sentiment: "positive",
     summary: "Inflation cooling faster than anticipated triggers major market rally across Asian and GCC indices.",
     countries: ["US", "EU", "AE", "SA"],
-    target: { lat: 30.0, lng: 20.0, zoomLevel: 2.5 }
+    target: { lat: 30.0, lng: 20.0, zoomLevel: 2.5 },
+    imageUrl: "/assets/images/mock/financial_rates.png"
   }
 ];
 
@@ -94,7 +95,8 @@ export const trendingNews: NewsItem[] = [
     sentiment: "positive",
     summary: "Nations are increasingly building local GPU clusters to ensure digital sovereignty and protection against global API reliance.",
     countries: ["AE", "IN", "SG", "KR"],
-    target: { lat: 20.0, lng: 70.0, zoomLevel: 2.5 }
+    target: { lat: 20.0, lng: 70.0, zoomLevel: 2.5 },
+    imageUrl: "/assets/images/mock/sovereign_ai_brain.png"
   },
   {
     id: "T2",
@@ -105,7 +107,8 @@ export const trendingNews: NewsItem[] = [
     sentiment: "positive",
     summary: "A $10B subsidy package announced for 2nm fabrication plant in Gujarat, aiming for production by 2028.",
     countries: ["IN"],
-    target: { lat: 22.0, lng: 72.0, zoomLevel: 1.5 }
+    target: { lat: 22.0, lng: 72.0, zoomLevel: 1.5 },
+    imageUrl: "/assets/images/mock/semiconductor_fab.png"
   },
   {
     id: "T3",
@@ -116,7 +119,8 @@ export const trendingNews: NewsItem[] = [
     sentiment: "positive",
     summary: "SMR technology gains traction as a viable 'always-on' alternative to bridge renewable intermittency in heavy industrial zones.",
     countries: ["US", "FR", "AE", "CN"],
-    target: { lat: 40.0, lng: -40.0, zoomLevel: 2.8 }
+    target: { lat: 40.0, lng: -40.0, zoomLevel: 2.8 },
+    imageUrl: "http://googleusercontent.com/image_collection/image_retrieval/576214024933720820_0"
   }
 ];
 
@@ -151,7 +155,8 @@ export const localRegionalNews: NewsItem[] = [
     category: "Regional",
     sentiment: "positive",
     countries: ["AE", "OM"],
-    target: { lat: 24.0, lng: 56.0, zoomLevel: 1.5 }
+    target: { lat: 24.0, lng: 56.0, zoomLevel: 1.5 },
+    imageUrl: "http://googleusercontent.com/image_collection/image_retrieval/3985455145555052574_0"
   },
   {
     id: "LR4",
@@ -161,7 +166,8 @@ export const localRegionalNews: NewsItem[] = [
     category: "Regional",
     sentiment: "neutral",
     countries: ["QA"],
-    target: { lat: 25.2769, lng: 51.5200, zoomLevel: 1.2 }
+    target: { lat: 25.2769, lng: 51.5200, zoomLevel: 1.2 },
+    imageUrl: "/assets/images/mock/qatar_green_energy.png"
   }
 ];
 
@@ -201,7 +207,8 @@ export const mediaDataStore: Record<string, MediaData> = {
         sentiment: "positive",
         summary: "Major infrastructure projects in Jordan securing long-term regional stability.",
         countries: ["JO"],
-        target: { lat: 31.9, lng: 35.9, zoomLevel: 1.5 }
+        target: { lat: 31.9, lng: 35.9, zoomLevel: 1.5 },
+        imageUrl: "/assets/images/mock/jordan_desalination.png"
       }
     ],
     trending: [],
@@ -213,7 +220,8 @@ export const mediaDataStore: Record<string, MediaData> = {
         time: "4h ago",
         category: "Regional",
         sentiment: "positive",
-        countries: ["JO", "LB", "SY"]
+        countries: ["JO", "LB", "SY"],
+        imageUrl: "/assets/images/mock/levant_design.png"
       }
     ]
   },
@@ -232,7 +240,8 @@ export const mediaDataStore: Record<string, MediaData> = {
         sentiment: "positive",
         summary: "Nations are increasingly building local GPU clusters to ensure digital sovereignty.",
         countries: ["IN"],
-        target: { lat: 12.97, lng: 77.59, zoomLevel: 1.8 }
+        target: { lat: 12.97, lng: 77.59, zoomLevel: 1.8 },
+        imageUrl: "/assets/images/mock/india_tech_hub.png"
       }
     ],
     trending: [
@@ -243,7 +252,8 @@ export const mediaDataStore: Record<string, MediaData> = {
         time: "2h ago",
         category: "Global",
         sentiment: "positive",
-        countries: ["IN", "FR"]
+        countries: ["IN", "FR"],
+        imageUrl: "/assets/images/mock/india_upi.png"
       }
     ],
     regional: []

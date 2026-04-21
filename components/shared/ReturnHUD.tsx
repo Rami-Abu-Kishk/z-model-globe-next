@@ -23,7 +23,7 @@ export function ReturnHUD() {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="absolute bottom-12 right-12 z-[100] pointer-events-auto"
         >
-          <button
+          {/* <button
             onClick={handleReturn}
             className="
               flex items-center gap-2 
@@ -35,12 +35,13 @@ export function ReturnHUD() {
               hover:bg-white/60 hover:scale-105
               active:scale-95
               transition-all duration-200
+              cursor-pointer
               group
             "
           >
             <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             RETURN TO ORBIT
-          </button>
+          </button> */}
         </motion.div>
       )}
     </AnimatePresence>

@@ -1,34 +1,57 @@
 
 "use client";
 
-import React, { useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { TrendBadge } from '@/components/shared/TrendBadge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Globe, Building2, User, Zap, Briefcase, Award } from 'lucide-react';
+import { TrendingUp, Globe, Building2, User, Zap, Briefcase, Award, ChevronLeft, Download, ExternalLink } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import { investmentDataStore, KpiReport, Opportunity } from '@/lib/mock-data/investment.mock';
+import { investmentDataStore, KpiReport, Opportunity, InvestmentReport } from '@/lib/mock-data/investment.mock';
 import { useZModelStore } from '@/lib/store';
+import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { searchableCountries } from '@/lib/mockData';
+import { motion, AnimatePresence } from 'framer-motion';
+import { SharedArticleView } from '@/components/shared/SharedArticleView';
+import { useAIChat } from '../context/AIChatContext';
+import { AiBadge } from '../shared/AiBadge';
+import { KpiInsightOverlay, KpiInsightData } from '@/components/shared/KpiInsightOverlay';
 
 const InvestmentCandlestickChart = dynamic(() => import('./InvestmentCandlestickChart'), { ssr: false });
 const InvestmentChart3D = dynamic(() => import('./InvestmentChart3D'), { ssr: false });
 
 // ── Shared Sub-Components ───────────────────────────────────────────
 
-function InvestmentKpiCard({ kpi }: { kpi: KpiReport }) {
+function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: KpiReport) => void }) {
+  const { triggerChatFromCard } = useAIChat();
+
+  const handleAiTrigger = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    triggerChatFromCard({
+      module: 'Investment',
+      section: 'Sovereign KPIs',
+      title: kpi.title,
+      value: kpi.value
+    });
+  };
+
   return (
-    <div className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl hover:shadow-2xl transition-all group overflow-hidden relative flex flex-col h-full">
+    <div
+      className={`p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl hover:shadow-2xl transition-all group overflow-hidden relative flex flex-col h-full ${onOpen && kpi.insightData ? 'cursor-pointer hover:border-emerald-300' : ''}`}
+      onClick={() => onOpen && kpi.insightData && onOpen(kpi)}
+    >
+      <AiBadge
+        onClick={handleAiTrigger}
+        className="top-4 right-4 !w-8 !h-8 opacity-0 group-hover:opacity-100 transition-opacity"
+        tooltipText="Investment Thesis"
+      />
       <div className="absolute -top-4 -right-4 p-2 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none">
         <Briefcase className="w-24 h-24 text-slate-900" />
       </div>
 
       <div className="flex justify-between items-start mb-6 relative z-10">
-        <Badge variant="outline" className={`${kpi.impact === 'High' ? 'border-rose-200 text-rose-600 bg-rose-50/50' : 'border-emerald-200 text-emerald-600 bg-emerald-50/50'} text-[9px] font-black uppercase tracking-widest`}>
-          {kpi.impact} Impact
-        </Badge>
         <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{kpi.org}</span>
       </div>
 
@@ -51,30 +74,86 @@ function InvestmentKpiCard({ kpi }: { kpi: KpiReport }) {
 }
 
 function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => void }) {
+  const { triggerChatFromCard } = useAIChat();
+
+  const handleAiTrigger = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    triggerChatFromCard({
+      module: 'Investment',
+      section: 'Strategic Opportunities',
+      title: op.title,
+      value: op.region
+    });
+  };
+
   return (
     <div
-      className={`flex flex-col bg-white/60 backdrop-blur-md rounded-2xl border border-white/80 p-5 shadow-sm hover:shadow-lg transition-all h-full group ${onClick ? 'cursor-pointer hover:border-emerald-300' : ''}`}
+      className={`flex flex-col bg-white/60 backdrop-blur-md rounded-2xl border border-white/80 overflow-hidden shadow-sm hover:shadow-lg transition-all h-full group ${onClick ? 'cursor-pointer hover:border-emerald-300' : ''}`}
       onClick={onClick}
     >
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex-1 pr-2">
-          <h5 className="text-[13px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">
-            {op.title}
-          </h5>
-          <p className="text-[10px] text-slate-400 font-bold uppercase mt-1 flex items-center gap-1">
-            <Globe className="w-2 h-2" /> {op.region}
-          </p>
+      <div className="h-32 w-full relative bg-slate-100">
+        <img
+          src={op.imageUrl || "/assets/images/branding/fallback.png"}
+          alt={op.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/assets/images/branding/fallback.png";
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+
+        <AiBadge
+          onClick={handleAiTrigger}
+          className="top-3 right-3 !w-8 !h-8 opacity-0 group-hover:opacity-100 transition-opacity"
+          tooltipText="Generate Thesis"
+        />
+      </div>
+      <div className="p-5 flex flex-col flex-1">
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex-1 pr-2">
+            <h5 className="text-[13px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">
+              {op.title}
+            </h5>
+            <p className="text-[10px] text-slate-400 font-bold uppercase mt-1 flex items-center gap-1">
+              <Globe className="w-2 h-2" /> {op.region}
+            </p>
+          </div>
         </div>
-        <Badge className="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-black px-2 shadow-sm whitespace-nowrap">
-          {op.expectedReturn}
-        </Badge>
+        <p className="text-[11px] text-slate-600 leading-relaxed font-medium line-clamp-3">
+          {op.description}
+        </p>
       </div>
-      <div className="h-[140px] md:h-[180px] bg-slate-50/50 rounded-xl overflow-hidden mb-4 border border-slate-100">
-        <InvestmentCandlestickChart assetName={op.title} />
+    </div>
+  );
+}
+
+function InvestmentReportCard({ report, onClick }: { report: InvestmentReport, onClick?: (report: InvestmentReport) => void }) {
+  return (
+    <div
+      className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-lg hover:shadow-2xl transition-all group relative flex flex-col h-full cursor-pointer hover:border-emerald-300"
+      onClick={() => onClick ? onClick(report) : window.open(report.fileUrl, '_blank')}
+    >
+      <div className="flex justify-between items-start mb-4">
+        <Badge variant="outline" className="text-[9px] border-slate-200 text-slate-500 font-black uppercase tracking-widest">{report.org}</Badge>
+        <span className="text-[9px] font-black text-slate-400 uppercase">{report.date}</span>
       </div>
-      <p className="text-[11px] text-slate-600 leading-relaxed font-medium line-clamp-3">
-        {op.description}
-      </p>
+
+      <div className="flex-1">
+        <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-2 group-hover:text-emerald-700 transition-colors">{report.title}</h4>
+        <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 mb-4 font-medium italic">"{report.description}"</p>
+      </div>
+
+      <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+            <User className="w-2.5 h-2.5 text-slate-400" />
+          </div>
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{report.author}</p>
+        </div>
+        <div className="text-[10px] font-black text-emerald-600 uppercase tracking-widest flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          Open PDF <TrendingUp className="w-3 h-3" />
+        </div>
+      </div>
     </div>
   );
 }
@@ -82,12 +161,28 @@ function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => voi
 // ── Main Module ─────────────────────────────────────────────────────
 
 export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
-  const setActiveTarget = useZModelStore((s) => s.setActiveTarget);
-  const setSelectedCountries = useZModelStore((s) => s.setSelectedCountries);
-  const setSelectedCountry = useZModelStore((s) => s.setSelectedCountry);
-  const selectedCountry = useZModelStore((s) => s.selectedCountry);
-  const setViewState = useZModelStore((s) => s.setViewState);
-  const viewState = useZModelStore((s) => s.viewState);
+  const {
+    setActiveModule,
+    setActiveTarget,
+    setSelectedCountries,
+    setSelectedCountry,
+    selectedCountry,
+    setViewState,
+    viewState,
+    investmentActiveDetail,
+    setInvestmentActiveDetail,
+    investmentSelectedOpportunity,
+    setInvestmentSelectedOpportunity,
+    setActiveEconomyTrend
+  } = useZModelStore();
+
+  const [selectedKpi, setSelectedKpi] = useState<KpiReport | null>(null);
+
+  const handleKpiClick = (kpi: KpiReport) => {
+    if (kpi.insightData) {
+      setSelectedKpi(kpi);
+    }
+  };
 
   const currentDataKey = useMemo(() =>
     selectedCountry && investmentDataStore[selectedCountry] ? selectedCountry : 'GLOBAL',
@@ -97,14 +192,21 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
   const data = investmentDataStore[currentDataKey];
 
   const handleTargetClick = () => {
+    setActiveModule('investment');
     if (data.bestTarget.iso) {
       setSelectedCountry(null);
       setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 }); // UAE Coords
       setSelectedCountries([data.bestTarget.iso]);
+
+      if (isExpanded) {
+        setInvestmentSelectedOpportunity(null);
+        setInvestmentActiveDetail('UAE');
+      }
     }
   };
 
   const handleOpportunityClick = (op: Opportunity) => {
+    setActiveModule('investment');
     if (op.isoCodes && op.isoCodes.length > 0) {
       setSelectedCountry(null);
       setSelectedCountries(op.isoCodes);
@@ -119,10 +221,16 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
           zoomLevel: 1.8
         });
       }
+
+      if (isExpanded) {
+        setInvestmentActiveDetail('OPPORTUNITY');
+        setInvestmentSelectedOpportunity(op);
+      }
     }
   };
 
   const handleRowClick = (entityName: string) => {
+    setActiveModule('investment');
     // 1. Precise or contains match
     let country = searchableCountries.find(c =>
       c.name.toLowerCase().includes(entityName.toLowerCase()) ||
@@ -149,136 +257,344 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
     }
   };
 
+  const handleReportClick = (report: InvestmentReport) => {
+    setActiveModule('investment');
+    
+    // If it's the "Accelerating Investment" report, fly to the UAE hub viewpoint
+    if (report.title.includes('Accelerating Investment')) {
+      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.3 });
+      setSelectedCountries(['AE']);
+    } else if (report.id.includes('uae')) {
+       setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 });
+       setSelectedCountries(['AE']);
+    }
+
+    window.open(report.fileUrl, '_blank');
+  };
+
   if (isExpanded) {
     return (
-      <div className="flex flex-col gap-6 md:gap-10 pb-12 w-full max-w-full overflow-x-hidden">
-        {/* FIRST SECTION: Top 3 Strategic Opportunities */}
-        <div className="space-y-6">
-          <SectionHeader
-            title="Top 3 Global Strategic Opportunities"
-            icon={Zap}
-            subtitle="Real-time volatility tracking and expected yield forecasts"
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.topOpportunities.map((op, i) => (
-              <OpportunityCard
-                key={i}
-                op={op}
-                onClick={() => handleOpportunityClick(op)}
+      <div className="flex flex-col gap-6 md:gap-10 pb-12 w-full max-w-full overflow-x-hidden relative min-h-[800px]">
+        <AnimatePresence mode="wait">
+          {investmentActiveDetail === 'NONE' ? (
+            <motion.div
+              key="main-view"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.4 }}
+              className="flex flex-col gap-6 md:gap-10 w-full"
+            >
+              {/* FIRST SECTION: Top 3 Strategic Opportunities */}
+              <div className="space-y-6">
+                <SectionHeader
+                  title="Top 3 Investment Opportunities"
+                  icon={Zap}
+                  subtitle="Real-time volatility tracking and expected yield forecasts, updated 24/7"
+                />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {data.topOpportunities.map((op, i) => (
+                    <OpportunityCard
+                      key={i}
+                      op={op}
+                      onClick={() => handleOpportunityClick(op)}
+                    />
+                  ))}
+                </div>
+              </div>
+              <SectionHeader
+                title={data.bestTarget.label}
+                icon={Zap}
+                subtitle="Real-time volatility tracking and expected yield forecasts"
               />
-            ))}
-          </div>
-        </div>
+              {/* SECOND SECTION: Hero Target & Multi-Series Chart */}
+              <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
+                <div
+                  className="xl:col-span-2 glass-card p-6 md:p-8 cursor-pointer hover:shadow-emerald-200/40 transition-all group flex flex-col justify-between relative overflow-hidden"
+                  onClick={handleTargetClick}
+                >
+                  {/* Subtle background image */}
+                  <div className="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <img
+                      src={data.bestTarget.imageUrl || "/assets/images/branding/fallback.png"}
+                      alt=""
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/assets/images/branding/fallback.png";
+                      }}
+                    />
+                  </div>
 
-        {/* SECOND SECTION: Hero Target & Multi-Series Chart */}
-        <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
-          <div
-            className="xl:col-span-2 p-6 md:p-10 bg-gradient-to-br from-emerald-50/80 to-sky-50/80 backdrop-blur-2xl border border-white/80 rounded-3xl shadow-2xl cursor-pointer hover:shadow-emerald-200/50 transition-all group flex flex-col justify-between"
-            onClick={handleTargetClick}
-          >
-            <div>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
-                <div className="relative w-fit">
-                  <div className="absolute inset-0 bg-emerald-500 rounded-full animate-ping opacity-20 scale-125" />
-                  <div className="relative bg-emerald-600 p-4 md:p-5 rounded-3xl shadow-xl transform group-hover:rotate-6 transition-transform">
-                    <Award className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                  {/* Subtle holographic background texture/glow */}
+                  <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-100/30 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-200/40 transition-colors z-0" />
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex flex-col gap-1 pr-2">
+                        <h3 className="text-3xl lg:text-5xl font-black text-slate-900 leading-[1.1] tracking-tighter mt-1">
+                          {data.bestTarget.name}
+                        </h3>
+                      </div>
+                      <div className="bg-slate-900/5 p-3 rounded-2xl border border-slate-900/10 group-hover:border-emerald-300 group-hover:bg-emerald-50 transition-all shrink-0">
+                        <Award className="w-6 h-6 text-slate-400 group-hover:text-emerald-600 transition-colors" />
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-0.5 bg-emerald-500/20 rounded-full h-12 self-stretch group-hover:bg-emerald-500 transition-colors" />
+                      <p className="text-[13px] md:text-sm text-slate-600 font-medium leading-relaxed max-w-[280px]">
+                        {data.bestTarget.details}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex items-end justify-between border-t border-slate-200/50 pt-6 relative z-10">
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-4xl lg:text-6xl font-black text-slate-900 leading-none tracking-tighter">
+                          {data.bestTarget.score}
+                        </span>
+                      </div>
+                      <span className="text-[9px] text-black font-black uppercase tracking-[0.2em] mt-2">
+                        Investment Rating
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col items-end gap-2 text-right shrink-0">
+                      <p className="text-[9px]  font-bold uppercase tracking-widest">
+                        Sync: {data.bestTarget.timestamp}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <Badge className="bg-emerald-100 text-emerald-700 border-none text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] mb-2 px-3">
-                    {data.bestTarget.label}
-                  </Badge>
-                  <h3 className="text-3xl md:text-5xl font-black text-slate-900 leading-none tracking-tighter">
-                    {data.bestTarget.name}
-                  </h3>
+
+                <div className="xl:col-span-3 p-6 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl flex flex-col min-h-[400px]">
+                  <SectionHeader
+                    title="Top 5 countries to invest in"
+                    icon={TrendingUp}
+                    subtitle="Relative performance of leading sovereign investment targets, 24/7 updated"
+                  />
+                  <div className="flex-1 mt-6 min-h-0">
+                    <InvestmentChart3D />
+                  </div>
                 </div>
               </div>
-              <p className="text-[14px] md:text-base text-slate-700 font-medium leading-relaxed max-w-md">
-                {data.bestTarget.details}
-              </p>
-            </div>
 
-            <div className="mt-8 md:mt-12 flex items-end justify-between border-t border-emerald-900/5 pt-8">
-              <div className="flex flex-col">
-                <span className="text-4xl md:text-6xl font-black text-emerald-600 leading-none">{data.bestTarget.score}</span>
-                <span className="text-[10px] md:text-[11px] text-slate-400 font-black uppercase tracking-[0.2em] mt-3">Investment Alpha Index</span>
+              {/* BOTTOM SECTION: Institutional KPIs & Strategic Reports */}
+              <div className="space-y-12">
+                {/* INSTITUTIONAL KPIS SECTION */}
+                <div className="space-y-6">
+                  <SectionHeader
+                    title="Institutional Alpha KPIs"
+                    icon={Award}
+                    subtitle="Consolidated real-time briefings from UNCTAD, Global SWF, and IMF delegates"
+                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {data.kpis.map((kpi, idx) => (
+                      <InvestmentKpiCard
+                        key={idx}
+                        kpi={kpi}
+                        onOpen={handleKpiClick}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* STRATEGIC REPORTS SECTION */}
+                <div className="space-y-6">
+                  <SectionHeader
+                    title="Strategic Intelligence Reports"
+                    icon={Building2}
+                    subtitle="Proprietary and institutional deep-dive research documents available for review"
+                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {data.reports.map((report, idx) => (
+                      <InvestmentReportCard key={idx} report={report} onClick={handleReportClick} />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="p-4 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl overflow-x-auto">
+                  <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
+                    <Building2 className="w-4 h-4" /> Entity Performance & Risk Index
+                  </h4>
+                  <div className="min-w-[600px]">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="border-slate-200 hover:bg-transparent">
+                          <TableHead className="text-[11px] font-black uppercase text-slate-800 tracking-widest">Entity</TableHead>
+                          <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Credit Rating</TableHead>
+                          <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Capital Inflow</TableHead>
+                          <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Risk Profile</TableHead>
+                          <TableHead className="text-[11px] font-black uppercase text-slate-800 text-right tracking-widest">Yield Spread</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {data.tableData.map((row) => (
+                          <TableRow
+                            key={row.id}
+                            className="border-slate-100 hover:bg-slate-50/50 transition-colors cursor-pointer group/row"
+                            onClick={() => handleRowClick(row.entity)}
+                          >
+                            <TableCell className="font-extrabold text-slate-900 text-sm whitespace-nowrap">{row.entity}</TableCell>
+                            <TableCell className="text-center">
+                              <Badge variant="outline" className="bg-slate-50 border-slate-200 font-black text-[10px]">
+                                {row.rating}
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-center font-black text-emerald-600">{row.inflow}</TableCell>
+                            <TableCell className="text-center">
+                              <Badge className={`text-[9px] font-black uppercase px-2 shadow-sm ${row.risk === 'Low' ? 'bg-emerald-100 text-emerald-700' :
+                                row.risk === 'Medium' ? 'bg-amber-100 text-amber-700' :
+                                  row.risk === 'Extreme' ? 'bg-slate-900 text-white animate-pulse' :
+                                    'bg-rose-100 text-rose-700'
+                                }`}>
+                                {row.risk} Risk
+                              </Badge>
+                            </TableCell>
+                            <TableCell className="text-right font-black text-slate-900">{row.yield}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
               </div>
-              <div className="text-right">
-                <Badge variant="outline" className="text-[10px] border-emerald-200 text-emerald-600 uppercase mb-2">Updated 24/7</Badge>
-                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{data.bestTarget.timestamp}</p>
-              </div>
+            </motion.div>
+          ) : investmentActiveDetail === 'UAE' ? (
+            <div className="w-full">
+              <SharedArticleView
+                onBack={() => {
+                  setInvestmentActiveDetail('NONE');
+                  setSelectedCountries([]);
+                  setActiveEconomyTrend(null);
+                }}
+                article={{
+                  title: "Executive Brief: UAE Investment Landscape",
+                  subtitle: "Sovereign Strategic Briefing • 2026",
+                  category: "Investment Strategy",
+                  badgeText: "TOP STRATEGIC TARGET",
+                  badgeClassName: "bg-emerald-600",
+                  imageUrl: "/assets/images/mock/uae_investment_hero.png",
+                  summary: data.bestTarget.pdfReportData?.summary || "The UAE's evolution into a premier global investment destination is driven by strategic foresight, world-class infrastructure, and a robust regulatory framework.",
+                  content: (
+                    <div className="space-y-8 mt-12 pb-12">
+                      {data.bestTarget.pdfReportData?.highlights.map((point, i) => (
+                        <div key={i} className="flex gap-6 group">
+                          <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                          <div>
+                            <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-1">{point.title}</h4>
+                            <p className="text-[15px] text-slate-600 font-medium leading-relaxed">{point.detail}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )
+                }}
+                actions={
+                  <Button
+                    variant="outline"
+                    className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+                    onClick={() => {
+                      if (data.bestTarget.pdfReportData?.downloadUrl) {
+                        window.open(data.bestTarget.pdfReportData.downloadUrl, '_blank');
+                      }
+                    }}
+                  >
+                    <ExternalLink className="w-4 h-4" /> View Full Report
+                  </Button>
+                }
+              />
             </div>
-          </div>
+          ) : (
+            <div className="w-full">
+              <SharedArticleView
+                onBack={() => {
+                  setInvestmentActiveDetail('NONE');
+                  setInvestmentSelectedOpportunity(null);
+                  setSelectedCountries([]);
+                  setActiveEconomyTrend(null);
+                }}
 
-          <div className="xl:col-span-3 p-6 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl flex flex-col min-h-[400px]">
-            <SectionHeader
-              title="Sovereign Alpha Benchmarking"
-              icon={TrendingUp}
-              subtitle="Relative performance of leading sovereign investment targets"
-            />
-            <div className="flex-1 mt-6 min-h-0">
-              <InvestmentChart3D />
+                actions={
+                  <Button
+                    variant="outline"
+                    className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+                    onClick={() => {
+                      window.open('/files/full analysis of High Yield government.pdf', '_blank');
+                    }}
+                  >
+                    <ExternalLink className="w-4 h-4" /> View Full Analysis
+                  </Button>
+                }
+
+                article={{
+                  title: investmentSelectedOpportunity!.title,
+                  subtitle: `Strategic Opportunity • ${investmentSelectedOpportunity!.region}`,
+                  category: "Strategic Investment",
+                  badgeText: "STRETEGIC ALPHA TARGET",
+                  badgeClassName: "bg-indigo-600",
+                  imageUrl: investmentSelectedOpportunity!.imageUrl,
+                  summary: investmentSelectedOpportunity!.description,
+                  content: (
+                    <div className="space-y-10 mt-12">
+                      <div className="flex gap-6 group">
+                        <div className="w-2 h-2 rounded-full bg-indigo-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(79,70,229,0.5)]" />
+                        <div>
+                          <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-2">Alpha Strategic Positioning</h4>
+                          <p className="text-[16px] text-slate-600 font-medium leading-loose">
+                            This opportunity represents a cornerstore of the current sovereign investment landscape in {investmentSelectedOpportunity!.region}.
+                            Our real-time intelligence suggests that the underlying assets are entering a period of significant appreciation
+                            driven by favorable regulatory shifts and institutional capital rotation.
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex gap-6 group">
+                        <div className="w-2 h-2 rounded-full bg-indigo-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(79,70,229,0.5)]" />
+                        <div>
+                          <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-2">Institutional Sentiment & Liquidity</h4>
+                          <p className="text-[16px] text-slate-600 font-medium leading-loose">
+                            Major global SWFs and institutional allocators have identified this sector as a primary growth vector.
+                            The expected liquidity profile remains robust, offering a high-conviction entry point for tactical asset allocation
+                            targeting long-term sovereign wealth preservation and growth.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ),
+
+
+                }}
+              />
             </div>
-          </div>
-        </div>
+          )}
+        </AnimatePresence>
 
-        {/* BOTTOM SECTION: Institutional KPIs & Audit Table */}
-        <div className="space-y-8">
-          <SectionHeader
-            title="Sovereign Investment KPIs & Reports"
-            icon={Award}
-            subtitle="Consolidated briefings from UNCTAD, Global SWF, and IMF delegates"
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.kpisAndReports.map((kpi, idx) => <InvestmentKpiCard key={idx} kpi={kpi} />)}
-          </div>
-
-          <div className="p-4 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl overflow-x-auto">
-            <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
-              <Building2 className="w-4 h-4" /> Entity Performance & Risk Index
-            </h4>
-            <div className="min-w-[600px]">
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-slate-200 hover:bg-transparent">
-                    <TableHead className="text-[11px] font-black uppercase text-slate-800 tracking-widest">Entity</TableHead>
-                    <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Credit Rating</TableHead>
-                    <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Capital Inflow</TableHead>
-                    <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Risk Profile</TableHead>
-                    <TableHead className="text-[11px] font-black uppercase text-slate-800 text-right tracking-widest">Yield Spread</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.tableData.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      className="border-slate-100 hover:bg-slate-50/50 transition-colors cursor-pointer group/row"
-                      onClick={() => handleRowClick(row.entity)}
-                    >
-                      <TableCell className="font-extrabold text-slate-900 text-sm whitespace-nowrap">{row.entity}</TableCell>
-                      <TableCell className="text-center">
-                        <Badge variant="outline" className="bg-slate-50 border-slate-200 font-black text-[10px]">
-                          {row.rating}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-center font-black text-emerald-600">{row.inflow}</TableCell>
-                      <TableCell className="text-center">
-                        <Badge className={`text-[9px] font-black uppercase px-2 shadow-sm ${row.risk === 'Low' ? 'bg-emerald-100 text-emerald-700' :
-                            row.risk === 'Medium' ? 'bg-amber-100 text-amber-700' :
-                              row.risk === 'Extreme' ? 'bg-slate-900 text-white animate-pulse' :
-                                'bg-rose-100 text-rose-700'
-                          }`}>
-                          {row.risk} Risk
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right font-black text-slate-900">{row.yield}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          </div>
-        </div>
+        {/* Reusable KPI Deep-Dive Overlay */}
+        <KpiInsightOverlay
+          isOpen={!!selectedKpi}
+          onClose={() => setSelectedKpi(null)}
+          kpi={selectedKpi ? {
+            title: selectedKpi.title,
+            value: selectedKpi.value,
+            org: selectedKpi.insightData?.org || selectedKpi.org || 'Z-Model Digital Core',
+            unit: selectedKpi.insightData?.unit,
+            historicalData: selectedKpi.insightData?.historicalData || [],
+            forecastData: selectedKpi.insightData?.forecastData || [],
+            labels: selectedKpi.insightData?.labels || { historical: [], forecast: [] },
+            analysis: selectedKpi.insightData?.analysis || { historical: '', forecast: '' },
+            stats: selectedKpi.insightData?.stats || {
+              historical: { confidence: '', delta: '' },
+              forecast: { confidence: '', delta: '' }
+            }
+          } as KpiInsightData : null}
+          loadingPhrases={[
+            "Initializing Sovereign Investment Audit...",
+            "Synthesizing Capital Flow Vectors...",
+            "Analyzing Institutional Sentiment Matrix...",
+            "Calibrating Yield Projections...",
+            "Finalizing AI Synthesis..."
+          ]}
+        />
       </div>
     );
   }
@@ -306,7 +622,6 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">{op.title}</span>
-                    <span className="text-xs font-black text-emerald-600">{op.expectedReturn}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-[9px] text-slate-400 font-bold uppercase">{op.region}</span>
@@ -338,8 +653,12 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
           <div className="space-y-4 pt-2">
             <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Institutional Pulse</h4>
             <div className="space-y-3">
-              {data.kpisAndReports.slice(0, 3).map((kpi, idx) => (
-                <div key={idx} className="flex flex-col p-4 bg-white/60 rounded-2xl border border-white shadow-sm">
+              {data.kpis.slice(0, 3).map((kpi, idx) => (
+                <div
+                  key={idx}
+                  className={`flex flex-col p-4 bg-white/60 rounded-2xl border border-white shadow-sm transition-all ${kpi.insightData ? 'cursor-pointer hover:border-emerald-200 hover:shadow-md' : ''}`}
+                  onClick={() => kpi.insightData && handleKpiClick(kpi)}
+                >
                   <div className="flex justify-between items-start mb-2">
                     <span className="text-lg font-black text-slate-900">{kpi.value}</span>
                     <Badge variant="outline" className="text-[8px] border-slate-200 text-slate-500 uppercase">{kpi.org}</Badge>
@@ -348,6 +667,33 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               ))}
             </div>
+
+            {/* Reusable KPI Deep-Dive Overlay */}
+            <KpiInsightOverlay
+              isOpen={!!selectedKpi}
+              onClose={() => setSelectedKpi(null)}
+              kpi={selectedKpi ? {
+                title: selectedKpi.title,
+                value: selectedKpi.value,
+                org: selectedKpi.insightData?.org || selectedKpi.org || 'Z-Model Digital Core',
+                unit: selectedKpi.insightData?.unit,
+                historicalData: selectedKpi.insightData?.historicalData || [],
+                forecastData: selectedKpi.insightData?.forecastData || [],
+                labels: selectedKpi.insightData?.labels || { historical: [], forecast: [] },
+                analysis: selectedKpi.insightData?.analysis || { historical: '', forecast: '' },
+                stats: selectedKpi.insightData?.stats || {
+                  historical: { confidence: '', delta: '' },
+                  forecast: { confidence: '', delta: '' }
+                }
+              } as KpiInsightData : null}
+              loadingPhrases={[
+                "Initializing Sovereign Investment Audit...",
+                "Synthesizing Capital Flow Vectors...",
+                "Analyzing Institutional Sentiment Matrix...",
+                "Calibrating Yield Projections...",
+                "Finalizing AI Synthesis..."
+              ]}
+            />
           </div>
         </div>
       </ScrollArea>

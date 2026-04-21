@@ -28,6 +28,7 @@ export function DetailDrawer() {
     setSelectedCountry,
     setSelectedCountries,
     setViewState,
+    activeModule,
     setActiveModule,
     setFocusedCardId
   } = useZModelStore();
@@ -118,7 +119,7 @@ export function DetailDrawer() {
 
   return (
     <AnimatePresence>
-      {activeCountry && countryData && (
+      {activeCountry && countryData && !activeModule && (
         <motion.div
           initial={{ x: '100%', opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}

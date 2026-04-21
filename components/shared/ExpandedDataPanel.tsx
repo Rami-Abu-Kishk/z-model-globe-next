@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
-import { X, Layers, Search, ChevronDown } from 'lucide-react';
+import { X, Layers, Search, ChevronDown, Minimize2, ArrowLeft } from 'lucide-react';
 import { searchableCountries } from '@/lib/mockData';
 
 import { EconomyModule } from '@/components/modules/EconomyModule';
@@ -53,6 +53,41 @@ export function ExpandedDataPanel() {
   const setActiveCountry = useZModelStore(s => s.setActiveCountry);
   const setActiveTarget = useZModelStore(s => s.setActiveTarget);
   const setViewState = useZModelStore(s => s.setViewState);
+
+  // Detail states for back button
+  const investmentActiveDetail = useZModelStore(s => s.investmentActiveDetail);
+  const setInvestmentActiveDetail = useZModelStore(s => s.setInvestmentActiveDetail);
+  const setInvestmentSelectedOpportunity = useZModelStore(s => s.setInvestmentSelectedOpportunity);
+  const mediaActiveNewsId = useZModelStore(s => s.mediaActiveNewsId);
+  const setMediaActiveNewsId = useZModelStore(s => s.setMediaActiveNewsId);
+  const setMediaSelectedArticle = useZModelStore(s => s.setMediaSelectedArticle);
+  const setActiveEconomyTrend = useZModelStore(s => s.setActiveEconomyTrend);
+
+  const showBackButton = (focusedCardId === 'investment' && investmentActiveDetail !== 'NONE') || 
+                       (focusedCardId === 'media' && mediaActiveNewsId !== null);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleModuleBack = () => {
+    // Shared Resets
+    setSelectedCountries([]);
+    setActiveEconomyTrend(null);
+
+    if (focusedCardId === 'investment') {
+      setInvestmentActiveDetail('NONE');
+      setInvestmentSelectedOpportunity(null);
+    } else if (focusedCardId === 'media') {
+      setMediaActiveNewsId(null);
+      setMediaSelectedArticle(null);
+    }
+  };
+
+  // Scroll content to top whenever focused card or detail view changes
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [focusedCardId, investmentActiveDetail, mediaActiveNewsId]);
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [localQuery, setLocalQuery] = useState('');
@@ -154,6 +189,9 @@ export function ExpandedDataPanel() {
 
               {/* Right: Search & Close */}
               <div className="flex items-center gap-3">
+                
+                {/* Unified back button integrated into close button below */}
+
                 <div ref={searchContainerRef} className="relative">
                   <motion.div
                     animate={{ 
@@ -164,7 +202,7 @@ export function ExpandedDataPanel() {
                   >
                     <button 
                       onClick={() => setIsSearchOpen(!isSearchOpen)}
-                      className="w-10 h-10 flex items-center justify-center text-slate-600 hover:text-slate-900 shrink-0"
+                      className="w-10 h-10 flex items-center justify-center text-slate-600 hover:text-slate-900 shrink-0 cursor-pointer"
                     >
                       <Search className="w-4 h-4" />
                     </button>
@@ -190,7 +228,7 @@ export function ExpandedDataPanel() {
                           <button
                             key={country.iso}
                             onClick={() => handleCountrySelect(country)}
-                            className="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 border-b border-slate-100 last:border-none transition-colors group"
+                            className="w-full px-4 py-3 flex items-center justify-between hover:bg-slate-50 border-b border-slate-100 last:border-none transition-colors group cursor-pointer"
                           >
                             <div className="flex items-center gap-3">
                               <div className="w-6 h-4 overflow-hidden rounded-sm border border-slate-200/60 bg-slate-50 flex items-center justify-center p-0.5">
@@ -215,11 +253,31 @@ export function ExpandedDataPanel() {
                 <div className="w-px h-6 bg-slate-200/60 mx-1" />
 
                 <button
-                  onClick={resetView}
-                  className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm"
-                  aria-label="Close panel"
+                  onClick={showBackButton ? handleModuleBack : resetView}
+                  className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm cursor-pointer"
+                  aria-label={showBackButton ? "Go back" : "Close panel"}
                 >
-                  <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                  <AnimatePresence mode="wait">
+                    {showBackButton ? (
+                      <motion.div
+                        key="back"
+                        initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                      >
+                        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="close"
+                        initial={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                      >
+                        <X className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </button>
               </div>
 
@@ -228,10 +286,11 @@ export function ExpandedDataPanel() {
           
           {/* Scrollable Module Content */}
           <motion.div 
+            ref={scrollRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex-1 w-full text-slate-800 overflow-y-auto p-10 custom-scrollbar relative"
+            className="flex-1 w-full text-slate-800 overflow-y-auto p-10 custom-scrollbar relative scroll-smooth"
           >
             {React.createElement(MODULE_COMPONENTS[focusedCardId], { isExpanded: true })}
           </motion.div>

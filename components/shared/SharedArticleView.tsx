@@ -1,12 +1,12 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ChevronLeft, 
-  Minimize2, 
-  ExternalLink, 
-  FileText, 
+import {
+  ChevronLeft,
+  Minimize2,
+  ExternalLink,
+  FileText,
   Newspaper,
   Download
 } from 'lucide-react';
@@ -40,15 +40,24 @@ interface SharedArticleViewProps {
   className?: string;
 }
 
-export function SharedArticleView({ 
-  article, 
-  onBack, 
-  actions, 
-  extraContent, 
-  className 
+export function SharedArticleView({
+  article,
+  onBack,
+  actions,
+  extraContent,
+  className
 }: SharedArticleViewProps) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to top whenever the article content changes
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [article]);
+
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -59,17 +68,14 @@ export function SharedArticleView({
     >
       {/* Hero Section */}
       <div className="w-full lg:w-1/2 h-[300px] lg:h-auto relative bg-slate-100">
-        {article.imageUrl ? (
-          <img 
-            src={article.imageUrl} 
-            alt={article.title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-slate-50">
-            <Newspaper className="w-20 h-20 text-slate-200" />
-          </div>
-        )}
+        <img
+          src={article.imageUrl || "/assets/images/branding/fallback.png"}
+          alt={article.title}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "/assets/images/branding/fallback.png";
+          }}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
         <div className="absolute bottom-0 left-0 p-10">
           <Badge className={cn(
@@ -85,7 +91,10 @@ export function SharedArticleView({
       </div>
 
       {/* Content Section */}
-      <div className="flex-1 p-8 lg:p-12 flex flex-col justify-between overflow-y-auto">
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 p-8 lg:p-12 flex flex-col justify-between overflow-y-auto scroll-smooth"
+      >
         <div className="flex-1">
           {/* Header */}
           <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100">
@@ -104,9 +113,9 @@ export function SharedArticleView({
                 </p>
               </div>
             </div>
-            <Button 
+            <Button
               onClick={onBack}
-              variant="ghost" 
+              variant="ghost"
               className="rounded-full w-12 h-12 hover:bg-slate-100 group transition-all"
             >
               <Minimize2 className="w-5 h-5 text-slate-400 group-hover:text-slate-900" />
@@ -146,9 +155,9 @@ export function SharedArticleView({
               <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Resources & External Intelligence</h5>
               <div className="flex flex-wrap gap-4">
                 {article.links.map((link, i) => (
-                  <a 
-                    key={i} 
-                    href={link.url} 
+                  <a
+                    key={i}
+                    href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-2xl hover:border-slate-900 hover:shadow-lg transition-all group"

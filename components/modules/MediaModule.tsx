@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from '@/lib/utils';
 import { SharedArticleView } from '@/components/shared/SharedArticleView';
 import { useZModelStore } from '@/lib/store';
+import { useAIChat } from '../context/AIChatContext';
+import { AiBadge } from '../shared/AiBadge';
 
 import { 
   Newspaper, 
@@ -41,10 +43,28 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
     selectedCountry,
     mediaCategoryFilter,
     setMediaCategoryFilter,
-    setMediaActiveNewsId
+    mediaActiveNewsId,
+    setMediaActiveNewsId,
+    mediaSelectedArticle,
+    setMediaSelectedArticle,
+    setActiveEconomyTrend
   } = useZModelStore();
+  const { triggerChatFromCard } = useAIChat();
+  const [videoSource, setVideoSource] = useState<'SKY' | 'CNN'>('SKY');
   
-  const [selectedArticle, setSelectedArticle] = useState<NewsItem | null>(null);
+  const videoSources = {
+    SKY: 'Cw2gP01LhQ0',
+    CNN: 'U--OjmpjF5o'
+  };
+  const handleAiTrigger = (e: React.MouseEvent, news: NewsItem) => {
+    e.stopPropagation();
+    triggerChatFromCard({
+      module: 'Media',
+      section: 'Breaking News',
+      title: news.headline,
+      value: news.source
+    });
+  };
 
   const data = useMemo(() => 
     mediaDataStore[selectedCountry || 'GLOBAL'] || mediaDataStore['GLOBAL'],
@@ -66,13 +86,15 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
     
     // Only set selected article if we are in expanded view
     if (isExpanded) {
-      setSelectedArticle(news);
+      setMediaSelectedArticle(news);
     }
   };
 
   const handleBack = () => {
-    setSelectedArticle(null);
+    setMediaSelectedArticle(null);
     setMediaActiveNewsId(null);
+    setSelectedCountries([]);
+    setActiveEconomyTrend(null);
   };
 
   if (isExpanded) {
@@ -80,7 +102,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
       <div className="flex flex-col gap-8 pb-4 relative min-h-[700px]">
         {/* TOP: 3-Column Performance Grid - Hidden when an article is focused */}
         <AnimatePresence>
-          {!selectedArticle && (
+          {!mediaSelectedArticle && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -102,11 +124,77 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
             </motion.div>
           )}
         </AnimatePresence>
+        {/* VIDEO: Signal Intelligence Terminal */}
+        {!mediaSelectedArticle && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative group overflow-hidden bg-white/40 backdrop-blur-xl border border-white/60 rounded-[2.5rem] shadow-2xl p-4 sm:p-6"
+          >
+            {/* Header / HUD Overlay */}
+            <div className="flex items-center justify-between mb-4 px-2">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-2 h-2 rounded-full bg-rose-500 animate-ping absolute inset-0" />
+                  <div className="w-2 h-2 rounded-full bg-rose-600 relative" />
+                </div>
+                <div>
+                  <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] leading-none mb-1">
+                    Signal Intelligence Feed
+                  </h4>
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+                    Source: {videoSource === 'SKY' ? 'Sky News Global' : 'Sky News Ar'} • Live
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 bg-slate-900/5 p-1 rounded-xl border border-slate-200">
+                <button 
+                  onClick={() => setVideoSource('SKY')}
+                  className={cn(
+                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all",
+                    videoSource === 'SKY' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
+                  )}
+                >
+                  SKY NEWS
+                </button>
+                <button 
+                  onClick={() => setVideoSource('CNN')}
+                  className={cn(
+                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all",
+                    videoSource === 'CNN' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
+                  )}
+                >
+                  Sky News Ar
+                </button>
+              </div>
+            </div>
 
+            {/* Video Container */}
+            <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-slate-900 ring-1 ring-white/20 shadow-inner">
+               <iframe 
+                key={videoSource}
+                name="intelligence-feed"
+                className="absolute inset-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${videoSources[videoSource]}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0`} 
+                title={`${videoSource} Signal Feed`} 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin" 
+                allowFullScreen
+              />
+              
+              {/* Corner Accents */}
+              <div className="absolute top-4 left-4 w-6 h-6 border-t font-black border-l border-white/20 pointer-events-none" />
+              <div className="absolute top-4 right-4 w-6 h-6 border-t border-r border-white/20 pointer-events-none" />
+              <div className="absolute bottom-4 left-4 w-6 h-6 border-b border-l border-white/20 pointer-events-none" />
+              <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-white/20 pointer-events-none" />
+            </div>
+          </motion.div>
+        )}
         {/* MAIN: Intelligence Dashboard Grid */}
         <div className="relative flex-1">
           <AnimatePresence mode="wait">
-            {!selectedArticle ? (
+            {!mediaSelectedArticle ? (
               <motion.div 
                 key="grid"
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -117,7 +205,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 {/* Bucket 1: Breaking News (Pulse) */}
                 <div 
                   className={cn(
-                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px]",
+                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px] cursor-pointer",
                     mediaCategoryFilter === 'Breaking' ? "border-rose-400 ring-2 ring-rose-400/20 scale-[1.01]" : "border-white/60"
                   )}
                   onClick={() => setMediaCategoryFilter('Breaking')}
@@ -141,11 +229,18 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                           className="p-5 rounded-2xl bg-white/60 border border-slate-100 hover:border-rose-200 hover:bg-white transition-all cursor-pointer group relative"
                         >
                           <div className="flex items-center justify-between mb-3">
-                            <div className="flex items-center gap-2">
-                              <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                              <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
-                            </div>
-                            <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-rose-500" />
+                             <div className="flex items-center gap-2">
+                               <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                               <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
+                             </div>
+                             <div className="flex items-center gap-2">
+                               <AiBadge 
+                                 onClick={(e) => handleAiTrigger(e, news)}
+                                 className="!relative !w-6 !h-6 !static border-rose-100 bg-rose-50/30 shadow-none hover:bg-rose-50 hover:scale-110"
+                                 tooltipText="Sentiment Audit"
+                               />
+                               <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-rose-500" />
+                             </div>
                           </div>
                           <h4 className="text-[15px] font-black text-slate-900 group-hover:text-rose-600 transition-colors leading-tight mb-3">
                             {news.headline}
@@ -167,7 +262,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 {/* Bucket 2: Most Trending (Impact Analytics) */}
                 <div 
                   className={cn(
-                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px]",
+                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px] cursor-pointer",
                     mediaCategoryFilter === 'Trending' ? "border-sky-400 ring-2 ring-sky-400/20 scale-[1.01]" : "border-white/60"
                   )}
                   onClick={() => setMediaCategoryFilter('Trending')}
@@ -220,7 +315,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 {/* Bucket 3: Local & Regional (Sovereign Focus) */}
                 <div 
                   className={cn(
-                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px]",
+                    "flex flex-col bg-white/40 backdrop-blur-xl border rounded-3xl shadow-2xl transition-all duration-500 overflow-hidden min-h-[630px] cursor-pointer",
                     mediaCategoryFilter === 'Regional' ? "border-emerald-400 ring-2 ring-emerald-400/20 scale-[1.01]" : "border-white/60"
                   )}
                   onClick={() => setMediaCategoryFilter('Regional')}
@@ -267,19 +362,19 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
             ) : (
               <SharedArticleView
                 article={{
-                  title: selectedArticle.headline,
-                  subtitle: `${selectedArticle.time} • ${selectedArticle.category}`,
-                  category: selectedArticle.category,
-                  badgeText: selectedArticle.category === 'Breaking' ? 'Breaking Intelligence' : 'Sector Trending',
-                  badgeClassName: selectedArticle.category === 'Breaking' ? "bg-rose-500" : "bg-sky-500",
-                  imageUrl: selectedArticle.imageUrl,
-                  summary: selectedArticle.summary || "",
+                  title: mediaSelectedArticle.headline,
+                  subtitle: `${mediaSelectedArticle.time} • ${mediaSelectedArticle.category}`,
+                  category: mediaSelectedArticle.category,
+                  badgeText: mediaSelectedArticle.category === 'Breaking' ? 'Breaking Intelligence' : 'Sector Trending',
+                  badgeClassName: mediaSelectedArticle.category === 'Breaking' ? "bg-rose-500" : "bg-sky-500",
+                  imageUrl: mediaSelectedArticle.imageUrl,
+                  summary: mediaSelectedArticle.summary || "",
                   source: {
-                    name: selectedArticle.source,
+                    name: mediaSelectedArticle.source,
                     description: 'Primary Source',
-                    initial: selectedArticle.source[0]
+                    initial: mediaSelectedArticle.source[0]
                   },
-                  links: selectedArticle.links
+                  links: mediaSelectedArticle.links
                 }}
                 onBack={handleBack}
               />

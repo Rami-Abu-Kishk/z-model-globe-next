@@ -12,7 +12,7 @@ export default function InvestmentChart3D() {
 
     const myChart = echarts.init(chartRef.current);
 
-    const countries = ['UAE', 'Singapore', 'USA', 'India', 'UK', 'Japan'];
+    const countries = ['UAE', 'Singapore', 'USA', 'India', 'UK'];
     const metrics = ['FDI Inflow', 'Credit Rating', 'Yield Spread'];
 
     // [countryIndex, metricIndex, value]
@@ -22,15 +22,19 @@ export default function InvestmentChart3D() {
       [2, 0, 7.8], [2, 1, 8.1], [2, 2, 6.4],
       [3, 0, 8.9], [3, 1, 6.5], [3, 2, 9.1],
       [4, 0, 5.5], [4, 1, 7.8], [4, 2, 4.2],
-      [5, 0, 4.2], [5, 1, 8.5], [5, 2, 3.1],
     ];
 
     const option = {
       tooltip: {},
       visualMap: {
+        min: 0,
         max: 10,
+        calculable: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
         inRange: {
-          color: ['#f1f5f9', '#94a3b8', '#10b981', '#059669']
+          color: ['#be123c', '#f59e0b', '#10b981'] // Muted Crimson -> Amber -> Emerald
         },
         show: false
       },

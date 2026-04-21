@@ -11,6 +11,7 @@ import { ExpandedDataPanel } from '@/components/shared/ExpandedDataPanel';
 import { SearchBar } from '@/components/shared/SearchBar';
 import { DetailDrawer } from '@/components/shared/DetailDrawer';
 import { ModuleNav } from '@/components/shared/ModuleNav';
+import { GlobeControls } from '@/components/shared/GlobeControls';
 import { DummyFocusSection } from '@/components/ui-sections/DummyFocusSection';
 
 function CanvasLoader() {
@@ -24,6 +25,8 @@ function CanvasLoader() {
 
 // Removed ArrowControls function
 
+
+import { AIChatBot } from '@/components/chat/AIChatBot';
 
 export default function Home() {
   return (
@@ -62,18 +65,21 @@ export default function Home() {
 
       {/* ── LAYER 3: Interactive Overlays ── */}
       <ModuleNav />
-      <SearchBar />
 
+      <SearchBar />
       <ReturnHUD />
 
-      {/* ── LAYER 4: Non-Interactive Info Overlays (z-50) ── */}
+      {/* ── LAYER 4: Non-Interactive Info Overlays (z-30) ── */}
       <div className="absolute inset-0 z-30 pointer-events-none">
         <DetailDrawer />
         <ExpandedDataPanel />
 
-        <div className="absolute top-8 left-8 pointer-events-none select-none">
-          <h1 className="text-2xl font-black tracking-tighter text-slate-800 uppercase leading-none">
-            The Z Model<span className="text-slate-400 font-light"> | Orbital</span>
+        <div 
+          className="absolute top-8 left-8 pointer-events-auto select-none cursor-pointer"
+          onClick={() => useZModelStore.getState().resetView()}
+        >
+          <h1 className="text-3xl tracking-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 font-black uppercase leading-none">
+            Z-MODEL
           </h1>
           <p className="text-[10px] text-slate-500 tracking-[0.2em] font-semibold mt-1 uppercase">
             Executive Strategic Dashboard
@@ -86,20 +92,13 @@ export default function Home() {
             V3.0 · Spatial Interface · Live
           </span>
         </div>
-
-        {/* Removed ArrowControls */}
-
-
-        {/* --- TEST COMPONENT --- */}
-        {/* <div className="absolute bottom-8 right-8 pointer-events-auto">
-          <DummyFocusSection />
-        </div> */}
-
-        {/* <div className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none select-none">
-          <p className="text-[10px] text-slate-400 font-medium tracking-widest uppercase">
-            Use arrows to navigate modules · Predictive Intelligence Active
-          </p>
-        </div> */}
+      </div>
+          
+      {/* ── AI ChatBot ── */}
+      <div className="fixed inset-0 z-[10000] pointer-events-none">
+        <div className="absolute inset-0 pointer-events-none">
+           <AIChatBot />
+        </div>
       </div>
     </main>
   );

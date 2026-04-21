@@ -32,11 +32,38 @@ export interface RegionalCrisis {
   imageUrl?: string;
 }
 
+export interface PoliticalNews {
+  id: string;
+  headline: string;
+  time: string;
+  category: 'Strategic' | 'Diplomatic' | 'Security';
+  summary: string;
+  source: string;
+}
+
 export interface PoliticalKpi {
   label: string;
   value: string;
   trend: 'up' | 'down';
   representative?: Representative;
+  insightData?: {
+    org: string;
+    unit?: string;
+    historicalData: number[];
+    forecastData: number[];
+    labels: {
+      historical: string[];
+      forecast: string[];
+    };
+    analysis: {
+      historical: string;
+      forecast: string;
+    };
+    stats: {
+      historical: { confidence: string; delta: string };
+      forecast: { confidence: string; delta: string };
+    };
+  };
 }
 
 export const politicalCases: PoliticalCase[] = [
@@ -141,43 +168,111 @@ export const regionalCrises: RegionalCrisis[] = [
 
 export const politicalKpis: PoliticalKpi[] = [
   { 
-    label: "Stability Index", 
-    value: "68.4", 
+    label: "Political Stability Index", 
+    value: "46.90%", 
     trend: "down",
     representative: {
       name: "Amb. Linda Thomas",
       title: "Permanent Representative",
       org: "UN Security Council"
+    },
+    insightData: {
+      org: "UNSC",
+      historicalData: [52.1, 51.5, 50.2, 48.8, 46.9],
+      forecastData: [46.9, 45.2, 43.5, 41.8, 40.1],
+      labels: {
+        historical: ['2021', '2022', '2023', '2024', '2025'],
+        forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+      },
+      analysis: {
+        historical: "Global stability has faced significant headwinds, primarily driven by regional fragmentation and the disruption of traditional diplomatic channels.",
+        forecast: "Predictive vectors indicate potential stabilization if multilateral maritime safety protocols are solidified in key corridors."
+      },
+      stats: {
+        historical: { confidence: "99.2%", delta: "-3.7%" },
+        forecast: { confidence: "88.4%", delta: "-6.3%" }
+      }
     }
   },
   { 
-    label: "Diplomatic Agility", 
-    value: "142", 
-    trend: "up",
-    representative: {
-      name: "H.E. Reem Al Hashimy",
-      title: "Minister of State",
-      org: "UAE International Cooperation"
-    }
-  },
-  { 
-    label: "Trade Lane Security", 
-    value: "82%", 
+    label: "Global Peace Index", 
+    value: "52.40%", 
     trend: "down",
     representative: {
-      name: "Arsenio Dominguez",
-      title: "Secretary-General",
-      org: "International Maritime Org"
+      name: "Steve Killelea",
+      title: "Founder",
+      org: "IEP (Economics & Peace)"
+    },
+    insightData: {
+      org: "IEP",
+      historicalData: [58.5, 57.2, 55.8, 54.1, 52.4],
+      forecastData: [52.4, 51.2, 50.5, 49.8, 49.0],
+      labels: {
+        historical: ['2021', '2022', '2023', '2024', '2025'],
+        forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+      },
+      analysis: {
+        historical: "The index reflects a world where conflict intensity has increased, particularly in the Levant and Eastern Europe, affecting overall peace scores.",
+        forecast: "Medium-term projections suggest a tapering of the decline as regional mediation efforts begin to localize conflict containment."
+      },
+      stats: {
+        historical: { confidence: "98.1%", delta: "-5.2%" },
+        forecast: { confidence: "85.9%", delta: "-3.4%" }
+      }
     }
   },
   { 
-    label: "Global Trust Score", 
-    value: "94%", 
+    label: "Global Terrorism Index", 
+    value: "38.15%", 
     trend: "up",
     representative: {
-      name: "Børge Brende",
-      title: "President",
-      org: "World Economic Forum"
+      name: "Sérgio de Mello",
+      title: "Senior Audit Director",
+      org: "Global Security Watch"
+    },
+    insightData: {
+      org: "GSW / IEP",
+      historicalData: [32, 34.5, 35.8, 37.2, 38.15],
+      forecastData: [38.15, 39.5, 41.2, 42.8, 44.5],
+      labels: {
+        historical: ['2021', '2022', '2023', '2024', '2025'],
+        forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+      },
+      analysis: {
+        historical: "Terrorism vectors have shifted from large-scale coordinated attacks to decentralized small-cell activity, complicating detection and prevention matrices.",
+        forecast: "Z-Model analytics predict a continued rise in cyber-terrorism incidents, necessitating a shift in global defense spending toward digital infrastructure."
+      },
+      stats: {
+        historical: { confidence: "99.4%", delta: "+15.6%" },
+        forecast: { confidence: "90.2%", delta: "+16.8%" }
+      }
+    }
+  },
+  { 
+    label: "Work Risk Index", 
+    value: "61.20%", 
+    trend: "down",
+    representative: {
+      name: "Guy Ryder",
+      title: "Special Envoy",
+      org: "Int'l Labour Org"
+    },
+    insightData: {
+      org: "ILO / WEF",
+      historicalData: [68, 66.5, 64.2, 62.8, 61.2],
+      forecastData: [61.2, 60.1, 58.5, 57.2, 55.5],
+      labels: {
+        historical: ['2021', '2022', '2023', '2024', '2025'],
+        forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+      },
+      analysis: {
+        historical: "Labour disruption due to political instability and AI displacement has significantly altered the risk profile for multinational employers.",
+        forecast: "A transition toward 'resilient working' models is expected to lower risk scores as legal frameworks for remote sovereign work mature."
+      },
+      stats: {
+        historical: { confidence: "97.8%", delta: "-6.8%" },
+        forecast: { confidence: "89.5%", delta: "-9.2%" }
+      }
     }
   }
 ];
@@ -186,13 +281,18 @@ export interface PoliticalData {
   cases: PoliticalCase[];
   crises: RegionalCrisis[];
   kpis: PoliticalKpi[];
+  news: PoliticalNews[];
 }
 
 export const politicalDataStore: Record<string, PoliticalData> = {
   GLOBAL: {
     cases: politicalCases,
     crises: regionalCrises,
-    kpis: politicalKpis
+    kpis: politicalKpis,
+    news: [
+      { id: "N1", headline: "UNSC Drafts New Maritime Security Protocol", time: "2h ago", category: "Security", source: "Intelligence Desk", summary: "A new draft resolution aims to establish enhanced security zones in critical transit chokepoints." },
+      { id: "N2", headline: "G7 Summit Reaffirms Commitment to Indo-Pacific", time: "5h ago", category: "Diplomatic", source: "Diplomatic Core", summary: "Leaders have pledged increased cooperation on maritime defense and digital governance standards." }
+    ]
   },
   JO: {
     cases: [
@@ -220,8 +320,13 @@ export const politicalDataStore: Record<string, PoliticalData> = {
       }
     ],
     kpis: [
-      { label: "Stability Index", value: "88.2", trend: "up" },
-      { label: "Diplomatic Lead", value: "Rank #1", trend: "up" }
+      { label: "Political Stability Index", value: "88.20%", trend: "up" },
+      { label: "Global Peace Index", value: "72.50%", trend: "up" },
+      { label: "Global Terrorism Index", value: "12.40%", trend: "down" },
+      { label: "Work Risk Index", value: "35.10%", trend: "up" }
+    ],
+    news: [
+      { id: "NJ1", headline: "Amman Hosts Regional Security Dialogue", time: "1h ago", category: "Diplomatic", source: "Amman Bureau", summary: "High-level representatives meet to discuss logistics for humanitarian corridors." }
     ]
   },
   US: {
@@ -239,8 +344,13 @@ export const politicalDataStore: Record<string, PoliticalData> = {
     ],
     crises: [],
     kpis: [
-      { label: "Policy Efficiency", value: "72.5", trend: "down" },
-      { label: "Institutional Trust", value: "42%", trend: "down" }
+      { label: "Political Stability Index", value: "68.40%", trend: "down" },
+      { label: "Global Peace Index", value: "62.10%", trend: "down" },
+      { label: "Global Terrorism Index", value: "24.50%", trend: "up" },
+      { label: "Work Risk Index", value: "78.20%", trend: "down" }
+    ],
+    news: [
+      { id: "NU1", headline: "State Dept. Issues New Digital Governance Mandate", time: "30m ago", category: "Strategic", source: "DC Bureau", summary: "New framework for cross-border data flows and AI safety standards finalized." }
     ]
   },
   CN: {
@@ -258,8 +368,117 @@ export const politicalDataStore: Record<string, PoliticalData> = {
     ],
     crises: [],
     kpis: [
-      { label: "Strategic Depth", value: "95.0", trend: "up" },
-      { label: "Diplomatic Reach", value: "125 Countries", trend: "up" }
+      { label: "Political Stability Index", value: "92.50%", trend: "up" },
+      { label: "Global Peace Index", value: "85.80%", trend: "up" },
+      { label: "Global Terrorism Index", value: "5.20%", trend: "down" },
+      { label: "Work Risk Index", value: "81.40%", trend: "up" }
+    ],
+    news: [
+      { id: "NC1", headline: "Digital Silk Road Expansion Announced", time: "4h ago", category: "Strategic", source: "Beijing Desk", summary: "New fiber-link projects connecting Central Asia to Europe slated for 2026." }
+    ]
+  },
+  AE: {
+    cases: [
+      {
+        id: "C-AE-1",
+        name: "Global Trade Corridors",
+        region: "UAE / Global",
+        severity: "Stable",
+        coordinates: [54.3773, 24.4539],
+        description: "Strategic expansion of UAE-led maritime and air logistics hubs connecting three continents.",
+        involvedParties: ["DP World", "Etihad Rail", "Ministry of Economy"],
+        isoCodes: ["AE", "IN", "CN", "ZA"]
+      },
+      {
+        id: "C-AE-2",
+        name: "Energy Transition Roadmap",
+        region: "UAE / MENA",
+        severity: "Stable",
+        coordinates: [55.2708, 25.2048],
+        description: "Implementation of COP28 mandates and net-zero 2050 strategic initiatives.",
+        involvedParties: ["ADNOC", "Masdar", "Ministry of Climate Change"],
+        isoCodes: ["AE", "SA", "DE"]
+      },
+      {
+        id: "C-AE-3",
+        name: "AI Sovereign Cloud Initiative",
+        region: "UAE / Global",
+        severity: "Critical",
+        coordinates: [54.3773, 24.4539],
+        description: "Development of domestic AI compute clusters and secure data sovereign zones for governmental applications.",
+        summary: "The UAE's AI Sovereign Cloud Initiative is a critical pillar of its digital economy strategy, aiming to ensure data sovereignty and advanced compute capabilities.",
+        involvedParties: ["G42", "TII", "Cybersecurity Council", "NVIDIA", "ASPIRE"],
+        isoCodes: ["AE", "US"]
+      }
+    ],
+    crises: [
+      {
+        id: "RC-AE-1",
+        region: "Arabian Gulf Maritime",
+        status: "Deterrence Monitoring",
+        priority: "High",
+        alert: true,
+        details: "Increased naval patrolling to prevent interference with commercial oil tankers near international chokepoints.",
+        uaeImpact: 94,
+        coordinates: [25.5, 53.5]
+      }
+    ],
+    kpis: [
+      { 
+        label: "Political Stability Index", 
+        value: "70.14%", 
+        trend: "up",
+        representative: {
+          name: "H.E. Reem Al Hashimy",
+          title: "Minister of State",
+          org: "International Cooperation"
+        },
+        insightData: {
+          org: "MoFAIC",
+          historicalData: [65.85, 64.88, 70.24, 70.24, 70.14],
+          forecastData: [70.14, 72.5, 75.8, 78.2, 81.5],
+          labels: {
+            historical: ['2021', '2022', '2023', '2024', '2025'],
+            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+          },
+          analysis: {
+            historical: "The UAE has maintained a high-performance trajectory in political stability, with a significant jump observed between 2021 and 2022.",
+            forecast: "Z-Model projections indicate a hockeystick acceleration as the 'We the UAE 2031' vision gains momentum."
+          },
+          stats: {
+            historical: { confidence: "99.8%", delta: "+6.5%" },
+            forecast: { confidence: "94.2%", delta: "+16.2%" }
+          }
+        }
+      },
+      { 
+        label: "Global Peace Index", 
+        value: "84.20%", 
+        trend: "up",
+        representative: {
+          name: "H.E. Noura Al Kaabi",
+          title: "Minister of State",
+          org: "Public Diplomacy"
+        }
+      },
+      { 
+        label: "Global Terrorism Index", 
+        value: "95.10%", 
+        trend: "up",
+        representative: {
+          name: "H.E. Abdullah Al Marri",
+          title: "Minister of Economy",
+          org: "Regulatory Affairs"
+        }
+      },
+      { 
+        label: "Work Risk Index", 
+        value: "78.77%", 
+        trend: "up"
+      }
+    ],
+    news: [
+      { id: "NAE1", headline: "UAE Spearheads Global AI Ethics Accord", time: "1h ago", category: "Strategic", source: "Abu Dhabi Hub", summary: "G42 and international partners draft framework for sovereign AI applications." }
     ]
   }
 };

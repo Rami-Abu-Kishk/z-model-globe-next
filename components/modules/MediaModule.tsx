@@ -53,7 +53,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
   
   const videoSources = {
     SKY: 'Cw2gP01LhQ0',
-    CNN: 'oJv24tYnL_M' // Current CNN live link
+    CNN: 'U--OjmpjF5o'
   };
   const handleAiTrigger = (e: React.MouseEvent, news: NewsItem) => {
     e.stopPropagation();
@@ -148,7 +148,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 <button 
                   onClick={() => setVideoSource('SKY')}
                   className={cn(
-                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all",
+                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all cursor-pointer",
                     videoSource === 'SKY' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
                   )}
                 >
@@ -157,11 +157,11 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 <button 
                   onClick={() => setVideoSource('CNN')}
                   className={cn(
-                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all",
+                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all cursor-pointer",
                     videoSource === 'CNN' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
                   )}
                 >
-                  CNN INT
+                  SKY NEWS AR
                 </button>
               </div>
             </div>

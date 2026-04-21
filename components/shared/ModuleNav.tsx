@@ -13,6 +13,7 @@ import {
   Calendar 
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { GlobeControls } from './GlobeControls';
 
 const NAV_ITEMS: { id: ModuleId; label: string; icon: any }[] = [
   { id: 'economy', label: 'Economy', icon: BarChart3 },
@@ -77,6 +78,9 @@ export function ModuleNav() {
           );
         })}
       </div>
+         <div className='w-full flex justify-center mt-5'>
+          <GlobeControls />
+         </div>
     </motion.div>
   );
 }

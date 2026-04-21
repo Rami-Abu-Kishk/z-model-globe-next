@@ -65,7 +65,7 @@ export default function Home() {
 
       {/* ── LAYER 3: Interactive Overlays ── */}
       <ModuleNav />
-      <GlobeControls />
+
       <SearchBar />
       <ReturnHUD />
 

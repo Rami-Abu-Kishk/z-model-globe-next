@@ -6,7 +6,7 @@ import { SectionHeader } from '@/components/shared/SectionHeader';
 import { TrendBadge } from '@/components/shared/TrendBadge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Globe, Building2, User, Zap, Briefcase, Award, ChevronLeft, Download } from 'lucide-react';
+import { TrendingUp, Globe, Building2, User, Zap, Briefcase, Award, ChevronLeft, Download, ExternalLink } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { investmentDataStore, KpiReport, Opportunity, InvestmentReport } from '@/lib/mock-data/investment.mock';
 import { useZModelStore } from '@/lib/store';
@@ -470,16 +470,12 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                     variant="outline"
                     className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
                     onClick={() => {
-                      const link = document.createElement('a');
-                      link.href = data.bestTarget.pdfReportData?.downloadUrl || '';
-                      link.download = 'UAE_Country_Card.pdf';
-                      link.target = '_blank';
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
+                      if (data.bestTarget.pdfReportData?.downloadUrl) {
+                        window.open(data.bestTarget.pdfReportData.downloadUrl, '_blank');
+                      }
                     }}
                   >
-                    <Download className="w-4 h-4" /> Download report
+                    <ExternalLink className="w-4 h-4" /> View Full Report
                   </Button>
                 }
               />
@@ -491,6 +487,19 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   setInvestmentActiveDetail('NONE');
                   setInvestmentSelectedOpportunity(null);
                 }}
+
+                actions={
+                  <Button
+                    variant="outline"
+                    className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+                    onClick={() => {
+                      window.open('/files/full analysis of High Yield government.pdf', '_blank');
+                    }}
+                  >
+                    <ExternalLink className="w-4 h-4" /> View Full Analysis
+                  </Button>
+                }
+
                 article={{
                   title: investmentSelectedOpportunity!.title,
                   subtitle: `Strategic Opportunity • ${investmentSelectedOpportunity!.region}`,
@@ -524,7 +533,9 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                         </div>
                       </div>
                     </div>
-                  )
+                  ),
+
+
                 }}
               />
             </div>

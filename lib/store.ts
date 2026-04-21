@@ -7,9 +7,9 @@ export type ModuleId =
   | 'political' 
   | 'media'
   | 'research'
-  | 'groups' 
+  | 'companies' 
   | 'masterObserver' 
-  | 'abuDhabiGov'
+  | 'abudhabi'
   | 'calendar';
 
 export type InvestmentDetailView = 'NONE' | 'UAE' | 'OPPORTUNITY';

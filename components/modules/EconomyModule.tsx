@@ -12,6 +12,7 @@ import {
   Clock, 
   Building2,
   User,
+  Sparkle,
 } from 'lucide-react';
 import { economyDataStore, TrendData, KpiReport, InvestmentReport } from '@/lib/mock-data/economy.mock';
 import { AiBadge } from '@/components/shared/AiBadge';
@@ -20,11 +21,12 @@ import { useAIChat } from '../context/AIChatContext';
 import dynamic from 'next/dynamic';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { KpiInsightOverlay, KpiInsightData } from '@/components/shared/KpiInsightOverlay';
+import { Badge } from '@/components/ui/badge';
 
 const EconomyExpandedChart3D = dynamic(() => import('./EconomyExpandedChart3D'), { ssr: false });
 
 // ── Sparkline Component ─────────────────────────────────────────────
-function TrendSparkline({ data, color }: { data: number[], color: string }) {
+function TrendSparkline({ data, color, labels = ['2021', '2022', '2023', '2024', '2025'] }: { data: number[], color: string, labels?: string[] }) {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,8 +34,22 @@ function TrendSparkline({ data, color }: { data: number[], color: string }) {
     const chart = echarts.init(chartRef.current);
 
     chart.setOption({
-      grid: { left: 0, right: 0, top: 5, bottom: 5 },
-      xAxis: { type: 'category', show: false },
+      grid: { left: 0, right: 0, top: 5, bottom: 20 },
+      xAxis: { 
+        type: 'category', 
+        show: true,
+        data: labels,
+        axisLine: { show: false },
+        axisTick: { show: false },
+        axisLabel: {
+          show: true,
+          color: '#94a3b8', // slate-400
+          fontSize: 8,
+          fontWeight: 900,
+          margin: 10,
+          interval: 0,
+        }
+      },
       yAxis: { type: 'value', show: false, min: 'dataMin', max: 'dataMax' },
       series: [{
         data: data,
@@ -56,15 +72,17 @@ function TrendSparkline({ data, color }: { data: number[], color: string }) {
       window.removeEventListener('resize', handleResize);
       chart.dispose();
     };
-  }, [data, color]);
+  }, [data, color, labels]);
 
-  return <div ref={chartRef} className="w-full h-12" />;
+  return <div ref={chartRef} className="w-full h-16" />;
 }
 
 // ── Item Components ──────────────────────────────────────────────────
 function TrendCard({ trend, type }: { trend: TrendData, type: 'positive' | 'negative' }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { triggerChatFromCard } = useAIChat();
+  const setSelectedCountries = useZModelStore((s) => s.setSelectedCountries);
+  const setActiveEconomyTrend = useZModelStore((s) => s.setActiveEconomyTrend);
   const isPositive = type === 'positive';
   const color = isPositive ? '#10b981' : '#f43f5e';
 
@@ -82,7 +100,13 @@ function TrendCard({ trend, type }: { trend: TrendData, type: 'positive' | 'nega
     <>
       <div
         className="p-5 bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl shadow-sm hover:shadow-lg transition-all group flex flex-col h-full min-h-[160px] cursor-pointer"
-        onClick={() => setIsExpanded(true)}
+        onClick={() => {
+          setIsExpanded(true);
+          setActiveEconomyTrend(trend);
+          if (trend.relatedCountries && trend.relatedCountries.length > 0) {
+            setSelectedCountries(trend.relatedCountries);
+          }
+        }}
       >
         <AiBadge 
           className="-bottom-4 cursor-pointer left-1/2 -translate-x-1/2" 
@@ -110,33 +134,62 @@ function TrendCard({ trend, type }: { trend: TrendData, type: 'positive' | 'nega
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="absolute inset-0 bg-slate-900/10 backdrop-blur-xl"
-            onClick={() => setIsExpanded(false)}
+            onClick={() => {
+              setIsExpanded(false);
+              setSelectedCountries([]);
+              setActiveEconomyTrend(null);
+            }}
           />
 
           <motion.div
-            className="relative w-full max-w-lg bg-white/95 backdrop-blur-3xl border border-white/60 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-[2rem] overflow-hidden"
+            className="relative w-full max-w-lg bg-white/95 backdrop-blur-3xl border border-white/60 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.2)] rounded-[2.5rem] overflow-hidden"
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
           >
-            <div className="p-8">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <div className={`text-[10px] font-black uppercase tracking-[0.2em] mb-1 ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
-                    {isPositive ? 'Growth Opportunity' : 'Contraction Risk'}
+            <div className="p-10">
+              <div className="flex justify-between items-start mb-8">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Sparkle className="w-3.5 h-3.5 text-indigo-500" />
+                    <span className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em]">Institutional Deep-Dive</span>
                   </div>
-                  <h3 className="text-2xl font-black text-slate-900 tracking-tighter">{trend.label}</h3>
+                  <h3 className="text-3xl font-black text-slate-900 tracking-tighter leading-none">{trend.label}</h3>
+                  <div className={`text-[10px] font-black uppercase tracking-[0.2em] pt-1 ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    {isPositive ? 'Critical Growth Opportunity' : 'Strategic Contraction Risk'}
+                  </div>
                 </div>
-                <div className={`text-xl font-black ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+                <div className={`text-4xl font-black ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
                   {isPositive ? '+' : ''}{trend.value}%
                 </div>
               </div>
 
-              <div className="p-6 bg-slate-50/50 rounded-2xl border border-slate-100 mb-6">
-                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">AI Trend Synthesis</h4>
-                <p className="text-sm font-medium text-slate-700 leading-relaxed italic">
+              <div className="p-8 bg-indigo-50/20 backdrop-blur-sm border border-indigo-100/50 rounded-3xl mb-8 relative overflow-hidden group/reasoning">
+                <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500/20" />
+                <div className="flex justify-between items-center mb-4">
+                  <div className="flex items-center gap-2">
+                    <Sparkle className="w-4 h-4 text-indigo-600" />
+                    <span className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em]">AI Predictive Synthesis</span>
+                  </div>
+                  <Badge className="bg-indigo-500 text-white border-none text-[8px] font-black uppercase tracking-widest shadow-sm">Z-Model Core</Badge>
+                </div>
+                <p className="text-[15px] font-bold text-slate-700 leading-relaxed tracking-tight italic">
                   "{trend.description || 'No detailed synthesis available for this indicator.'}"
                 </p>
               </div>
+
+              {trend.relatedCountries && trend.relatedCountries.length > 0 && (
+                <div className="mb-6">
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Top Impacted Regions</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {trend.relatedCountries.map(iso => (
+                      <div key={iso} className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg border border-slate-200 shadow-sm">
+                        <img src={`https://flagcdn.com/w20/${iso.toLowerCase()}.png`} alt={iso} className="w-4 h-3 rounded-[2px] object-cover" />
+                        <span className="text-[10px] font-black tracking-widest uppercase text-slate-700">{iso}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-4">
                 <div className="flex justify-between items-center text-[10px] font-black text-slate-400 uppercase tracking-widest">
@@ -152,7 +205,11 @@ function TrendCard({ trend, type }: { trend: TrendData, type: 'positive' | 'nega
 
               <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
                 <button
-                  onClick={() => setIsExpanded(false)}
+                  onClick={() => {
+                    setIsExpanded(false);
+                    setSelectedCountries([]);
+                    setActiveEconomyTrend(null);
+                  }}
                   className="px-6 py-2 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-full hover:bg-slate-800 transition-colors cursor-pointer"
                 >
                   Close Analysis
@@ -339,7 +396,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
                 <h4 className="text-[12px] font-black text-emerald-600 uppercase tracking-[0.2em] leading-none">Positive Trends</h4>
                 <div className="flex items-center gap-2 mt-1">
                   <p className="text-[9px] text-slate-400 font-bold uppercase">Sectors currently exceeding historical CAGR benchmarks</p>
-                  <span className="text-[8px] text-slate-300 font-black uppercase tracking-widest ml-2">• Last update: 2 hours ago</span>
+                  <span className="text-[8px] text-slate-300 font-black uppercase tracking-widest ml-2">• Last update: 1 hour ago</span>
                 </div>
               </div>
             </div>
@@ -358,7 +415,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
                 <h4 className="text-[12px] font-black text-rose-600 uppercase tracking-[0.2em] leading-none">Negative Trends</h4>
                 <div className="flex items-center gap-2 mt-1">
                   <p className="text-[9px] text-slate-400 font-bold uppercase">High-pressure indicators requiring strategic mediation</p>
-                  <span className="text-[8px] text-slate-300 font-black uppercase tracking-widest ml-2">• Last update: 2 hours ago</span>
+                  <span className="text-[8px] text-slate-300 font-black uppercase tracking-widest ml-2">• Last update: 1 hour ago</span>
                 </div>
               </div>
             </div>
@@ -520,8 +577,14 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
           unit: selectedKpi.insightData?.unit,
           historicalData: selectedKpi.insightData?.historicalData || [],
           forecastData: selectedKpi.insightData?.forecastData || [],
-          labels: selectedKpi.insightData?.labels || { historical: [], forecast: [] },
-          analysis: selectedKpi.insightData?.analysis || { historical: '', forecast: '' },
+          labels: {
+            historical: ['2021', '2022', '2023', '2024', '2025'],
+            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+          },
+          analysis: {
+            historical: "Audit records from 2021-2025 confirm a recovery trajectory following global disruptions. Verification via Z-Model ledger nodes indicates high correlation between regional fiscal stimulus and the current 2.9% baseline.",
+            forecast: "The projected 8.8% growth is driven by three convergent vectors: wide-scale industrial GenAI integration, a massive capital pivot towards decentralized energy grids, and reduced cross-border friction via Z-Model protocols."
+          },
           stats: selectedKpi.insightData?.stats || { 
             historical: { confidence: '', delta: '' }, 
             forecast: { confidence: '', delta: '' } 

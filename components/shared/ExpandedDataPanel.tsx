@@ -61,11 +61,18 @@ export function ExpandedDataPanel() {
   const mediaActiveNewsId = useZModelStore(s => s.mediaActiveNewsId);
   const setMediaActiveNewsId = useZModelStore(s => s.setMediaActiveNewsId);
   const setMediaSelectedArticle = useZModelStore(s => s.setMediaSelectedArticle);
+  const setActiveEconomyTrend = useZModelStore(s => s.setActiveEconomyTrend);
 
   const showBackButton = (focusedCardId === 'investment' && investmentActiveDetail !== 'NONE') || 
                        (focusedCardId === 'media' && mediaActiveNewsId !== null);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const handleModuleBack = () => {
+    // Shared Resets
+    setSelectedCountries([]);
+    setActiveEconomyTrend(null);
+
     if (focusedCardId === 'investment') {
       setInvestmentActiveDetail('NONE');
       setInvestmentSelectedOpportunity(null);
@@ -74,6 +81,13 @@ export function ExpandedDataPanel() {
       setMediaSelectedArticle(null);
     }
   };
+
+  // Scroll content to top whenever focused card or detail view changes
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [focusedCardId, investmentActiveDetail, mediaActiveNewsId]);
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [localQuery, setLocalQuery] = useState('');
@@ -176,21 +190,7 @@ export function ExpandedDataPanel() {
               {/* Right: Search & Close */}
               <div className="flex items-center gap-3">
                 
-                {/* Unified Back Button */}
-                <AnimatePresence>
-                  {showBackButton && (
-                    <motion.button
-                      initial={{ opacity: 0, scale: 0.8, x: 10 }}
-                      animate={{ opacity: 1, scale: 1, x: 0 }}
-                      exit={{ opacity: 0, scale: 0.8, x: 10 }}
-                      onClick={handleModuleBack}
-                      className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm cursor-pointer"
-                      aria-label="Go back"
-                    >
-                      <ArrowLeft className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-                    </motion.button>
-                  )}
-                </AnimatePresence>
+                {/* Unified back button integrated into close button below */}
 
                 <div ref={searchContainerRef} className="relative">
                   <motion.div
@@ -253,11 +253,31 @@ export function ExpandedDataPanel() {
                 <div className="w-px h-6 bg-slate-200/60 mx-1" />
 
                 <button
-                  onClick={resetView}
+                  onClick={showBackButton ? handleModuleBack : resetView}
                   className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm cursor-pointer"
-                  aria-label="Close panel"
+                  aria-label={showBackButton ? "Go back" : "Close panel"}
                 >
-                  <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                  <AnimatePresence mode="wait">
+                    {showBackButton ? (
+                      <motion.div
+                        key="back"
+                        initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                      >
+                        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="close"
+                        initial={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        exit={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                      >
+                        <X className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </button>
               </div>
 
@@ -266,10 +286,11 @@ export function ExpandedDataPanel() {
           
           {/* Scrollable Module Content */}
           <motion.div 
+            ref={scrollRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex-1 w-full text-slate-800 overflow-y-auto p-10 custom-scrollbar relative"
+            className="flex-1 w-full text-slate-800 overflow-y-auto p-10 custom-scrollbar relative scroll-smooth"
           >
             {React.createElement(MODULE_COMPONENTS[focusedCardId], { isExpanded: true })}
           </motion.div>

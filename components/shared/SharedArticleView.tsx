@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
   ChevronLeft,
@@ -47,6 +47,15 @@ export function SharedArticleView({
   extraContent,
   className
 }: SharedArticleViewProps) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to top whenever the article content changes
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [article]);
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -82,7 +91,10 @@ export function SharedArticleView({
       </div>
 
       {/* Content Section */}
-      <div className="flex-1 p-8 lg:p-12 flex flex-col justify-between overflow-y-auto">
+      <div
+        ref={scrollContainerRef}
+        className="flex-1 p-8 lg:p-12 flex flex-col justify-between overflow-y-auto scroll-smooth"
+      >
         <div className="flex-1">
           {/* Header */}
           <div className="flex items-center justify-between mb-8 pb-8 border-b border-slate-100">

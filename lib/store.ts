@@ -93,6 +93,9 @@ interface ZModelStore {
   investmentSelectedOpportunity: any | null; // Using any to avoid circular import with mock types
   setInvestmentSelectedOpportunity: (op: any | null) => void;
 
+  activeEconomyTrend: any | null;
+  setActiveEconomyTrend: (trend: any | null) => void;
+
   // ── Master reset ─────────────────────────────────────────────────
   resetView: () => void;
 }
@@ -112,6 +115,7 @@ export const useZModelStore = create<ZModelStore>((set) => ({
     activeModule: id,
     selectedCountry: null,
     selectedCountries: [],
+    activeEconomyTrend: null,
     mediaActiveNewsId: null,
     mediaCategoryFilter: 'all',
     activeTarget: null,
@@ -179,6 +183,9 @@ export const useZModelStore = create<ZModelStore>((set) => ({
   investmentSelectedOpportunity: null,
   setInvestmentSelectedOpportunity: (op) => set({ investmentSelectedOpportunity: op }),
 
+  activeEconomyTrend: null,
+  setActiveEconomyTrend: (trend) => set({ activeEconomyTrend: trend }),
+
   // ── Master Reset ──────────────────────────────────────────────────
   resetView: () =>
     set({
@@ -197,6 +204,7 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       mediaSelectedArticle: null,
       investmentActiveDetail: 'NONE',
       investmentSelectedOpportunity: null,
+      activeEconomyTrend: null,
       autoRotate: true,
     }),
 }));

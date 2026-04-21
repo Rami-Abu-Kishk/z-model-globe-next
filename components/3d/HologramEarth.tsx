@@ -7,8 +7,8 @@ import { motion } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
 import { GlobeCameraController } from './GlobeCameraController';
 import { economyGlobeData, investmentGlobePoints, politicalCrisisRings, mediaNewsItems, groupsArcs, searchableCountries, politicalArcs } from '@/lib/mockData';
-import { 
-  breakingNews as mediaBreaking, 
+import {
+  breakingNews as mediaBreaking,
   trendingNews as mediaTrending,
   localRegionalNews as mediaRegional
 } from '@/lib/mock-data/media.mock';
@@ -79,7 +79,9 @@ export const HologramEarth = forwardRef((props, ref) => {
 
     // Set UI behavior
     setActiveCountry(country.name);
-    setViewState('EARTH_FOCUS');
+    if (!activeModule) {
+      setViewState('EARTH_FOCUS');
+    }
   };
 
 
@@ -169,14 +171,18 @@ export const HologramEarth = forwardRef((props, ref) => {
   }));
 
   // Memoize layer data to prevent WebGL stutters during typing in search
-  const pointsData = useMemo(() => activeModule === 'investment' ? investmentGlobePoints : [], [activeModule]);
+  const pointsData = useMemo(() => {
+    const isInvestment = activeModule === 'investment';
+    const hasSelection = selectedCountry || selectedCountries.length > 0;
+    return (isInvestment && !hasSelection) ? investmentGlobePoints : [];
+  }, [activeModule, selectedCountry, selectedCountries]);
   const ringsData = useMemo(() => activeModule === 'political' ? politicalCrisisRings : [], [activeModule]);
   const labelsData = useMemo(() => [], []);
   const selectionLabelData = useMemo(() => {
     if (!selectedCountry) return [];
     const country = searchableCountries.find(c => c.iso === selectedCountry);
     if (!country) return [];
-    
+
     return [{
       lat: country.lat,
       lng: country.lng,
@@ -192,18 +198,18 @@ export const HologramEarth = forwardRef((props, ref) => {
   const arcsData = useMemo(() => {
     if (activeModule === 'companies') return groupsArcs;
     if (activeModule === 'political') return politicalArcs;
-    
+
     if (activeModule === 'media') {
       // Generate "Intelligence Flow" arcs from news sources to Abu Dhabi
       const AD_LAT = 24.4539;
       const AD_LNG = 54.3773;
-      
+
       let newsItems = [...mediaBreaking, ...mediaTrending, ...mediaRegional];
 
       // Layer 1: Filter by specific active news ID (highest priority)
       if (mediaActiveNewsId) {
         newsItems = newsItems.filter(n => n.id === mediaActiveNewsId);
-      } 
+      }
       // Layer 2: Filter by category section (Breaking/Trending/Regional)
       else if (mediaCategoryFilter !== 'all') {
         newsItems = newsItems.filter(n => n.category === mediaCategoryFilter);
@@ -223,7 +229,7 @@ export const HologramEarth = forwardRef((props, ref) => {
           sentiment: news.sentiment
         }));
     }
-    
+
     return [];
   }, [activeModule, mediaCategoryFilter, mediaActiveNewsId]);
 
@@ -276,7 +282,7 @@ export const HologramEarth = forwardRef((props, ref) => {
         htmlAltitude={(d: any) => d.type === 'selection' ? 0.15 : (d.size || 1) * 0.1 + 0.02}
         htmlElement={(d: any) => {
           const el = document.createElement('div');
-          
+
           if (d.type === 'selection') {
             // Minimalist "Selected" Label with Flag
             const flagCode = (d.iso || '').toLowerCase();
@@ -356,15 +362,15 @@ export const HologramEarth = forwardRef((props, ref) => {
         arcColor={(d: any) => {
           const isHovered = hoveredArc && hoveredArc.id === d.id;
           const opacity = hoveredArc ? (isHovered ? 1.0 : 0.15) : 0.6;
-          
+
           const colors: string[] = Array.isArray(d.color) ? d.color : [d.color, d.color];
           // Modify alpha for each color in the gradient
           return colors.map((c: string) => {
             // Convert hex to rgba with our calculated opacity
-            return c === '#10b981' ? `rgba(16, 185, 129, ${opacity})` : 
-                   c === '#3b82f6' ? `rgba(59, 130, 246, ${opacity})` : 
-                   c === '#f43f5e' ? `rgba(244, 63, 94, ${opacity})` : 
-                   `rgba(255, 255, 255, ${opacity})`;
+            return c === '#10b981' ? `rgba(16, 185, 129, ${opacity})` :
+              c === '#3b82f6' ? `rgba(59, 130, 246, ${opacity})` :
+                c === '#f43f5e' ? `rgba(244, 63, 94, ${opacity})` :
+                  `rgba(255, 255, 255, ${opacity})`;
           });
         }}
         arcDashLength={0.4}
@@ -396,7 +402,7 @@ export const HologramEarth = forwardRef((props, ref) => {
 
         polygonAltitude={(d: any) => {
           const p = d.properties || {};
-          const getValid = (...vals: (string|null|undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
+          const getValid = (...vals: (string | null | undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
 
           const id = getValid(d.id, p.ISO_A3_EH, p.ADM0_ISO, p.ISO_A3, p.iso_a3, p.BRK_A3) || "";
           const name = String(p.NAME || p.name || p.ADMIN || "").toUpperCase();
@@ -425,7 +431,7 @@ export const HologramEarth = forwardRef((props, ref) => {
         polygonsTransitionDuration={300}
         polygonCapColor={(d: any) => {
           const p = d.properties || {};
-          const getValid = (...vals: (string|null|undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
+          const getValid = (...vals: (string | null | undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
 
           const id = getValid(d.id, p.ISO_A3_EH, p.ADM0_ISO, p.ISO_A3, p.iso_a3, p.BRK_A3) || "";
           const name = String(p.NAME || p.name || p.ADMIN || "").toUpperCase();
@@ -450,11 +456,11 @@ export const HologramEarth = forwardRef((props, ref) => {
             }
           }
 
-          if (activeModule === 'economy' && economyGlobeData[iso]) {
-            const info = economyGlobeData[iso];
-            if (info.status === 'positive') return 'rgba(16, 185, 129, 0.4)'; // Emerald 500 at 40%
-            return 'rgba(239, 68, 68, 0.4)'; // Rose 500 at 40%
-          }
+          // if (activeModule === 'economy' && economyGlobeData[iso]) {
+          //   const info = economyGlobeData[iso];
+          //   if (info.status === 'positive') return 'rgba(16, 185, 129, 0.4)'; // Emerald 500 at 40%
+          //   return 'rgba(239, 68, 68, 0.4)'; // Rose 500 at 40%
+          // }
 
           return 'rgba(51, 65, 85, 0.25)'; // Softer Slate/Navy countries
         }}
@@ -463,7 +469,7 @@ export const HologramEarth = forwardRef((props, ref) => {
         polygonLabel={(d: any) => {
           const p = d.properties;
           const iso = (p.ISO_A2 || p.iso_a2 || p['ISO3166-1-Alpha-2'] || '').toUpperCase();
-          
+
           let name = p.NAME || p.name || p.ADMIN || 'Unknown';
           let flagCode = iso.toLowerCase();
           let displayIso = iso;
@@ -478,9 +484,34 @@ export const HologramEarth = forwardRef((props, ref) => {
           // --- ECONOMY INTELLIGENCE OVERLAY ---
           const ecoData = economyGlobeData[iso];
           const countryMeta = searchableCountries.find(c => c.iso === iso);
+          const activeTrend = useZModelStore.getState().activeEconomyTrend;
           let intelligenceHtml = '';
 
-          if (activeModule === 'economy' && ecoData) {
+          // Trend-specific impact (Priority 1)
+          if (activeModule === 'economy' && activeTrend && activeTrend.relatedCountries?.includes(iso)) {
+            const trendValue = activeTrend.countryValues?.[iso] || activeTrend.value;
+            const isPos = trendValue >= 0;
+            intelligenceHtml = `
+              <div class="mt-3 pt-3 border-t border-slate-200/50 flex items-center justify-between gap-6">
+                <div class="flex flex-col">
+                  <span class="text-[8px] text-slate-600 uppercase font-black tracking-[0.15em] mb-0.5">${activeTrend.label}</span>
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-sm font-black ${isPos ? 'text-emerald-600' : 'text-rose-600'}">
+                      ${isPos ? '↑' : '↓'} ${trendValue > 0 ? '+' : ''}${trendValue}%
+                    </span>
+                  </div>
+                </div>
+                <div class="flex flex-col items-end">
+                   <span class="text-[8px] text-slate-400 uppercase font-black tracking-[0.15em] mb-0.5">Focus</span>
+                   <div class="px-2 py-0.5 rounded-lg text-[8px] font-black uppercase ${isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}">
+                    ${isPos ? 'Advancing' : 'Under Pressure'}
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+          // Standard GDP data (Priority 2)
+          else if (activeModule === 'economy' && ecoData) {
             const isPos = ecoData.status === 'positive';
             intelligenceHtml = `
               <div class="mt-3 pt-3 border-t border-slate-200/50 flex items-center justify-between gap-6">
@@ -518,15 +549,15 @@ export const HologramEarth = forwardRef((props, ref) => {
         }}
         onPolygonHover={(d: any) => {
           const p = d?.properties || {};
-          const getValid = (...vals: (string|null|undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
+          const getValid = (...vals: (string | null | undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
           const identifier = d ? (getValid(p.ISO_A2_EH, p.ISO_A2, p['ISO3166-1-Alpha-2'], p.NAME, p.ADMIN, d.id)) : null;
           setHoveredCountry(identifier || null);
           document.body.style.cursor = d ? 'pointer' : 'auto';
         }}
         onPolygonClick={(d: any, _e: any, { lat, lng }: any) => {
           const p = d.properties || {};
-          const getValid = (...vals: (string|null|undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
-          
+          const getValid = (...vals: (string | null | undefined)[]) => vals.find(v => v && v !== "-99" && v !== "" && v !== "undefined");
+
           // 1. Get a reliable ISO code
           const iso = getValid(p.ISO_A2_EH, p.ISO_A2, p.iso_a2, p.POSTAL, p.ADM0_ISO, p['ISO3166-1-Alpha-2']) || "";
 
@@ -539,7 +570,9 @@ export const HologramEarth = forwardRef((props, ref) => {
             // Fallback logic if the country isn't in your searchable list
             setSelectedCountry(iso);
             setActiveTarget({ lat, lng, zoomLevel: FOCUS_ALTITUDE });
-            setViewState('EARTH_FOCUS');
+            if (!activeModule) {
+              setViewState('EARTH_FOCUS');
+            }
           }
         }}
       />

@@ -127,11 +127,11 @@ function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => voi
   );
 }
 
-function InvestmentReportCard({ report }: { report: InvestmentReport }) {
+function InvestmentReportCard({ report, onClick }: { report: InvestmentReport, onClick?: (report: InvestmentReport) => void }) {
   return (
     <div
       className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-lg hover:shadow-2xl transition-all group relative flex flex-col h-full cursor-pointer hover:border-emerald-300"
-      onClick={() => window.open(report.fileUrl, '_blank')}
+      onClick={() => onClick ? onClick(report) : window.open(report.fileUrl, '_blank')}
     >
       <div className="flex justify-between items-start mb-4">
         <Badge variant="outline" className="text-[9px] border-slate-200 text-slate-500 font-black uppercase tracking-widest">{report.org}</Badge>
@@ -161,17 +161,20 @@ function InvestmentReportCard({ report }: { report: InvestmentReport }) {
 // ── Main Module ─────────────────────────────────────────────────────
 
 export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
-  const setActiveTarget = useZModelStore((s) => s.setActiveTarget);
-  const setSelectedCountries = useZModelStore((s) => s.setSelectedCountries);
-  const setSelectedCountry = useZModelStore((s) => s.setSelectedCountry);
-  const selectedCountry = useZModelStore((s) => s.selectedCountry);
-  const setViewState = useZModelStore((s) => s.setViewState);
-  const viewState = useZModelStore((s) => s.viewState);
-
-  const investmentActiveDetail = useZModelStore((s) => s.investmentActiveDetail);
-  const setInvestmentActiveDetail = useZModelStore((s) => s.setInvestmentActiveDetail);
-  const investmentSelectedOpportunity = useZModelStore((s) => s.investmentSelectedOpportunity);
-  const setInvestmentSelectedOpportunity = useZModelStore((s) => s.setInvestmentSelectedOpportunity);
+  const {
+    setActiveModule,
+    setActiveTarget,
+    setSelectedCountries,
+    setSelectedCountry,
+    selectedCountry,
+    setViewState,
+    viewState,
+    investmentActiveDetail,
+    setInvestmentActiveDetail,
+    investmentSelectedOpportunity,
+    setInvestmentSelectedOpportunity,
+    setActiveEconomyTrend
+  } = useZModelStore();
 
   const [selectedKpi, setSelectedKpi] = useState<KpiReport | null>(null);
 
@@ -189,6 +192,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
   const data = investmentDataStore[currentDataKey];
 
   const handleTargetClick = () => {
+    setActiveModule('investment');
     if (data.bestTarget.iso) {
       setSelectedCountry(null);
       setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 }); // UAE Coords
@@ -202,6 +206,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
   };
 
   const handleOpportunityClick = (op: Opportunity) => {
+    setActiveModule('investment');
     if (op.isoCodes && op.isoCodes.length > 0) {
       setSelectedCountry(null);
       setSelectedCountries(op.isoCodes);
@@ -225,6 +230,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
   };
 
   const handleRowClick = (entityName: string) => {
+    setActiveModule('investment');
     // 1. Precise or contains match
     let country = searchableCountries.find(c =>
       c.name.toLowerCase().includes(entityName.toLowerCase()) ||
@@ -249,6 +255,21 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
         zoomLevel: 1.8
       });
     }
+  };
+
+  const handleReportClick = (report: InvestmentReport) => {
+    setActiveModule('investment');
+    
+    // If it's the "Accelerating Investment" report, fly to the UAE hub viewpoint
+    if (report.title.includes('Accelerating Investment')) {
+      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.3 });
+      setSelectedCountries(['AE']);
+    } else if (report.id.includes('uae')) {
+       setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 });
+       setSelectedCountries(['AE']);
+    }
+
+    window.open(report.fileUrl, '_blank');
   };
 
   if (isExpanded) {
@@ -387,7 +408,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   />
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {data.reports.map((report, idx) => (
-                      <InvestmentReportCard key={idx} report={report} />
+                      <InvestmentReportCard key={idx} report={report} onClick={handleReportClick} />
                     ))}
                   </div>
                 </div>
@@ -442,7 +463,11 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
           ) : investmentActiveDetail === 'UAE' ? (
             <div className="w-full">
               <SharedArticleView
-                onBack={() => setInvestmentActiveDetail('NONE')}
+                onBack={() => {
+                  setInvestmentActiveDetail('NONE');
+                  setSelectedCountries([]);
+                  setActiveEconomyTrend(null);
+                }}
                 article={{
                   title: "Executive Brief: UAE Investment Landscape",
                   subtitle: "Sovereign Strategic Briefing • 2026",
@@ -486,6 +511,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 onBack={() => {
                   setInvestmentActiveDetail('NONE');
                   setInvestmentSelectedOpportunity(null);
+                  setSelectedCountries([]);
+                  setActiveEconomyTrend(null);
                 }}
 
                 actions={

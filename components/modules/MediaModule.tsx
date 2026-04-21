@@ -46,14 +46,15 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
     mediaActiveNewsId,
     setMediaActiveNewsId,
     mediaSelectedArticle,
-    setMediaSelectedArticle
+    setMediaSelectedArticle,
+    setActiveEconomyTrend
   } = useZModelStore();
   const { triggerChatFromCard } = useAIChat();
   const [videoSource, setVideoSource] = useState<'SKY' | 'CNN'>('SKY');
   
   const videoSources = {
     SKY: 'Cw2gP01LhQ0',
-    CNN: 'oJv24tYnL_M' // Current CNN live link
+    CNN: 'U--OjmpjF5o'
   };
   const handleAiTrigger = (e: React.MouseEvent, news: NewsItem) => {
     e.stopPropagation();
@@ -92,6 +93,8 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
   const handleBack = () => {
     setMediaSelectedArticle(null);
     setMediaActiveNewsId(null);
+    setSelectedCountries([]);
+    setActiveEconomyTrend(null);
   };
 
   if (isExpanded) {
@@ -140,7 +143,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                     Signal Intelligence Feed
                   </h4>
                   <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">
-                    Source: {videoSource === 'SKY' ? 'Sky News Global' : 'CNN International'} • Live
+                    Source: {videoSource === 'SKY' ? 'Sky News Global' : 'Sky News Ar'} • Live
                   </p>
                 </div>
               </div>
@@ -161,7 +164,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                     videoSource === 'CNN' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
                   )}
                 >
-                  CNN INT
+                  Sky News Ar
                 </button>
               </div>
             </div>

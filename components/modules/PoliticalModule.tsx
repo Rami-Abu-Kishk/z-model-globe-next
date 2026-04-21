@@ -42,10 +42,13 @@ import dynamic from 'next/dynamic';
 const PoliticalChart3D = dynamic(() => import('./PoliticalChart3D'), { ssr: false });
 
 export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
-  const setActiveTarget = useZModelStore((s) => s.setActiveTarget);
-  const setSelectedCountry = useZModelStore((s) => s.setSelectedCountry);
-  const selectedCountry = useZModelStore((s) => s.selectedCountry);
-  const setSelectedCountries = useZModelStore((s) => s.setSelectedCountries);
+  const { 
+    setActiveTarget, 
+    setSelectedCountry, 
+    setSelectedCountries,
+    selectedCountry,
+    setActiveEconomyTrend
+  } = useZModelStore();
   
   const [selectedItem, setSelectedItem] = useState<PoliticalCase | RegionalCrisis | null>(null);
   const [selectedKpi, setSelectedKpi] = useState<PoliticalKpi | null>(null);
@@ -107,6 +110,8 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
 
   const handleBack = () => {
     setSelectedItem(null);
+    setSelectedCountries([]);
+    setActiveEconomyTrend(null);
   };
 
   if (isExpanded) {
@@ -219,6 +224,37 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                       ))}
                     </div>
                   </ScrollArea>
+                </div>
+              </section>
+
+              <section className="space-y-6">
+                <SectionHeader 
+                  title="Intelligence Briefs" 
+                  icon={Newspaper} 
+                  subtitle="Latest strategic intelligence & diplomatic intercepts"
+                />
+                <div className="flex flex-col bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl shadow-2xl overflow-hidden">
+                  <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {data.news.map((news) => (
+                      <div 
+                        key={news.id} 
+                        className="p-5 rounded-2xl bg-white border border-slate-100 hover:border-sky-200 transition-all cursor-pointer group shadow-sm flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-3">
+                            <Badge className="bg-slate-100 text-slate-600 text-[9px] font-black px-2 py-0.5 border-none shadow-none uppercase">
+                              {news.category} • {news.time}
+                            </Badge>
+                            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{news.source}</span>
+                          </div>
+                          <h4 className="text-[14px] font-black text-slate-900 group-hover:text-sky-600 transition-colors leading-tight mb-2">
+                            {news.headline}
+                          </h4>
+                          <p className="text-[11px] text-slate-500 font-medium leading-relaxed italic">{news.summary}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </section>
 
@@ -355,6 +391,22 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
             >
               <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2">{kpi.label}</p>
               <p className="text-xl font-black text-slate-900 tracking-tighter">{kpi.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">INTELLIGENCE BRIEFS</h4>
+        <div className="space-y-3 mb-6">
+          {data.news.slice(0, 2).map((news) => (
+            <div
+              key={news.id}
+              className="p-3 bg-white/40 border border-white/60 rounded-2xl cursor-pointer hover:bg-white/60 transition-all"
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[8px] font-black text-sky-600 uppercase tracking-widest">{news.category}</span>
+                <span className="text-[8px] font-bold text-slate-400">{news.time}</span>
+              </div>
+              <p className="text-[10px] font-black text-slate-900 leading-tight">{news.headline}</p>
             </div>
           ))}
         </div>

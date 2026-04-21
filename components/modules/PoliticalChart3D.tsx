@@ -55,9 +55,9 @@ export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) 
         viewControl: {
           autoRotate: false,
           autoRotateSpeed: 5,
-          distance: 250,
-          alpha: 30,
-          beta: 35
+          distance: 220,
+          alpha: 25,
+          beta: 225
         },
         boxOutline: {
           show: true,
@@ -75,11 +75,11 @@ export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) 
           main: {
             intensity: 1.5,
             shadow: true,
-            alpha: 45,
-            beta: 45
+            alpha: 30,
+            beta: 210
           },
           ambient: {
-            intensity: 0.4
+            intensity: 0.5
           }
         }
       },

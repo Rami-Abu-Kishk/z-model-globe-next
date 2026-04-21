@@ -143,11 +143,11 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           historicalData: [1.2, 1.3, 1.5, 1.4, 1.4],
           forecastData: [1.4, 1.5, 1.7, 1.9, 2.1],
           labels: {
-            historical: ['2019', '2020', '2021', '2022', '2023'],
-            forecast: ['2024', '2025', '2026', '2027', '2028 (Est)']
+            historical: ['2021', '2022', '2023', '2024', '2025'],
+            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
           },
           analysis: {
-            historical: "Global Foreign Direct Investment (FDI) has faced significant headwinds due to fragmentation in global supply chains and rising geopolitical tensions, leading to a plateau in volume through 2023.",
+            historical: "Global Foreign Direct Investment (FDI) has faced significant headwinds due to fragmentation in global supply chains and rising geopolitical tensions, leading to a plateau in volume through 2025.",
             forecast: "Z-Model projections indicate a significant rebound as capital rotates back into emerging green-tech sectors and sovereign-led digital infrastructure projects in the Global South."
           },
           stats: {
@@ -192,8 +192,8 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           historicalData: [5.2, 5.8, 6.4, 6.9, 7.1],
           forecastData: [7.1, 7.4, 7.8, 8.2, 8.5],
           labels: {
-            historical: ['2019', '2020', '2021', '2022', '2023'],
-            forecast: ['2024', '2025', '2026', '2027', '2028 (Est)']
+            historical: ['2021', '2022', '2023', '2024', '2025'],
+            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
           },
           analysis: {
             historical: "Emerging markets have delivered resilient yields despite global inflationary pressures, driven by fiscal discipline and the 'flight to quality' among institutional investors seeking alpha.",
@@ -213,7 +213,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         description: "Comprehensive audit of global capital allocation strategies and efficiency vectors for 2026.",
         fileUrl: "/files/Accelerating-Investment.pdf",
         org: "Z-Model Digital",
-        author: "Strategy Dept",
+        author: "World Bank",
         date: "Apr 2026"
       }
     ],
@@ -299,7 +299,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         description: "Strategic audit of UAE industry mobilization and green financing pipelines.",
         fileUrl: "/files/Accelerating-Investment.pdf",
         org: "Z-Model Digital",
-        author: "Strategy Dept",
+        author: "World Bank",
         date: "Apr 2026"
       }
     ],

@@ -3,9 +3,9 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
 import 'echarts-gl';
-import { politicalCases } from '@/lib/mock-data/political.mock';
+import { PoliticalCase } from '@/lib/mock-data/political.mock';
 
-export default function PoliticalChart3D() {
+export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function PoliticalChart3D() {
     const myChart = echarts.init(chartRef.current, undefined, { renderer: 'canvas' });
     
     // Mapping 3D Bar Data
-    const data = politicalCases.map((pc, idx) => {
+    const data = (cases || []).map((pc, idx) => {
       // Meaningful Tiers:
       // X: Severity (Internal Tension)
       // Y: Involved Parties (Regional Complexity)
@@ -144,7 +144,7 @@ export default function PoliticalChart3D() {
       resizeObserver.disconnect();
       myChart.dispose();
     };
-  }, []);
+  }, [cases]);
 
   return <div ref={chartRef} className="w-full h-full" />;
 }

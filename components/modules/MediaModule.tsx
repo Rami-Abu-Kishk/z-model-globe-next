@@ -49,7 +49,12 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
     setMediaSelectedArticle
   } = useZModelStore();
   const { triggerChatFromCard } = useAIChat();
+  const [videoSource, setVideoSource] = useState<'SKY' | 'CNN'>('SKY');
   
+  const videoSources = {
+    SKY: 'Cw2gP01LhQ0',
+    CNN: 'oJv24tYnL_M' // Current CNN live link
+  };
   const handleAiTrigger = (e: React.MouseEvent, news: NewsItem) => {
     e.stopPropagation();
     triggerChatFromCard({
@@ -116,7 +121,73 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
             </motion.div>
           )}
         </AnimatePresence>
+        {/* VIDEO: Signal Intelligence Terminal */}
+        {!mediaSelectedArticle && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="relative group overflow-hidden bg-white/40 backdrop-blur-xl border border-white/60 rounded-[2.5rem] shadow-2xl p-4 sm:p-6"
+          >
+            {/* Header / HUD Overlay */}
+            <div className="flex items-center justify-between mb-4 px-2">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-2 h-2 rounded-full bg-rose-500 animate-ping absolute inset-0" />
+                  <div className="w-2 h-2 rounded-full bg-rose-600 relative" />
+                </div>
+                <div>
+                  <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] leading-none mb-1">
+                    Signal Intelligence Feed
+                  </h4>
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+                    Source: {videoSource === 'SKY' ? 'Sky News Global' : 'CNN International'} • Live
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 bg-slate-900/5 p-1 rounded-xl border border-slate-200">
+                <button 
+                  onClick={() => setVideoSource('SKY')}
+                  className={cn(
+                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all",
+                    videoSource === 'SKY' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
+                  )}
+                >
+                  SKY NEWS
+                </button>
+                <button 
+                  onClick={() => setVideoSource('CNN')}
+                  className={cn(
+                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all",
+                    videoSource === 'CNN' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
+                  )}
+                >
+                  CNN INT
+                </button>
+              </div>
+            </div>
 
+            {/* Video Container */}
+            <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-slate-900 ring-1 ring-white/20 shadow-inner">
+               <iframe 
+                key={videoSource}
+                name="intelligence-feed"
+                className="absolute inset-0 w-full h-full"
+                src={`https://www.youtube.com/embed/${videoSources[videoSource]}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0`} 
+                title={`${videoSource} Signal Feed`} 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin" 
+                allowFullScreen
+              />
+              
+              {/* Corner Accents */}
+              <div className="absolute top-4 left-4 w-6 h-6 border-t font-black border-l border-white/20 pointer-events-none" />
+              <div className="absolute top-4 right-4 w-6 h-6 border-t border-r border-white/20 pointer-events-none" />
+              <div className="absolute bottom-4 left-4 w-6 h-6 border-b border-l border-white/20 pointer-events-none" />
+              <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-white/20 pointer-events-none" />
+            </div>
+          </motion.div>
+        )}
         {/* MAIN: Intelligence Dashboard Grid */}
         <div className="relative flex-1">
           <AnimatePresence mode="wait">

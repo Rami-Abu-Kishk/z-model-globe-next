@@ -14,6 +14,34 @@ export interface KpiReport {
   value: string;
   rep: string;
   org: string;
+  insightData?: {
+    org: string;
+    unit?: string;
+    historicalData: number[];
+    forecastData: number[];
+    labels: {
+      historical: string[];
+      forecast: string[];
+    };
+    analysis: {
+      historical: string;
+      forecast: string;
+    };
+    stats: {
+      historical: { confidence: string; delta: string };
+      forecast: { confidence: string; delta: string };
+    };
+  };
+}
+
+export interface InvestmentReport {
+  id: string;
+  title: string;
+  description: string;
+  fileUrl: string;
+  org: string;
+  author: string;
+  date: string;
 }
 
 export interface InvestmentData {
@@ -25,9 +53,16 @@ export interface InvestmentData {
     timestamp: string;
     iso?: string; // Used to fly the camera
     imageUrl?: string; // New: For hero target
+    pdfReportData?: {
+      summary: string;
+      highlights: { title: string; detail: string }[];
+      metrics: { label: string; value: string; trend?: string }[];
+      downloadUrl: string;
+    };
   };
   topOpportunities: Opportunity[];
-  kpisAndReports: KpiReport[];
+  kpis: KpiReport[];
+  reports: InvestmentReport[];
   tableData: {
     id: string;
     entity: string;
@@ -78,10 +113,92 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         imageUrl: "/assets/images/mock/lithium_mining.png"
       }
     ],
-    kpisAndReports: [
-      { title: "Global FDI Flows", impact: "High", value: "$1.4 Trillion", rep: "Rebeca Grynspan", org: "UNCTAD" },
-      { title: "Sovereign Wealth Index", impact: "High", value: "84.2", rep: "Diego López", org: "Global SWF" },
-      { title: "Emerging Market Yield", impact: "Medium", value: "7.1%", rep: "Marcello Estevão", org: "World Bank" }
+    kpis: [
+      {
+        title: "Global FDI Flows",
+        impact: "High",
+        value: "$1.4 Trillion",
+        rep: "Rebeca Grynspan",
+        org: "UNCTAD",
+        insightData: {
+          org: "UNCTAD",
+          unit: "$T",
+          historicalData: [1.2, 1.3, 1.5, 1.4, 1.4],
+          forecastData: [1.4, 1.5, 1.7, 1.9, 2.1],
+          labels: {
+            historical: ['2019', '2020', '2021', '2022', '2023'],
+            forecast: ['2024', '2025', '2026', '2027', '2028 (Est)']
+          },
+          analysis: {
+            historical: "Global Foreign Direct Investment (FDI) has faced significant headwinds due to fragmentation in global supply chains and rising geopolitical tensions, leading to a plateau in volume through 2023.",
+            forecast: "Z-Model projections indicate a significant rebound as capital rotates back into emerging green-tech sectors and sovereign-led digital infrastructure projects in the Global South."
+          },
+          stats: {
+            historical: { confidence: "99.1%", delta: "-6.7%" },
+            forecast: { confidence: "87.5%", delta: "+50.0%" }
+          }
+        }
+      },
+      {
+        title: "Sovereign Wealth Index",
+        impact: "High",
+        value: "84.2",
+        rep: "Diego López",
+        org: "Global SWF",
+        insightData: {
+          org: "Global SWF",
+          historicalData: [72.1, 75.4, 79.2, 81.5, 84.2],
+          forecastData: [84.2, 88.5, 94.2, 102.5, 115.0],
+          labels: {
+            historical: ['2019', '2020', '2021', '2022', '2023'],
+            forecast: ['2024', '2025', '2026', '2027', '2028 (Est)']
+          },
+          analysis: {
+            historical: "The index reflects a steady consolidation of sovereign wealth, particularly among GCC-based funds which have pivoted towards internal giga-projects and strategic global technology allocations.",
+            forecast: "The hockeystick vector for sovereign capital is projected to accelerate as funds mature into primary venture builders, leading the 'New Industrial Era' targets by 2026."
+          },
+          stats: {
+            historical: { confidence: "98.8%", delta: "+16.8%" },
+            forecast: { confidence: "92.3%", delta: "+36.5%" }
+          }
+        }
+      },
+      {
+        title: "Emerging Market Yield",
+        impact: "Medium",
+        value: "7.1%",
+        rep: "Marcello Estevão",
+        org: "World Bank",
+        insightData: {
+          org: "World Bank",
+          unit: "%",
+          historicalData: [5.2, 5.8, 6.4, 6.9, 7.1],
+          forecastData: [7.1, 7.4, 7.8, 8.2, 8.5],
+          labels: {
+            historical: ['2019', '2020', '2021', '2022', '2023'],
+            forecast: ['2024', '2025', '2026', '2027', '2028 (Est)']
+          },
+          analysis: {
+            historical: "Emerging markets have delivered resilient yields despite global inflationary pressures, driven by fiscal discipline and the 'flight to quality' among institutional investors seeking alpha.",
+            forecast: "Yield spreads are expected to remain attractive as structural reforms and digital transformations within the BRICS+ framework lower risk premiums for long-term sovereign assets."
+          },
+          stats: {
+            historical: { confidence: "97.5%", delta: "+36.5%" },
+            forecast: { confidence: "85.2%", delta: "+19.7%" }
+          }
+        }
+      }
+    ],
+    reports: [
+      {
+        id: "rep-1",
+        title: "Accelerating Investment",
+        description: "Comprehensive audit of global capital allocation strategies and efficiency vectors for 2026.",
+        fileUrl: "/files/Accelerating-Investment.pdf",
+        org: "Z-Model Digital",
+        author: "Strategy Dept",
+        date: "Apr 2026"
+      }
     ],
     tableData: [
       { id: "1", entity: "UAE", rating: "Aa2", inflow: "+$23B", risk: "Low", yield: "4.1%" },
@@ -92,45 +209,82 @@ export const investmentDataStore: Record<string, InvestmentData> = {
   },
   AE: {
     bestTarget: {
-      label: "Prime Investment Sector",
-      name: "AI & Sovereign Data Centers",
+      label: "Prime Investment Target",
+      name: "United Arab Emirates",
       score: 99.1,
-      details: "Massive influx of capital into sovereign cloud infrastructure and localized large language model training facilities.",
+      details: "Premier global hub for sovereign capital and AI innovation, supported by a world-class regulatory framework.",
       timestamp: "Updated: Live 24/7",
-      imageUrl: "/assets/images/mock/uae_investment_hero.png"
+      imageUrl: "/assets/images/mock/uae_investment_hero.png",
+      pdfReportData: {
+        summary: "The United Arab Emirates (UAE) presents a highly attractive, affluent investment landscape characterized by strong government support, a low-tax environment, and world-class infrastructure. While the overall investment climate is robust, investors should diversify across sectors to mitigate localized risks such as slowing consumption and export growth.",
+        highlights: [
+          { title: "Macroeconomic Profile", detail: "GDP & Wealth: $504.17 Billion (Per Capita: ~$53,000) across a population of 9.52 Million. Growth & Stability: Projected GDP growth of 4.0% for 2024, supported by a highly stable inflation rate of 1.66% and low unemployment at 2.13%. Foreign Direct Investment (FDI): Strong international footprint with an FDI rate of 8.5%." },
+          { title: "Investment Climate & Key Trends", detail: "The UAE scores a strong 81.4 on the Investment Climate index, bolstered by perfect scores in transportation infrastructure, telecommunications, and tax burden. Positive KPI Trends: Significant improvements in Digitalization (↑13.75%) and massive drops in Crime (↓85.15%) and Government Debt Growth (↓99.48%). The Business Environment Index remains highly stable." },
+          { title: "Strategic Risks & Watch-Outs", detail: "The report warns of challenges regarding investment growth momentum and potential currency depreciation. Corresponding KPIs also show sharp declines in Consumption Growth (↓88.98%) and Export Growth (↓75.54%)." },
+          { title: "Top Strategic Opportunities", detail: "The highest-value sector for capital allocation is Financial Services, though high-yield opportunities span multiple industries. Industry & Manufacturing: EDB Industrial Mobilization Program — $16.34B pipeline | 8-14% ROI. Financial Services (Top Value Sector): EDB Industrial & Green Financing Pipeline — $16.30B | 5-9% ROI. UAE National Investment Fund — $10.00B | 6-12% ROI. Infrastructure: Abu Dhabi Multi-Project PPP — $12.80B | 5-12% ROI, Dubai Strategic Sewerage Tunnel — 6-10% ROI. Renewable Energy: Masdar + EWEC Solar PV + BESS Gigascale Project — 6-12% ROI." },
+          { title: "Strategic Takeaway", detail: "The UAE offers fertile ground for investors. Capitalizing on infrastructure and green financing pipelines while maintaining a diversified portfolio is the optimal strategy to navigate the slight dips in localized consumption and export momentum." }
+        ],
+        metrics: [
+          { label: "GDP growth", value: "4.0%", trend: "up" },
+          { label: "Inflation rate", value: "1.66%", trend: "stable" },
+          { label: "Unemployment", value: "2.13%", trend: "down" },
+          { label: "FDI Interest", value: "8.5%", trend: "up" }
+        ],
+        downloadUrl: "/files/Report - Country Card for UAE.pdf"
+      }
     },
     topOpportunities: [
       {
-        title: "Abu Dhabi Sovereign Cloud",
-        region: "Abu Dhabi",
-        expectedReturn: "14.2% IRR",
+        title: "EDB Industrial Mobilization",
+        region: "UAE Global",
+        expectedReturn: "8-14% ROI",
         status: "up",
-        description: "Tier 4 data center expansion funded by public-private partnerships.",
+        description: "Emirates Development Bank program focusing on industry and manufacturing mobilization.",
         isoCodes: ["AE"],
         imageUrl: "/assets/images/mock/uae_ai_datacenter.png"
       },
       {
-        title: "Clean Energy Grids",
-        region: "Dubai / AD",
-        expectedReturn: "8.5% APY",
+        title: "Abu Dhabi Multi-Project PPP",
+        region: "Abu Dhabi",
+        expectedReturn: "5-12% ROI",
         status: "up",
-        description: "Solar and hydrogen transition infrastructure projects.",
+        description: "Major infrastructure public-private partnership pipeline across the capital.",
         isoCodes: ["AE"],
         imageUrl: "/assets/images/mock/green_energy_bonds.png"
       },
       {
-        title: "Luxury Real Estate",
-        region: "Dubai",
-        expectedReturn: "11.0% ROI",
-        status: "stable",
-        description: "Ultra-prime waterfront and branded residence developments.",
+        title: "Masdar Solar PV + BESS",
+        region: "National",
+        expectedReturn: "6-12% ROI",
+        status: "up",
+        description: "Gigascale renewable energy initiative integrating Solar PV and Battery Storage.",
         isoCodes: ["AE"]
       }
     ],
-    kpisAndReports: [
+    kpis: [
       { title: "UAE FDI Inflow Growth", impact: "High", value: "+10.3%", rep: "Minister of Economy", org: "UAE Gov" },
       { title: "Tech Sector Investment", impact: "High", value: "$5.2B", rep: "Regional Director", org: "WEF" },
       { title: "Real Estate Transaction Volume", impact: "Medium", value: "120B AED", rep: "DLD Chief", org: "DLD" }
+    ],
+    reports: [
+      {
+        id: "rep-uae-1",
+        title: "Report - Country Card for UAE",
+        description: "Official investment profile: GDP $504B, Growth 4.0%, and strategic sector analysis.",
+        fileUrl: "/files/Report - Country Card for UAE.pdf",
+        org: "Z-Model Research",
+        author: "AI Analyst",
+        date: "Apr 2026"
+      },
+      {
+        id: "rep-2",
+        title: "Accelerating Investment",
+        description: "Strategic audit of UAE industry mobilization and green financing pipelines.",
+        fileUrl: "/files/Accelerating-Investment.pdf",
+        org: "Z-Model Digital",
+        author: "Strategy Dept",
+        date: "Apr 2026"
+      }
     ],
     tableData: [
       { id: "1", entity: "Abu Dhabi Gov", rating: "Aa2", inflow: "+$15B", risk: "Low", yield: "4.0%" },
@@ -175,11 +329,12 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         imageUrl: "/assets/images/mock/green_energy_bonds.png"
       }
     ],
-    kpisAndReports: [
+    kpis: [
       { title: "Federal Funds Rate", impact: "High", value: "5.25%", rep: "Jerome Powell", org: "Federal Reserve" },
       { title: "Venture Capital Volume", impact: "High", value: "$45B", rep: "Regional Head", org: "SVB" },
       { title: "S&P 500 Dividend Yield", impact: "Medium", value: "1.6%", rep: "Chief Analyst", org: "BlackRock" }
     ],
+    reports: [],
     tableData: [
       { id: "1", entity: "Treasury Bonds", rating: "AA+", inflow: "+$120B", risk: "Low", yield: "4.2%" },
       { id: "2", entity: "Nasdaq 100", rating: "N/A", inflow: "+$65B", risk: "High", yield: "12.5%" },
@@ -220,11 +375,12 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         isoCodes: ["CN"]
       }
     ],
-    kpisAndReports: [
+    kpis: [
       { title: "GDP Growth Rate", impact: "High", value: "5.0%", rep: "Pan Gongsheng", org: "PBOC" },
       { title: "Tech R&D Spending", impact: "High", value: "$450B", rep: "Secretary", org: "MOST" },
       { title: "Foreign Direct Investment", impact: "Medium", value: "$160B", rep: "Director", org: "SAFE" }
     ],
+    reports: [],
     tableData: [
       { id: "1", entity: "CSI 300 Index", rating: "N/A", inflow: "-$12B", risk: "High", yield: "8.5%" },
       { id: "2", entity: "Gov Bonds (10Y)", rating: "A+", inflow: "+$45B", risk: "Low", yield: "2.4%" },
@@ -258,10 +414,11 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         imageUrl: "/assets/images/mock/jordan_desalination.png"
       }
     ],
-    kpisAndReports: [
+    kpis: [
       { title: "Tourism Growth", impact: "High", value: "+15.4%", rep: "JTB Strategy", org: "Jordan Tourism Board" },
       { title: "FDI Inflow", impact: "Medium", value: "$1.2B", rep: "Investment Min", org: "MoI" }
     ],
+    reports: [],
     tableData: [
       { id: "1", entity: "Public Treasury Bills", rating: "B+", inflow: "+$500M", risk: "High", yield: "8.2%" },
       { id: "2", entity: "ASE Index", rating: "N/A", inflow: "+$120M", risk: "Medium", yield: "5.5%" }
@@ -294,10 +451,11 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         isoCodes: ["IN"]
       }
     ],
-    kpisAndReports: [
+    kpis: [
       { title: "Quarterly FDI Inflow", impact: "High", value: "$18.5B", rep: "RBI Director", org: "RBI" },
       { title: "MSME Credit Growth", impact: "Medium", value: "+14%", rep: "Finance Min", org: "MoF" }
     ],
+    reports: [],
     tableData: [
       { id: "1", entity: "Nifty 50", rating: "N/A", inflow: "+$12B", risk: "Medium", yield: "12.2%" },
       { id: "2", entity: "Sovereign Green Bonds", rating: "BBB-", inflow: "+$5B", risk: "Low", yield: "7.1%" }
@@ -330,10 +488,11 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         imageUrl: "/assets/images/mock/lithium_mining.png"
       }
     ],
-    kpisAndReports: [
+    kpis: [
       { title: "PIF Assets Under Mgmt", impact: "High", value: "$770B", rep: "H.E. Yasir Al-Rumayyan", org: "PIF" },
       { title: "Non-Oil Revenue Growth", impact: "High", value: "+4.8%", rep: "Finance Min", org: "MoF" }
     ],
+    reports: [],
     tableData: [
       { id: "1", entity: "Saudi Aramco", rating: "A1", inflow: "+$20B", risk: "Low", yield: "4.8%" },
       { id: "2", entity: "TASI Index", rating: "N/A", inflow: "+$8B", risk: "Medium", yield: "3.5%" }
@@ -357,10 +516,11 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         isoCodes: ["RU"]
       }
     ],
-    kpisAndReports: [
+    kpis: [
       { title: "Capital Flight Volume", impact: "High", value: "Decreasing", rep: "CBR Analyst", org: "CBR" },
       { title: "Export Transit Surplus", impact: "Medium", value: "$65B", rep: "Rosatom Chief", org: "Rosatom" }
     ],
+    reports: [],
     tableData: [
       { id: "1", entity: "OFZ Bonds", rating: "Restricted", inflow: "N/A", risk: "Extreme", yield: "16.5%" },
       { id: "2", entity: "MOEX Index", rating: "N/A", inflow: "N/A", risk: "High", yield: "9.2%" }

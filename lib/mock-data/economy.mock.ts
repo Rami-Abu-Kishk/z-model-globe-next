@@ -11,6 +11,24 @@ export interface KpiReport {
   value: string;
   rep: string;
   org: string;
+  insightData?: {
+    org?: string;
+    unit?: string;
+    historicalData: number[];
+    forecastData: number[];
+    labels: {
+      historical: string[];
+      forecast: string[];
+    };
+    analysis: {
+      historical: string;
+      forecast: string;
+    };
+    stats: {
+      historical: { confidence: string; delta: string };
+      forecast: { confidence: string; delta: string };
+    };
+  };
 }
 
 export interface EconomyData {
@@ -63,8 +81,52 @@ export const economyDataStore: Record<string, EconomyData> = {
       }
     ],
     kpisAndReports: [
-      { title: "Global GDP Growth", impact: "High", value: "2.9%", rep: "Kristalina Georgieva", org: "IMF" },
-      { title: "Trade Volume Index", impact: "Medium", value: "104.5", rep: "Ngozi Okonjo-Iweala", org: "WTO" },
+      { 
+        title: "Global GDP Growth", 
+        impact: "High", 
+        value: "2.9%", 
+        rep: "Kristalina Georgieva", 
+        org: "IMF",
+        insightData: {
+          historicalData: [2.4, 2.1, -1.2, 1.8, 2.6],
+          forecastData: [2.9, 3.2, 4.8, 6.5, 8.8],
+          labels: {
+            historical: ['2019', '2020', '2021', '2022', '2023'],
+            forecast: ['2024', '2025', '2026', '2027', '2028 (Est)']
+          },
+          analysis: {
+            historical: "Audit records from 2019-2023 confirm a recovery trajectory following global disruptions. Verification via Z-Model ledger nodes indicates high correlation between regional fiscal stimulus and the current 2.9% baseline.",
+            forecast: "The projected 8.8% growth is driven by three convergent vectors: wide-scale industrial GenAI integration, a massive capital pivot towards decentralized energy grids, and reduced cross-border friction via Z-Model protocols."
+          },
+          stats: {
+            historical: { confidence: "99.8%", delta: "+0.8%" },
+            forecast: { confidence: "94.2%", delta: "+6.2%" }
+          }
+        }
+      },
+      { 
+        title: "Trade Volume Index", 
+        impact: "Medium", 
+        value: "104.5", 
+        rep: "Ngozi Okonjo-Iweala", 
+        org: "WTO",
+        insightData: {
+          historicalData: [98, 102, 95, 101, 104.5],
+          forecastData: [104.5, 108.2, 112.5, 118, 125],
+          labels: {
+            historical: ['2019', '2020', '2021', '2022', '2023'],
+            forecast: ['2024', '2025', '2026', '2027', '2028 (Est)']
+          },
+          analysis: {
+            historical: "Global trade volumes shifted toward digital services and fragmented manufacturing hubs. Regional trade agreements in Asia-Pacific compensated for contractions in Atlantic corridors.",
+            forecast: "Z-Model indicates a 'Great Acceleration' in cross-border settlement speeds as DLT-based trade finance reaches 40% adoption among top-tier exporters by 2026."
+          },
+          stats: {
+            historical: { confidence: "98.1%", delta: "+6.5" },
+            forecast: { confidence: "89.4%", delta: "+20.5" }
+          }
+        }
+      },
       { title: "Global Poverty Reduction Rate", impact: "High", value: "+1.2%", rep: "Ajay Banga", org: "World Bank" },
       { title: "Cross-Border FDI", impact: "Medium", value: "$1.3T", rep: "Rebeca Grynspan", org: "UNCTAD" }
     ]

@@ -6,25 +6,27 @@ import { SectionHeader } from '@/components/shared/SectionHeader';
 import { TrendBadge } from '@/components/shared/TrendBadge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Globe, Building2, User, Zap, Briefcase, Award, ChevronLeft } from 'lucide-react';
+import { TrendingUp, Globe, Building2, User, Zap, Briefcase, Award, ChevronLeft, Download } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import { investmentDataStore, KpiReport, Opportunity } from '@/lib/mock-data/investment.mock';
+import { investmentDataStore, KpiReport, Opportunity, InvestmentReport } from '@/lib/mock-data/investment.mock';
 import { useZModelStore } from '@/lib/store';
+import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { searchableCountries } from '@/lib/mockData';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SharedArticleView } from '@/components/shared/SharedArticleView';
 import { useAIChat } from '../context/AIChatContext';
 import { AiBadge } from '../shared/AiBadge';
+import { KpiInsightOverlay, KpiInsightData } from '@/components/shared/KpiInsightOverlay';
 
 const InvestmentCandlestickChart = dynamic(() => import('./InvestmentCandlestickChart'), { ssr: false });
 const InvestmentChart3D = dynamic(() => import('./InvestmentChart3D'), { ssr: false });
 
 // ── Shared Sub-Components ───────────────────────────────────────────
 
-function InvestmentKpiCard({ kpi }: { kpi: KpiReport }) {
+function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: KpiReport) => void }) {
   const { triggerChatFromCard } = useAIChat();
-  
+
   const handleAiTrigger = (e: React.MouseEvent) => {
     e.stopPropagation();
     triggerChatFromCard({
@@ -36,8 +38,11 @@ function InvestmentKpiCard({ kpi }: { kpi: KpiReport }) {
   };
 
   return (
-    <div className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl hover:shadow-2xl transition-all group overflow-hidden relative flex flex-col h-full">
-      <AiBadge 
+    <div
+      className={`p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl hover:shadow-2xl transition-all group overflow-hidden relative flex flex-col h-full ${onOpen && kpi.insightData ? 'cursor-pointer hover:border-emerald-300' : ''}`}
+      onClick={() => onOpen && kpi.insightData && onOpen(kpi)}
+    >
+      <AiBadge
         onClick={handleAiTrigger}
         className="top-4 right-4 !w-8 !h-8 opacity-0 group-hover:opacity-100 transition-opacity"
         tooltipText="Investment Thesis"
@@ -87,8 +92,8 @@ function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => voi
       onClick={onClick}
     >
       <div className="h-32 w-full relative bg-slate-100">
-        <img 
-          src={op.imageUrl || "/assets/images/branding/fallback.png"} 
+        <img
+          src={op.imageUrl || "/assets/images/branding/fallback.png"}
           alt={op.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           onError={(e) => {
@@ -96,9 +101,9 @@ function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => voi
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-        
-        <AiBadge 
-          onClick={handleAiTrigger} 
+
+        <AiBadge
+          onClick={handleAiTrigger}
           className="top-3 right-3 !w-8 !h-8 opacity-0 group-hover:opacity-100 transition-opacity"
           tooltipText="Generate Thesis"
         />
@@ -122,6 +127,37 @@ function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => voi
   );
 }
 
+function InvestmentReportCard({ report }: { report: InvestmentReport }) {
+  return (
+    <div
+      className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-lg hover:shadow-2xl transition-all group relative flex flex-col h-full cursor-pointer hover:border-emerald-300"
+      onClick={() => window.open(report.fileUrl, '_blank')}
+    >
+      <div className="flex justify-between items-start mb-4">
+        <Badge variant="outline" className="text-[9px] border-slate-200 text-slate-500 font-black uppercase tracking-widest">{report.org}</Badge>
+        <span className="text-[9px] font-black text-slate-400 uppercase">{report.date}</span>
+      </div>
+
+      <div className="flex-1">
+        <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-2 group-hover:text-emerald-700 transition-colors">{report.title}</h4>
+        <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 mb-4 font-medium italic">"{report.description}"</p>
+      </div>
+
+      <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
+            <User className="w-2.5 h-2.5 text-slate-400" />
+          </div>
+          <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{report.author}</p>
+        </div>
+        <div className="text-[10px] font-black text-emerald-600 uppercase tracking-widest flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+          Open PDF <TrendingUp className="w-3 h-3" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Main Module ─────────────────────────────────────────────────────
 
 export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
@@ -131,11 +167,19 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
   const selectedCountry = useZModelStore((s) => s.selectedCountry);
   const setViewState = useZModelStore((s) => s.setViewState);
   const viewState = useZModelStore((s) => s.viewState);
-  
+
   const investmentActiveDetail = useZModelStore((s) => s.investmentActiveDetail);
   const setInvestmentActiveDetail = useZModelStore((s) => s.setInvestmentActiveDetail);
   const investmentSelectedOpportunity = useZModelStore((s) => s.investmentSelectedOpportunity);
   const setInvestmentSelectedOpportunity = useZModelStore((s) => s.setInvestmentSelectedOpportunity);
+
+  const [selectedKpi, setSelectedKpi] = useState<KpiReport | null>(null);
+
+  const handleKpiClick = (kpi: KpiReport) => {
+    if (kpi.insightData) {
+      setSelectedKpi(kpi);
+    }
+  };
 
   const currentDataKey = useMemo(() =>
     selectedCountry && investmentDataStore[selectedCountry] ? selectedCountry : 'GLOBAL',
@@ -149,7 +193,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
       setSelectedCountry(null);
       setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 }); // UAE Coords
       setSelectedCountries([data.bestTarget.iso]);
-      
+
       if (isExpanded) {
         setInvestmentSelectedOpportunity(null);
         setInvestmentActiveDetail('UAE');
@@ -223,9 +267,9 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
               {/* FIRST SECTION: Top 3 Strategic Opportunities */}
               <div className="space-y-6">
                 <SectionHeader
-                  title="Top 3 Global Strategic Opportunities"
+                  title="Top 3 Investment Opportunities"
                   icon={Zap}
-                  subtitle="Real-time volatility tracking and expected yield forecasts"
+                  subtitle="Real-time volatility tracking and expected yield forecasts, updated 24/7"
                 />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {data.topOpportunities.map((op, i) => (
@@ -237,7 +281,11 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   ))}
                 </div>
               </div>
-
+              <SectionHeader
+                title={data.bestTarget.label}
+                icon={Zap}
+                subtitle="Real-time volatility tracking and expected yield forecasts"
+              />
               {/* SECOND SECTION: Hero Target & Multi-Series Chart */}
               <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
                 <div
@@ -246,8 +294,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 >
                   {/* Subtle background image */}
                   <div className="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <img 
-                      src={data.bestTarget.imageUrl || "/assets/images/branding/fallback.png"} 
+                    <img
+                      src={data.bestTarget.imageUrl || "/assets/images/branding/fallback.png"}
                       alt=""
                       className="w-full h-full object-cover"
                       onError={(e) => {
@@ -258,21 +306,13 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
                   {/* Subtle holographic background texture/glow */}
                   <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-100/30 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-200/40 transition-colors z-0" />
-
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex flex-col gap-1 pr-2">
-                        <div className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
-                          <span className="text-[9px] font-black text-emerald-700 uppercase tracking-[0.3em]">
-                            {data.bestTarget.label}
-                          </span>
-                        </div>
                         <h3 className="text-3xl lg:text-5xl font-black text-slate-900 leading-[1.1] tracking-tighter mt-1">
                           {data.bestTarget.name}
                         </h3>
                       </div>
-
                       <div className="bg-slate-900/5 p-3 rounded-2xl border border-slate-900/10 group-hover:border-emerald-300 group-hover:bg-emerald-50 transition-all shrink-0">
                         <Award className="w-6 h-6 text-slate-400 group-hover:text-emerald-600 transition-colors" />
                       </div>
@@ -292,15 +332,14 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                         <span className="text-4xl lg:text-6xl font-black text-slate-900 leading-none tracking-tighter">
                           {data.bestTarget.score}
                         </span>
-                        <span className="text-sm font-bold text-emerald-600">ALPHA</span>
                       </div>
-                      <span className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em] mt-2">
+                      <span className="text-[9px] text-black font-black uppercase tracking-[0.2em] mt-2">
                         Investment Rating
                       </span>
                     </div>
 
                     <div className="flex flex-col items-end gap-2 text-right shrink-0">
-                      <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">
+                      <p className="text-[9px]  font-bold uppercase tracking-widest">
                         Sync: {data.bestTarget.timestamp}
                       </p>
                     </div>
@@ -309,9 +348,9 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
                 <div className="xl:col-span-3 p-6 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl flex flex-col min-h-[400px]">
                   <SectionHeader
-                    title="Sovereign Alpha Benchmarking"
+                    title="Top 5 countries to invest in"
                     icon={TrendingUp}
-                    subtitle="Relative performance of leading sovereign investment targets"
+                    subtitle="Relative performance of leading sovereign investment targets, 24/7 updated"
                   />
                   <div className="flex-1 mt-6 min-h-0">
                     <InvestmentChart3D />
@@ -319,15 +358,38 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               </div>
 
-              {/* BOTTOM SECTION: Institutional KPIs & Audit Table */}
-              <div className="space-y-8">
-                <SectionHeader
-                  title="Sovereign Investment KPIs & Reports"
-                  icon={Award}
-                  subtitle="Consolidated briefings from UNCTAD, Global SWF, and IMF delegates"
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {data.kpisAndReports.map((kpi, idx) => <InvestmentKpiCard key={idx} kpi={kpi} />)}
+              {/* BOTTOM SECTION: Institutional KPIs & Strategic Reports */}
+              <div className="space-y-12">
+                {/* INSTITUTIONAL KPIS SECTION */}
+                <div className="space-y-6">
+                  <SectionHeader
+                    title="Institutional Alpha KPIs"
+                    icon={Award}
+                    subtitle="Consolidated real-time briefings from UNCTAD, Global SWF, and IMF delegates"
+                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {data.kpis.map((kpi, idx) => (
+                      <InvestmentKpiCard
+                        key={idx}
+                        kpi={kpi}
+                        onOpen={handleKpiClick}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* STRATEGIC REPORTS SECTION */}
+                <div className="space-y-6">
+                  <SectionHeader
+                    title="Strategic Intelligence Reports"
+                    icon={Building2}
+                    subtitle="Proprietary and institutional deep-dive research documents available for review"
+                  />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {data.reports.map((report, idx) => (
+                      <InvestmentReportCard key={idx} report={report} />
+                    ))}
+                  </div>
                 </div>
 
                 <div className="p-4 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl overflow-x-auto">
@@ -382,22 +444,16 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
               <SharedArticleView
                 onBack={() => setInvestmentActiveDetail('NONE')}
                 article={{
-                  title: "United Arab Emirates: The Global Alpha Hub",
+                  title: "Executive Brief: UAE Investment Landscape",
                   subtitle: "Sovereign Strategic Briefing • 2026",
                   category: "Investment Strategy",
                   badgeText: "TOP STRATEGIC TARGET",
                   badgeClassName: "bg-emerald-600",
                   imageUrl: "/assets/images/mock/uae_investment_hero.png",
-                  summary: "The UAE's evolution into a premier global investment destination is driven by strategic foresight, world-class infrastructure, and a robust regulatory framework tailored for the next era of global capital.",
+                  summary: data.bestTarget.pdfReportData?.summary || "The UAE's evolution into a premier global investment destination is driven by strategic foresight, world-class infrastructure, and a robust regulatory framework.",
                   content: (
-                    <div className="space-y-8 mt-12">
-                      {[
-                        { title: "Tax-Free Environment", detail: "Zero corporate tax in strategic sectors and a network of 40+ specialized free zones offering 100% foreign ownership and full capital repatriation." },
-                        { title: "Golden Visa & Residency", detail: "Long-term 10-year residency programs attracting top-tier talent, entrepreneurs, and high-net-worth investors, ensuring stability for family and capital." },
-                        { title: "Strategic Architecture", detail: "Unparalleled logistics via DP World's global port network and Emirates/Etihad's aviation dominance, seamlessly linking East, West, and Africa." },
-                        { title: "Sovereign AI Leadership", detail: "First nation with a dedicated Minister for AI, home to G42's massive ecosystem and the cutting-edge Falcon Large Language Models." },
-                        { title: "Institutional Safety", detail: "A stable political environment with world-class legal frameworks (DIFC/ADGM) offering English Common Law protections for investors." }
-                      ].map((point, i) => (
+                    <div className="space-y-8 mt-12 pb-12">
+                      {data.bestTarget.pdfReportData?.highlights.map((point, i) => (
                         <div key={i} className="flex gap-6 group">
                           <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                           <div>
@@ -409,6 +465,23 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                     </div>
                   )
                 }}
+                actions={
+                  <Button
+                    variant="outline"
+                    className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = data.bestTarget.pdfReportData?.downloadUrl || '';
+                      link.download = 'UAE_Country_Card.pdf';
+                      link.target = '_blank';
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }}
+                  >
+                    <Download className="w-4 h-4" /> Download report
+                  </Button>
+                }
               />
             </div>
           ) : (
@@ -433,8 +506,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                         <div>
                           <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-2">Alpha Strategic Positioning</h4>
                           <p className="text-[16px] text-slate-600 font-medium leading-loose">
-                            This opportunity represents a cornerstore of the current sovereign investment landscape in {investmentSelectedOpportunity!.region}. 
-                            Our real-time intelligence suggests that the underlying assets are entering a period of significant appreciation 
+                            This opportunity represents a cornerstore of the current sovereign investment landscape in {investmentSelectedOpportunity!.region}.
+                            Our real-time intelligence suggests that the underlying assets are entering a period of significant appreciation
                             driven by favorable regulatory shifts and institutional capital rotation.
                           </p>
                         </div>
@@ -444,8 +517,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                         <div>
                           <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-2">Institutional Sentiment & Liquidity</h4>
                           <p className="text-[16px] text-slate-600 font-medium leading-loose">
-                            Major global SWFs and institutional allocators have identified this sector as a primary growth vector. 
-                            The expected liquidity profile remains robust, offering a high-conviction entry point for tactical asset allocation 
+                            Major global SWFs and institutional allocators have identified this sector as a primary growth vector.
+                            The expected liquidity profile remains robust, offering a high-conviction entry point for tactical asset allocation
                             targeting long-term sovereign wealth preservation and growth.
                           </p>
                         </div>
@@ -457,6 +530,33 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
             </div>
           )}
         </AnimatePresence>
+
+        {/* Reusable KPI Deep-Dive Overlay */}
+        <KpiInsightOverlay
+          isOpen={!!selectedKpi}
+          onClose={() => setSelectedKpi(null)}
+          kpi={selectedKpi ? {
+            title: selectedKpi.title,
+            value: selectedKpi.value,
+            org: selectedKpi.insightData?.org || selectedKpi.org || 'Z-Model Digital Core',
+            unit: selectedKpi.insightData?.unit,
+            historicalData: selectedKpi.insightData?.historicalData || [],
+            forecastData: selectedKpi.insightData?.forecastData || [],
+            labels: selectedKpi.insightData?.labels || { historical: [], forecast: [] },
+            analysis: selectedKpi.insightData?.analysis || { historical: '', forecast: '' },
+            stats: selectedKpi.insightData?.stats || {
+              historical: { confidence: '', delta: '' },
+              forecast: { confidence: '', delta: '' }
+            }
+          } as KpiInsightData : null}
+          loadingPhrases={[
+            "Initializing Sovereign Investment Audit...",
+            "Synthesizing Capital Flow Vectors...",
+            "Analyzing Institutional Sentiment Matrix...",
+            "Calibrating Yield Projections...",
+            "Finalizing AI Synthesis..."
+          ]}
+        />
       </div>
     );
   }
@@ -515,8 +615,12 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
           <div className="space-y-4 pt-2">
             <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Institutional Pulse</h4>
             <div className="space-y-3">
-              {data.kpisAndReports.slice(0, 3).map((kpi, idx) => (
-                <div key={idx} className="flex flex-col p-4 bg-white/60 rounded-2xl border border-white shadow-sm">
+              {data.kpis.slice(0, 3).map((kpi, idx) => (
+                <div
+                  key={idx}
+                  className={`flex flex-col p-4 bg-white/60 rounded-2xl border border-white shadow-sm transition-all ${kpi.insightData ? 'cursor-pointer hover:border-emerald-200 hover:shadow-md' : ''}`}
+                  onClick={() => kpi.insightData && handleKpiClick(kpi)}
+                >
                   <div className="flex justify-between items-start mb-2">
                     <span className="text-lg font-black text-slate-900">{kpi.value}</span>
                     <Badge variant="outline" className="text-[8px] border-slate-200 text-slate-500 uppercase">{kpi.org}</Badge>
@@ -525,6 +629,33 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               ))}
             </div>
+
+            {/* Reusable KPI Deep-Dive Overlay */}
+            <KpiInsightOverlay
+              isOpen={!!selectedKpi}
+              onClose={() => setSelectedKpi(null)}
+              kpi={selectedKpi ? {
+                title: selectedKpi.title,
+                value: selectedKpi.value,
+                org: selectedKpi.insightData?.org || selectedKpi.org || 'Z-Model Digital Core',
+                unit: selectedKpi.insightData?.unit,
+                historicalData: selectedKpi.insightData?.historicalData || [],
+                forecastData: selectedKpi.insightData?.forecastData || [],
+                labels: selectedKpi.insightData?.labels || { historical: [], forecast: [] },
+                analysis: selectedKpi.insightData?.analysis || { historical: '', forecast: '' },
+                stats: selectedKpi.insightData?.stats || {
+                  historical: { confidence: '', delta: '' },
+                  forecast: { confidence: '', delta: '' }
+                }
+              } as KpiInsightData : null}
+              loadingPhrases={[
+                "Initializing Sovereign Investment Audit...",
+                "Synthesizing Capital Flow Vectors...",
+                "Analyzing Institutional Sentiment Matrix...",
+                "Calibrating Yield Projections...",
+                "Finalizing AI Synthesis..."
+              ]}
+            />
           </div>
         </div>
       </ScrollArea>

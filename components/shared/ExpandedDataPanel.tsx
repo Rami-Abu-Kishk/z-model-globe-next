@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
-import { X, Layers, Search, ChevronDown, Minimize2 } from 'lucide-react';
+import { X, Layers, Search, ChevronDown, Minimize2, ArrowLeft } from 'lucide-react';
 import { searchableCountries } from '@/lib/mockData';
 
 import { EconomyModule } from '@/components/modules/EconomyModule';
@@ -187,7 +187,7 @@ export function ExpandedDataPanel() {
                       className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm cursor-pointer"
                       aria-label="Go back"
                     >
-                      <Minimize2 className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                      <ArrowLeft className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                     </motion.button>
                   )}
                 </AnimatePresence>

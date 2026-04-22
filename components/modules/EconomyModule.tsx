@@ -256,11 +256,11 @@ function KpiReportCard({ kpi, onOpen }: { kpi: KpiReport, onOpen: (kpi: KpiRepor
 
   return (
     <div
-      className="relative h-[280px] w-full cursor-pointer group perspective-1000"
+      className="relative h-[200px] w-full cursor-pointer group perspective-1000"
       onClick={() => onOpen(kpi)}
     >
       <div className="w-full h-full transform transition-transform duration-500 group-hover:scale-[1.02]">
-        <div className="absolute inset-0 p-6 backdrop-blur-2xl border border-white/60 bg-white/40 rounded-2xl shadow-xl hover:shadow-2xl flex flex-col h-full transition-all duration-300 group-hover:bg-white/60">
+        <div className="absolute inset-0 p-6 backdrop-blur-2xl border border-white/60 bg-white/40 rounded-2xl shadow-xl hover:shadow-2xl flex flex-col transition-all duration-300 group-hover:bg-white/60">
           <AiBadge 
             className="-bottom-4 cursor-pointer left-1/2 -translate-x-1/2" 
             onClick={handleAiTrigger}
@@ -275,23 +275,20 @@ function KpiReportCard({ kpi, onOpen }: { kpi: KpiReport, onOpen: (kpi: KpiRepor
               <Clock className="w-3 h-3 text-slate-400" />
               <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-none">Last Update: 2h ago</span>
             </div>
-            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{kpi.org}</span>
+            {(kpi.org.toLowerCase().includes('world bank') || kpi.rep.toLowerCase().includes('world bank')) ? (
+              <div className="w-12 h-12 rounded-2xl bg-white shadow-xl flex items-center justify-center border border-slate-100 -mt-2 -mr-2">
+                <img src="/worldBank.svg" alt="World Bank" className="w-9 h-9 object-contain" />
+              </div>
+            ) : (
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{kpi.org}</span>
+            )}
           </div>
 
-          <div className="flex-1 relative z-10">
+          <div className="relative z-10">
             <h3 className="text-3xl font-black mb-2 tracking-tighter text-slate-900">{kpi.value}</h3>
             <p className="text-[12px] font-bold leading-snug uppercase tracking-tight transition-colors text-slate-600 group-hover:text-slate-900">
               {kpi.title.replace(/\s*Forecast\s*/gi, '')}
             </p>
-          </div>
-
-          <div className="pt-4 border-t border-slate-200/60 flex items-center justify-between relative z-10">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                <Globe className="w-3 h-3 text-slate-400" />
-              </div>
-              <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{kpi.rep}</p>
-            </div>
           </div>
         </div>
       </div>
@@ -305,8 +302,20 @@ function InvestmentReportCard({ report }: { report: InvestmentReport }) {
       className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-lg hover:shadow-2xl transition-all group relative flex flex-col h-full cursor-pointer hover:border-emerald-300"
       onClick={() => window.open(report.fileUrl, '_blank')}
     >
-      <div className="flex justify-between items-start mb-4">
-        <span className="px-2 py-0.5 rounded-full border border-slate-200 text-slate-500 text-[9px] font-black uppercase tracking-widest">{report.org}</span>
+      <div className="flex justify-between items-start mb-6">
+        {(report.org.toLowerCase().includes('world bank') || report.author.toLowerCase().includes('world bank')) ? (
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-white shadow-xl flex items-center justify-center border border-slate-100">
+              <img src="/worldBank.svg" alt="World Bank" className="w-9 h-9 object-contain" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[11px] font-black text-slate-900 uppercase tracking-widest leading-none">World Bank</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase mt-1">Official Intelligence</span>
+            </div>
+          </div>
+        ) : (
+          <span className="px-2 py-0.5 rounded-full border border-slate-200 text-slate-500 text-[9px] font-black uppercase tracking-widest">{report.org}</span>
+        )}
         <span className="text-[9px] font-black text-slate-400 uppercase">{report.date}</span>
       </div>
 

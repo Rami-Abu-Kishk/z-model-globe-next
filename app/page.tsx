@@ -31,7 +31,7 @@ import { AIChatBot } from '@/components/chat/AIChatBot';
 export default function Home() {
   return (
     <main className="fixed inset-0 w-screen h-screen bg-[#faf9f6] overflow-hidden">
-      
+
       {/* ── LAYER 1 (z-0): React-Globe.gl wrapper ── */}
       <div className="absolute inset-0 z-0">
         <HologramEarth />
@@ -41,7 +41,7 @@ export default function Home() {
       <div className="absolute inset-0 z-10 pointer-events-none">
         <Canvas
           // CRITICAL: Force the actual WebGL canvas element to ignore mouse clicks
-          style={{ pointerEvents: 'none' }} 
+          style={{ pointerEvents: 'none' }}
           camera={{ position: [0, 7, 11], fov: 45 }}
           gl={{
             antialias: true,
@@ -55,7 +55,7 @@ export default function Home() {
             <pointLight position={[10, 10, 10]} intensity={3} color="#ffffff" />
             <pointLight position={[-10, -5, -10]} intensity={1} color="#c7ddf9" />
             <spotLight position={[0, 15, 8]} angle={0.3} penumbra={1} intensity={3} castShadow={false} />
-            
+
             {/* Removed OrbitalRing */}
 
             <CameraController />
@@ -74,7 +74,7 @@ export default function Home() {
         <DetailDrawer />
         <ExpandedDataPanel />
 
-        <div 
+        <div
           className="absolute top-8 left-8 pointer-events-auto select-none cursor-pointer"
           onClick={() => useZModelStore.getState().resetView()}
         >
@@ -93,11 +93,11 @@ export default function Home() {
           </span>
         </div>
       </div>
-          
+
       {/* ── AI ChatBot ── */}
       <div className="fixed inset-0 z-[10000] pointer-events-none">
         <div className="absolute inset-0 pointer-events-none">
-           <AIChatBot />
+          <AIChatBot />
         </div>
       </div>
     </main>

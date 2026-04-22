@@ -35,13 +35,47 @@ export function ModuleNav() {
   const setFocusedCardId = useZModelStore((s) => s.setFocusedCardId);
   const setViewState = useZModelStore((s) => s.setViewState);
 
+
+
   return (
+    
     <motion.div
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ type: "spring", damping: 25, stiffness: 120, delay: 0.5 }}
       className="absolute left-8 top-1/2 -translate-y-1/2 z-50 pointer-events-auto"
     >
+
+
+    <div className="flex flex-col gap-3">
+        <button
+
+          className={`
+            group relative flex items-center justify-center
+            w-14 h-14 rounded-2xl
+            bg-white/40 backdrop-blur-2xl 
+            border border-white/60
+            shadow-[0_8px_32px_rgba(0,0,0,0.1)]
+            transition-all duration-300
+            hover:bg-white/60 hover:scale-105 active:scale-95 cursor-pointer
+            m-3
+          `}
+
+        >
+          <div className="relative">
+           <motion.div>
+              <h1 className="hover:bg-white/60 hover:scale-105 active:scale-95 cursor-pointer" >Ar</h1>
+           </motion.div>
+          </div>
+
+          {/* Tooltip */}
+          <div className="absolute left-20 px-3 py-1 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 -translate-x-2 group-hover:translate-x-0 whitespace-nowrap shadow-xl border border-white/10 flex items-center gap-2">
+            Switch Language Ar/En
+          </div>
+        </button>
+      </div>
+
+
       <div className="flex flex-col items-center gap-2 p-1.5 bg-white/20 backdrop-blur-2xl border border-white/40 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
         {NAV_ITEMS.map((item, index) => {
           const isActive = activeModule === item.id;

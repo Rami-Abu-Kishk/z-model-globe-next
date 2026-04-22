@@ -53,11 +53,11 @@ function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: Kpi
 
       <div className="flex justify-between items-start mb-6 relative z-10">
         <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{kpi.org}</span>
-        {(kpi.org.toLowerCase().includes('world bank') || kpi.rep.toLowerCase().includes('world bank')) && (
+        {/* {(kpi.org.toLowerCase().includes('world bank') || kpi.rep.toLowerCase().includes('world bank')) && (
            <div className="w-12 h-12 rounded-2xl bg-white shadow-xl flex items-center justify-center border border-slate-100 -mt-2 -mr-2">
              <img src="/worldBank.svg" alt="World Bank" className="w-9 h-9 object-contain" />
            </div>
-        )}
+        )} */}
       </div>
 
       <div className="flex-1 relative z-10">
@@ -351,7 +351,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   </div>
 
                   <div className="mt-8 flex items-end justify-between border-t border-slate-200/50 pt-6 relative z-10">
-                    <div className="flex flex-col min-w-0">
+                    {/* <div className="flex flex-col min-w-0">
                       <div className="flex items-baseline gap-2">
                         <span className="text-4xl lg:text-6xl font-black text-slate-900 leading-none tracking-tighter">
                           {data.bestTarget.score}
@@ -360,7 +360,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                       <span className="text-[9px] text-black font-black uppercase tracking-[0.2em] mt-2">
                         Investment Rating
                       </span>
-                    </div>
+                    </div> */}
 
                     <div className="flex flex-col items-end gap-2 text-right shrink-0">
                       <p className="text-[9px]  font-bold uppercase tracking-widest">
@@ -387,7 +387,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 {/* INSTITUTIONAL KPIS SECTION */}
                 <div className="space-y-6">
                   <SectionHeader
-                    title="Institutional Alpha KPIs"
+                    title="Key Performance Indicators"
                     icon={Award}
                     subtitle="Consolidated real-time briefings from UNCTAD, Global SWF, and IMF delegates"
                   />

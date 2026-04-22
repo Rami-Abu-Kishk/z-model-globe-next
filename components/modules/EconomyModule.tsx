@@ -435,7 +435,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
         {/* Global Organization KPIs */}
         <div className="space-y-8 mt-4">
           <SectionHeader
-            title="Sovereign KPIs"
+            title="Key Performance Indicators"
             icon={LayoutGrid}
             subtitle="Real-time audits from IMF, World Bank, and WTO delegates"
           />

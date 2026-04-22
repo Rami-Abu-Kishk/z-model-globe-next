@@ -228,7 +228,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               </section>
 
-              <section className="space-y-6">
+              {/* <section className="space-y-6">
                 <SectionHeader 
                   title="Intelligence Briefs" 
                   icon={Newspaper} 
@@ -257,7 +257,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                     ))}
                   </div>
                 </div>
-              </section>
+              </section> */}
 
               <section className="space-y-6">
                 <SectionHeader 

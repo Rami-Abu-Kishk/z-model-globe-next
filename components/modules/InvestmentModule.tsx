@@ -6,7 +6,7 @@ import { SectionHeader } from '@/components/shared/SectionHeader';
 import { TrendBadge } from '@/components/shared/TrendBadge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Globe, Building2, User, Zap, Briefcase, Award, ChevronLeft, Download, ExternalLink } from 'lucide-react';
+import { TrendingUp, Globe, Building2, User, Zap, Briefcase, Award, ChevronLeft, Download, ExternalLink, FileText, ArrowRight } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { investmentDataStore, KpiReport, Opportunity, InvestmentReport } from '@/lib/mock-data/investment.mock';
 import { useZModelStore } from '@/lib/store';
@@ -136,7 +136,7 @@ function InvestmentReportCard({ report, onClick }: { report: InvestmentReport, o
             </div>
             <div className="flex flex-col">
               <span className="text-[11px] font-black text-slate-900 uppercase tracking-widest leading-none">World Bank</span>
-              <span className="text-[9px] font-bold text-slate-400 uppercase mt-1">Strategic Audit</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase mt-1">Chief Economist Unit</span>
             </div>
           </div>
         ) : (
@@ -150,15 +150,11 @@ function InvestmentReportCard({ report, onClick }: { report: InvestmentReport, o
         <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 mb-4 font-medium italic">"{report.description}"</p>
       </div>
 
-      <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-            <User className="w-2.5 h-2.5 text-slate-400" />
-          </div>
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{report.author}</p>
-        </div>
-        <div className="text-[10px] font-black text-emerald-600 uppercase tracking-widest flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          Open PDF <TrendingUp className="w-3 h-3" />
+      <div className="pt-4 border-t border-slate-100 flex items-center justify-center">
+        <div className="w-full py-2.5 px-2 rounded-xl bg-slate-50 group-hover:bg-emerald-50 flex items-center justify-center gap-3 transition-all border border-transparent group-hover:border-emerald-100">
+          <FileText className="w-5 h-5 text-emerald-600" />
+          <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Open PDF Report</span>
+          <ArrowRight className="w-5 h-5 text-slate-900" />
         </div>
       </div>
     </div>

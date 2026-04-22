@@ -30,6 +30,7 @@ export interface BaseArticle {
     icon?: React.ReactNode;
   };
   links?: Array<{ label: string; url: string }>;
+  aiInsights?: Record<string, string | React.ReactNode>;
 }
 
 interface SharedArticleViewProps {

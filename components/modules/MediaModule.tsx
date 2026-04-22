@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from '@/lib/utils';
 import { SharedArticleView } from '@/components/shared/SharedArticleView';
+import { MediaArticleView } from '@/components/shared/MediaArticleView';
 import { useZModelStore } from '@/lib/store';
 import { useAIChat } from '../context/AIChatContext';
 import { AiBadge } from '../shared/AiBadge';
@@ -102,7 +103,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
       <div className="flex flex-col gap-8 pb-4 relative min-h-[700px]">
         {/* TOP: 3-Column Performance Grid - Hidden when an article is focused */}
         <AnimatePresence>
-          {!mediaSelectedArticle && (
+          {/* {!mediaSelectedArticle && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -122,7 +123,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               ))}
             </motion.div>
-          )}
+          )} */}
         </AnimatePresence>
         {/* VIDEO: Signal Intelligence Terminal */}
         {!mediaSelectedArticle && (
@@ -222,7 +223,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                   
                   <ScrollArea className="flex-1">
                     <div className="p-4 space-y-4">
-                      {data.breaking.map((news) => (
+                      {data.breaking.map((news, i) => (
                         <div 
                           key={news.id} 
                           onClick={() => handleNewsClick(news)}
@@ -234,11 +235,13 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                                <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
                              </div>
                              <div className="flex items-center gap-2">
-                               <AiBadge 
-                                 onClick={(e) => handleAiTrigger(e, news)}
-                                 className="!relative !w-6 !h-6 !static border-rose-100 bg-rose-50/30 shadow-none hover:bg-rose-50 hover:scale-110"
-                                 tooltipText="Sentiment Audit"
-                               />
+                               {i === 0 && (
+                                 <AiBadge 
+                                   onClick={(e) => handleAiTrigger(e, news)}
+                                   className="!relative !w-6 !h-6 !static border-rose-100 bg-rose-50/30 shadow-none hover:bg-rose-50 hover:scale-110"
+                                   tooltipText="Sentiment Audit"
+                                 />
+                               )}
                                <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-rose-500" />
                              </div>
                           </div>
@@ -360,7 +363,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               </motion.div>
             ) : (
-              <SharedArticleView
+              <MediaArticleView
                 article={{
                   title: mediaSelectedArticle.headline,
                   subtitle: `${mediaSelectedArticle.time} • ${mediaSelectedArticle.category}`,
@@ -374,7 +377,8 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                     description: 'Primary Source',
                     initial: mediaSelectedArticle.source[0]
                   },
-                  links: mediaSelectedArticle.links
+                  links: mediaSelectedArticle.links,
+                  aiInsights: mediaSelectedArticle.aiInsights
                 }}
                 onBack={handleBack}
               />

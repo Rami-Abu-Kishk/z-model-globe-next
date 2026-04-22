@@ -96,6 +96,9 @@ interface ZModelStore {
   activeEconomyTrend: any | null;
   setActiveEconomyTrend: (trend: any | null) => void;
 
+  politicalSelectedCase: any | null;
+  setPoliticalSelectedCase: (item: any | null) => void;
+
   // ── Master reset ─────────────────────────────────────────────────
   resetView: () => void;
 }
@@ -186,6 +189,9 @@ export const useZModelStore = create<ZModelStore>((set) => ({
   activeEconomyTrend: null,
   setActiveEconomyTrend: (trend) => set({ activeEconomyTrend: trend }),
 
+  politicalSelectedCase: null,
+  setPoliticalSelectedCase: (item) => set({ politicalSelectedCase: item }),
+
   // ── Master Reset ──────────────────────────────────────────────────
   resetView: () =>
     set({
@@ -202,9 +208,9 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       mediaCategoryFilter: 'all',
       mediaActiveNewsId: null,
       mediaSelectedArticle: null,
-      investmentActiveDetail: 'NONE',
       investmentSelectedOpportunity: null,
       activeEconomyTrend: null,
+      politicalSelectedCase: null,
       autoRotate: true,
     }),
 }));

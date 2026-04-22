@@ -47,10 +47,11 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     setSelectedCountry, 
     setSelectedCountries,
     selectedCountry,
-    setActiveEconomyTrend
+    setActiveEconomyTrend,
+    politicalSelectedCase,
+    setPoliticalSelectedCase
   } = useZModelStore();
   
-  const [selectedItem, setSelectedItem] = useState<PoliticalCase | RegionalCrisis | null>(null);
   const [selectedKpi, setSelectedKpi] = useState<PoliticalKpi | null>(null);
   const { triggerChatFromCard } = useAIChat();
 
@@ -85,7 +86,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     }
     
     if (isExpanded) {
-      setSelectedItem(crisis);
+      setPoliticalSelectedCase(crisis);
     }
   };
 
@@ -98,7 +99,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     }
     
     if (isExpanded) {
-      setSelectedItem(pc);
+      setPoliticalSelectedCase(pc);
     }
   };
 
@@ -109,7 +110,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
   };
 
   const handleBack = () => {
-    setSelectedItem(null);
+    setPoliticalSelectedCase(null);
     setSelectedCountries([]);
     setActiveEconomyTrend(null);
   };
@@ -118,7 +119,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     return (
       <div className="flex flex-col gap-12 pb-12 relative min-h-[700px]">
         <AnimatePresence mode="wait">
-          {!selectedItem ? (
+          {!politicalSelectedCase ? (
             <motion.div 
               key="main-dashboard"
               initial={{ opacity: 0, scale: 0.98 }}
@@ -268,7 +269,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                   {data.kpis.map((kpi, idx) => (
                     <div 
                       key={idx} 
-                      className="p-5 bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl shadow-xl flex flex-col justify-between group hover:border-sky-400/50 transition-all relative overflow-hidden cursor-pointer"
+                      className="p-5 bg-white/40 backdrop-blur-xl border border-white/60 rounded-3xl shadow-xl flex flex-col justify-between group hover:border-sky-400/50 transition-all relative cursor-pointer"
                       onClick={() => handleKpiClick(kpi)}
                     >
                       <AiBadge 
@@ -281,10 +282,10 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                             value: kpi.value
                           });
                         }}
-                        className="absolute bottom-4 right-4 cursor-pointer z-20"
+                        className="absolute -bottom-4 left-1/2 -translate-x-1/2 cursor-pointer z-20"
                         tooltipText="AI Deep Dive"
                       />
-                      <div className="relative z-10">
+                      <div className="relative z-10 flex flex-col justify-between h-full">
                         <div className="flex items-center justify-between mb-4">
                           <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{kpi.label}</p>
                           <div className={`p-1.5 rounded-lg ${kpi.trend === 'up' ? 'bg-emerald-500/10 text-emerald-600' : 'bg-rose-500/10 text-rose-600'}`}>
@@ -293,7 +294,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                         </div>
                         <h3 className="text-3xl font-black text-slate-900 tracking-tighter mb-4">{kpi.value}</h3>
                         
-                        {kpi.representative && (
+                        {/* {kpi.representative && (
                           <div className="pt-4 border-t border-slate-200/50 flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-500">
                               <Users className="w-4 h-4" />
@@ -303,7 +304,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                               <span className="text-[9px] text-slate-500 font-bold uppercase mt-0.5">{kpi.representative.org}</span>
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   ))}
@@ -313,24 +314,24 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
           ) : (
             <SharedArticleView
               article={{
-                title: 'name' in selectedItem ? selectedItem.name : `${selectedItem.region} Conflict Alert`,
-                subtitle: `${'region' in selectedItem ? selectedItem.region : 'Global'} • ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`,
-                category: 'severity' in selectedItem ? selectedItem.severity : 'Conflict',
-                badgeText: 'severity' in selectedItem ? `Priority: ${selectedItem.severity}` : `Impact: ${selectedItem.uaeImpact}%`,
-                badgeClassName: 'severity' in selectedItem ? (selectedItem.severity === 'Critical' ? "bg-rose-500" : "bg-sky-500") : "bg-amber-500",
-                imageUrl: selectedItem.imageUrl,
-                summary: selectedItem.summary || ('description' in selectedItem ? selectedItem.description : selectedItem.details),
+                title: 'name' in politicalSelectedCase ? politicalSelectedCase.name : `${politicalSelectedCase.region} Conflict Alert`,
+                subtitle: `${'region' in politicalSelectedCase ? politicalSelectedCase.region : 'Global'} • ${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`,
+                category: 'severity' in politicalSelectedCase ? politicalSelectedCase.severity : 'Conflict',
+                badgeText: 'severity' in politicalSelectedCase ? `Priority: ${politicalSelectedCase.severity}` : `Impact: ${politicalSelectedCase.uaeImpact}%`,
+                badgeClassName: 'severity' in politicalSelectedCase ? (politicalSelectedCase.severity === 'Critical' ? "bg-rose-500" : "bg-sky-500") : "bg-amber-500",
+                imageUrl: politicalSelectedCase.imageUrl,
+                summary: politicalSelectedCase.summary || ('description' in politicalSelectedCase ? politicalSelectedCase.description : politicalSelectedCase.details),
                 source: {
                   name: 'Geopolitical Intelligence Report',
                   description: 'Global Monitoring Division',
                 }
               }}
               onBack={handleBack}
-              extraContent={'involvedParties' in selectedItem && (
+              extraContent={'involvedParties' in politicalSelectedCase && (
                 <div className="space-y-4">
                   <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Involved Parties & Stakeholders</h5>
                   <div className="flex flex-wrap gap-2">
-                    {selectedItem.involvedParties.map((party, i) => (
+                    {politicalSelectedCase.involvedParties.map((party: string, i: number) => (
                       <Badge key={i} variant="secondary" className="bg-slate-100 text-slate-600 font-bold px-3 py-1 border-none uppercase text-[9px]">
                         {party}
                       </Badge>

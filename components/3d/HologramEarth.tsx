@@ -171,31 +171,20 @@ export const HologramEarth = forwardRef((props, ref) => {
   }));
 
   // Memoize layer data to prevent WebGL stutters during typing in search
+  const hasAnySelection = !!(selectedCountry || selectedCountries.length > 0);
+
   const pointsData = useMemo(() => {
     const isInvestment = activeModule === 'investment';
-    const hasSelection = selectedCountry || selectedCountries.length > 0;
-    return (isInvestment && !hasSelection) ? investmentGlobePoints : [];
-  }, [activeModule, selectedCountry, selectedCountries]);
-  const ringsData = useMemo(() => activeModule === 'political' ? politicalCrisisRings : [], [activeModule]);
+    return (isInvestment && !hasAnySelection) ? investmentGlobePoints : [];
+  }, [activeModule, hasAnySelection]);
+
+  const ringsData = useMemo(() => (activeModule === 'political' && !hasAnySelection) ? politicalCrisisRings : [], [activeModule, hasAnySelection]);
+
   const labelsData = useMemo(() => [], []);
-  const selectionLabelData = useMemo(() => {
-    if (!selectedCountry) return [];
-    const country = searchableCountries.find(c => c.iso === selectedCountry);
-    if (!country) return [];
-
-    return [{
-      lat: country.lat,
-      lng: country.lng,
-      label: country.name,
-      iso: country.iso,
-      type: 'selection'
-    }];
-  }, [selectedCountry]);
-
-  // Combine intelligence points and the active selection label
-  const combinedHtmlData = useMemo(() => [...pointsData, ...selectionLabelData], [pointsData, selectionLabelData]);
 
   const arcsData = useMemo(() => {
+    if (hasAnySelection) return []; // Hide clutter when focusing on a country
+
     if (activeModule === 'companies') return groupsArcs;
     if (activeModule === 'political') return politicalArcs;
 
@@ -231,7 +220,24 @@ export const HologramEarth = forwardRef((props, ref) => {
     }
 
     return [];
-  }, [activeModule, mediaCategoryFilter, mediaActiveNewsId]);
+  }, [activeModule, mediaCategoryFilter, mediaActiveNewsId, hasAnySelection]);
+
+  const selectionLabelData = useMemo(() => {
+    if (!selectedCountry) return [];
+    const country = searchableCountries.find(c => c.iso === selectedCountry);
+    if (!country) return [];
+
+    return [{
+      lat: country.lat,
+      lng: country.lng,
+      label: country.name,
+      iso: country.iso,
+      type: 'selection'
+    }];
+  }, [selectedCountry]);
+
+  // Combine intelligence points and the active selection label
+  const combinedHtmlData = useMemo(() => [...pointsData, ...selectionLabelData], [pointsData, selectionLabelData]);
 
   // Handle Abu Dhabi Gov camera lock
   useEffect(() => {
@@ -267,6 +273,9 @@ export const HologramEarth = forwardRef((props, ref) => {
         }}
         backgroundColor="rgba(0,0,0,0)"
         rendererConfig={{ antialias: true, alpha: true }}
+        showAtmosphere={!hasAnySelection}
+        atmosphereColor="#3b82f6"
+        atmosphereAltitude={0.15}
         globeMaterial={globeMaterial}
         polygonsData={countriesGeoJson}
         pointsData={pointsData}
@@ -426,6 +435,7 @@ export const HologramEarth = forwardRef((props, ref) => {
             }
           }
 
+          if (hasAnySelection) return 0;
           return 0.01;
         }}
         polygonsTransitionDuration={300}
@@ -462,10 +472,11 @@ export const HologramEarth = forwardRef((props, ref) => {
           //   return 'rgba(239, 68, 68, 0.4)'; // Rose 500 at 40%
           // }
 
+          if (hasAnySelection) return 'rgba(51, 65, 85, 0.04)'; // Extremely pale ghost when something else is selected
           return 'rgba(51, 65, 85, 0.25)'; // Softer Slate/Navy countries
         }}
-        polygonSideColor={() => 'rgba(34, 211, 238, 0.2)'}
-        polygonStrokeColor={() => 'rgba(255, 255, 255, 0.6)'}
+        polygonSideColor={() => hasAnySelection ? 'rgba(34, 211, 238, 0)' : 'rgba(34, 211, 238, 0.2)'}
+        polygonStrokeColor={() => hasAnySelection ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.6)'}
         polygonLabel={(d: any) => {
           const p = d.properties;
           const iso = (p.ISO_A2 || p.iso_a2 || p['ISO3166-1-Alpha-2'] || '').toUpperCase();

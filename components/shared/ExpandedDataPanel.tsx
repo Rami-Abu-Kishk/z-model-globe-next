@@ -62,9 +62,12 @@ export function ExpandedDataPanel() {
   const setMediaActiveNewsId = useZModelStore(s => s.setMediaActiveNewsId);
   const setMediaSelectedArticle = useZModelStore(s => s.setMediaSelectedArticle);
   const setActiveEconomyTrend = useZModelStore(s => s.setActiveEconomyTrend);
+  const politicalSelectedCase = useZModelStore(s => s.politicalSelectedCase);
+  const setPoliticalSelectedCase = useZModelStore(s => s.setPoliticalSelectedCase);
 
   const showBackButton = (focusedCardId === 'investment' && investmentActiveDetail !== 'NONE') || 
-                       (focusedCardId === 'media' && mediaActiveNewsId !== null);
+                       (focusedCardId === 'media' && mediaActiveNewsId !== null) ||
+                       (focusedCardId === 'political' && politicalSelectedCase !== null);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -79,6 +82,8 @@ export function ExpandedDataPanel() {
     } else if (focusedCardId === 'media') {
       setMediaActiveNewsId(null);
       setMediaSelectedArticle(null);
+    } else if (focusedCardId === 'political') {
+      setPoliticalSelectedCase(null);
     }
   };
 
@@ -87,7 +92,7 @@ export function ExpandedDataPanel() {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [focusedCardId, investmentActiveDetail, mediaActiveNewsId]);
+  }, [focusedCardId, investmentActiveDetail, mediaActiveNewsId, politicalSelectedCase]);
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [localQuery, setLocalQuery] = useState('');

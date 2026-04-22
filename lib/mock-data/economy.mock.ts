@@ -30,6 +30,8 @@ export interface KpiReport {
       historical: { confidence: string; delta: string };
       forecast: { confidence: string; delta: string };
     };
+    outlookAndDrivers?: string[];
+    interpretation?: string;
   };
 }
 
@@ -127,7 +129,14 @@ export const economyDataStore: Record<string, EconomyData> = {
           stats: {
             historical: { confidence: "99.8%", delta: "+0.4%" },
             forecast: { confidence: "94.2%", delta: "+0.5%" }
-          }
+          },
+          outlookAndDrivers: [
+            "2026–2027 slowdown phase: geopolitical shocks and energy volatility",
+            "Productivity gains from AI diffusion and automation",
+            "Stabilization of energy markets via renewables + nuclear expansion",
+            "Partial normalization of trade flows after fragmentation shock"
+          ],
+          interpretation: "Slowdown phase followed by AI-led re-acceleration. Geopolitical volatility remains a persistent anchor on baseline growth."
         }
       },
       {
@@ -151,7 +160,14 @@ export const economyDataStore: Record<string, EconomyData> = {
           stats: {
             historical: { confidence: "98.1%", delta: "+7.0%" },
             forecast: { confidence: "89.4%", delta: "+6.5%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Supply-chain regionalization (“friend-shoring”) increases costs/redundancy",
+            "India–Gulf–Africa logistics axis becomes a new accelerator",
+            "AI-enabled services trade becomes a major contributor",
+            "Reconfiguration of global value chains"
+          ],
+          interpretation: "Moderate but structurally re-routed trade expansion rather than hyper-globalization. Trade grows faster than GDP due to structural reconfiguration."
         }
       },
       {
@@ -175,7 +191,14 @@ export const economyDataStore: Record<string, EconomyData> = {
           stats: {
             historical: { confidence: "98.5%", delta: "-2.3%" },
             forecast: { confidence: "87.2%", delta: "-1.4%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Ongoing pressures from energy volatility and geopolitical tensions",
+            "Supply-chain restructuring increases structural production costs",
+            "Expansionary fiscal policies in major economies support demand",
+            "AI and automation productivity gains (gradual disinflation)"
+          ],
+          interpretation: "Phase of sticky inflation followed by gradual but uneven disinflation. Prices remain structurally higher than previous decades."
         }
       },
       {
@@ -199,7 +222,14 @@ export const economyDataStore: Record<string, EconomyData> = {
           stats: {
             historical: { confidence: "97.8%", delta: "-0.1%" },
             forecast: { confidence: "84.5%", delta: "-0.4%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Industrial restructuring in manufacturing and fossil fuel sectors",
+            "Productivity shock from AI → short-term labor displacement",
+            "Job creation in AI services, green infrastructure, and cybersecurity",
+            "Emerging markets absorb labor via industrial relocation"
+          ],
+          interpretation: "Labor markets become more polarized but not structurally weaker. “Job churn increases” while aggregate unemployment gradually improves."
         }
       }
     ],
@@ -291,13 +321,23 @@ export const economyDataStore: Record<string, EconomyData> = {
           stats: {
             historical: { confidence: "99.2%", delta: "+0.7%" },
             forecast: { confidence: "93.5%", delta: "+1.1%" }
-          }
+          },
+          outlookAndDrivers: [
+            "2026–2027: normalization after strong expansion cycle (~5% baseline)",
+            "2028–2030: re-acceleration driven by structural forces",
+            "AI + digital economy scaling across government and private sector",
+            "Tourism expansion (premium + long-stay residency model)",
+            "Real estate + infrastructure mega-project cycle (D33 agenda)",
+            "Financial hub deepening (wealth migration, capital inflows)",
+            "Energy stability (oil + gas remains fiscal anchor but declining GDP share)"
+          ],
+          interpretation: "UAE does not decouple from global cycles, but its growth floor rises. Economy behaves like a “managed high-growth hub economy” (5–5.6%)"
         }
       },
       {
         title: "UAE Trade Volume",
         impact: "High",
-        value: "$1.50T",
+        value: "$1.62T",
         rep: "Thani Al Zeyoudi",
         org: "Ministry of Economy",
         insightData: {
@@ -317,7 +357,14 @@ export const economyDataStore: Record<string, EconomyData> = {
           stats: {
             historical: { confidence: "98.9%", delta: "+19.1%" },
             forecast: { confidence: "91.2%", delta: "+40.0%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Expansion of Dubai–Abu Dhabi logistics + re-export ecosystems",
+            "Growth of India–Gulf–Africa trade corridor",
+            "Rising share of services exports (finance, tourism, AI, digital services)",
+            "Continued role as a neutral trade intermediary amid global fragmentation"
+          ],
+          interpretation: "Trade grows faster than GDP, reinforcing UAE’s position as a global re-export and services hub. Non-oil trade increasingly dominates value creation."
         }
       },
       {
@@ -343,7 +390,16 @@ export const economyDataStore: Record<string, EconomyData> = {
           stats: {
             historical: { confidence: "98.7%", delta: "+1.4%" },
             forecast: { confidence: "91.0%", delta: "+0.9%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Strong import efficiency via logistics hubs",
+            "Currency peg to USD ensures monetary stability",
+            "Productivity gains from automation and AI",
+            "Housing + real estate demand (population inflows)",
+            "High-skilled labor immigration",
+            "Service-sector price normalization (tourism, healthcare, education)"
+          ],
+          interpretation: "Inflation remains contained but not ultra-low. UAE transitions from “price-stable emerging economy” → “mild inflation growth hub economy”"
         }
       },
       {
@@ -369,7 +425,16 @@ export const economyDataStore: Record<string, EconomyData> = {
           stats: {
             historical: { confidence: "99.1%", delta: "-0.1%" },
             forecast: { confidence: "94.2%", delta: "-0.3%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Large expatriate labor market with flexible absorption",
+            "High labor mobility (no rigid unemployment cycles)",
+            "Continuous inflow of skilled migrants",
+            "AI increases productivity but creates offsetting high-skill jobs",
+            "Growth in construction, logistics, tourism, finance, and tech",
+            "Expansion of free zones and startup ecosystems"
+          ],
+          interpretation: "UAE unemployment is not cyclical in the traditional sense. It behaves more like a “labor-import equilibrium system”. Structural unemployment remains anchored near 2%"
         }
       }
     ],

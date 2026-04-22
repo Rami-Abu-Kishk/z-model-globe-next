@@ -482,7 +482,9 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             stats: selectedKpi.insightData?.stats || { 
               historical: { confidence: '', delta: '' }, 
               forecast: { confidence: '', delta: '' } 
-            }
+            },
+            outlookAndDrivers: selectedKpi.insightData?.outlookAndDrivers,
+            interpretation: selectedKpi.insightData?.interpretation
           } as KpiInsightData : null}
           loadingPhrases={[
             "Initializing Z-Model Economy Core...",
@@ -595,7 +597,9 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
           stats: selectedKpi.insightData?.stats || { 
             historical: { confidence: '', delta: '' }, 
             forecast: { confidence: '', delta: '' } 
-          }
+          },
+          outlookAndDrivers: selectedKpi.insightData?.outlookAndDrivers,
+          interpretation: selectedKpi.insightData?.interpretation
         } as KpiInsightData : null}
         loadingPhrases={[
           "Initializing Z-Model Economy Core...",

@@ -1,3 +1,4 @@
+this is for the uae :
 UAE Economic and Investment Indicators (2026–2030)
 Economic Indicators 
 1. UAE Trade & External Sector (Trade Volume Proxy – USD trillion)
@@ -263,48 +264,293 @@ The UAE should remain a high-savings economy, but the savings ratio may edge dow
 
 
 
-Indicator
+and this is for the globe 
+
+
+
+The Economic and Investment indicators descriptions
+Economic Indicators:
+1. Trade Volume
+Trade volume is an economic indicator that measures the total value of goods and services exchanged between countries over a specific period of time. This includes exports and imports of goods such as industrial products, raw materials, and energy, as well as services like transportation, tourism, and finance. This indicator is important because it reflects the level of economic openness and integration between markets, as well as the strength of trade relations and global supply chains. A rise in trade volume typically indicates expanding economic activity and stronger demand, while a decline suggests a slowdown in economic activity or the presence of trade restrictions.
+
+2. GDP Growth
+GDP growth is an economic indicator that measures the rate of change in the total value of goods and services produced within an economy over a specific period of time. It reflects the extent of economic expansion and productivity and is widely used as a primary measure of economic health and growth potential. GDP growth is influenced by factors such as consumption, investment, government spending, and external trade, as well as technological and demographic changes. An increase in this indicator signals economic expansion, higher employment, and improved corporate profits, while a decline points to economic slowdown or weaker overall demand.
+
+3. Inflation Rate
+The inflation rate is an economic indicator that measures the continuous change in the general level of prices of goods and services over time, reflecting changes in the purchasing power of money. Inflation is influenced by multiple factors such as production costs, energy and food prices, demand levels, and monetary policies. It is a key measure of economic stability, as higher inflation reduces purchasing power and increases the cost of living, while low or stable inflation reflects a more balanced economic environment. Moderate inflation is often considered healthy as it indicates sustained demand and economic growth.
+
+
+
+
+
+
+
+4. Unemployment Rate
+The unemployment rate is an economic indicator that measures the percentage of individuals within the labor force who are able and willing to work but are unable to find employment. It reflects the condition and efficiency of the labor market in generating job opportunities relative to the supply of labor. The unemployment rate is influenced by economic cycles, growth levels, industrial structure, and technological changes. A high unemployment rate typically indicates weak economic activity and reduced labor demand, while a low rate suggests a strong economy and higher job creation, although excessively low levels may lead to wage pressures.
+Investment Indicators:
+1. Global Investment as % of GDP:
+It is an indicator that measures the size of investment relative to gross domestic product over a given period. It shows the share of output allocated to capital formation, such as spending on infrastructure, buildings, machinery, equipment, and other productive assets. It is used to assess the extent to which an economy is directed toward expanding its future productive capacity.
+2. Global Investment Growth (%):
+It is an indicator that measures the rate of change in investment over time, usually from one year to the next. It shows whether investment has increased or decreased, and by what percentage. It is used to understand the direction of investment activity and the degree to which it is accelerating or slowing over time.
+3. Global FDI Inflows as % of GDP:
+It is an indicator that measures the value of foreign direct investment flows during a given period relative to gross domestic product. It reflects the importance of cross-border productive investment in an economy, such as establishing new projects, acquiring influential ownership stakes in companies, or reinvesting earnings in existing operations. It is used to assess the role of FDI in economic activity.
+4. Global External Debt as % of GDP:
+It is an indicator that measures the size of external debt relative to gross domestic product. External debt includes financial obligations owed to nonresidents, such as loans, bonds, and other liabilities. This indicator is used to assess the extent to which an economy depends on external financing and to monitor debt vulnerability and repayment capacity.
+5. Global Savings as % of GDP:
+It is an indicator that measures the share of income or output that is not spent on consumption and is retained as saving during a given period. It shows the portion of resources available to finance investment or support financial stability. It is used to understand an economy’s capacity to generate internal resources for growth.
+The Global Economic and Investment indicators 
+Global Economic Indicators:
+1. Global Trade Volume (USD trillion)
+Projection Table
+Year
+Global Trade Volume (USD Trillion)
 2026
+33.5
 2027
+34.8
 2028
+36.4
 2029
+38.1
 2030
-                 Interpretation
-Political stability index (%)
-84
-85
-86
-87
-88
-High and gradually improving. The UAE benefits from strong state capacity, policy continuity, fiscal buffers, and diversification momentum. The IMF’s latest Article IV says the UAE has shown significant resilience to global uncertainty, regional conflicts, and oil-price volatility. The main reason the score does not move closer to 100 is that regional geopolitical spillovers and cyber-security exposure remain persistent. 
+40.0
+
+Outlook & Drivers
+Global trade expands steadily but with structural fragmentation:
+Supply-chain regionalization (“friend-shoring”) increases trade costs but also creates redundant flows. 
+Asia + Middle East logistics corridors (India–Gulf–Africa axis) become new trade accelerators. 
+AI-enabled services trade (digital goods, data flows) becomes a major incremental contributor. 
+Trade grows faster than GDP again after 2027 due to reconfiguration of global value chains, not globalization efficiency gains. 
+Net effect: moderate but structurally re-routed trade expansion rather than hyper-globalization.
+2. Global GDP Growth (%)
+Projection Table
+Year
+Global GDP Growth (%)
+2026
+3.1%
+2027
+3.0%
+2028
+3.2%
+2029
+3.3%
+2030
+3.4%
+
+Outlook & Drivers
+2026–2027 slowdown phase: geopolitical shocks, energy volatility, and restrictive financial conditions keep growth near ~3% (consistent with IMF baseline ~3.1%) 
+2028–2030 re-acceleration: 
+Productivity gains from AI diffusion, automation, and advanced manufacturing 
+Stabilization of energy markets via renewables + nuclear expansion 
+Partial normalization of trade flows after fragmentation shock
 
 
 
 
-Global peace index (%)
-77
-78
-79
-80
-81
-Moderately strong with gradual improvement. The UAE benefits from solid domestic stability and effective internal security, which support a better-than-global average peace profile. However, its overall score remains constrained by the broader regional security environment and ongoing global militarisation trends. According to the 2025 GPI, the UAE is positioned in the upper-middle tier globally rather than among the top performers, indicating a trajectory of steady but limited improvement rather than a significant upward shift.
 
 
-Global terrorism index (%)
-91
-92
-93
-93
-94
-Very strong and improving. The UAE faces low levels of terrorism exposure by international standards, and the 2026 GTI places it firmly within the low-impact category. Its resilience is expected to remain high, supported by strong security coordination, advanced surveillance systems, strict border control, and robust financial enforcement mechanisms. However, it is not entirely insulated, as regional conflict dynamics may still generate indirect risks through maritime routes, cyber threats, or isolated lone-actor incidents.
-World Risk Index- (%)
-90
-89
-89
-88
-87
-Strong but slowly softening. Relative to most countries, the UAE remains resilient because of infrastructure quality, fiscal capacity, and active climate-adaptation and water-security planning. But medium-term pressure comes from structural exposure to extreme heat, water scarcity, coastal and urban flood risk, and the costs of adaptation in a hyper-arid environment. Official UAE climate and water strategies explicitly treat resilience and water security as national priorities, which supports a high score, but not a flat one. 
 
+
+
+
+3. Global Inflation Rate (%)
+Projection Table
+Year
+Global Inflation Rate (%)
+2026
+4.2%
+2027
+3.8%
+2028
+3.3%
+2029
+3.0%
+2030
+2.8%
+
+
+Outlook & Drivers 
+2026–2027: Phase of Relatively High and Sticky Inflation 
+Ongoing pressures from energy volatility and geopolitical tensions 
+Supply-chain restructuring increases structural production costs 
+Expansionary fiscal policies in major economies support demand 
+Result: only a modest slowdown in inflation, not a rapid decline 
+2028–2030: Gradual but Uneven Disinflation Phase 
+AI and automation productivity gains begin to materialize, but unevenly across countries 
+Relative stabilization in energy markets, though volatility does not fully disappear 
+Central banks maintain credibility in anchoring inflation expectations 
+Result: gradual decline in inflation, but remaining above historically low levels
+
+
+
+
+4. Global Unemployment Rate (%)
+Projection Table
+Year
+Global Unemployment Rate (%)
+2026
+5.2%
+2027
+5.3%
+2028
+5.1%
+2029
+4.9%
+2030
+4.8%
+
+Outlook & Drivers
+Short-term rise (2026–2027): 
+Industrial restructuring in manufacturing and fossil fuel sectors 
+Productivity shock from AI → short-term labor displacement 
+Weak cyclical demand in advanced economies 
+Medium-term decline (2028–2030): 
+Job creation in: 
+AI services ecosystems 
+Green infrastructure 
+Defense and cybersecurity sectors 
+Emerging markets absorb labor via industrial relocation 
+Structural interpretation:
+Labor markets become more polarized but not structurally weaker 
+“Job churn increases” while aggregate unemployment gradually improves
+
+
+
+Global Investment Indicators:
+1. Global Investment as % of GDP:
+Projection Table
+Year
+Global Investment as % of GDP
+2026
+26.80%
+2027
+27.00%
+2028
+27.20%
+2029
+27.40%
+2030
+27.50%
+
+
+Outlook & Drivers
+The global investment-to-GDP ratio is expected to rise gradually and steadily, without sharp acceleration, reflecting a slow structural increase in global capital formation driven by long-term economic transformation.
+The main driver of this trend is sustained demand for capital-intensive investments in energy transition infrastructure, digital systems (data centers, semiconductors, AI capacity), water infrastructure, logistics networks, and defense-related industries. These sectors require continuous, multi-year investment, supporting a steady upward drift in global investment levels.
+However, the pace remains constrained by tighter financial conditions, higher financing costs, and elevated debt levels across many economies, which limit the scope for a broad-based investment boom.
+Overall, global investment is shifting from broad cyclical expansion to targeted, strategic allocation of capital, resulting in a stable but gradual increase in investment intensity rather than a sharp surge.
+
+
+
+
+
+
+2. Global Investment Growth (%):
+Projection Table
+Year
+Global Investment Growth (%)
+2026
+3.00%
+2027
+3.50%
+2028
+4.00%
+2029
+4.20%
+2030
+4.00%
+
+
+Outlook & Drivers
+Investment growth is expected to be moderate in 2026, then gradually improve as financing conditions normalize and strategic spending shifts from the announcement phase to execution. The acceleration during 2028–2029 reflects the overlap of three major waves: digital infrastructure, energy system restructuring, and security and economic resilience spending.
+After that, growth is likely to slow slightly by 2030, as some early investments in AI and energy reach maturity, electricity grid bottlenecks become more binding, and rising debt-servicing costs constrain governments’ ability to co-finance projects. In addition, the weak investment base highlighted by the IMF for 2026 amid global disruptions, UNCTAD’s warnings about fragile global investment, and the large scale of data center and energy expansion all support this pattern: weak in the near term, followed by stronger momentum toward the end of the decade.
+
+
+
+
+
+
+
+
+
+
+3. Global FDI Inflows as % of GDP:
+Projection Table
+Year
+Global FDI Inflows as % of GDP
+2026
+1.33%
+2027
+1.35%
+2028
+1.36%
+2029
+1.39%
+2030
+1.41%
+
+
+Outlook & Drivers
+Foreign Direct Investment (FDI) is expected to recover, but at a slower pace than total investment. This reflects structural factors, as global firms continue to invest, but a growing share of investment is taking place through domestic capital expenditure, reshoring to allied countries, state-led industrial subsidy programs, and investment structures that do not translate into traditional cross-border FDI as efficiently as in previous cycles.
+According to the latest UNCTAD monitor, the rebound observed in 2025 overstated the true strength of underlying real investment activity. A significant portion of the increase was driven by conduit flows passing through financial centers, while actual investment projects—particularly greenfield investment and project finance—remained relatively weak.
+As a result, FDI is expected to increase, but with a lower economic multiplier effect and a more fragmented and less concentrated pattern compared to earlier phases of globalization.
+
+
+
+
+
+4. Global External Debt as % of GDP:
+Projection Table
+Year
+Global External Debt as % of GDP
+2026
+48.5%
+2027
+49.3%
+2028
+50.1%
+2029
+50.8%
+2030
+51.2%
+
+
+Outlook & Drivers
+Global external debt is expected to rise slowly and steadily over 2026–2030, driven by:
+Persistent fiscal deficits in major economies (defense, aging, climate spending)
+Higher long-term cost of global capital and risk premiums
+Fragmentation of global finance into regional blocs
+Continued refinancing pressure in emerging markets
+Moderate global GDP growth limiting debt dilution
+Core Interpretation
+The world is shifting into a high but stable external debt regime:
+debt rises slightly, but no sharp acceleration due to tighter financial conditions and reduced cross-border lending intensity.
+
+
+
+
+
+
+
+5. Global Savings as % of GDP:
+Projection Table
+Year
+Global Savings as % of GDP
+2026
+27.00%
+2027
+27.10%
+2028
+27.30%
+2029
+27.40%
+2030
+27.50%
+
+
+Outlook & Drivers
+Global savings are expected to edge up slightly in line with investment, with no significant gap emerging at the global level. The main drivers include strong corporate cash generation in the technology and energy sectors, precautionary saving by governments and households amid geopolitical uncertainty, and demographic-driven excess savings in parts of Asia and Europe.
+On the downside, fiscal dissaving—driven by higher spending on defense, climate adaptation, and debt servicing—acts as a limiting factor. Overall, the global savings rate is likely to increase only marginally, which also explains why the investment-to-GDP ratio in this outlook rises only gradually.
+In addition, near-term IMF projections for growth and inflation, combined with elevated global debt pressures, reduce the likelihood of any sharp decline in global savings.
 
 
 

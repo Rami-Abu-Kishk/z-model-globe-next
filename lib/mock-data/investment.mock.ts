@@ -31,6 +31,8 @@ export interface KpiReport {
       historical: { confidence: string; delta: string };
       forecast: { confidence: string; delta: string };
     };
+    outlookAndDrivers?: string[];
+    interpretation?: string;
   };
 }
 
@@ -153,7 +155,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "99.1%", delta: "+14.2%" },
             forecast: { confidence: "87.5%", delta: "+34.0%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Sustained demand for energy transition infrastructure",
+            "Digital systems (data centers, semiconductors, AI capacity)",
+            "Water infrastructure and logistics networks",
+            "Strategic allocation of capital rather than sharp surge"
+          ],
+          interpretation: "Slow structural increase in global capital formation. Growth is constrained by tighter financial conditions and elevated debt levels."
         }
       },
       {
@@ -178,7 +187,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "98.5%", delta: "+52.3%" },
             forecast: { confidence: "89.2%", delta: "+43.7%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Overlap of digital infrastructure waves",
+            "Energy system restructuring",
+            "Security and economic resilience spending",
+            "Normalizing financing conditions"
+          ],
+          interpretation: "Improvement as strategic spending shifts from announcement to execution phase. Growth likely to slow slightly by 2030 as early AI/energy investments mature."
         }
       },
       {
@@ -203,7 +219,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "99.1%", delta: "-6.7%" },
             forecast: { confidence: "85.4%", delta: "+100.0%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Reshoring to allied countries (“friend-shoring”)",
+            "State-led industrial subsidy programs",
+            "Growing share of domestic capital expenditure",
+            "Fragmented global value chains"
+          ],
+          interpretation: "FDI recovers at a slower pace than total investment. Greenfield investment projects remain relatively weak compared to conduit flows."
         }
       },
       {
@@ -228,7 +251,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "97.8%", delta: "+9.5%" },
             forecast: { confidence: "82.1%", delta: "+5.4%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Persistent fiscal deficits (defense, aging, climate spending)",
+            "Higher long-term cost of global capital and risk premiums",
+            "Fragmentation of global finance into regional blocs",
+            "Refinancing pressure in emerging markets"
+          ],
+          interpretation: "Shift into a high but stable external debt regime. No sharp acceleration due to tighter financial conditions."
         }
       },
       {
@@ -253,7 +283,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "98.2%", delta: "+4.3%" },
             forecast: { confidence: "91.5%", delta: "+17.7%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Strong corporate cash generation in tech and energy",
+            "Precautionary saving amid geopolitical uncertainty",
+            "Demographic-driven excess savings in Asia/Europe",
+            "Fiscal dissaving (defense, climate) acting as a limit"
+          ],
+          interpretation: "Global savings edge up slightly in line with investment. Fiscal dissaving limits the upside potential of the national/global savings rate."
         }
       }
     ],
@@ -354,7 +391,15 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "99.4%", delta: "+12.0%" },
             forecast: { confidence: "93.1%", delta: "+7.4%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Infrastructure and advanced manufacturing buildout",
+            "Logistics, tourism capacity, and data centers",
+            "Power systems and grid reinforcement",
+            "Clean-energy buildout",
+            "Operation 300bn scaling industry"
+          ],
+          interpretation: "Gradual rise in investment ratio. The UAE’s policy architecture supports this via National Investment Strategy 2031 and CEPA programs."
         }
       },
       {
@@ -381,7 +426,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "98.8%", delta: "-12.8%" },
             forecast: { confidence: "92.5%", delta: "-22.1%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Early phase support from lower borrowing costs",
+            "Strong public balance sheets and FDI momentum",
+            "Execution of industrial and infrastructure programs",
+            "Moving from build-out to scaling and utilization"
+          ],
+          interpretation: "Growth moderates as the expansion matures. Early burst of capex transitions into a more normalized pace of healthy investment."
         }
       },
       {
@@ -408,7 +460,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "99.1%", delta: "+24.1%" },
             forecast: { confidence: "91.2%", delta: "+18.1%" }
-          }
+          },
+          outlookAndDrivers: [
+            "National Investment Strategy 2031 goals",
+            "AED 240 billion annual inflow targets",
+            "Opening of more service sectors to foreign ownership",
+            "Standardized cross-border data transfer"
+          ],
+          interpretation: "FDI stays high and trends modestly upward. This remains one of the clearest structural strengths of the UAE's economic story."
         }
       },
       {
@@ -435,7 +494,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "99.7%", delta: "-0.4%" },
             forecast: { confidence: "91.5%", delta: "-0.1%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Global inflation easing and monetary normalization",
+            "Dirham peg to the U.S. dollar transmission",
+            "Strong domestic credit demand",
+            "High fiscal spending and energy/tech investment"
+          ],
+          interpretation: "Rates restabilize around 4.8%–5.0% after early declines. Bank margins are sustained by continued non-oil expansion demand."
         }
       },
       {
@@ -462,7 +528,14 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           stats: {
             historical: { confidence: "99.2%", delta: "-3.1%" },
             forecast: { confidence: "93.4%", delta: "-4.4%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Windfall oil revenues and SWF accumulation",
+            "Efficient corporate reinvestment",
+            "Domestic capital absorption by investment projects",
+            "Strong external position and current-account surplus"
+          ],
+          interpretation: "UAE remains a high-savings economy. Savings ratio edges down slightly as capital is channeled into domestic expansion projects."
         }
       }
     ],

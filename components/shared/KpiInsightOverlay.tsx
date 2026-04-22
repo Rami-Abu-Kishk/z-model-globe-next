@@ -26,6 +26,8 @@ export interface KpiInsightData {
     historical: { confidence: string; delta: string };
     forecast: { confidence: string; delta: string };
   };
+  outlookAndDrivers?: string[];
+  interpretation?: string;
 }
 
 interface KpiInsightOverlayProps {
@@ -264,6 +266,37 @@ export function KpiInsightOverlay({
                     </div>
                   </div>
                 </div>
+
+                {/* Outlook & Drivers Section */}
+                {viewMode === 'forecast' && kpi.outlookAndDrivers && kpi.outlookAndDrivers.length > 0 && (
+                  <div className="p-8 bg-slate-50/50 border border-slate-100 rounded-3xl space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Zap className="w-4 h-4 text-amber-500" />
+                      <span className="text-[10px] font-black text-slate-800 uppercase tracking-[0.2em]">Outlook & Structural Drivers</span>
+                    </div>
+                    <ul className="grid grid-cols-1 gap-2">
+                      {kpi.outlookAndDrivers.map((driver, idx) => (
+                        <li key={idx} className="flex gap-3 text-[13px] font-bold text-slate-600 leading-tight">
+                          <span className="text-amber-500 mt-0.5">•</span>
+                          {driver}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Interpretation Section (Forecast Only) */}
+                {viewMode === 'forecast' && kpi.interpretation && (
+                  <div className="p-8 bg-blue-50/30 border border-blue-100 rounded-3xl space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Activity className="w-4 h-4 text-blue-600" />
+                      <span className="text-[10px] font-black text-blue-800 uppercase tracking-[0.2em]">Strategic Interpretation</span>
+                    </div>
+                    <p className="text-[14px] font-bold text-slate-700 leading-relaxed tracking-tight italic">
+                      " {kpi.interpretation} "
+                    </p>
+                  </div>
+                )}
 
                 <div className="pt-6 border-t border-slate-100 flex flex-col items-center gap-4">
                   <button 

@@ -65,8 +65,9 @@ export const HologramEarth = forwardRef((props, ref) => {
   const autoRotate = useZModelStore(s => s.autoRotate);
   const isEarthFocus = viewState === 'EARTH_FOCUS';
   const isCardFocus = viewState === 'CARD_FOCUS';
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState<any>(false);
   const [hoveredArc, setHoveredArc] = useState<any>(null);
+  const politicalActiveRingLabels = useZModelStore(s => s.politicalActiveRingLabels);
 
   const handleSelect = (country: typeof searchableCountries[0]) => {
     setSearchQuery('');
@@ -178,7 +179,15 @@ export const HologramEarth = forwardRef((props, ref) => {
     return (isInvestment && !hasAnySelection) ? investmentGlobePoints : [];
   }, [activeModule, hasAnySelection]);
 
-  const ringsData = useMemo(() => (activeModule === 'political' && !hasAnySelection) ? politicalCrisisRings : [], [activeModule, hasAnySelection]);
+  const ringsData = useMemo(() => {
+    if (activeModule !== 'political') return [];
+    // If a specific case/crisis is selected, filter to matching rings only (fast swap, no fade-out)
+    if (politicalActiveRingLabels !== null) {
+      return politicalCrisisRings.filter(r => politicalActiveRingLabels.includes(r.label));
+    }
+    // Default: show all rings (no selection active)
+    return politicalCrisisRings;
+  }, [activeModule, politicalActiveRingLabels]);
 
   const labelsData = useMemo(() => [], []);
 

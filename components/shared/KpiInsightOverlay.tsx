@@ -194,7 +194,7 @@ export function KpiInsightOverlay({
                             return `~${kpi.value.startsWith('$') ? '$' : ''}${projected}${kpi.unit || ''}`;
                           })()
                       } 
-                      <span className="text-indigo-500 ml-2">↑</span>
+                      {/* <span className="text-indigo-500 ml-2">↑</span> */}
                     </h2>
                     <p className="text-[12px] font-black text-slate-400 uppercase tracking-widest">
                       {kpi.title} - {kpi.org} Matrix ({viewMode === 'historical' ? 'Audited' : 'Projected'})

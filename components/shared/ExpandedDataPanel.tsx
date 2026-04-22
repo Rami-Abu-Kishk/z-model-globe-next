@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
-import { X, Layers, Search, ChevronDown, Minimize2, ArrowLeft } from 'lucide-react';
+import { X, Layers, Search, ChevronDown, Minimize2, ArrowLeft, XCircle } from 'lucide-react';
 import { searchableCountries } from '@/lib/mockData';
 
 import { EconomyModule } from '@/components/modules/EconomyModule';
@@ -49,10 +49,19 @@ export function ExpandedDataPanel() {
   const resetView = useZModelStore(s => s.resetView);
   const selectedCountry = useZModelStore(s => s.selectedCountry);
   const setSelectedCountry = useZModelStore(s => s.setSelectedCountry);
+  const selectedCountries = useZModelStore(s => s.selectedCountries);
   const setSelectedCountries = useZModelStore(s => s.setSelectedCountries);
   const setActiveCountry = useZModelStore(s => s.setActiveCountry);
   const setActiveTarget = useZModelStore(s => s.setActiveTarget);
   const setViewState = useZModelStore(s => s.setViewState);
+
+  const hasCountrySelection = !!selectedCountry || selectedCountries.length > 0;
+
+  const handleClearCountrySelection = () => {
+    setSelectedCountry(null);
+    setSelectedCountries([]);
+    setActiveCountry(null);
+  };
 
   // Detail states for back button
   const investmentActiveDetail = useZModelStore(s => s.investmentActiveDetail);
@@ -168,29 +177,62 @@ export function ExpandedDataPanel() {
                 </div>
               </div>
 
-              {/* Middle: Country Badge */}
-              <AnimatePresence mode="wait">
-                {currentCountry && (
-                  <motion.div 
-                    key={currentCountry.iso}
-                    initial={{ opacity: 0, scale: 0.9, y: 5 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: -5 }}
-                    className="flex items-center gap-2.5 px-4 py-2 bg-white/60 border border-white/80 shadow-sm rounded-full"
-                  >
-                    <div className="w-8 h-5 overflow-hidden rounded-sm border border-slate-200/60 flex-shrink-0 bg-slate-50 flex items-center justify-center p-0.5">
-                      <img 
-                        src={`https://flagcdn.com/w40/${currentCountry.iso.toLowerCase()==="il"?"ps":currentCountry.iso.toLowerCase()}.png`} 
-                        alt={currentCountry.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <span className="text-sm font-black text-slate-900 uppercase tracking-tight">
-                      {currentCountry.name === "Israel" ? "Occupied Palestine" : currentCountry.name}
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* Middle: Country Badge + Clear Button */}
+              <div className="flex items-center gap-2">
+                <AnimatePresence mode="wait">
+                  {currentCountry ? (
+                    <motion.div 
+                      key={currentCountry.iso}
+                      initial={{ opacity: 0, scale: 0.9, y: 5 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: -5 }}
+                      className="flex items-center gap-2.5 px-4 py-2 bg-white/60 border border-white/80 shadow-sm rounded-full"
+                    >
+                      <div className="w-8 h-5 overflow-hidden rounded-sm border border-slate-200/60 flex-shrink-0 bg-slate-50 flex items-center justify-center p-0.5">
+                        <img 
+                          src={`https://flagcdn.com/w40/${currentCountry.iso.toLowerCase()==="il"?"ps":currentCountry.iso.toLowerCase()}.png`} 
+                          alt={currentCountry.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                        {currentCountry.name === "Israel" ? "Occupied Palestine" : currentCountry.name}
+                      </span>
+                    </motion.div>
+                  ) : selectedCountries.length > 0 ? (
+                    <motion.div
+                      key="multi-country"
+                      initial={{ opacity: 0, scale: 0.9, y: 5 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: -5 }}
+                      className="flex items-center gap-2 px-4 py-2 bg-white/60 border border-white/80 shadow-sm rounded-full"
+                    >
+                      <span className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                        {selectedCountries.length} Countries Selected
+                      </span>
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+
+                {/* Clear Selection Button */}
+                <AnimatePresence>
+                  {hasCountrySelection && (
+                    <motion.button
+                      key="clear-selection"
+                      initial={{ opacity: 0, scale: 0.7 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.7 }}
+                      transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+                      onClick={handleClearCountrySelection}
+                      title="Clear country selection"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-red-50 border border-slate-200/80 hover:border-red-200 text-slate-500 hover:text-red-500 transition-all duration-200 text-xs font-bold cursor-pointer shadow-sm group"
+                    >
+                      <XCircle className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform duration-300" />
+                      <span>Clear</span>
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* Right: Search & Close */}
               <div className="flex items-center gap-3">

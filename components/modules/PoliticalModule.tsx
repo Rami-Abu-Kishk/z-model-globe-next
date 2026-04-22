@@ -49,7 +49,8 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     selectedCountry,
     setActiveEconomyTrend,
     politicalSelectedCase,
-    setPoliticalSelectedCase
+    setPoliticalSelectedCase,
+    setPoliticalActiveRingLabels
   } = useZModelStore();
   
   const [selectedKpi, setSelectedKpi] = useState<PoliticalKpi | null>(null);
@@ -70,11 +71,23 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     [selectedCountry]
   );
 
+  // Maps a crisis/case region name to the matching politicalCrisisRings label(s)
+  const getRingLabelsForRegion = (region: string): string[] => {
+    if (region.includes('Levant')) return ['Levant Corridor'];
+    if (region.includes('Bab-el-Mandeb') || region.includes('Red Sea') || region.includes('Maritime Security')) return ['Bab-el-Mandeb'];
+    if (region.includes('Sudan') || region.includes('Heartland')) return ['Sudan'];
+    if (region.includes('Hormuz') || region.includes('Straits') || region.includes('Arabian Gulf')) return ['Straits of Hormuz'];
+    return []; // No matching ring — hide all rings
+  };
+
   const handleCrisisClick = (crisis: RegionalCrisis) => {
-    setSelectedCountry(null); 
+    setSelectedCountry(null);
     const [lat, lng] = crisis.coordinates;
     setActiveTarget({ lat, lng, zoomLevel: 1.5 });
-    
+
+    // Show only the rings relevant to this crisis
+    setPoliticalActiveRingLabels(getRingLabelsForRegion(crisis.region));
+
     if (crisis.region.includes('Levant')) {
       setSelectedCountries(['IL', 'PS', 'JO', 'LB', 'SY']);
     } else if (crisis.region.includes('Bab-el-Mandeb') || crisis.region.includes('Red Sea')) {
@@ -84,7 +97,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     } else if (crisis.region.includes('Hormuz')) {
       setSelectedCountries(['AE', 'OM', 'IR', 'SA']);
     }
-    
+
     if (isExpanded) {
       setPoliticalSelectedCase(crisis);
     }
@@ -93,11 +106,15 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
   const handleCaseClick = (pc: PoliticalCase) => {
     const [lng, lat] = pc.coordinates;
     setActiveTarget({ lat, lng, zoomLevel: 1.2 });
+
+    // Show only the rings relevant to this case
+    setPoliticalActiveRingLabels(getRingLabelsForRegion(pc.region + ' ' + pc.name));
+
     if (pc.isoCodes) {
       setSelectedCountries(pc.isoCodes);
       setSelectedCountry(null);
     }
-    
+
     if (isExpanded) {
       setPoliticalSelectedCase(pc);
     }
@@ -113,6 +130,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     setPoliticalSelectedCase(null);
     setSelectedCountries([]);
     setActiveEconomyTrend(null);
+    setPoliticalActiveRingLabels(null); // Restore all rings
   };
 
   if (isExpanded) {

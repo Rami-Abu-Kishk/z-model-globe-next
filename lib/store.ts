@@ -99,6 +99,10 @@ interface ZModelStore {
   politicalSelectedCase: any | null;
   setPoliticalSelectedCase: (item: any | null) => void;
 
+  // ── Which political crisis rings to show (null = all, [] = none, [...] = filtered) ─
+  politicalActiveRingLabels: string[] | null;
+  setPoliticalActiveRingLabels: (labels: string[] | null) => void;
+
   // ── Master reset ─────────────────────────────────────────────────
   resetView: () => void;
 }
@@ -192,6 +196,9 @@ export const useZModelStore = create<ZModelStore>((set) => ({
   politicalSelectedCase: null,
   setPoliticalSelectedCase: (item) => set({ politicalSelectedCase: item }),
 
+  politicalActiveRingLabels: null,
+  setPoliticalActiveRingLabels: (labels) => set({ politicalActiveRingLabels: labels }),
+
   // ── Master Reset ──────────────────────────────────────────────────
   resetView: () =>
     set({
@@ -211,6 +218,7 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       investmentSelectedOpportunity: null,
       activeEconomyTrend: null,
       politicalSelectedCase: null,
+      politicalActiveRingLabels: null,
       autoRotate: true,
     }),
 }));

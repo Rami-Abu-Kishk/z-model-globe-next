@@ -52,7 +52,7 @@ function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: Kpi
       </div>
 
       <div className="flex justify-between items-start mb-6 relative z-10">
-        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{kpi.org}</span>
+        <span className="text-[13px] font-black text-slate-600 uppercase tracking-widest">{kpi.title}</span>
         {/* {(kpi.org.toLowerCase().includes('world bank') || kpi.rep.toLowerCase().includes('world bank')) && (
            <div className="w-12 h-12 rounded-2xl bg-white shadow-xl flex items-center justify-center border border-slate-100 -mt-2 -mr-2">
              <img src="/worldBank.svg" alt="World Bank" className="w-9 h-9 object-contain" />
@@ -62,7 +62,7 @@ function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: Kpi
 
       <div className="flex-1 relative z-10">
         <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">{kpi.value}</h3>
-        <p className="text-[12px] font-bold text-slate-600 leading-snug mb-6 uppercase tracking-tight">{kpi.title}</p>
+        <p className="text-[12px] font-bold text-slate-400 leading-snug mb-6 uppercase tracking-tight">{kpi.org}</p>
       </div>
     </div>
   );

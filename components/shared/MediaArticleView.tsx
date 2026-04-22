@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft,
   Minimize2,
@@ -17,7 +17,8 @@ import {
   RefreshCw,
   Star,
   Sparkles,
-  Brain
+  Brain,
+  Sparkle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -155,6 +156,62 @@ const AI_ANALYSIS_BUTTONS = [
   },
 ];
 
+const AI_LOADING_PHRASES: Record<string, string[]> = {
+  summary: [
+    "Parsing article structure...",
+    "Extracting core narrative...",
+    "Synthesizing overview...",
+    "Finalizing Summary..."
+  ],
+  statistics: [
+    "Aggregating quantitative vectors...",
+    "Calculating data density...",
+    "Formatting metric matrices...",
+    "Finalizing Statistics..."
+  ],
+  background: [
+    "Querying historical data-lake...",
+    "Establishing context anchors...",
+    "Retrieving epoch metadata...",
+    "Finalizing Background..."
+  ],
+  traceback: [
+    "Mapping causal chains...",
+    "Tracking narrative evolution...",
+    "Correlating timeline nodes...",
+    "Finalizing Traceback..."
+  ],
+  comparison: [
+    "Analyzing cross-agency patterns...",
+    "Identifying narrative variance...",
+    "Normalizing perspective vectors...",
+    "Finalizing Comparison..."
+  ],
+  analysis: [
+    "Initiating neural deep-dive...",
+    "Extracting strategic insights...",
+    "Evaluating intelligence weight...",
+    "Finalizing Analysis..."
+  ],
+  prediction: [
+    "Extrapolating current trajectories...",
+    "Generating probabilistic models...",
+    "Forecasting impact horizons...",
+    "Finalizing Prediction..."
+  ],
+  'cross-referencing': [
+    "Syncing global news clusters...",
+    "Finding entity relationships...",
+    "Validating source consistency...",
+    "Finalizing Cross-Referencing..."
+  ],
+  recommendation: [
+    "Calculating strategic options...",
+    "Refining guidance vectors...",
+    "Finalizing Executive Recommendations..."
+  ]
+};
+
 export function MediaArticleView({
   article,
   onBack,
@@ -162,6 +219,9 @@ export function MediaArticleView({
 }: MediaArticleViewProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [activeButton, setActiveButton] = useState<string>('details');
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingPhrase, setLoadingPhrase] = useState('');
+  const [loadedSections, setLoadedSections] = useState<Set<string>>(new Set(['details']));
   const { sendMessage, setIsOpen, setIsMinimized } = useAIChat();
 
   const handleAiBadgeClick = () => {
@@ -170,12 +230,41 @@ export function MediaArticleView({
     sendMessage("Analyze: MENA Cloud Infrastructure Expansion", "user");
   };
 
+  const handleButtonClick = (id: string) => {
+    if (id === activeButton) return;
+    
+    if (id !== 'details' && !loadedSections.has(id)) {
+      setIsLoading(true);
+      setActiveButton(id);
+      
+      const phrases = AI_LOADING_PHRASES[id] || ["Initializing Z-Model Core...", "Synthesizing Data...", "Finalizing..."];
+      let phraseIndex = 0;
+      setLoadingPhrase(phrases[0]);
+
+      const phraseInterval = setInterval(() => {
+        phraseIndex++;
+        if (phraseIndex < phrases.length) {
+          setLoadingPhrase(phrases[phraseIndex]);
+        }
+      }, 700);
+
+      setTimeout(() => {
+        setIsLoading(false);
+        setLoadedSections(prev => new Set([...prev, id]));
+        clearInterval(phraseInterval);
+      }, 2800);
+    } else {
+      setActiveButton(id);
+    }
+  };
+
   // Scroll to top whenever the article content changes
   useEffect(() => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
     setActiveButton('details');
+    setLoadedSections(new Set(['details']));
   }, [article]);
 
   const active = AI_ANALYSIS_BUTTONS.find(b => b.id === activeButton);
@@ -276,49 +365,135 @@ export function MediaArticleView({
 
               {/* Body content */}
               <div className="prose prose-slate max-w-none text-slate-600 leading-loose text-[15px] font-medium">
-                {activeButton === 'details' ? (
-                  typeof article.content === 'string' ? (
-                    <p>{article.content}</p>
-                  ) : (
-                    article.content || (
-                      <p>
-                        Strategic intelligence reports indicate that this development will have significant
-                        implications for regional sovereignty and digital infrastructure. Our analysis suggests
-                        a 15% increase in operational efficiency across relevant sectors within the next
-                        fiscal quarter.
-                      </p>
-                    )
-                  )
-                ) : (
-                  <div className="space-y-6">
-                    {/* AI Section Header */}
-                    <div className="flex items-center gap-3 py-3 px-4 rounded-xl bg-slate-50 border border-slate-100 mb-6">
-                      <div className={cn(
-                        "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm",
-                        active?.activeGradient && `bg-gradient-to-br ${active.activeGradient}`
-                      )}>
-                        {active && <active.icon className="w-4 h-4 text-white" />}
+                <AnimatePresence mode="wait">
+                  {isLoading ? (
+                    <motion.div
+                      key="loading"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      className="flex flex-col items-center justify-center py-20 gap-8 min-h-[300px]"
+                    >
+                      <div className="relative">
+                        <div className={cn(
+                          "absolute inset-0 blur-3xl rounded-full animate-pulse opacity-20",
+                          active?.activeGradient ? `bg-${active.color}-500` : "bg-indigo-500"
+                        )} />
+                        <motion.div
+                          animate={{
+                            scale: [1, 1.1, 1],
+                            rotate: [0, 5, -5, 0]
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                          }}
+                          className="relative z-10 w-20 h-20 bg-white rounded-full shadow-2xl flex items-center justify-center border border-slate-100"
+                        >
+                          <Sparkle className={cn(
+                            "w-10 h-10",
+                            active?.activeText || "text-indigo-500"
+                          )} />
+                        </motion.div>
+
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 border border-slate-200/50 rounded-full animate-[spin_10s_linear_infinite]" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 border border-slate-100/30 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
                       </div>
-                      <div>
-                        <h3 className="text-[12px] font-black text-slate-900 uppercase tracking-widest leading-none">
-                          {active?.label} Analysis
-                        </h3>
-                        <p className="text-[10px] font-bold text-slate-400 uppercase leading-none mt-1">
-                          Source: Z-Model Neural Engine
-                           {/* • Ref: {article.title.substring(0, 5)}-{activeButton.toUpperCase()} */}
+
+                      <div className="space-y-3 text-center z-10">
+                        <div className="flex items-center justify-center gap-2">
+                          <div className="flex gap-1">
+                            {[0, 1, 2].map((i) => (
+                              <motion.div
+                                key={i}
+                                animate={{ opacity: [0.3, 1, 0.3] }}
+                                transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+                                className={cn("w-1 h-1 rounded-full", active?.activeIcon || "bg-indigo-500")}
+                              />
+                            ))}
+                          </div>
+                          <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Neural Synthesis Core</span>
+                        </div>
+
+                        <motion.p
+                          key={loadingPhrase}
+                          initial={{ opacity: 0, y: 5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -5 }}
+                          className="text-lg font-black tracking-tight h-7 bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent"
+                        >
+                          {loadingPhrase}
+                        </motion.p>
+                        
+                        <p className="text-[10px] text-slate-300 font-bold uppercase tracking-widest">
+                          Distributed Intelligence • Cluster {Math.floor(Math.random() * 90) + 10}
                         </p>
                       </div>
-                    </div>
 
-                    <div className="whitespace-pre-wrap">
-                      {article.aiInsights?.[activeButton] || (
-                        <div className="py-12 text-center">
-                          <p className="text-slate-400 italic">No specific AI data found for this category. The neural engine is still processing the latest data vectors.</p>
+                      <div className="w-48 h-1 bg-slate-100 rounded-full overflow-hidden">
+                        <motion.div
+                          className={cn(
+                            "h-full bg-gradient-to-r",
+                            active?.activeGradient || "from-indigo-500 to-blue-500"
+                          )}
+                          initial={{ width: "0%" }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 2.8, ease: "easeInOut" }}
+                        />
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key={activeButton}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      {activeButton === 'details' ? (
+                        typeof article.content === 'string' ? (
+                          <p>{article.content}</p>
+                        ) : (
+                          article.content || (
+                            <p>
+                              Strategic intelligence reports indicate that this development will have significant
+                              implications for regional sovereignty and digital infrastructure. Our analysis suggests
+                              a 15% increase in operational efficiency across relevant sectors within the next
+                              fiscal quarter.
+                            </p>
+                          )
+                        )
+                      ) : (
+                        <div className="space-y-6">
+                          <div className="flex items-center gap-3 py-3 px-4 rounded-xl bg-slate-50 border border-slate-100 mb-6">
+                            <div className={cn(
+                              "w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-sm",
+                              active?.activeGradient && `bg-gradient-to-br ${active.activeGradient}`
+                            )}>
+                              {active && <active.icon className="w-4 h-4 text-white" />}
+                            </div>
+                            <div>
+                              <h3 className="text-[12px] font-black text-slate-900 uppercase tracking-widest leading-none">
+                                {active?.label} Analysis
+                              </h3>
+                              <p className="text-[10px] font-bold text-slate-400 uppercase leading-none mt-1">
+                                Source: Z-Model Neural Engine
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="whitespace-pre-wrap">
+                            {article.aiInsights?.[activeButton] || (
+                              <div className="py-12 text-center">
+                                <p className="text-slate-400 italic">No specific AI data found for this category. The neural engine is still processing the latest data vectors.</p>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       )}
-                    </div>
-                  </div>
-                )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </ScrollArea>
@@ -349,7 +524,7 @@ export function MediaArticleView({
               return (
                 <motion.button
                   key={btn.id}
-                  onClick={() => setActiveButton(btn.id)}
+                  onClick={() => handleButtonClick(btn.id)}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   className={cn(

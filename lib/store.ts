@@ -103,6 +103,10 @@ interface ZModelStore {
   politicalActiveRingLabels: string[] | null;
   setPoliticalActiveRingLabels: (labels: string[] | null) => void;
 
+  // ── Show Investment Points ───────────────────────────────────────
+  showInvestmentPoints: boolean;
+  setShowInvestmentPoints: (active: boolean) => void;
+
   // ── Master reset ─────────────────────────────────────────────────
   resetView: () => void;
 }
@@ -199,6 +203,9 @@ export const useZModelStore = create<ZModelStore>((set) => ({
   politicalActiveRingLabels: null,
   setPoliticalActiveRingLabels: (labels) => set({ politicalActiveRingLabels: labels }),
 
+  showInvestmentPoints: false,
+  setShowInvestmentPoints: (active) => set({ showInvestmentPoints: active }),
+
   // ── Master Reset ──────────────────────────────────────────────────
   resetView: () =>
     set({
@@ -219,6 +226,7 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       activeEconomyTrend: null,
       politicalSelectedCase: null,
       politicalActiveRingLabels: null,
+      showInvestmentPoints: false,
       autoRotate: true,
     }),
 }));

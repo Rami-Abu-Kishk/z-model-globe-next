@@ -73,7 +73,11 @@ export interface InvestmentData {
     risk: 'Low' | 'Medium' | 'High' | 'Extreme';
     yield: string;
   }[];
+  aiInsights?: Record<string, string | React.ReactNode>;
 }
+
+import React from 'react';
+
 
 export const investmentDataStore: Record<string, InvestmentData> = {
   GLOBAL: {
@@ -307,10 +311,16 @@ export const investmentDataStore: Record<string, InvestmentData> = {
     ],
     tableData: [
       { id: "1", entity: "UAE", rating: "Aa2", inflow: "+$23B", risk: "Low", yield: "4.1%" },
-      { id: "2", entity: "Japan", rating: "Aaa", inflow: "+$18B", risk: "Low", yield: "3.8%" },
-      { id: "3", entity: "India", rating: "Baa3", inflow: "+$45B", risk: "Medium", yield: "7.2%" },
-      { id: "4", entity: "Brazil", rating: "Ba2", inflow: "+$12B", risk: "High", yield: "10.5%" }
-    ]
+      { id: "2", entity: "USA", rating: "AA+", inflow: "+$120B", risk: "Low", yield: "4.2%" },
+      { id: "3", entity: "Canada", rating: "Aaa", inflow: "+$15B", risk: "Low", yield: "3.9%" },
+      { id: "4", entity: "Japan", rating: "Aaa", inflow: "+$18B", risk: "Low", yield: "3.8%" },
+      { id: "5", entity: "China", rating: "A+", inflow: "+$65B", risk: "Medium", yield: "2.5%" }
+    ],
+    aiInsights: {
+      summary: "Global investment landscapes in 2026 are defined by a massive rotation into 'Sovereign Alpha'—high-conviction targets backed by direct state policy and AI-driven industrialization. The UAE, USA, and India emerge as the primary beneficiaries of this capital flight, offering a blend of regulatory stability and hyper-growth potential in digital infrastructure.",
+      opportunities: "1. **Sovereign Cloud & Data Sovereignty**: Massive build-out of localized compute clusters across the GCC and SE Asia.\n2. **Energy Transition Arbitrage**: Capitalizing on the volatility of the green energy shift via high-yield sovereign bonds.\n3. **AI-Enabled Manufacturing**: Direct FDI into semi-automated 'Giga-factories' in North America and India.",
+      tactical: "• **Immediate Action**: Overweight UAE sovereign-linked entities targeting the 'D33' expansion.\n• **Risk Hedge**: Neutralize US interest rate volatility via long-term green infrastructure play.\n• **Emerging Alpha**: Monitor Indian digital stack exports to frontier markets for high-growth entry points."
+    }
   },
   AE: {
     bestTarget: {
@@ -564,7 +574,12 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       { id: "2", entity: "Dubai Gov", rating: "Unrated", inflow: "+$10B", risk: "Low", yield: "4.5%" },
       { id: "3", entity: "Sharjah Gov", rating: "Ba1", inflow: "+$2B", risk: "Medium", yield: "6.2%" },
       { id: "4", entity: "Ras Al Khaimah", rating: "A-", inflow: "+$1.5B", risk: "Low", yield: "5.1%" }
-    ]
+    ],
+    aiInsights: {
+      summary: "The UAE remains the world's most sophisticated 'Safe Haven' for institutional capital. With a 2026 growth forecast of 4.0% and an FDI inflow target of $33B+, the nation is transitioning from a trade hub to a global AI and Biotech powerhouse. The D33 strategy acts as a primary catalyst for long-term value creation.",
+      opportunities: "1. **Operation 300bn**: High-conviction manufacturing mobilization with projected 8-14% ROI.\n2. **Masdar Renewable Expansion**: Gigascale solar + battery storage projects targeting 6-12% ROI.\n3. **ADGM/DIFC Digital Assets**: Regulatory-safe entry points into tokenize sovereign debt and real estate.",
+      tactical: "• **Allocation**: Deploy 40% of regional capital into Abu Dhabi infrastructure PPPs.\n• **Strategic Move**: Leverage 'Golden Visa' linked real estate funds for non-correlated yield.\n• **Tech Play**: Direct investment into G42-linked AI ventures for maximum strategic exposure."
+    }
   },
   US: {
     bestTarget: {

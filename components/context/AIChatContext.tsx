@@ -65,6 +65,32 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
       insightData
     };
     setMessages(prev => [...prev, newMessage]);
+
+    // Simple Mock Response Logic
+    if (sender === 'user') {
+      setTimeout(() => {
+        let botText = "I'm processing that request. Analyzing relevant geopolitical and economic vectors...";
+        
+        const lowerText = text.toLowerCase();
+        
+        if (lowerText.includes('red sea maritime security')) {
+          botText = "Sovereign Intelligence Report: Red Sea Maritime Security is currently categorized as 'CRITICAL'. The Bab-el-Mandeb strait is seeing a 45% increase in insurance premiums for all commercial freight. Our neural engine suggests escalation risks are mounting due to asymmetrical threat vectors. Would you like a breakdown of the specific involved parties?";
+        } else if (lowerText.includes('tell me more') || lowerText.includes('give more info')) {
+          // Check previous context if possible, or just give a generic high-fidelity response
+          botText = "Deep-Dive Analysis: The primary drivers of instability in the current sector are a combination of local kinetic shifts and global energy price volatility. Specifically, for 'Red Sea Maritime Security', we are tracking a mobilization of strategic assets in the Gulf of Aden. Impact on UAE strategic trade corridors is estimated at -2.4% annually if security is not normalized by Q3 2026.";
+        } else if (lowerText.includes('analyze investment potential')) {
+           botText = "Neural Analysis complete. The target shows a high alpha score with significant regulatory tailwinds. However, exposure to regional currency volatility remains a Tier-2 risk. I recommend a weighted allocation strategy focusing on infrastructure-backed sovereign bonds.";
+        }
+
+        const botMessage: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          text: botText,
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, botMessage]);
+      }, 1000);
+    }
   };
 
   const triggerChatFromCard = (context: ChatTriggerContext) => {

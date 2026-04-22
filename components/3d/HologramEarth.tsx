@@ -68,6 +68,7 @@ export const HologramEarth = forwardRef((props, ref) => {
   const [isFocused, setIsFocused] = useState<any>(false);
   const [hoveredArc, setHoveredArc] = useState<any>(null);
   const politicalActiveRingLabels = useZModelStore(s => s.politicalActiveRingLabels);
+  const showInvestmentPoints = useZModelStore(s => s.showInvestmentPoints);
 
   const handleSelect = (country: typeof searchableCountries[0]) => {
     setSearchQuery('');
@@ -176,8 +177,11 @@ export const HologramEarth = forwardRef((props, ref) => {
 
   const pointsData = useMemo(() => {
     const isInvestment = activeModule === 'investment';
-    return (isInvestment && !hasAnySelection) ? investmentGlobePoints : [];
-  }, [activeModule, hasAnySelection]);
+    // Show points if in investment module AND (no selection OR explicitly enabled via showInvestmentPoints)
+    // Actually, the user says "when the user scrolls to ... show the point data if not dont show it"
+    // So we should depend on showInvestmentPoints for investment points.
+    return (isInvestment && showInvestmentPoints) ? investmentGlobePoints : [];
+  }, [activeModule, showInvestmentPoints]);
 
   const ringsData = useMemo(() => {
     if (activeModule !== 'political') return [];

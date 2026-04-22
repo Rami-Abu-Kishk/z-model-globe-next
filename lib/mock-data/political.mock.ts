@@ -198,7 +198,7 @@ export const politicalKpis: PoliticalKpi[] = [
   },
   {
     label: "Global Peace Index",
-    value: "68%",
+    value: "61%",
     trend: "down",
     representative: {
       name: "Steve Killelea",

@@ -242,7 +242,7 @@ export function KpiInsightOverlay({
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
+                {/* <div className="grid grid-cols-2 gap-6">
                   <div className="p-5 bg-white border border-slate-100 rounded-2xl shadow-sm">
                     <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">
                       {viewMode === 'historical' ? 'Audit Confidence' : 'Prediction Reliability'}
@@ -265,7 +265,7 @@ export function KpiInsightOverlay({
                       <span className="text-[8px] font-bold text-slate-400 uppercase">vs Baseline</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Outlook & Drivers Section */}
                 {viewMode === 'forecast' && kpi.outlookAndDrivers && kpi.outlookAndDrivers.length > 0 && (

@@ -307,7 +307,7 @@ function InvestmentReportCard({ report }: { report: InvestmentReport }) {
       <div className="flex justify-between items-start mb-6">
         {(report.org.toLowerCase().includes('world bank') || report.author.toLowerCase().includes('world bank')) ? (
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-white shadow-xl flex items-center justify-center border border-slate-100">
+            <div className="w-12 h-12 rounded-xl bg-white shadow-xl flex items-center justify-center border border-slate-100">
               <img src="/worldBank.svg" alt="World Bank" className="w-9 h-9 object-contain" />
             </div>
             <div className="flex flex-col">

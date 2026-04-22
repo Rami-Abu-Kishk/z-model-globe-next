@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { MarkdownContent } from './MarkdownContent';
 
 export interface BaseArticle {
   title: string;
@@ -125,12 +126,12 @@ export function SharedArticleView({
 
           {/* Main Content */}
           <div className="prose prose-slate max-w-none">
-            <p className="text-xl lg:text-2xl font-black text-slate-900 leading-tight mb-6 tracking-tight">
+            <p className="text-xl lg:text-2xl font-black text-slate-900 leading-tight mb-6 tracking-tight text-justify">
               {article.summary}
             </p>
-            <div className="text-slate-600 leading-loose text-lg font-medium">
+            <div className="text-slate-600 leading-loose text-lg font-medium text-justify">
               {typeof article.content === 'string' ? (
-                <p>{article.content}</p>
+                <MarkdownContent content={article.content as string} />
               ) : (
                 article.content || (
                   <p>
@@ -143,7 +144,7 @@ export function SharedArticleView({
 
           {/* Extra Content (e.g. Tags, Involved Parties) */}
           {extraContent && (
-            <div className="mt-8">
+            <div className="mt-8 text-justify">
               {extraContent}
             </div>
           )}

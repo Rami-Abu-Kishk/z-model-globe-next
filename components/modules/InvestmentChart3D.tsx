@@ -12,7 +12,7 @@ export default function InvestmentChart3D() {
 
     const myChart = echarts.init(chartRef.current);
 
-    const countries = ['UAE', 'Singapore', 'USA', 'India', 'UK'];
+    const countries = ['UAE', 'USA', 'Canada', 'Japan',"China"];
     const metrics = ['FDI Inflow', 'Credit Rating', 'Yield Spread'];
 
     // [countryIndex, metricIndex, value]

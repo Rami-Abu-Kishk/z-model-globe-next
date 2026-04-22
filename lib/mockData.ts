@@ -355,9 +355,10 @@ export const economyGlobeData: Record<string, { growth: number, status: 'positiv
 
 export const investmentGlobePoints = [
   { lat: 24.4539, lng: 54.3773, size: 1.5, color: '#10b981', label: 'UAE Global Hub' },
-  { lat: 1.3521, lng: 103.8198, size: 1.2, color: '#10b981', label: 'Singapore Tech/Finance' },
-  { lat: 40.7128, lng: -74.0060, size: 1.0, color: '#10b981', label: 'NYC Markets' },
-  { lat: 28.6139, lng: 77.2090, size: 1.3, color: '#10b981', label: 'India Emerging Markets' }
+  { lat: 40.7128, lng: -74.0060, size: 1.2, color: '#10b981', label: 'US Financial Centers' },
+  { lat: 45.4215, lng: -75.6972, size: 1.0, color: '#10b981', label: 'Canada Resource Core' },
+  { lat: 35.6762, lng: 139.6503, size: 1.1, color: '#10b981', label: 'Japan Tech Infrastructure' },
+  { lat: 39.9042, lng: 116.4074, size: 1.4, color: '#10b981', label: 'China Industrial Hub' }
 ];
 
 export const politicalCrisisRings = [

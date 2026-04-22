@@ -18,6 +18,7 @@ import { SharedArticleView } from '@/components/shared/SharedArticleView';
 import { useAIChat } from '../context/AIChatContext';
 import { AiBadge } from '../shared/AiBadge';
 import { KpiInsightOverlay, KpiInsightData } from '@/components/shared/KpiInsightOverlay';
+import { InvestmentCountryView } from '@/components/shared/InvestmentCountryView';
 
 const InvestmentCandlestickChart = dynamic(() => import('./InvestmentCandlestickChart'), { ssr: false });
 const InvestmentChart3D = dynamic(() => import('./InvestmentChart3D'), { ssr: false });
@@ -68,7 +69,17 @@ function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: Kpi
   );
 }
 
-function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => void }) {
+function OpportunityCard({ 
+  op, 
+  onClick, 
+  onHoverStart, 
+  onHoverEnd 
+}: { 
+  op: Opportunity, 
+  onClick?: () => void,
+  onHoverStart?: () => void,
+  onHoverEnd?: () => void
+}) {
   const { triggerChatFromCard } = useAIChat();
 
   const handleAiTrigger = (e: React.MouseEvent) => {
@@ -85,6 +96,8 @@ function OpportunityCard({ op, onClick }: { op: Opportunity, onClick?: () => voi
     <div
       className={`flex flex-col bg-white/60 backdrop-blur-md rounded-2xl border border-white/80 overflow-hidden shadow-sm hover:shadow-lg transition-all h-full group ${onClick ? 'cursor-pointer hover:border-emerald-300' : ''}`}
       onClick={onClick}
+      onMouseEnter={onHoverStart}
+      onMouseLeave={onHoverEnd}
     >
       <div className="h-32 w-full relative bg-slate-100">
         <img
@@ -176,7 +189,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
     setInvestmentActiveDetail,
     investmentSelectedOpportunity,
     setInvestmentSelectedOpportunity,
-    setActiveEconomyTrend
+    setActiveEconomyTrend,
+    setShowInvestmentPoints
   } = useZModelStore();
 
   const [selectedKpi, setSelectedKpi] = useState<KpiReport | null>(null);
@@ -262,14 +276,14 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
   const handleReportClick = (report: InvestmentReport) => {
     setActiveModule('investment');
-    
+
     // If it's the "Accelerating Investment" report, fly to the UAE hub viewpoint
     if (report.title.includes('Accelerating Investment')) {
       setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.3 });
       setSelectedCountries(['AE']);
     } else if (report.id.includes('uae')) {
-       setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 });
-       setSelectedCountries(['AE']);
+      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 });
+      setSelectedCountries(['AE']);
     }
 
     window.open(report.fileUrl, '_blank');
@@ -293,7 +307,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 <SectionHeader
                   title="Top 3 Investment Opportunities"
                   icon={Zap}
-                  subtitle="Real-time volatility tracking and expected yield forecasts, updated 24/7"
+                  subtitle="Real-time volatility tracking and expected yield forecasts, Last Update : 2hrs ago"
                 />
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {data.topOpportunities.map((op, i) => (
@@ -301,6 +315,12 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                       key={i}
                       op={op}
                       onClick={() => handleOpportunityClick(op)}
+                      onHoverStart={() => {
+                        if (op.isoCodes) setSelectedCountries(op.isoCodes);
+                      }}
+                      onHoverEnd={() => {
+                        setSelectedCountries([]);
+                      }}
                     />
                   ))}
                 </div>
@@ -308,7 +328,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
               <SectionHeader
                 title={data.bestTarget.label}
                 icon={Zap}
-                subtitle="Real-time volatility tracking and expected yield forecasts"
+                subtitle="Real-time volatility tracking and expected yield forecasts, Last Update : 13hrs ago"
               />
               {/* SECOND SECTION: Hero Target & Multi-Series Chart */}
               <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
@@ -327,6 +347,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                       }}
                     />
                   </div>
+
+                  <h1 className="text-2xl lg:text-4xl font-black text-slate-900 leading-[1.1] tracking-tighter mt-1">Best Country to Invest in</h1>
 
                   {/* Subtle holographic background texture/glow */}
                   <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-100/30 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-200/40 transition-colors z-0" />
@@ -370,16 +392,20 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   </div>
                 </div>
 
-                <div className="xl:col-span-3 p-6 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl flex flex-col min-h-[400px]">
+                <motion.div 
+                  className="xl:col-span-3 p-6 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl flex flex-col min-h-[400px] transition-all hover:border-emerald-300/50"
+                  onMouseEnter={() => setShowInvestmentPoints(true)}
+                  onMouseLeave={() => setShowInvestmentPoints(false)}
+                >
                   <SectionHeader
                     title="Top 5 countries to invest in"
                     icon={TrendingUp}
-                    subtitle="Relative performance of leading sovereign investment targets, 24/7 updated"
+                    subtitle="Relative performance of leading sovereign investment targets, Last Update : 2hrs ago"
                   />
                   <div className="flex-1 mt-6 min-h-0">
                     <InvestmentChart3D />
                   </div>
-                </div>
+                </motion.div>
               </div>
 
               {/* BOTTOM SECTION: Institutional KPIs & Strategic Reports */}
@@ -389,7 +415,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   <SectionHeader
                     title="Key Performance Indicators"
                     icon={Award}
-                    subtitle="Consolidated real-time briefings from UNCTAD, Global SWF, and IMF delegates"
+                    subtitle="Consolidated real-time briefings from UNCTAD, Global SWF, and IMF delegates, Last Update : 3hrs ago"
                   />
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {data.kpis.map((kpi, idx) => (
@@ -407,7 +433,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   <SectionHeader
                     title="Strategic Intelligence Reports"
                     icon={Building2}
-                    subtitle="Proprietary and institutional deep-dive research documents available for review"
+                    subtitle="Proprietary and institutional deep-dive research documents available for review, Last Update : 2hrs ago"
                   />
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {data.reports.map((report, idx) => (
@@ -465,13 +491,13 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
             </motion.div>
           ) : investmentActiveDetail === 'UAE' ? (
             <div className="w-full">
-              <SharedArticleView
+              <InvestmentCountryView
                 onBack={() => {
                   setInvestmentActiveDetail('NONE');
                   setSelectedCountries([]);
                   setActiveEconomyTrend(null);
                 }}
-                article={{
+                data={{
                   title: "Executive Brief: UAE Investment Landscape",
                   subtitle: "Sovereign Strategic Briefing • 2026",
                   category: "Investment Strategy",
@@ -479,6 +505,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   badgeClassName: "bg-emerald-600",
                   imageUrl: "/assets/images/mock/uae_investment_hero.png",
                   summary: data.bestTarget.pdfReportData?.summary || "The UAE's evolution into a premier global investment destination is driven by strategic foresight, world-class infrastructure, and a robust regulatory framework.",
+                  aiInsights: data.aiInsights,
                   content: (
                     <div className="space-y-8 mt-12 pb-12">
                       {data.bestTarget.pdfReportData?.highlights.map((point, i) => (
@@ -486,26 +513,26 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                           <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                           <div>
                             <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-1">{point.title}</h4>
-                            <p className="text-[15px] text-slate-600 font-medium leading-relaxed">{point.detail}</p>
+                            <p className="text-[15px] text-slate-600 font-medium leading-relaxed text-justify">{point.detail}</p>
                           </div>
                         </div>
                       ))}
+                      <div className="flex justify-center pt-8">
+                        <Button
+                          variant="outline"
+                          className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+                          onClick={() => {
+                            if (data.bestTarget.pdfReportData?.downloadUrl) {
+                              window.open(data.bestTarget.pdfReportData.downloadUrl, '_blank');
+                            }
+                          }}
+                        >
+                          <ExternalLink className="w-4 h-4" /> View Full Report
+                        </Button>
+                      </div>
                     </div>
                   )
                 }}
-                actions={
-                  <Button
-                    variant="outline"
-                    className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
-                    onClick={() => {
-                      if (data.bestTarget.pdfReportData?.downloadUrl) {
-                        window.open(data.bestTarget.pdfReportData.downloadUrl, '_blank');
-                      }
-                    }}
-                  >
-                    <ExternalLink className="w-4 h-4" /> View Full Report
-                  </Button>
-                }
               />
             </div>
           ) : (
@@ -517,27 +544,15 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   setSelectedCountries([]);
                   setActiveEconomyTrend(null);
                 }}
-
-                actions={
-                  <Button
-                    variant="outline"
-                    className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
-                    onClick={() => {
-                      window.open('/files/full analysis of High Yield government.pdf', '_blank');
-                    }}
-                  >
-                    <ExternalLink className="w-4 h-4" /> View Full Analysis
-                  </Button>
-                }
-
                 article={{
                   title: investmentSelectedOpportunity!.title,
                   subtitle: `Strategic Opportunity • ${investmentSelectedOpportunity!.region}`,
                   category: "Strategic Investment",
-                  badgeText: "STRETEGIC ALPHA TARGET",
+                  badgeText: "STRATEGIC ALPHA TARGET",
                   badgeClassName: "bg-indigo-600",
                   imageUrl: investmentSelectedOpportunity!.imageUrl,
                   summary: investmentSelectedOpportunity!.description,
+                  aiInsights: investmentDataStore['GLOBAL'].aiInsights, // Fallback to global AI insights for opportunities
                   content: (
                     <div className="space-y-10 mt-12">
                       <div className="flex gap-6 group">
@@ -545,7 +560,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                         <div>
                           <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-2">Alpha Strategic Positioning</h4>
                           <p className="text-[16px] text-slate-600 font-medium leading-loose">
-                            This opportunity represents a cornerstore of the current sovereign investment landscape in {investmentSelectedOpportunity!.region}.
+                            This opportunity represents a cornerstone of the current sovereign investment landscape in {investmentSelectedOpportunity!.region}.
                             Our real-time intelligence suggests that the underlying assets are entering a period of significant appreciation
                             driven by favorable regulatory shifts and institutional capital rotation.
                           </p>
@@ -562,10 +577,19 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                           </p>
                         </div>
                       </div>
+                      <div className="flex justify-center pt-8">
+                        <Button
+                          variant="outline"
+                          className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+                          onClick={() => {
+                            window.open('/files/full analysis of High Yield government.pdf', '_blank');
+                          }}
+                        >
+                          <ExternalLink className="w-4 h-4" /> View Full Analysis
+                        </Button>
+                      </div>
                     </div>
-                  ),
-
-
+                  )
                 }}
               />
             </div>
@@ -624,6 +648,10 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   key={i}
                   className="flex flex-col p-4 bg-white/70 rounded-2xl border border-white shadow-sm hover:shadow-md transition-all cursor-pointer hover:border-emerald-200 group"
                   onClick={() => handleOpportunityClick(op)}
+                  onMouseEnter={() => {
+                    if (op.isoCodes) setSelectedCountries(op.isoCodes);
+                  }}
+                  onMouseLeave={() => setSelectedCountries([])}
                 >
                   <div className="flex justify-between items-start mb-2">
                     <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">{op.title}</span>
@@ -641,6 +669,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
           <div
             className="p-5 bg-gradient-to-br from-emerald-50 to-white border border-emerald-100 rounded-2xl shadow-sm cursor-pointer hover:shadow-md transition-all group"
             onClick={handleTargetClick}
+            onMouseEnter={() => setShowInvestmentPoints(true)}
+            onMouseLeave={() => setShowInvestmentPoints(false)}
           >
             <div className="flex items-start justify-between">
               <div className="flex flex-col gap-2">

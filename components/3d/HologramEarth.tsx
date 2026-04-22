@@ -12,6 +12,7 @@ import {
   trendingNews as mediaTrending,
   localRegionalNews as mediaRegional
 } from '@/lib/mock-data/media.mock';
+import { GlobePoint } from '@/lib/types';
 
 
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
@@ -69,6 +70,7 @@ export const HologramEarth = forwardRef((props, ref) => {
   const [hoveredArc, setHoveredArc] = useState<any>(null);
   const politicalActiveRingLabels = useZModelStore(s => s.politicalActiveRingLabels);
   const showInvestmentPoints = useZModelStore(s => s.showInvestmentPoints);
+  const showBestTargetPoint = useZModelStore(s => s.showBestTargetPoint);
 
   const handleSelect = (country: typeof searchableCountries[0]) => {
     setSearchQuery('');
@@ -122,7 +124,7 @@ export const HologramEarth = forwardRef((props, ref) => {
     if (!controls) return false;
     Object.assign(controls, {
       autoRotate: autoRotate && !isEarthFocus && !activeTarget && selectedCountries.length === 0,
-      autoRotateSpeed: 0.5,
+      autoRotateSpeed: 2,
       enableZoom: true,
       enablePan: true,
       enableRotate: true
@@ -137,28 +139,21 @@ export const HologramEarth = forwardRef((props, ref) => {
 
     // Camera Position (only if no activeTarget)
     if (!activeTarget) {
-      const duration = (isFirstMount.current && !isEarthFocus) ? 0 : 1000;
-
-      // Robust Initialization: We force the altitude multiple times during startup
-      // to ensure OrbitControls doesn't reset it to a default value.
-      if (isFirstMount.current) {
-        let count = 0;
-        const initInterval = setInterval(() => {
-          if (globeRef.current) {
-            const currentPov = globeRef.current.pointOfView();
-            globeRef.current.pointOfView({ ...currentPov, altitude: targetAlt }, 0);
-          }
-          count++;
-          if (count > 10) clearInterval(initInterval);
-        }, 100);
-      } else {
-        if (globeRef.current) {
-          const currentPov = globeRef.current.pointOfView();
-          globeRef.current.pointOfView({ ...currentPov, altitude: targetAlt }, duration);
-        }
+      const duration = 1000;
+      const currentPov = globeRef.current.pointOfView();
+      
+      // Only change altitude if we are specifically focusing on a country (EARTH_FOCUS)
+      // Otherwise, stay at ORBITAL_ALTITUDE to prevent jitter during module navigation
+      const targetAlt = isEarthFocus ? FOCUS_ALTITUDE : ORBITAL_ALTITUDE;
+      
+      if (Math.abs(currentPov.altitude - targetAlt) > 0.01) {
+        globeRef.current.pointOfView({ ...currentPov, altitude: targetAlt }, duration);
       }
     }
-    isFirstMount.current = false;
+    
+    // Safety: ensure first mount is marked false even if onGlobeReady isn't called for some reason
+    // but the main work is moved to onGlobeReady for stability
+    setTimeout(() => { isFirstMount.current = false; }, 3000);
 
     // Controls Sync with retry
     if (!syncControls()) {
@@ -175,13 +170,25 @@ export const HologramEarth = forwardRef((props, ref) => {
   // Memoize layer data to prevent WebGL stutters during typing in search
   const hasAnySelection = !!(selectedCountry || selectedCountries.length > 0);
 
-  const pointsData = useMemo(() => {
+  const pointsData = useMemo<GlobePoint[]>(() => {
     const isInvestment = activeModule === 'investment';
-    // Show points if in investment module AND (no selection OR explicitly enabled via showInvestmentPoints)
-    // Actually, the user says "when the user scrolls to ... show the point data if not dont show it"
-    // So we should depend on showInvestmentPoints for investment points.
-    return (isInvestment && showInvestmentPoints) ? investmentGlobePoints : [];
-  }, [activeModule, showInvestmentPoints]);
+    const points: GlobePoint[] = (isInvestment && showInvestmentPoints) ? [...investmentGlobePoints] as GlobePoint[] : [];
+    
+    // Add Best Target Point if enabled
+    if (isInvestment && showBestTargetPoint) {
+      // UAE Coordinates for the special marker
+      points.push({
+        lat: 23.4241,
+        lng: 53.8478,
+        size: 1.8, // Slightly reduced
+        color: '#fbbf24', // Premium Gold
+        label: 'Best Country to Invest In',
+        isBestTarget: true
+      });
+    }
+    
+    return points;
+  }, [activeModule, showInvestmentPoints, showBestTargetPoint]);
 
   const ringsData = useMemo(() => {
     if (activeModule !== 'political') return [];
@@ -279,9 +286,26 @@ export const HologramEarth = forwardRef((props, ref) => {
         ref={globeRef}
         onGlobeReady={() => {
           syncControls();
-          if (globeRef.current && !isEarthFocus && !activeTarget) {
-            const currentPov = globeRef.current.pointOfView();
-            globeRef.current.pointOfView({ ...currentPov, altitude: ORBITAL_ALTITUDE }, 0);
+          if (globeRef.current && isFirstMount.current) {
+            // 1. Instantly snap to deep space altitude
+            globeRef.current.pointOfView({ 
+              lat: 20.5937, 
+              lng: 78.9629, 
+              altitude: 20.0 
+            }, 0);
+
+            // 2. Begin smooth descent to orbital altitude
+            // Delay slightly to ensure WebGL context is initialized and ready for animation
+            requestAnimationFrame(() => {
+              if (globeRef.current) {
+                globeRef.current.pointOfView({ 
+                  lat: 20.5937, 
+                  lng: 78.9629, 
+                  altitude: ORBITAL_ALTITUDE 
+                }, 2500);
+                isFirstMount.current = false;
+              }
+            });
           }
         }}
         backgroundColor="rgba(0,0,0,0)"
@@ -296,9 +320,9 @@ export const HologramEarth = forwardRef((props, ref) => {
         labelsData={labelsData}
         arcsData={arcsData}
 
-        pointAltitude={(d: any) => (d.size || 1) * 0.1}
-        pointColor="color"
-        pointRadius={0.5}
+        pointAltitude={(d: any) => d.isBestTarget ? 0.4 : (d.size || 1) * 0.1}
+        pointColor={(d: any) => d.color || '#10b981'}
+        pointRadius={(d: any) => d.isBestTarget ? 0.3 : 0.5}
 
         htmlElementsData={combinedHtmlData}
         htmlAltitude={(d: any) => d.type === 'selection' ? 0.15 : (d.size || 1) * 0.1 + 0.02}

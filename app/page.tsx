@@ -5,6 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { HologramEarth } from '@/components/3d/HologramEarth';
 import { CameraController } from '@/components/3d/CameraController';
 import { useZModelStore } from '@/lib/store';
+import { motion } from 'framer-motion';
 
 import { ReturnHUD } from '@/components/shared/ReturnHUD';
 import { ExpandedDataPanel } from '@/components/shared/ExpandedDataPanel';
@@ -74,24 +75,32 @@ export default function Home() {
         <DetailDrawer />
         <ExpandedDataPanel />
 
-        <div
-          className="absolute top-8 left-8 pointer-events-auto select-none cursor-pointer"
-          onClick={() => useZModelStore.getState().resetView()}
-        >
-          <h1 className="text-3xl tracking-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 font-black uppercase leading-none">
-            Z-MODEL
-          </h1>
-          <p className="text-[10px] text-slate-500 tracking-[0.2em] font-semibold mt-1 uppercase">
-            Executive Strategic Dashboard
-          </p>
-        </div>
+        <motion.div
+           className="absolute top-8 left-8 pointer-events-auto select-none cursor-pointer"
+           initial={{ x: -100, opacity: 0, filter: 'blur(10px)' }}
+           animate={{ x: 0, opacity: 1, filter: 'blur(0px)' }}
+           transition={{ delay: 0.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+           onClick={() => useZModelStore.getState().resetView()}
+         >
+           <h1 className="text-3xl tracking-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 font-black uppercase leading-none">
+             Z-MODEL
+           </h1>
+           <p className="text-[10px] text-slate-500 tracking-[0.2em] font-semibold mt-1 uppercase">
+             Executive Strategic Dashboard
+           </p>
+         </motion.div>
 
-        <div className="absolute top-8 right-8 pointer-events-none select-none flex items-center gap-2">
+        <motion.div 
+          className="absolute top-8 right-8 pointer-events-none select-none flex items-center gap-2"
+          initial={{ x: 100, opacity: 0, filter: 'blur(10px)' }}
+          animate={{ x: 0, opacity: 1, filter: 'blur(0px)' }}
+          transition={{ delay: 1.0, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase">
             V3.0 · Spatial Interface · Live
           </span>
-        </div>
+        </motion.div>
       </div>
 
       {/* ── AI ChatBot ── */}

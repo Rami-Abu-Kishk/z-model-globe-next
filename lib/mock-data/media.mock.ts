@@ -7,6 +7,7 @@ export interface NewsItem {
   time: string;
   category: 'Breaking' | 'Local' | 'Regional' | 'Global';
   sentiment: 'positive' | 'negative' | 'neutral';
+  impact?: number; // 0-100 scale
   summary?: string;
   url?: string;
   target?: GlobeTarget;
@@ -135,6 +136,7 @@ export const trendingNews: NewsItem[] = [
     time: "1h ago",
     category: "Global",
     sentiment: "positive",
+    impact: 94,
     summary: "Nations are increasingly building local GPU clusters to ensure digital sovereignty and protection against global API reliance.",
     countries: ["AE", "IN", "SG", "KR"],
     target: { lat: 20.0, lng: 70.0, zoomLevel: 2.5 },
@@ -147,6 +149,7 @@ export const trendingNews: NewsItem[] = [
     time: "3h ago",
     category: "Global",
     sentiment: "positive",
+    impact: 86,
     summary: "A $10B subsidy package announced for 2nm fabrication plant in Gujarat, aiming for production by 2028.",
     countries: ["IN"],
     target: { lat: 22.0, lng: 72.0, zoomLevel: 1.5 },
@@ -159,6 +162,7 @@ export const trendingNews: NewsItem[] = [
     time: "5h ago",
     category: "Global",
     sentiment: "positive",
+    impact: 72,
     summary: "SMR technology gains traction as a viable 'always-on' alternative to bridge renewable intermittency in heavy industrial zones.",
     countries: ["US", "FR", "AE", "CN"],
     target: { lat: 40.0, lng: -40.0, zoomLevel: 2.8 },
@@ -171,6 +175,7 @@ export const trendingNews: NewsItem[] = [
     time: "7h ago",
     category: "Global",
     sentiment: "positive",
+    impact: 89,
     summary: "Urban air mobility takes a quantum leap as full-scale commercial testing begins in the Gulf.",
     countries: ["SA", "DE"],
     target: { lat: 28.0, lng: 35.0, zoomLevel: 2.5 },
@@ -183,6 +188,7 @@ export const trendingNews: NewsItem[] = [
     time: "9h ago",
     category: "Global",
     sentiment: "neutral",
+    impact: 62,
     summary: "Institutional adoption of AI trading bots on the DFM highlights rapid digital transformation in regional finance.",
     countries: ["AE"],
     target: { lat: 25.2, lng: 55.3, zoomLevel: 2.5 },

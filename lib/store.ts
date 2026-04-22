@@ -107,6 +107,10 @@ interface ZModelStore {
   showInvestmentPoints: boolean;
   setShowInvestmentPoints: (active: boolean) => void;
 
+  // ── Show Best Country Target Point ───────────────────────────────
+  showBestTargetPoint: boolean;
+  setShowBestTargetPoint: (active: boolean) => void;
+
   // ── Master reset ─────────────────────────────────────────────────
   resetView: () => void;
 }
@@ -206,6 +210,9 @@ export const useZModelStore = create<ZModelStore>((set) => ({
   showInvestmentPoints: false,
   setShowInvestmentPoints: (active) => set({ showInvestmentPoints: active }),
 
+  showBestTargetPoint: false,
+  setShowBestTargetPoint: (active) => set({ showBestTargetPoint: active }),
+
   // ── Master Reset ──────────────────────────────────────────────────
   resetView: () =>
     set({
@@ -227,6 +234,7 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       politicalSelectedCase: null,
       politicalActiveRingLabels: null,
       showInvestmentPoints: false,
+      showBestTargetPoint: false,
       autoRotate: true,
     }),
 }));

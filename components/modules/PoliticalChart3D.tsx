@@ -13,7 +13,7 @@ export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) 
 
     // Use a light theme base
     const myChart = echarts.init(chartRef.current, undefined, { renderer: 'canvas' });
-    
+
     // Mapping 3D Bar Data
     const data = (cases || []).map((pc, idx) => {
       // Meaningful Tiers:
@@ -23,7 +23,7 @@ export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) 
       const severity = pc.severity === 'Critical' ? 95 : pc.severity === 'Warning' ? 65 : 35;
       const complexity = Math.min(pc.involvedParties.length * 20, 100);
       const impact = 45 + (idx * 15); // Simulated Impact Magnitude
-      
+
       return [severity, complexity, impact, pc.name, pc.severity];
     });
 
@@ -118,7 +118,7 @@ export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) 
         data: data, // Pass full array [x, y, z, name, severity]
         shading: 'lambert',
         label: {
-            show: false // Remove names from the chart itself as requested
+          show: false // Remove names from the chart itself as requested
         },
         itemStyle: {
           opacity: 1,
@@ -136,7 +136,7 @@ export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) 
     };
 
     myChart.setOption(option);
-    
+
     const resizeObserver = new ResizeObserver(() => myChart.resize());
     resizeObserver.observe(chartRef.current);
 

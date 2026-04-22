@@ -94,6 +94,11 @@ export function ExpandedDataPanel() {
     } else if (focusedCardId === 'political') {
       setPoliticalSelectedCase(null);
     }
+
+    // Refocus on country if selection exists
+    if (selectedCountry) {
+      setSelectedCountry(selectedCountry);
+    }
   };
 
   // Scroll content to top whenever focused card or detail view changes

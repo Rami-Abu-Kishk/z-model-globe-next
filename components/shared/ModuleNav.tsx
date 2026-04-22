@@ -40,9 +40,9 @@ export function ModuleNav() {
   return (
     
     <motion.div
-      initial={{ x: -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ type: "spring", damping: 25, stiffness: 120, delay: 0.5 }}
+      initial={{ x: -100, opacity: 0, filter: 'blur(10px)' }}
+      animate={{ x: 0, opacity: 1, filter: 'blur(0px)' }}
+      transition={{ type: "spring", damping: 30, stiffness: 100, delay: 1.4 }}
       className="absolute left-8 top-1/2 -translate-y-1/2 z-50 pointer-events-auto"
     >
 
@@ -86,7 +86,7 @@ export function ModuleNav() {
               key={item.id}
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.6 + index * 0.05 }}
+              transition={{ delay: 1.6 + index * 0.08, ease: "easeOut" }}
               onClick={() => {
                 const redirectItems: ModuleId[] = [
                   "research",

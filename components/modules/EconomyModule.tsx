@@ -24,6 +24,7 @@ import dynamic from 'next/dynamic';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { KpiInsightOverlay, KpiInsightData } from '@/components/shared/KpiInsightOverlay';
 import { Badge } from '@/components/ui/badge';
+import { PdfPreviewModal } from '@/components/shared/PdfPreviewModal';
 
 const EconomyExpandedChart3D = dynamic(() => import('./EconomyExpandedChart3D'), { ssr: false });
 
@@ -298,11 +299,11 @@ function KpiReportCard({ kpi, onOpen }: { kpi: KpiReport, onOpen: (kpi: KpiRepor
   );
 }
 
-function InvestmentReportCard({ report }: { report: InvestmentReport }) {
+function InvestmentReportCard({ report, onOpen }: { report: InvestmentReport, onOpen: (report: InvestmentReport) => void }) {
   return (
     <div
       className="p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-lg hover:shadow-2xl transition-all group relative flex flex-col h-full cursor-pointer hover:border-emerald-300"
-      onClick={() => window.open(report.fileUrl, '_blank')}
+      onClick={() => onOpen(report)}
     >
       <div className="flex justify-between items-start mb-6">
         {(report.org.toLowerCase().includes('world bank') || report.author.toLowerCase().includes('world bank')) ? (
@@ -339,6 +340,7 @@ function InvestmentReportCard({ report }: { report: InvestmentReport }) {
 
 export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
   const [selectedKpi, setSelectedKpi] = useState<KpiReport | null>(null);
+  const [selectedReport, setSelectedReport] = useState<InvestmentReport | null>(null);
   const selectedCountry = useZModelStore((s) => s.selectedCountry);
   const activeCountry = useZModelStore((s) => s.activeCountry);
   const setSelectedCountry = useZModelStore((s) => s.setSelectedCountry);
@@ -435,7 +437,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
         {/* Global Organization KPIs */}
         <div className="space-y-8 mt-4">
           <SectionHeader
-            title="Key Performance Indicators"
+            title="Global Kpis"
             icon={LayoutGrid}
             subtitle="Real-time audits from IMF, World Bank, and WTO delegates"
           />
@@ -460,7 +462,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {data.reports.map((report, idx) => (
-                <InvestmentReportCard key={idx} report={report} />
+                <InvestmentReportCard key={idx} report={report} onOpen={setSelectedReport} />
               ))}
             </div>
           </div>
@@ -492,7 +494,14 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             "Processing 2028 Horizon KPIs...",
             "Calibrating Hockeystick Acceleration Models...",
             "Finalizing AI Synthesis..."
-          ]}
+            ]}
+        />
+        {/* PDF Report Preview Modal */}
+        <PdfPreviewModal 
+          isOpen={!!selectedReport}
+          onClose={() => setSelectedReport(null)}
+          title={selectedReport?.title || ''}
+          fileUrl={selectedReport?.fileUrl || ''}
         />
       </div>
     );
@@ -558,7 +567,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
                   <div
                     key={idx}
                     className="flex flex-col p-4 bg-white/60 rounded-2xl border border-white shadow-sm hover:border-emerald-200 transition-all cursor-pointer group"
-                    onClick={() => window.open(report.fileUrl, '_blank')}
+                    onClick={() => setSelectedReport(report)}
                   >
                     <div className="flex justify-between items-start mb-1">
                       <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight group-hover:text-emerald-700 transition-colors">{report.title}</span>
@@ -608,6 +617,13 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
           "Calibrating Hockeystick Acceleration Models...",
           "Finalizing AI Synthesis..."
         ]}
+      />
+      {/* PDF Report Preview Modal */}
+      <PdfPreviewModal 
+        isOpen={!!selectedReport}
+        onClose={() => setSelectedReport(null)}
+        title={selectedReport?.title || ''}
+        fileUrl={selectedReport?.fileUrl || ''}
       />
     </div>
   );

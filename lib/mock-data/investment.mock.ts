@@ -140,7 +140,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       {
         title: "Global Investment",
         impact: "High",
-        value: "$18.5 Trillion",
+        value: "$18.5 T",
         rep: "Makhtar Diop",
         org: "World Bank",
         insightData: {
@@ -204,7 +204,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       {
         title: "Global FDI Inflows",
         impact: "High",
-        value: "$1.4 Trillion",
+        value: "$1.4 T",
         rep: "Rebeca Grynspan",
         org: "UNCTAD",
         insightData: {
@@ -236,7 +236,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       {
         title: "Global External Debt",
         impact: "Medium",
-        value: "$92 Trillion",
+        value: "$92 T",
         rep: "Emre Tiftik",
         org: "IIF",
         insightData: {
@@ -621,7 +621,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       {
         title: "US Investment",
         impact: "High",
-        value: "$2.1 Trillion",
+        value: "$2.1 T",
         rep: "Philip Jefferson",
         org: "Federal Reserve",
         insightData: {
@@ -696,7 +696,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       {
         title: "US External Debt",
         impact: "High",
-        value: "$34 Trillion",
+        value: "$34 T",
         rep: "Janet Yellen",
         org: "US Treasury",
         insightData: {
@@ -789,7 +789,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       {
         title: "China Investment",
         impact: "High",
-        value: "$5.8 Trillion",
+        value: "$5.8 T",
         rep: "Zhang Qingsong",
         org: "PBOC",
         insightData: {
@@ -864,7 +864,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       {
         title: "China External Debt",
         impact: "Medium",
-        value: "$2.4 Trillion",
+        value: "$2.4 T",
         rep: "Pan Gongsheng",
         org: "PBOC",
         insightData: {

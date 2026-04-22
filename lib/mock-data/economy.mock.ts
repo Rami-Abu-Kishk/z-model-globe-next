@@ -57,54 +57,54 @@ export const economyDataStore: Record<string, EconomyData> = {
   GLOBAL: {
     positiveTrends: [
       {
-        label: "Global AI Sector",
-        value: 34.5,
-        dataPoints: [8.5, 12.0, 18.5, 26.8, 34.5],
-        description: "Exponential acceleration in LLM deployment and enterprise AI integration is driving unprecedented capital allocation. This vector represents the strongest productivity shift in the digital era.",
-        relatedCountries: ["US", "CN", "GB", "AE", "IN"],
-        countryValues: { "US": 42.5, "CN": 38.2, "GB": 28.4, "AE": 45.1, "IN": 35.7 }
+        label: "Technology and AI Sector",
+        value: 27.5,
+        dataPoints: [8.5, 12.0, 15.5, 20.8, 27.5],
+        description: "Driven by generative AI, cloud infrastructure, and semiconductors. This sector is the fastest-growing globally with massive capital allocation toward digital transformation.",
+        relatedCountries: ["AE", "US", "CN", "TW", "KR", "SA"],
+        countryValues: { "AE": 40.0, "US": 28.0, "CN": 24.0, "TW": 30.0, "KR": 22.0, "SA": 32.5 }
       },
       {
-        label: "Green Energy Sector",
-        value: 18.2,
-        dataPoints: [12.4, 15.2, 17.8, 16.5, 18.2],
-        description: "Decarbonization mandates are fueling a massive transition toward renewable infrastructure. Sovereign funds are pivoting heavily toward sustainable assets to hedge against long-term climate risk.",
-        relatedCountries: ["CN", "US", "DE", "DK", "AE"],
-        countryValues: { "CN": 24.5, "US": 18.1, "DE": 22.8, "DK": 31.4, "AE": 25.6 }
+        label: "Clean Energy Sector",
+        value: 15.0,
+        dataPoints: [9.4, 11.2, 12.8, 13.5, 15.0],
+        description: "Expansion driven by the global transition toward solar, wind, and smart grids. Sovereign funds are pivoting heavily toward carbon neutrality and sustainable assets.",
+        relatedCountries: ["AE", "CN", "BR", "US", "IN", "SA"],
+        countryValues: { "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0, "SA": 20.5 }
       },
       {
-        label: "Emerging Markets Sector",
-        value: 12.4,
-        dataPoints: [6.5, 4.8, 5.2, 9.4, 12.4],
-        description: "Rapid digitization in Southeast Asia and Africa is creating new consumer markets. Local fintech and logistics startups are capturing significant share from traditional global incumbents.",
-        relatedCountries: ["IN", "ID", "VN", "BR", "MX"],
-        countryValues: { "IN": 18.2, "ID": 14.5, "VN": 16.8, "BR": 10.2, "MX": 11.5 }
+        label: "Advanced Manufacturing",
+        value: 8.0,
+        dataPoints: [4.5, 5.8, 6.2, 7.4, 8.0],
+        description: "Focus on industrial automation, robotics, and supply chain restructuring. High-tech manufacturing is becoming a key pillar for high-value economic models.",
+        relatedCountries: ["AE", "CN", "US", "DE", "IN", "SA"],
+        countryValues: { "AE": 22.0, "CN": 8.0, "US": 7.0, "DE": 6.0, "IN": 9.0, "SA": 12.4 }
       }
     ],
     negativeTrends: [
       {
-        label: "Commercial Real Estate Sector",
-        value: -8.5,
-        dataPoints: [-1.2, -3.5, -6.8, -7.9, -8.5],
-        description: "The remote work paradigm shift continues to erode office valuations in major financial hubs. Debt restructuring in this sector remains a significant systemic risk for regional banks.",
-        relatedCountries: ["US", "GB", "DE", "FR", "AU"],
-        countryValues: { "US": -12.4, "GB": -10.1, "DE": -8.5, "FR": -6.2, "AU": -5.8 }
+        label: "Construction & Real Estate",
+        value: -1.0,
+        dataPoints: [-0.2, -0.5, -0.7, -0.9, -1.0],
+        description: "Facing headwinds from high interest rates and slowing demand in advanced economies. Systemic risk remains high for legacy property financing models.",
+        relatedCountries: ["US", "GB", "DE", "FR", "IT"],
+        countryValues: { "US": -2.2, "GB": -4.0, "DE": -2.0, "FR": -1.5, "IT": -1.4 }
       },
       {
-        label: "Legacy Supply Chain Sector",
-        value: -4.2,
-        dataPoints: [-8.5, -6.2, -4.8, -4.5, -4.2],
-        description: "Traditional logistical frameworks are struggling with rising fuel costs and geopolitical friction. Decoupling from high-risk manufacturing nodes is causing short-term friction and margin compression.",
-        relatedCountries: ["CN", "DE", "JP", "KR", "TW"],
-        countryValues: { "CN": -6.8, "DE": -5.2, "JP": -3.5, "KR": -4.1, "TW": -3.8 }
+        label: "Heavy Industry",
+        value: -0.4,
+        dataPoints: [-0.1, -0.2, -0.3, -0.3, -0.4],
+        description: "Slowdown in international trade and rising production costs are impacting traditional manufacturing bases in Europe and North America.",
+        relatedCountries: ["US", "DE", "GB", "IT", "JP"],
+        countryValues: { "US": -1.0, "DE": -2.0, "GB": -1.5, "IT": -1.0, "JP": -0.3 }
       },
       {
-        label: "Global Inflation Drag Sector",
-        value: -2.1,
-        dataPoints: [-1.8, -4.2, -5.7, -3.4, -2.1],
-        description: "Persistent core inflation is forcing central banks to maintain restrictive monetary policies. This sustained high-rate environment is dampening consumer demand and stretching corporate balance sheets.",
-        relatedCountries: ["AR", "TR", "GB", "US", "DE"],
-        countryValues: { "AR": -15.2, "TR": -10.5, "GB": -3.2, "US": -2.4, "DE": -2.1 }
+        label: "Global Agriculture",
+        value: -0.5,
+        dataPoints: [-0.1, -0.2, -0.3, -0.4, -0.5],
+        description: "Climate change and drought conditions are causing significant fluctuations in global food production and grain exports.",
+        relatedCountries: ["US", "BR", "IN", "AR", "ZA"],
+        countryValues: { "US": -1.0, "BR": -0.5, "IN": -0.6, "AR": -4.0, "ZA": -3.0 }
       }
     ],
     kpisAndReports: [
@@ -248,54 +248,54 @@ export const economyDataStore: Record<string, EconomyData> = {
   AE: { // United Arab Emirates Specific Data
     positiveTrends: [
       {
-        label: "Non-Oil GDP Surge",
-        value: 45.2,
-        dataPoints: [22.4, 28.5, 34.2, 40.8, 45.2],
-        description: "Massive diversification efforts under Vision 2031 are yielding record results. The UAE is successfully repositioning as a global hub for aviation, logistics, and digital services.",
-        relatedCountries: ["AE", "SA", "QA", "OM", "KW"],
-        countryValues: { "AE": 45.2, "SA": 12.4, "QA": 8.5, "OM": 5.2, "KW": 4.1 }
+        label: "Technology and AI Sector",
+        value: 40.0,
+        dataPoints: [15.0, 22.0, 30.0, 35.0, 40.0],
+        description: "Leading global hub for AI. Growth driven by sovereign investment in data centers, digital infrastructure, and advanced government adoption of AI technologies.",
+        relatedCountries: ["AE", "US", "CN", "TW", "KR"],
+        countryValues: { "AE": 40.0, "US": 28.0, "CN": 24.0, "SA": 32.5, "TW": 30.0 }
       },
       {
-        label: "FDI Tech Inflows",
-        value: 28.4,
-        dataPoints: [12.1, 15.8, 20.4, 24.2, 28.4],
-        description: "Business-friendly regulations and golden visa programs are attracting world-class AI and robotics firms. The 'We the UAE 2031' strategy is driving high-fidelity tech investments.",
-        relatedCountries: ["AE", "SG", "IE", "CH", "LU"],
-        countryValues: { "AE": 28.4, "SG": 15.2, "IE": 12.1, "CH": 10.5, "LU": 9.8 }
+        label: "Clean Energy Sector",
+        value: 28.0,
+        dataPoints: [10.0, 15.0, 20.0, 24.0, 28.0],
+        description: "Rapid expansion of low-cost solar projects and integration of AI in grid management. Implementing carbon neutrality strategies with high execution speed.",
+        relatedCountries: ["AE", "CN", "BR", "US", "IN"],
+        countryValues: { "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0 }
       },
       {
-        label: "Tourism Revenue",
-        value: 15.6,
-        dataPoints: [6.2, 9.8, 12.5, 14.2, 15.6],
-        description: "Major global events and luxury hospitality expansion are driving double-digit growth. UAE remains the premier destination for regional and international high-net-worth travelers.",
-        relatedCountries: ["AE", "ES", "FR", "IT", "SA"],
-        countryValues: { "AE": 15.6, "ES": 12.4, "FR": 10.2, "IT": 9.5, "SA": 8.1 }
+        label: "Advanced Manufacturing",
+        value: 22.0,
+        dataPoints: [8.0, 12.0, 15.0, 18.0, 22.0],
+        description: "Development of smart industrial zones. Shift toward high-value manufacturing like aerospace and precision electronics while leveraging global logistics connectivity.",
+        relatedCountries: ["AE", "CN", "US", "DE", "IN"],
+        countryValues: { "AE": 22.0, "CN": 8.0, "US": 7.0, "DE": 6.0, "IN": 9.0 }
       }
     ],
     negativeTrends: [
       {
-        label: "Legacy Retail Decline",
-        value: -3.2,
-        dataPoints: [-1.5, -2.1, -2.8, -3.0, -3.2],
-        description: "Hyper-growth in e-commerce is putting pressure on traditional local malls. Retailers must adapt to omnichannel strategies to survive the digital-first consumer shift.",
-        relatedCountries: ["AE", "SA", "US", "GB", "CA"],
-        countryValues: { "AE": -3.2, "SA": -2.8, "US": -1.5, "GB": -1.2, "CA": -0.8 }
+        label: "Construction & Real Estate",
+        value: -0.2,
+        dataPoints: [-0.1, -0.1, -0.1, -0.2, -0.2],
+        description: "Resilient compared to global peers but facing minor headwinds from high interest rates affecting long-term financing costs.",
+        relatedCountries: ["US", "GB", "DE", "AE", "SA"],
+        countryValues: { "AE": -0.2, "US": -2.2, "GB": -4.0, "DE": -2.0, "SA": -0.5 }
       },
       {
-        label: "Traditional Media Spend",
-        value: -5.1,
-        dataPoints: [-2.4, -3.5, -4.2, -4.8, -5.1],
-        description: "Advertising budgets are migrating rapidly to social platforms and influencer marketing. Legacy print and television outlets are facing significant revenue headwinds.",
-        relatedCountries: ["AE", "US", "GB", "DE", "FR"],
-        countryValues: { "AE": -5.1, "US": -4.2, "GB": -3.8, "DE": -3.5, "FR": -3.1 }
+        label: "Heavy Industry",
+        value: -0.5,
+        dataPoints: [-0.2, -0.3, -0.4, -0.5, -0.5],
+        description: "Exposure to global demand fluctuations and rising production costs in legacy segments.",
+        relatedCountries: ["AE", "DE", "JP", "CN", "IN"],
+        countryValues: { "AE": -0.5, "DE": -2.0, "JP": -0.3, "CN": -1.2, "IN": -0.8 }
       },
       {
-        label: "Unoptimized Logistics",
-        value: -1.8,
-        dataPoints: [-2.1, -1.9, -1.8, -1.8, -1.8],
-        description: "Last-mile delivery inefficiencies in some regions are causing minor margin erosion. Strategic investments in AI-driven routing are required for optimization.",
-        relatedCountries: ["AE", "SA", "IN", "EG", "ZA"],
-        countryValues: { "AE": -1.8, "SA": -1.5, "IN": -1.2, "EG": -0.9, "ZA": -0.7 }
+        label: "Global Agriculture",
+        value: -0.4,
+        dataPoints: [-0.2, -0.3, -0.4, -0.4, -0.4],
+        description: "Fluctuations in global food production affect import costs even as local food security initiatives expand.",
+        relatedCountries: ["AE", "US", "BR", "IN", "AR"],
+        countryValues: { "AE": -0.4, "US": -1.0, "BR": -0.5, "IN": -0.6, "AR": -4.0 }
       }
     ],
     kpisAndReports: [
@@ -453,54 +453,54 @@ export const economyDataStore: Record<string, EconomyData> = {
   US: { // United States Specific Data
     positiveTrends: [
       {
-        label: "Domestic Semiconductor Mfg",
-        value: 22.1,
-        dataPoints: [5, 10, 15, 18, 22.1],
-        description: "The CHIPS Act is triggering a massive resurgence in onshoring critical tech manufacturing. Billions in CAPEX are allocated to building leading-edge foundries on US soil.",
-        relatedCountries: ["US", "JP", "NL", "TW", "KR"],
-        countryValues: { "US": 22.1, "JP": 15.2, "NL": 12.8, "TW": 18.5, "KR": 14.2 }
+        label: "Technology and AI Sector",
+        value: 28.0,
+        dataPoints: [10.0, 15.0, 20.0, 24.0, 28.0],
+        description: "Key growth driver through major technology companies. Dominating generative AI, cloud computing, and semiconductor designs.",
+        relatedCountries: ["US", "AE", "CN", "TW", "KR"],
+        countryValues: { "US": 28.0, "AE": 40.0, "CN": 24.0, "TW": 30.0, "KR": 22.0 }
       },
       {
-        label: "AI Enterprise Adoption",
-        value: 41.5,
-        dataPoints: [15, 22, 30, 38, 41.5],
-        description: "S&P 500 companies are racing to integrate generative AI into core operations. This trend reflects a broad mandate for operational efficiency and automated discovery.",
-        relatedCountries: ["US", "GB", "CA", "IL", "IN"],
-        countryValues: { "US": 41.5, "GB": 35.2, "CA": 32.8, "IL": 38.4, "IN": 30.1 }
+        label: "Clean Energy Sector",
+        value: 15.0,
+        dataPoints: [5.0, 8.0, 11.0, 13.0, 15.0],
+        description: "Supported by massive government incentives and investments in solar and wind infrastructure modernization.",
+        relatedCountries: ["US", "CN", "AE", "DE", "IN"],
+        countryValues: { "US": 15.0, "CN": 18.0, "AE": 28.0, "DE": 12.0, "IN": 16.0 }
       },
       {
-        label: "Renewable Grid Expansion",
-        value: 14.2,
-        dataPoints: [6, 8, 10, 12, 14.2],
-        description: "Federal tax incentives are accelerating the modernization of the energy grid. Large-scale utility solar and wind projects are reaching grid parity across the Midwest.",
-        relatedCountries: ["US", "CN", "DE", "ES", "DK"],
-        countryValues: { "US": 14.2, "CN": 18.5, "DE": 12.4, "ES": 10.8, "DK": 15.2 }
+        label: "Advanced Manufacturing",
+        value: 7.0,
+        dataPoints: [2.0, 3.5, 5.0, 6.0, 7.0],
+        description: "Driven by reshoring of strategic industries and adoption of industrial robotics and AI integration.",
+        relatedCountries: ["US", "CN", "DE", "JP", "IN"],
+        countryValues: { "US": 7.0, "CN": 8.0, "DE": 6.0, "JP": 5.0, "IN": 9.0 }
       }
     ],
     negativeTrends: [
       {
-        label: "Downtown Office Occupancy",
-        value: -15.4,
-        dataPoints: [-5, -8, -10, -12, -15.4],
-        description: "Major metropolitan areas are facing 'urban doom loop' risks as office vacancies remain at historic highs. Tax bases in cities like San Francisco and Chicago are under pressure.",
-        relatedCountries: ["US", "GB", "CA", "DE", "FR"],
-        countryValues: { "US": -15.4, "GB": -12.1, "CA": -10.5, "DE": -9.2, "FR": -8.4 }
+        label: "Construction & Real Estate",
+        value: -2.2,
+        dataPoints: [-0.5, -1.0, -1.5, -2.0, -2.2],
+        description: "Largest global negative contributor. High interest rates have collapsed mortgage demand and slowed commercial projects.",
+        relatedCountries: ["US", "GB", "DE", "FR", "IT"],
+        countryValues: { "US": -2.2, "GB": -4.0, "DE": -2.0, "FR": -1.5, "IT": -1.4 }
       },
       {
-        label: "Consumer Debt Default Rate",
-        value: -4.8,
-        dataPoints: [-1, -2, -3, -4, -4.8],
-        description: "Rising interest rates are beginning to stress household finances. Credit card and auto loan delinquencies are edging toward pre-pandemic norms, indicating potential cooling.",
-        relatedCountries: ["US", "GB", "CA", "AU", "NZ"],
-        countryValues: { "US": -4.8, "GB": -4.2, "CA": -3.5, "AU": -3.2, "NZ": -2.8 }
+        label: "Heavy Industry",
+        value: -1.0,
+        dataPoints: [-0.2, -0.4, -0.6, -0.8, -1.0],
+        description: "Slowdown in industrial tech sector and lower demand for capital goods amid supply chain restructuring.",
+        relatedCountries: ["US", "DE", "GB", "IT", "JP"],
+        countryValues: { "US": -1.0, "DE": -2.0, "GB": -1.5, "IT": -1.0, "JP": -0.3 }
       },
       {
-        label: "Regional Bank Deposits",
-        value: -6.2,
-        dataPoints: [-2, -3, -4, -5, -6.2],
-        description: "Competition for deposits from money market funds is squeezing bank margins. Smaller institutions are facing capital flight as clients seek higher-yield, low-risk alternatives.",
-        relatedCountries: ["US", "CH", "DE", "IT", "FR"],
-        countryValues: { "US": -6.2, "CH": -5.5, "DE": -4.8, "IT": -4.2, "FR": -3.8 }
+        label: "Global Agriculture",
+        value: -1.0,
+        dataPoints: [-0.2, -0.4, -0.6, -0.8, -1.0],
+        description: "Drought in key agricultural states impacting corn and wheat production volumes.",
+        relatedCountries: ["US", "BR", "IN", "AR", "ZA"],
+        countryValues: { "US": -1.0, "BR": -0.5, "IN": -0.6, "AR": -4.0, "ZA": -3.0 }
       }
     ],
     kpisAndReports: [
@@ -602,25 +602,55 @@ export const economyDataStore: Record<string, EconomyData> = {
   JO: {
     positiveTrends: [
       {
-        label: "Amman Tech Hub Growth",
+        label: "Technology and AI Sector",
         value: 18.5,
-        dataPoints: [5, 8, 12, 15, 18.5],
-        description: "Jordan is emerging as a regional software development powerhouse. High talent density and competitive costs are attracting global tech outsourcing mandates.",
+        dataPoints: [5.0, 8.0, 12.0, 15.0, 18.5],
+        description: "Emerging regional software powerhouse. Growth driven by talent density and competitive outsourcing mandates.",
         relatedCountries: ["JO", "AE", "SA", "EG", "LB"],
         countryValues: { "JO": 18.5, "AE": 12.4, "SA": 10.2, "EG": 8.5, "LB": 5.1 }
       },
       {
-        label: "Tourism Resilience",
-        value: 24.2,
-        dataPoints: [10, 15, 18, 20, 24.2],
-        description: "Post-pandemic travel surge to Petra and Wadi Rum remains strong. National marketing campaigns are successfully diversifying the visitor base beyond regional markets.",
+        label: "Clean Energy Sector",
+        value: 12.0,
+        dataPoints: [4.0, 6.0, 8.0, 10.0, 12.0],
+        description: "Expansion in solar and wind projects to reduce energy import reliance and support industrial growth.",
         relatedCountries: ["JO", "EG", "MA", "TR", "AE"],
-        countryValues: { "JO": 24.2, "EG": 18.5, "MA": 15.2, "TR": 12.8, "AE": 10.5 }
+        countryValues: { "JO": 12.0, "EG": 18.5, "MA": 15.2, "TR": 12.8, "AE": 10.5 }
+      },
+      {
+        label: "Advanced Manufacturing",
+        value: 9.5,
+        dataPoints: [3.0, 5.0, 7.0, 8.5, 9.5],
+        description: "Focus on pharmaceuticals and high-value chemical manufacturing for regional export markets.",
+        relatedCountries: ["JO", "SA", "AE", "IQ", "EG"],
+        countryValues: { "JO": 9.5, "SA": 12.0, "AE": 22.0, "IQ": 6.5, "EG": 7.0 }
       }
     ],
     negativeTrends: [
-      { label: "Energy Import Costs", value: -12.4, dataPoints: [-2, -5, -8, -10, -12.4], description: "Reliance on external energy sources creates budget vulnerability.", relatedCountries: ["JO", "EG", "IQ", "LB", "MA"], countryValues: { "JO": -12.4, "EG": -8.5, "IQ": -6.2, "LB": -15.1, "MA": -5.2 } },
-      { label: "Water Scarcity Impact", value: -15.1, dataPoints: [-5, -8, -10, -12, -15.1], description: "Severe water stress is impacting agricultural output and municipal planning.", relatedCountries: ["JO", "EG", "IQ", "SY", "AE"], countryValues: { "JO": -15.1, "EG": -12.4, "IQ": -10.2, "SY": -18.5, "AE": -5.1 } }
+      {
+        label: "Construction & Real Estate",
+        value: -1.2,
+        dataPoints: [-0.3, -0.5, -0.8, -1.0, -1.2],
+        description: "Slowdown in residential development due to high financing costs and regional economic uncertainty.",
+        relatedCountries: ["JO", "EG", "LB", "SY", "AE"],
+        countryValues: { "JO": -1.2, "EG": -0.8, "LB": -2.5, "SY": -3.0, "AE": -0.2 }
+      },
+      {
+        label: "Heavy Industry",
+        value: -2.1,
+        dataPoints: [-0.5, -1.0, -1.5, -1.8, -2.1],
+        description: "Facing pressure from rising energy import costs and logistics friction in the Levant region.",
+        relatedCountries: ["JO", "EG", "IQ", "LB", "TR"],
+        countryValues: { "JO": -2.1, "EG": -1.5, "IQ": -1.2, "LB": -3.5, "TR": -0.8 }
+      },
+      {
+        label: "Global Agriculture",
+        value: -1.8,
+        dataPoints: [-0.4, -0.8, -1.2, -1.5, -1.8],
+        description: "Water scarcity and climate volatility impacting local crop yields and agricultural stability.",
+        relatedCountries: ["JO", "EG", "IQ", "SY", "SA"],
+        countryValues: { "JO": -1.8, "EG": -1.2, "IQ": -1.0, "SY": -2.5, "SA": -0.3 }
+      }
     ],
     kpisAndReports: [
       {
@@ -720,12 +750,56 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   CN: {
     positiveTrends: [
-      { label: "EV Export Dominance", value: 52.1, dataPoints: [10, 20, 35, 45, 52.1], description: "Unmatched scale in battery production is giving Chinese EV makers a decisive global cost advantage.", relatedCountries: ["CN", "DE", "JP", "KR", "US"] },
-      { label: "Clean Tech Capex", value: 38.6, dataPoints: [15, 20, 28, 32, 38.6], description: "China continues to lead the world in solar and wind capacity additions to power its industrial core.", relatedCountries: ["CN", "US", "IN", "DE", "BR"] }
+      {
+        label: "Technology and AI Sector",
+        value: 24.0,
+        dataPoints: [10.0, 15.0, 18.0, 21.0, 24.0],
+        description: "Driven by expansion of domestic chip manufacturing and development of national AI systems.",
+        relatedCountries: ["CN", "TW", "KR", "US", "AE"],
+        countryValues: { "CN": 24.0, "TW": 30.0, "KR": 22.0, "US": 28.0, "AE": 40.0 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 18.0,
+        dataPoints: [8.0, 11.0, 14.0, 16.0, 18.0],
+        description: "Leads global production of solar panels and battery technologies. Core engine for green industrial growth.",
+        relatedCountries: ["CN", "BR", "US", "IN", "DE"],
+        countryValues: { "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0, "DE": 12.0 }
+      },
+      {
+        label: "Advanced Manufacturing",
+        value: 8.0,
+        dataPoints: [4.0, 5.5, 6.5, 7.5, 8.0],
+        description: "Massive industrial base expansion in industrial robotics and high-tech supply chain automation.",
+        relatedCountries: ["CN", "US", "DE", "JP", "IN"],
+        countryValues: { "CN": 8.0, "US": 7.0, "DE": 6.0, "JP": 5.0, "IN": 9.0 }
+      }
     ],
     negativeTrends: [
-      { label: "Property Sector Drag", value: -18.4, dataPoints: [-5, -10, -12, -15, -18.4], description: "Ongoing deleveraging in the real estate market is dampening consumer confidence and local gov revenue.", relatedCountries: ["CN", "HK", "AU", "SG", "VN"] },
-      { label: "Demographic Aging", value: -4.2, dataPoints: [-1, -2, -3, -4, -4.2], description: "A shrinking workforce is increasing labor costs and long-term social welfare obligations.", relatedCountries: ["CN", "JP", "KR", "IT", "DE"] }
+      {
+        label: "Construction & Real Estate",
+        value: -1.5,
+        dataPoints: [-0.5, -0.8, -1.0, -1.3, -1.5],
+        description: "Ongoing deleveraging in the real estate market is dampening consumer confidence and local gov revenue.",
+        relatedCountries: ["CN", "HK", "AU", "SG", "VN"],
+        countryValues: { "CN": -1.5, "HK": -2.0, "AU": -0.8, "SG": -0.5, "VN": -0.4 }
+      },
+      {
+        label: "Heavy Industry",
+        value: -1.2,
+        dataPoints: [-0.4, -0.6, -0.8, -1.0, -1.2],
+        description: "Slowdown in traditional heavy manufacturing due to energy costs and cooling demand in export markets.",
+        relatedCountries: ["CN", "DE", "JP", "KR", "US"],
+        countryValues: { "CN": -1.2, "DE": -2.0, "JP": -0.3, "KR": -0.8, "US": -1.0 }
+      },
+      {
+        label: "Global Agriculture",
+        value: -0.2,
+        dataPoints: [-0.1, -0.1, -0.2, -0.2, -0.2],
+        description: "Climate fluctuations affecting crop consistency, though offset by expansive domestic food security reserves.",
+        relatedCountries: ["CN", "US", "BR", "IN", "AR"],
+        countryValues: { "CN": -0.2, "US": -1.0, "BR": -0.5, "IN": -0.6, "AR": -4.0 }
+      }
     ],
     kpisAndReports: [
       {
@@ -825,12 +899,56 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   IN: {
     positiveTrends: [
-      { label: "Mobile Manufacturing", value: 42.5, dataPoints: [20, 25, 30, 38, 42.5], description: "The 'Make in India' initiative has transformed the country into the world's second-largest mobile producer.", relatedCountries: ["IN", "VN", "CN", "MX", "TH"] },
-      { label: "Service Export Surplus", value: 22.8, dataPoints: [10, 15, 18, 20, 22.8], description: "High-end software and consultancy exports are driving record-high service trade surpluses.", relatedCountries: ["IN", "US", "GB", "AE", "SG"] }
+      {
+        label: "Technology and AI Sector",
+        value: 35.7,
+        dataPoints: [15.0, 20.0, 25.0, 30.0, 35.7],
+        description: "Rapid transformation through digital infrastructure scaling and emerging status as a global AI services hub.",
+        relatedCountries: ["IN", "US", "GB", "AE", "SG"],
+        countryValues: { "IN": 35.7, "US": 28.0, "GB": 25.0, "AE": 40.0, "SG": 22.0 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 16.0,
+        dataPoints: [6.0, 9.0, 12.0, 14.5, 16.0],
+        description: "Significant expansion in solar energy projects and modernization of the national electricity grid.",
+        relatedCountries: ["IN", "CN", "AE", "US", "BR"],
+        countryValues: { "IN": 16.0, "CN": 18.0, "AE": 28.0, "US": 15.0, "BR": 17.0 }
+      },
+      {
+        label: "Advanced Manufacturing",
+        value: 9.0,
+        dataPoints: [3.0, 5.0, 6.5, 8.0, 9.0],
+        description: "Expansion of the industrial base supported by national manufacturing programs and industrial automation.",
+        relatedCountries: ["IN", "CN", "US", "DE", "JP"],
+        countryValues: { "IN": 9.0, "CN": 8.0, "US": 7.0, "DE": 6.0, "JP": 5.0 }
+      }
     ],
     negativeTrends: [
-      { label: "Infrastructure Bottlenecks", value: -6.4, dataPoints: [-1, -2, -4, -5, -6.4], description: "Logistical delays and power grid inconsistencies are limiting industrial throughput in some corridors.", relatedCountries: ["IN", "BD", "PK", "EG", "NG"] },
-      { label: "Air Quality Economic Loss", value: -3.8, dataPoints: [-0.5, -1, -2, -3, -3.8], description: "High pollution levels in industrial hubs are causing health-related labor shortages and higher insurance costs.", relatedCountries: ["IN", "CN", "PK", "BD", "NP"] }
+      {
+        label: "Construction & Real Estate",
+        value: -0.8,
+        dataPoints: [-0.2, -0.4, -0.6, -0.7, -0.8],
+        description: "Infrastructure bottlenecks and high financing costs impacting large-scale residential projects.",
+        relatedCountries: ["IN", "US", "GB", "CN", "AE"],
+        countryValues: { "IN": -0.8, "US": -2.2, "GB": -4.0, "CN": -1.5, "AE": -0.2 }
+      },
+      {
+        label: "Heavy Industry",
+        value: -1.0,
+        dataPoints: [-0.3, -0.5, -0.7, -0.9, -1.0],
+        description: "Logistical delays and rising operational overhead affecting traditional heavy industrial corridors.",
+        relatedCountries: ["IN", "CN", "DE", "JP", "US"],
+        countryValues: { "IN": -1.0, "CN": -1.2, "DE": -2.0, "JP": -0.3, "US": -1.0 }
+      },
+      {
+        label: "Global Agriculture",
+        value: -0.6,
+        dataPoints: [-0.2, -0.3, -0.4, -0.5, -0.6],
+        description: "Monsoon variability and climate stress affecting consistency of rice and wheat production.",
+        relatedCountries: ["IN", "US", "BR", "AR", "ZA"],
+        countryValues: { "IN": -0.6, "US": -1.0, "BR": -0.5, "AR": -4.0, "ZA": -3.0 }
+      }
     ],
     kpisAndReports: [
       {
@@ -928,13 +1046,58 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     reports: []
   },
-  SA: {
+  SA: { // Saudi Arabia Specific Data
     positiveTrends: [
-      { label: "Mining Sector Revenue", value: 31.2, dataPoints: [10, 15, 22, 28, 31.2], description: "New mineral deposit discoveries are attracting massive FDI under the Vision 2030 mining framework.", relatedCountries: ["SA", "AU", "CA", "CL", "ZA"] },
-      { label: "Gaming Hub Expansion", value: 14.5, dataPoints: [2, 5, 8, 12, 14.5], description: "Strategic investments in e-sports and game development are capturing the regional youth demographic.", relatedCountries: ["SA", "AE", "KR", "US", "JP"] }
+      {
+        label: "Technology and AI Sector",
+        value: 32.5,
+        dataPoints: [10.0, 15.0, 22.0, 28.0, 32.5],
+        description: "Vision 2030 digital core expansion. Massive investment in AI gaming hubs, regional data centers, and digital government infrastructure.",
+        relatedCountries: ["SA", "AE", "US", "CN", "TW"],
+        countryValues: { "SA": 32.5, "AE": 40.0, "US": 28.0, "CN": 24.0, "TW": 30.0 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 20.5,
+        dataPoints: [5.0, 9.0, 14.0, 18.0, 20.5],
+        description: "Strategic pivot toward solar, green hydrogen, and circular economy projects under the Saudi Green Initiative.",
+        relatedCountries: ["SA", "AE", "CN", "BR", "US"],
+        countryValues: { "SA": 20.5, "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0 }
+      },
+      {
+        label: "Advanced Manufacturing",
+        value: 12.4,
+        dataPoints: [3.0, 5.5, 8.0, 10.5, 12.4],
+        description: "Mining sector expansion and downstream petrochemical advanced manufacturing. Localizing critical supply chains for the MENA region.",
+        relatedCountries: ["SA", "AE", "CN", "DE", "IN"],
+        countryValues: { "SA": 12.4, "AE": 22.0, "CN": 8.0, "DE": 6.0, "IN": 9.0 }
+      }
     ],
     negativeTrends: [
-      { label: "Global Oil Volatility", value: -8.2, dataPoints: [-2, -4, -6, -7, -8.2], description: "Fluctuating Brent prices are creating uncertainty in projected fiscal surpluses for the next quarter.", relatedCountries: ["SA", "RU", "IQ", "AE", "KW"] }
+      {
+        label: "Construction & Real Estate",
+        value: -0.5,
+        dataPoints: [-0.1, -0.2, -0.3, -0.4, -0.5],
+        description: "Massive project demand offset by higher capital costs. Strategic realignment of giga-projects to manage fiscal liquidity.",
+        relatedCountries: ["SA", "AE", "US", "GB", "DE"],
+        countryValues: { "SA": -0.5, "AE": -0.2, "US": -1.0, "GB": -1.5, "DE": -1.2 }
+      },
+      {
+        label: "Heavy Industry",
+        value: -0.8,
+        dataPoints: [-0.2, -0.4, -0.6, -0.7, -0.8],
+        description: "Exposure to global demand fluctuations in traditional petrochemical cycles and rising operational overhead.",
+        relatedCountries: ["SA", "DE", "CN", "JP", "US"],
+        countryValues: { "SA": -0.8, "DE": -2.0, "CN": -1.2, "JP": -0.3, "US": -1.0 }
+      },
+      {
+        label: "Global Agriculture",
+        value: -0.3,
+        dataPoints: [-0.1, -0.2, -0.3, -0.3, -0.3],
+        description: "High reliance on international food chains making fiscal spend sensitive to global grain price volatility.",
+        relatedCountries: ["SA", "AE", "US", "BR", "IN"],
+        countryValues: { "SA": -0.3, "AE": -0.4, "US": -1.0, "BR": -0.5, "IN": -0.6 }
+      }
     ],
     kpisAndReports: [
       {
@@ -1034,12 +1197,56 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   RU: { // Russia Specific Data
     positiveTrends: [
-      { label: "Agricultural Self-Sufficiency", value: 12.4, dataPoints: [5, 7, 9, 11, 12.4], description: "Massive state subsidies are driving a record-breaking harvest and food security autonomy.", relatedCountries: ["RU", "BR", "AR", "US", "CA"] },
-      { label: "LNG Arctic Expansion", value: 18.2, dataPoints: [10, 12, 14, 16, 18.2], description: "New northern sea route infrastructure is enabling record LNG exports to Asian partners.", relatedCountries: ["RU", "CN", "IN", "QA", "US"] }
+      {
+        label: "Technology and AI Sector",
+        value: 12.0,
+        dataPoints: [3.0, 6.0, 8.0, 10.0, 12.0],
+        description: "Focus on domestic tech self-reliance and cloning of global platforms for the regional market.",
+        relatedCountries: ["RU", "CN", "IR", "TR", "IN"],
+        countryValues: { "RU": 12.0, "CN": 24.0, "IR": 15.2, "TR": 10.5, "IN": 35.7 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 8.5,
+        dataPoints: [2.0, 4.0, 6.0, 7.5, 8.5],
+        description: "Expansion in Arctic energy infrastructure and regional grid adaptation strategies.",
+        relatedCountries: ["RU", "CN", "IN", "QA", "AE"],
+        countryValues: { "RU": 8.5, "CN": 18.0, "IN": 16.0, "QA": 10.2, "AE": 28.0 }
+      },
+      {
+        label: "Advanced Manufacturing",
+        value: 10.2,
+        dataPoints: [3.0, 5.0, 7.0, 9.0, 10.2],
+        description: "Industrial core expansion in Aerospace and defense-adjacent high-tech segments.",
+        relatedCountries: ["RU", "CN", "IN", "US", "DE"],
+        countryValues: { "RU": 10.2, "CN": 8.0, "IN": 9.0, "US": 7.0, "DE": 6.0 }
+      }
     ],
     negativeTrends: [
-      { label: "SWIFT Disconnection Impact", value: -25.6, dataPoints: [-10, -15, -20, -22, -25.6], description: "Isolation from global payment systems continues to increase transaction costs for import/export.", relatedCountries: ["RU", "IR", "KP", "VE", "CU"] },
-      { label: "CBR Interest Rate Drag", value: -16.0, dataPoints: [-8, -10, -12, -14, -16.0], description: "Emergency double-digit rates are suppressing domestic credit growth and automotive sales.", relatedCountries: ["RU", "TR", "AR", "NG", "EG"] }
+      {
+        label: "Construction & Real Estate",
+        value: -2.5,
+        dataPoints: [-0.5, -1.0, -1.5, -2.0, -2.5],
+        description: "Housing sector contraction due to rising financing costs and material supply chain friction.",
+        relatedCountries: ["RU", "DE", "GB", "CN", "AE"],
+        countryValues: { "RU": -2.5, "DE": -2.0, "GB": -1.5, "CN": -1.5, "AE": -0.2 }
+      },
+      {
+        label: "Heavy Industry",
+        value: -1.8,
+        dataPoints: [-0.4, -0.8, -1.2, -1.5, -1.8],
+        description: "Decline in European demand for industrial machinery and rising specialized production costs.",
+        relatedCountries: ["RU", "DE", "IT", "JP", "CN"],
+        countryValues: { "RU": -1.8, "DE": -2.0, "IT": -1.0, "JP": -0.3, "CN": -1.2 }
+      },
+      {
+        label: "Global Agriculture",
+        value: -0.1,
+        dataPoints: [-0.1, -0.1, -0.1, -0.1, -0.1],
+        description: "Consistent yield volumes offset by logistical friction in international grain export channels.",
+        relatedCountries: ["RU", "BR", "IN", "AR", "ZA"],
+        countryValues: { "RU": -0.1, "BR": -0.5, "IN": -0.6, "AR": -4.0, "ZA": -3.0 }
+      }
     ],
     kpisAndReports: [
       {
@@ -1139,14 +1346,56 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   IR: { // Iran Specific Data
     positiveTrends: [
-      { label: "Eurasian Customs Pivot", value: 24.5, dataPoints: [8, 12, 16, 20, 24.5], description: "New trade agreements with regional neighbors are opening alternative routes for industrial exports.", relatedCountries: ["IR", "RU", "AM", "BY", "KZ"] },
-      { label: "Domestic Tech Self-Reliance", value: 15.2, dataPoints: [5, 8, 10, 12, 15.2], description: "Local startups are successfully cloning global platform models for the insulated domestic market.", relatedCountries: ["IR", "RU", "CN", "TR", "IN"] },
-      { label: "Regional Energy Corridor", value: 11.4, dataPoints: [2, 5, 8, 9, 11.4], description: "Increased gas exports to Iraq and Turkey are providing critical hard currency inflows.", relatedCountries: ["IR", "IQ", "TR", "PK", "TM"], countryValues: { "IR": 11.4, "IQ": 8.5, "TR": 7.2, "PK": 5.1, "TM": 4.8 } }
+      {
+        label: "Technology and AI Sector",
+        value: 15.2,
+        dataPoints: [5.0, 8.0, 10.0, 12.0, 15.2],
+        description: "Local startups successfully adapting global models for the insulated domestic market and regional corridors.",
+        relatedCountries: ["IR", "RU", "CN", "TR", "IN"],
+        countryValues: { "IR": 15.2, "RU": 12.0, "CN": 24.0, "TR": 10.5, "IN": 35.7 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 11.4,
+        dataPoints: [2.0, 5.0, 8.0, 9.5, 11.4],
+        description: "Growth in regional energy bridges and increased gas exports providing critical hard currency inflows.",
+        relatedCountries: ["IR", "IQ", "TR", "PK", "TM"],
+        countryValues: { "IR": 11.4, "IQ": 8.5, "TR": 7.2, "PK": 5.1, "TM": 4.8 }
+      },
+      {
+        label: "Advanced Manufacturing",
+        value: 8.5,
+        dataPoints: [2.0, 4.0, 6.0, 7.5, 8.5],
+        description: "Focus on domestic industrial self-reliance and specialized component manufacturing for the regional market.",
+        relatedCountries: ["IR", "RU", "CN", "AE", "SA"],
+        countryValues: { "IR": 8.5, "RU": 10.2, "CN": 8.0, "AE": 22.0, "SA": 12.4 }
+      }
     ],
     negativeTrends: [
-      { label: "Exchange Rate Devaluation", value: -42.1, dataPoints: [-10, -20, -30, -38, -42.1], description: "Sustained inflationary pressure is eroding purchasing power for the middle class.", relatedCountries: ["IR", "AR", "TR", "LB", "SY"], countryValues: { "IR": -42.1, "AR": -115.2, "TR": -65.4, "LB": -82.1, "SY": -54.2 } },
-      { label: "Capital Infrastructure Aging", value: -18.2, dataPoints: [-5, -8, -12, -15, -18.2], description: "Limited access to international spare parts is causing maintenance backlogs in the aviation and energy sectors.", relatedCountries: ["IR", "RU", "VE", "CU", "SD"], countryValues: { "IR": -18.2, "RU": -15.4, "VE": -22.1, "CU": -12.8, "SD": -25.4 } },
-      { label: "Cross-Border Banking Friction", value: -22.5, dataPoints: [-10, -15, -18, -20, -22.5], description: "Non-standard payment channels are causing significant delays in settling international trade balances.", relatedCountries: ["IR", "RU", "KP", "IQ", "AF"], countryValues: { "IR": -22.5, "RU": -18.4, "KP": -15.2, "IQ": -12.1, "AF": -20.5 } }
+      {
+        label: "Construction & Real Estate",
+        value: -3.2,
+        dataPoints: [-0.5, -1.2, -1.8, -2.5, -3.2],
+        description: "Slowdown in urban development due to financing friction and extreme currency volatility.",
+        relatedCountries: ["IR", "AR", "TR", "LB", "SY"],
+        countryValues: { "IR": -3.2, "AR": -4.0, "TR": -1.5, "LB": -2.5, "SY": -3.0 }
+      },
+      {
+        label: "Heavy Industry",
+        value: -2.8,
+        dataPoints: [-0.5, -1.2, -1.8, -2.4, -2.8],
+        description: "Maintenance backlogs in aviation and energy sectors due to limited access to global supply chains.",
+        relatedCountries: ["IR", "RU", "VE", "CU", "SD"],
+        countryValues: { "IR": -2.8, "RU": -1.8, "VE": -2.2, "CU": -1.2, "SD": -2.5 }
+      },
+      {
+        label: "Global Agriculture",
+        value: -1.5,
+        dataPoints: [-0.3, -0.6, -0.9, -1.2, -1.5],
+        description: "Environmental stress and climate fluctuations affecting crop yields in regional agricultural hubs.",
+        relatedCountries: ["IR", "IQ", "AF", "SY", "SA"],
+        countryValues: { "IR": -1.5, "IQ": -1.0, "AF": -2.0, "SY": -2.5, "SA": -0.3 }
+      }
     ],
     kpisAndReports: [
       {

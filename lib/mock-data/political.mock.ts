@@ -10,6 +10,9 @@ export interface PoliticalCase {
   name: string;
   region: string;
   severity: 'Critical' | 'Warning' | 'Stable';
+  severityScore?: number;
+  sensitivityScore?: number;
+  complexityScore?: number;
   coordinates: [number, number]; // [lng, lat]
   description: string;
   involvedParties: string[];
@@ -27,6 +30,9 @@ export interface RegionalCrisis {
   alert: boolean;
   details: string;
   uaeImpact: number; // 0-100 score
+  severityScore?: number;
+  sensitivityScore?: number;
+  complexityScore?: number;
   coordinates: [number, number]; // [lat, lng] for ringing
   summary?: string;
   imageUrl?: string;
@@ -69,55 +75,74 @@ export interface PoliticalKpi {
 export const politicalCases: PoliticalCase[] = [
   {
     id: "C1",
-    name: "Red Sea Maritime Security",
-    region: "MENA / Global",
+    name: "Closing the Strait of Hormuz",
+    region: "Gulf / Global",
     severity: "Critical",
-    coordinates: [42.5, 15.5],
-    description: "Protection of critical trade lanes against non-state actor interference. Impacting 12% of global trade volume.",
-    involvedParties: ["UN Security Council", "IMO", "Combined Maritime Forces"],
-    isoCodes: ["YE", "SA", "EG", "DJ", "ER", "JO"],
+    severityScore: 93,
+    sensitivityScore: 93.5,
+    complexityScore: 98,
+    coordinates: [56.25, 26.56],
+    description: "Scenario of partial disruption of the global energy economic system, directly threatening UAE maritime security and energy trade.",
+    involvedParties: ["UAE", "Iran", "Saudi Arabia", "United States", "China"],
+    isoCodes: ["AE", "IR", "SA", "OM", "US", "CN", "KW", "QA"],
     files: [
-      { name: "Maritime_Security_Audit_2024.pdf", size: "2.4 MB" },
-      { name: "Trade_Route_Impact_Analysis.docx", size: "1.1 MB" }
+      { name: "Hormuz_Closure_Impact_2026.pdf", size: "3.2 MB" },
+      { name: "Global_Oil_Trade_Disruption.docx", size: "1.5 MB" }
     ],
-    summary: "The escalation of maritime security threats in the Red Sea has necessitated a multi-national naval response to safeguard global supply chains. Insurance premiums for commercial transit have spiked by 300% since Q4.",
+    summary: "The closure of the Strait of Hormuz is considered one of the highest-risk geopolitical escalation scenarios, severely disrupting around 20% of global oil trade, triggering financial market instability, and reshaping global energy security architecture.",
     imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a9a37?auto=format&fit=crop&q=80&w=1200"
   },
   {
     id: "C2",
-    name: "G7 Digital Governance Accord",
-    region: "Europe / N. America",
-    severity: "Stable",
-    coordinates: [2.3522, 48.8566],
-    description: "Harmonization of AI safety standards and cross-border data flow regulations between G7 nations.",
-    involvedParties: ["OECD", "G7 Secretariat", "Tech Council"],
-    isoCodes: ["US", "GB", "FR", "DE", "IT", "CA", "JP"],
+    name: "Iranian Nuclear File",
+    region: "Middle East / Global",
+    severity: "Critical",
+    severityScore: 84,
+    sensitivityScore: 83,
+    complexityScore: 90,
+    coordinates: [51.4215, 35.6944],
+    description: "A structural factor reshaping the security architecture of the Gulf, creating an unstable deterrence balance, an indirect arms race, and tension in spheres of influence.",
+    involvedParties: ["Iran", "United States", "Palestinian Occupied Territories", "Gulf States"],
+    isoCodes: ["IR", "US", "PS", "AE", "SA"],
     files: [
-      { name: "AI_Safety_Framework.pdf", size: "4.8 MB" }
-    ]
+      { name: "Nuclear_Deterrence_Balance_2026.pdf", size: "2.8 MB" }
+    ],
+    summary: "The Iranian nuclear file presents a multi-layer geopolitical conflict, driving oil price volatility, increasing cybersecurity threats, and demanding strengthened defensive deterrence in the region."
   },
   {
     id: "C3",
-    name: "Arctic Sovereignty Demarcation",
-    region: "Arctic Circle",
+    name: "Expansion of the Lebanon War",
+    region: "Eastern Mediterranean / Gulf",
     severity: "Warning",
-    coordinates: [18.0686, 75.0],
-    description: "Contested claims over seabed resources and new northern shipping lanes due to glacial retreat.",
-    involvedParties: ["Arctic Council", "UNCLOS Commissioners"],
-    isoCodes: ["CA", "RU", "US", "NO", "DK"],
+    severityScore: 77,
+    sensitivityScore: 81,
+    complexityScore: 89,
+    coordinates: [33.8547, 35.8623],
+    description: "Prolonged regional conflict dynamic reshaping Middle Eastern balances gradually. Impacting geopolitical risk premiums and tourism.",
+    involvedParties: ["Lebanon", "Palestinian Occupied Territories", "Syria", "Iraq", "UAE"],
+    isoCodes: ["LB", "PS", "SY", "IQ", "AE"],
     files: [
-      { name: "Seabed_Claim_Map_V4.jpg", size: "12.5 MB" }
-    ]
+      { name: "Lebanon_War_Spillover_2026.pdf", size: "4.1 MB" }
+    ],
+    summary: "The continued expansion of the Lebanon war extends regional instability, indirectly affecting the UAE through interconnected regional markets, fluctuating energy prices, and geopolitical polarization.",
+    imageUrl: "https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80&w=1200"
   },
   {
     id: "C4",
-    name: "Brics+ Energy Coalition",
-    region: "Global South",
-    severity: "Stable",
-    coordinates: [45.0, 24.0],
-    description: "Strategic coordination of energy export quotas and de-dollarization of hydro-carbon trade.",
-    involvedParties: ["BRICS Task Force", "NDB"],
-    isoCodes: ["BR", "RU", "IN", "CN", "ZA", "AE", "SA", "EG", "ET", "IR"]
+    name: "Aviation Crisis & Airspace Disruption",
+    region: "Middle East Airspace",
+    severity: "Warning",
+    severityScore: 81,
+    sensitivityScore: 83,
+    complexityScore: 87,
+    coordinates: [25.2532, 55.3657],
+    description: "Regional disruption of the Middle East air transport system, reshaping flight routes and escalating operational costs.",
+    involvedParties: ["UAE", "Aviation Authorities", "Eastern Mediterranean States"],
+    isoCodes: ["AE", "LB", "SY", "PS", "JO", "TR"],
+    files: [
+      { name: "Aviation_Rerouting_Impact.pdf", size: "1.9 MB" }
+    ],
+    summary: "The Lebanon war resulted in airspace disruptions across the Eastern Mediterranean and the Gulf. As a global aviation connectivity hub, the UAE faces increased operational and fuel costs, alongside strategic reassessments of regional flight networks."
   }
 ];
 
@@ -298,7 +323,12 @@ export const politicalDataStore: Record<string, PoliticalData> = {
     crises: regionalCrises,
     kpis: politicalKpis,
     news: [
-      { id: "N1", headline: "UNSC Drafts New Maritime Security Protocol", time: "2h ago", category: "Security", source: "Intelligence Desk", summary: "A new draft resolution aims to establish enhanced security zones in critical transit chokepoints." },
+      {
+        id: "N1", headline: "UNSC Drafts New Maritime Security Protocol",
+        time: "2h ago", category: "Security", 
+        source: "Intelligence Desk", 
+        summary: "A new draft resolution aims to establish enhanced security zones in critical transit chokepoints."
+      },
       { id: "N2", headline: "G7 Summit Reaffirms Commitment to Indo-Pacific", time: "5h ago", category: "Diplomatic", source: "Diplomatic Core", summary: "Leaders have pledged increased cooperation on maritime defense and digital governance standards." }
     ]
   },
@@ -386,51 +416,8 @@ export const politicalDataStore: Record<string, PoliticalData> = {
     ]
   },
   AE: {
-    cases: [
-      {
-        id: "C-AE-1",
-        name: "Global Trade Corridors",
-        region: "UAE / Global",
-        severity: "Stable",
-        coordinates: [54.3773, 24.4539],
-        description: "Strategic expansion of UAE-led maritime and air logistics hubs connecting three continents.",
-        involvedParties: ["DP World", "Etihad Rail", "Ministry of Economy"],
-        isoCodes: ["AE", "IN", "CN", "ZA"]
-      },
-      {
-        id: "C-AE-2",
-        name: "Energy Transition Roadmap",
-        region: "UAE / MENA",
-        severity: "Stable",
-        coordinates: [55.2708, 25.2048],
-        description: "Implementation of COP28 mandates and net-zero 2050 strategic initiatives.",
-        involvedParties: ["ADNOC", "Masdar", "Ministry of Climate Change"],
-        isoCodes: ["AE", "SA", "DE"]
-      },
-      {
-        id: "C-AE-3",
-        name: "AI Sovereign Cloud Initiative",
-        region: "UAE / Global",
-        severity: "Critical",
-        coordinates: [54.3773, 24.4539],
-        description: "Development of domestic AI compute clusters and secure data sovereign zones for governmental applications.",
-        summary: "The UAE's AI Sovereign Cloud Initiative is a critical pillar of its digital economy strategy, aiming to ensure data sovereignty and advanced compute capabilities.",
-        involvedParties: ["G42", "TII", "Cybersecurity Council", "NVIDIA", "ASPIRE"],
-        isoCodes: ["AE", "US"]
-      }
-    ],
-    crises: [
-      {
-        id: "RC-AE-1",
-        region: "Arabian Gulf Maritime",
-        status: "Deterrence Monitoring",
-        priority: "High",
-        alert: true,
-        details: "Increased naval patrolling to prevent interference with commercial oil tankers near international chokepoints.",
-        uaeImpact: 94,
-        coordinates: [25.5, 53.5]
-      }
-    ],
+    cases: politicalCases,
+    crises: regionalCrises,
     kpis: [
       {
         label: "Political Stability Index",

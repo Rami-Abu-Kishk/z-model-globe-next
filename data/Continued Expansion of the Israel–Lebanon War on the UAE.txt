@@ -1,0 +1,110 @@
+﻿First: Impact of the Continued Expansion of the Israel–Lebanon War on the UAE (2026)
+1) Security and Geopolitical Impact
+The continuation of the war means the extension of regional instability in the Eastern Mediterranean, leading to:
+* Increased likelihood of spillover into other regional theaters (Syria – Iraq – Red Sea) 
+* Rising indirect risks to Gulf security 
+* Increased activity of non-conventional threats (cyber / indirect through local actors)
+Quantitative assessment:
+Security impact on the UAE: 72% (High)
+Reason: No direct military engagement, but strong linkage to the regional environment
+2) Economic Impact (Markets + Aviation + Energy + Investment)
+* Increase in geopolitical risk premium in the region 
+* Fluctuations in oil prices due to regional instability 
+* Limited but persistent impact on tourism and investment 
+* Higher insurance and transport costs 
+Quantitative assessment:
+Economic impact: 78% (Very High)
+Reason: The UAE is a regional economic hub sensitive to prolonged tensions
+3) Strategic Impact
+* Political repositioning across regional states 
+* Strengthening of “de-escalation” and “risk management” policies 
+* Greater reliance on international alliances 
+Quantitative assessment:
+Strategic impact: 74% (High)
+
+
+
+
+ UAE Summary
+Component
+	Score
+	Security impact
+	72%
+	Economic impact
+	78%
+	Strategic impact
+	74%
+	Overall average impact
+	75% (High)
+	
+
+ Second: Impact of the Continued War on the Region (Eastern Mediterranean + Middle East)
+1) Regional Security Impact
+* Expansion of instability into multiple regional theaters 
+* Increased likelihood of indirect confrontations between regional actors 
+* Ongoing pressure along Lebanese – Syrian – Israeli borders 
+Quantitative assessment:
+88% (Very High)
+2) Geopolitical Impact
+* Reshaping of power balances in the Eastern Mediterranean 
+* Increased role of regional and global powers in managing the conflict 
+* Growing political polarization in the region 
+Quantitative assessment:
+90% (Very High / Near Critical)
+3) Regional Economic Impact
+* Decline in investment stability in the Eastern Mediterranean 
+* Higher energy and transport costs 
+* Reduced tourism activity in affected areas 
+Quantitative assessment:
+82% (Very High)
+Regional Summary
+Component
+	Score
+	Security impact
+	88%
+	Geopolitical impact
+	90%
+	Economic impact
+	82%
+	Overall average impact
+	87% (Very High / Near Critical)
+	
+
+ Third: Classification of the Event (War Expansion 2026)
+1) Severity (S)
+ Result: ~77% → High Severity
+2) Sensitivity
+* UAE: 75% 
+* Region: 87% 
+ Result: ~81% → Very High Sensitivity
+3) Complexity
+* Multiple regional and international actors 
+* Military + political + economic overlap 
+* Prolonged conflict without clear resolution 
+Estimate:
+89% (Very High / Multi-theater geopolitical conflict)
+
+
+
+
+ Final Summary
+Indicator
+	UAE
+	Region
+	Severity
+	77%
+	87%
+	Sensitivity
+	81%
+	87%
+	Complexity
+	85%
+	89%
+	
+
+Analytical Conclusion
+The continued and expanding Israel–Lebanon war is not merely a localized conflict, but:
+A prolonged regional conflict dynamic reshaping Middle Eastern balances gradually without immediate full-scale escalation.
+For the UAE:
+* It is not a direct party to the conflict 
+* But it remains within a moderate-to-high impact zone due to strong regional interconnectivity

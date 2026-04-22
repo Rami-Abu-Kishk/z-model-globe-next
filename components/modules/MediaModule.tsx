@@ -289,13 +289,24 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                           <h4 className="text-[15px] font-black text-slate-900 group-hover:text-sky-600 transition-colors leading-tight mb-3">
                             {news.headline}
                           </h4>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5">
-                               <div className="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                 <div className="h-full bg-sky-500 w-3/4" />
-                               </div>
-                               <span className="text-[9px] font-bold text-slate-400 uppercase">Impact</span>
-                            </div>
+                           <div className="flex items-center justify-between">
+                             <div className="flex items-center gap-1.5">
+                                <div className="w-24 h-1.5 bg-slate-100/50 rounded-full overflow-hidden relative">
+                                  <motion.div 
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${news.impact || (60 + (parseInt(news.id.replace(/\D/g, '')) || (news.headline.length)) % 35)}%` }}
+                                    transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                                    className="h-full bg-sky-500 rounded-full relative"
+                                  >
+                                    <motion.div 
+                                      animate={{ x: ["-100%", "100%"] }}
+                                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                                    />
+                                  </motion.div>
+                                </div>
+                                <span className="text-[9px] font-bold text-slate-400 uppercase">Impact</span>
+                             </div>
                             <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-sky-500" />
                           </div>
                         </div>

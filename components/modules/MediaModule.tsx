@@ -235,13 +235,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                                <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
                              </div>
                              <div className="flex items-center gap-2">
-                               {i === 0 && (
-                                 <AiBadge 
-                                   onClick={(e) => handleAiTrigger(e, news)}
-                                   className="!relative !w-6 !h-6 !static border-rose-100 bg-rose-50/30 shadow-none hover:bg-rose-50 hover:scale-110"
-                                   tooltipText="Sentiment Audit"
-                                 />
-                               )}
+                              
                                <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-rose-500" />
                              </div>
                           </div>

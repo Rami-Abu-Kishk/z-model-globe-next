@@ -39,12 +39,12 @@ function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: Kpi
 
   return (
     <div
-      className={`p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl hover:shadow-2xl transition-all group overflow-hidden relative flex flex-col h-full ${onOpen && kpi.insightData ? 'cursor-pointer hover:border-emerald-300' : ''}`}
+      className={`p-6 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-2xl shadow-xl hover:shadow-2xl transition-all group relative flex flex-col h-full ${onOpen && kpi.insightData ? 'cursor-pointer hover:border-emerald-300' : ''}`}
       onClick={() => onOpen && kpi.insightData && onOpen(kpi)}
     >
       <AiBadge
         onClick={handleAiTrigger}
-        className="top-4 right-4 !w-8 !h-8 opacity-0 group-hover:opacity-100 transition-opacity"
+        className="absolute -bottom-4 left-1/2 -translate-x-1/2 !w-8 !h-8 opacity-800 transition-opacity"
         tooltipText="Investment Thesis"
       />
       <div className="absolute -top-4 -right-4 p-2 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none">
@@ -58,16 +58,6 @@ function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: Kpi
       <div className="flex-1 relative z-10">
         <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">{kpi.value}</h3>
         <p className="text-[12px] font-bold text-slate-600 leading-snug mb-6 uppercase tracking-tight">{kpi.title}</p>
-      </div>
-
-      <div className="pt-4 border-t border-slate-200/60 flex items-center justify-between relative z-10">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-            <User className="w-3 h-3 text-slate-400" />
-          </div>
-          <p className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{kpi.rep}</p>
-        </div>
-        <Building2 className="w-3 h-3 text-slate-300" />
       </div>
     </div>
   );

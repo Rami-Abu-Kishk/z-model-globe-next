@@ -188,36 +188,36 @@ export const HologramEarth = forwardRef((props, ref) => {
     if (activeModule === 'companies') return groupsArcs;
     if (activeModule === 'political') return politicalArcs;
 
-    if (activeModule === 'media') {
-      // Generate "Intelligence Flow" arcs from news sources to Abu Dhabi
-      const AD_LAT = 24.4539;
-      const AD_LNG = 54.3773;
+    // if (activeModule === 'media') {
+    //   // Generate "Intelligence Flow" arcs from news sources to Abu Dhabi
+    //   const AD_LAT = 24.4539;
+    //   const AD_LNG = 54.3773;
 
-      let newsItems = [...mediaBreaking, ...mediaTrending, ...mediaRegional];
+    //   let newsItems = [...mediaBreaking, ...mediaTrending, ...mediaRegional];
 
-      // Layer 1: Filter by specific active news ID (highest priority)
-      if (mediaActiveNewsId) {
-        newsItems = newsItems.filter(n => n.id === mediaActiveNewsId);
-      }
-      // Layer 2: Filter by category section (Breaking/Trending/Regional)
-      else if (mediaCategoryFilter !== 'all') {
-        newsItems = newsItems.filter(n => n.category === mediaCategoryFilter);
-      }
+    //   // Layer 1: Filter by specific active news ID (highest priority)
+    //   if (mediaActiveNewsId) {
+    //     newsItems = newsItems.filter(n => n.id === mediaActiveNewsId);
+    //   }
+    //   // Layer 2: Filter by category section (Breaking/Trending/Regional)
+    //   else if (mediaCategoryFilter !== 'all') {
+    //     newsItems = newsItems.filter(n => n.category === mediaCategoryFilter);
+    //   }
 
-      return newsItems
-        .filter(n => n.target)
-        .map(news => ({
-          id: news.id,
-          startLat: news.target!.lat,
-          startLng: news.target!.lng,
-          endLat: AD_LAT,
-          endLng: AD_LNG,
-          // Gradient from News Location to AD
-          color: news.sentiment === 'positive' ? ['#10b981', '#3b82f6'] : ['#f43f5e', '#3b82f6'],
-          name: news.headline,
-          sentiment: news.sentiment
-        }));
-    }
+    //   return newsItems
+    //     .filter(n => n.target)
+    //     .map(news => ({
+    //       id: news.id,
+    //       startLat: news.target!.lat,
+    //       startLng: news.target!.lng,
+    //       endLat: AD_LAT,
+    //       endLng: AD_LNG,
+    //       // Gradient from News Location to AD
+    //       color: news.sentiment === 'positive' ? ['#10b981', '#3b82f6'] : ['#f43f5e', '#3b82f6'],
+    //       name: news.headline,
+    //       sentiment: news.sentiment
+    //     }));
+    // }
 
     return [];
   }, [activeModule, mediaCategoryFilter, mediaActiveNewsId, hasAnySelection]);

@@ -12,6 +12,7 @@ import {
   trendingNews as mediaTrending,
   localRegionalNews as mediaRegional
 } from '@/lib/mock-data/media.mock';
+import { GlobePoint } from '@/lib/types';
 
 
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
@@ -65,8 +66,11 @@ export const HologramEarth = forwardRef((props, ref) => {
   const autoRotate = useZModelStore(s => s.autoRotate);
   const isEarthFocus = viewState === 'EARTH_FOCUS';
   const isCardFocus = viewState === 'CARD_FOCUS';
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState<any>(false);
   const [hoveredArc, setHoveredArc] = useState<any>(null);
+  const politicalActiveRingLabels = useZModelStore(s => s.politicalActiveRingLabels);
+  const showInvestmentPoints = useZModelStore(s => s.showInvestmentPoints);
+  const showBestTargetPoint = useZModelStore(s => s.showBestTargetPoint);
 
   const handleSelect = (country: typeof searchableCountries[0]) => {
     setSearchQuery('');
@@ -120,7 +124,7 @@ export const HologramEarth = forwardRef((props, ref) => {
     if (!controls) return false;
     Object.assign(controls, {
       autoRotate: autoRotate && !isEarthFocus && !activeTarget && selectedCountries.length === 0,
-      autoRotateSpeed: 0.5,
+      autoRotateSpeed: 2,
       enableZoom: true,
       enablePan: true,
       enableRotate: true
@@ -135,28 +139,21 @@ export const HologramEarth = forwardRef((props, ref) => {
 
     // Camera Position (only if no activeTarget)
     if (!activeTarget) {
-      const duration = (isFirstMount.current && !isEarthFocus) ? 0 : 1000;
-
-      // Robust Initialization: We force the altitude multiple times during startup
-      // to ensure OrbitControls doesn't reset it to a default value.
-      if (isFirstMount.current) {
-        let count = 0;
-        const initInterval = setInterval(() => {
-          if (globeRef.current) {
-            const currentPov = globeRef.current.pointOfView();
-            globeRef.current.pointOfView({ ...currentPov, altitude: targetAlt }, 0);
-          }
-          count++;
-          if (count > 10) clearInterval(initInterval);
-        }, 100);
-      } else {
-        if (globeRef.current) {
-          const currentPov = globeRef.current.pointOfView();
-          globeRef.current.pointOfView({ ...currentPov, altitude: targetAlt }, duration);
-        }
+      const duration = 1000;
+      const currentPov = globeRef.current.pointOfView();
+      
+      // Only change altitude if we are specifically focusing on a country (EARTH_FOCUS)
+      // Otherwise, stay at ORBITAL_ALTITUDE to prevent jitter during module navigation
+      const targetAlt = isEarthFocus ? FOCUS_ALTITUDE : ORBITAL_ALTITUDE;
+      
+      if (Math.abs(currentPov.altitude - targetAlt) > 0.01) {
+        globeRef.current.pointOfView({ ...currentPov, altitude: targetAlt }, duration);
       }
     }
-    isFirstMount.current = false;
+    
+    // Safety: ensure first mount is marked false even if onGlobeReady isn't called for some reason
+    // but the main work is moved to onGlobeReady for stability
+    setTimeout(() => { isFirstMount.current = false; }, 3000);
 
     // Controls Sync with retry
     if (!syncControls()) {
@@ -171,13 +168,80 @@ export const HologramEarth = forwardRef((props, ref) => {
   }));
 
   // Memoize layer data to prevent WebGL stutters during typing in search
-  const pointsData = useMemo(() => {
+  const hasAnySelection = !!(selectedCountry || selectedCountries.length > 0);
+
+  const pointsData = useMemo<GlobePoint[]>(() => {
     const isInvestment = activeModule === 'investment';
-    const hasSelection = selectedCountry || selectedCountries.length > 0;
-    return (isInvestment && !hasSelection) ? investmentGlobePoints : [];
-  }, [activeModule, selectedCountry, selectedCountries]);
-  const ringsData = useMemo(() => activeModule === 'political' ? politicalCrisisRings : [], [activeModule]);
+    const points: GlobePoint[] = (isInvestment && showInvestmentPoints) ? [...investmentGlobePoints] as GlobePoint[] : [];
+    
+    // Add Best Target Point if enabled
+    if (isInvestment && showBestTargetPoint) {
+      // UAE Coordinates for the special marker
+      points.push({
+        lat: 23.4241,
+        lng: 53.8478,
+        size: 1.8, // Slightly reduced
+        color: '#fbbf24', // Premium Gold
+        label: 'Best Country to Invest In',
+        isBestTarget: true
+      });
+    }
+    
+    return points;
+  }, [activeModule, showInvestmentPoints, showBestTargetPoint]);
+
+  const ringsData = useMemo(() => {
+    if (activeModule !== 'political') return [];
+    // If a specific case/crisis is selected, filter to matching rings only (fast swap, no fade-out)
+    if (politicalActiveRingLabels !== null) {
+      return politicalCrisisRings.filter(r => politicalActiveRingLabels.includes(r.label));
+    }
+    // Default: show all rings (no selection active)
+    return politicalCrisisRings;
+  }, [activeModule, politicalActiveRingLabels]);
+
   const labelsData = useMemo(() => [], []);
+
+  const arcsData = useMemo(() => {
+    if (hasAnySelection) return []; // Hide clutter when focusing on a country
+
+    if (activeModule === 'companies') return groupsArcs;
+    if (activeModule === 'political') return politicalArcs;
+
+    // if (activeModule === 'media') {
+    //   // Generate "Intelligence Flow" arcs from news sources to Abu Dhabi
+    //   const AD_LAT = 24.4539;
+    //   const AD_LNG = 54.3773;
+
+    //   let newsItems = [...mediaBreaking, ...mediaTrending, ...mediaRegional];
+
+    //   // Layer 1: Filter by specific active news ID (highest priority)
+    //   if (mediaActiveNewsId) {
+    //     newsItems = newsItems.filter(n => n.id === mediaActiveNewsId);
+    //   }
+    //   // Layer 2: Filter by category section (Breaking/Trending/Regional)
+    //   else if (mediaCategoryFilter !== 'all') {
+    //     newsItems = newsItems.filter(n => n.category === mediaCategoryFilter);
+    //   }
+
+    //   return newsItems
+    //     .filter(n => n.target)
+    //     .map(news => ({
+    //       id: news.id,
+    //       startLat: news.target!.lat,
+    //       startLng: news.target!.lng,
+    //       endLat: AD_LAT,
+    //       endLng: AD_LNG,
+    //       // Gradient from News Location to AD
+    //       color: news.sentiment === 'positive' ? ['#10b981', '#3b82f6'] : ['#f43f5e', '#3b82f6'],
+    //       name: news.headline,
+    //       sentiment: news.sentiment
+    //     }));
+    // }
+
+    return [];
+  }, [activeModule, mediaCategoryFilter, mediaActiveNewsId, hasAnySelection]);
+
   const selectionLabelData = useMemo(() => {
     if (!selectedCountry) return [];
     const country = searchableCountries.find(c => c.iso === selectedCountry);
@@ -194,44 +258,6 @@ export const HologramEarth = forwardRef((props, ref) => {
 
   // Combine intelligence points and the active selection label
   const combinedHtmlData = useMemo(() => [...pointsData, ...selectionLabelData], [pointsData, selectionLabelData]);
-
-  const arcsData = useMemo(() => {
-    if (activeModule === 'companies') return groupsArcs;
-    if (activeModule === 'political') return politicalArcs;
-
-    if (activeModule === 'media') {
-      // Generate "Intelligence Flow" arcs from news sources to Abu Dhabi
-      const AD_LAT = 24.4539;
-      const AD_LNG = 54.3773;
-
-      let newsItems = [...mediaBreaking, ...mediaTrending, ...mediaRegional];
-
-      // Layer 1: Filter by specific active news ID (highest priority)
-      if (mediaActiveNewsId) {
-        newsItems = newsItems.filter(n => n.id === mediaActiveNewsId);
-      }
-      // Layer 2: Filter by category section (Breaking/Trending/Regional)
-      else if (mediaCategoryFilter !== 'all') {
-        newsItems = newsItems.filter(n => n.category === mediaCategoryFilter);
-      }
-
-      return newsItems
-        .filter(n => n.target)
-        .map(news => ({
-          id: news.id,
-          startLat: news.target!.lat,
-          startLng: news.target!.lng,
-          endLat: AD_LAT,
-          endLng: AD_LNG,
-          // Gradient from News Location to AD
-          color: news.sentiment === 'positive' ? ['#10b981', '#3b82f6'] : ['#f43f5e', '#3b82f6'],
-          name: news.headline,
-          sentiment: news.sentiment
-        }));
-    }
-
-    return [];
-  }, [activeModule, mediaCategoryFilter, mediaActiveNewsId]);
 
   // Handle Abu Dhabi Gov camera lock
   useEffect(() => {
@@ -260,13 +286,33 @@ export const HologramEarth = forwardRef((props, ref) => {
         ref={globeRef}
         onGlobeReady={() => {
           syncControls();
-          if (globeRef.current && !isEarthFocus && !activeTarget) {
-            const currentPov = globeRef.current.pointOfView();
-            globeRef.current.pointOfView({ ...currentPov, altitude: ORBITAL_ALTITUDE }, 0);
+          if (globeRef.current && isFirstMount.current) {
+            // 1. Instantly snap to deep space altitude
+            globeRef.current.pointOfView({ 
+              lat: 20.5937, 
+              lng: 78.9629, 
+              altitude: 20.0 
+            }, 0);
+
+            // 2. Begin smooth descent to orbital altitude
+            // Delay slightly to ensure WebGL context is initialized and ready for animation
+            requestAnimationFrame(() => {
+              if (globeRef.current) {
+                globeRef.current.pointOfView({ 
+                  lat: 20.5937, 
+                  lng: 78.9629, 
+                  altitude: ORBITAL_ALTITUDE 
+                }, 2500);
+                isFirstMount.current = false;
+              }
+            });
           }
         }}
         backgroundColor="rgba(0,0,0,0)"
         rendererConfig={{ antialias: true, alpha: true }}
+        showAtmosphere={!hasAnySelection}
+        atmosphereColor="#3b82f6"
+        atmosphereAltitude={0.15}
         globeMaterial={globeMaterial}
         polygonsData={countriesGeoJson}
         pointsData={pointsData}
@@ -274,9 +320,9 @@ export const HologramEarth = forwardRef((props, ref) => {
         labelsData={labelsData}
         arcsData={arcsData}
 
-        pointAltitude={(d: any) => (d.size || 1) * 0.1}
-        pointColor="color"
-        pointRadius={0.5}
+        pointAltitude={(d: any) => d.isBestTarget ? 0.4 : (d.size || 1) * 0.1}
+        pointColor={(d: any) => d.color || '#10b981'}
+        pointRadius={(d: any) => d.isBestTarget ? 0.3 : 0.5}
 
         htmlElementsData={combinedHtmlData}
         htmlAltitude={(d: any) => d.type === 'selection' ? 0.15 : (d.size || 1) * 0.1 + 0.02}
@@ -426,6 +472,7 @@ export const HologramEarth = forwardRef((props, ref) => {
             }
           }
 
+          if (hasAnySelection) return 0;
           return 0.01;
         }}
         polygonsTransitionDuration={300}
@@ -462,10 +509,11 @@ export const HologramEarth = forwardRef((props, ref) => {
           //   return 'rgba(239, 68, 68, 0.4)'; // Rose 500 at 40%
           // }
 
+          if (hasAnySelection) return 'rgba(51, 65, 85, 0.04)'; // Extremely pale ghost when something else is selected
           return 'rgba(51, 65, 85, 0.25)'; // Softer Slate/Navy countries
         }}
-        polygonSideColor={() => 'rgba(34, 211, 238, 0.2)'}
-        polygonStrokeColor={() => 'rgba(255, 255, 255, 0.6)'}
+        polygonSideColor={() => hasAnySelection ? 'rgba(34, 211, 238, 0)' : 'rgba(34, 211, 238, 0.2)'}
+        polygonStrokeColor={() => hasAnySelection ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.6)'}
         polygonLabel={(d: any) => {
           const p = d.properties;
           const iso = (p.ISO_A2 || p.iso_a2 || p['ISO3166-1-Alpha-2'] || '').toUpperCase();

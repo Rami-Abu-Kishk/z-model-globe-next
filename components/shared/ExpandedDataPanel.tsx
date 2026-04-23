@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
-import { X, Layers, Search, ChevronDown, Minimize2, ArrowLeft } from 'lucide-react';
+import { X, Layers, Search, ChevronDown, Minimize2, ArrowLeft, XCircle } from 'lucide-react';
 import { searchableCountries } from '@/lib/mockData';
 
 import { EconomyModule } from '@/components/modules/EconomyModule';
@@ -49,10 +49,19 @@ export function ExpandedDataPanel() {
   const resetView = useZModelStore(s => s.resetView);
   const selectedCountry = useZModelStore(s => s.selectedCountry);
   const setSelectedCountry = useZModelStore(s => s.setSelectedCountry);
+  const selectedCountries = useZModelStore(s => s.selectedCountries);
   const setSelectedCountries = useZModelStore(s => s.setSelectedCountries);
   const setActiveCountry = useZModelStore(s => s.setActiveCountry);
   const setActiveTarget = useZModelStore(s => s.setActiveTarget);
   const setViewState = useZModelStore(s => s.setViewState);
+
+  const hasCountrySelection = !!selectedCountry || selectedCountries.length > 0;
+
+  const handleClearCountrySelection = () => {
+    setSelectedCountry(null);
+    setSelectedCountries([]);
+    setActiveCountry(null);
+  };
 
   // Detail states for back button
   const investmentActiveDetail = useZModelStore(s => s.investmentActiveDetail);
@@ -62,9 +71,12 @@ export function ExpandedDataPanel() {
   const setMediaActiveNewsId = useZModelStore(s => s.setMediaActiveNewsId);
   const setMediaSelectedArticle = useZModelStore(s => s.setMediaSelectedArticle);
   const setActiveEconomyTrend = useZModelStore(s => s.setActiveEconomyTrend);
+  const politicalSelectedCase = useZModelStore(s => s.politicalSelectedCase);
+  const setPoliticalSelectedCase = useZModelStore(s => s.setPoliticalSelectedCase);
 
   const showBackButton = (focusedCardId === 'investment' && investmentActiveDetail !== 'NONE') || 
-                       (focusedCardId === 'media' && mediaActiveNewsId !== null);
+                       (focusedCardId === 'media' && mediaActiveNewsId !== null) ||
+                       (focusedCardId === 'political' && politicalSelectedCase !== null);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -79,6 +91,13 @@ export function ExpandedDataPanel() {
     } else if (focusedCardId === 'media') {
       setMediaActiveNewsId(null);
       setMediaSelectedArticle(null);
+    } else if (focusedCardId === 'political') {
+      setPoliticalSelectedCase(null);
+    }
+
+    // Refocus on country if selection exists
+    if (selectedCountry) {
+      setSelectedCountry(selectedCountry);
     }
   };
 
@@ -87,16 +106,23 @@ export function ExpandedDataPanel() {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [focusedCardId, investmentActiveDetail, mediaActiveNewsId]);
+  }, [focusedCardId, investmentActiveDetail, mediaActiveNewsId, politicalSelectedCase]);
 
+  const [isCountriesListOpen, setIsCountriesListOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [localQuery, setLocalQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const countriesListRef = useRef<HTMLDivElement>(null);
 
   const isVisible = viewState === 'CARD_FOCUS' && focusedCardId !== null;
 
   const currentCountry = searchableCountries.find(c => c.iso === selectedCountry);
+  const singleSelectionFromList = selectedCountries.length === 1 
+    ? searchableCountries.find(c => c.iso === selectedCountries[0]) 
+    : null;
+
+  const displayCountry = currentCountry || singleSelectionFromList;
 
   const filteredResults = localQuery.trim() === '' 
     ? [] 
@@ -117,6 +143,9 @@ export function ExpandedDataPanel() {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
         setIsSearchOpen(false);
         setLocalQuery('');
+      }
+      if (countriesListRef.current && !countriesListRef.current.contains(event.target as Node)) {
+        setIsCountriesListOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -163,29 +192,105 @@ export function ExpandedDataPanel() {
                 </div>
               </div>
 
-              {/* Middle: Country Badge */}
-              <AnimatePresence mode="wait">
-                {currentCountry && (
-                  <motion.div 
-                    key={currentCountry.iso}
-                    initial={{ opacity: 0, scale: 0.9, y: 5 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9, y: -5 }}
-                    className="flex items-center gap-2.5 px-4 py-2 bg-white/60 border border-white/80 shadow-sm rounded-full"
-                  >
-                    <div className="w-8 h-5 overflow-hidden rounded-sm border border-slate-200/60 flex-shrink-0 bg-slate-50 flex items-center justify-center p-0.5">
-                      <img 
-                        src={`https://flagcdn.com/w40/${currentCountry.iso.toLowerCase()==="il"?"ps":currentCountry.iso.toLowerCase()}.png`} 
-                        alt={currentCountry.name}
-                        className="w-full h-full object-cover"
-                      />
+              {/* Middle: Country Badge + Clear Button */}
+              <div className="flex items-center gap-2">
+                <AnimatePresence mode="wait">
+                  {displayCountry ? (
+                    <motion.div 
+                      key={displayCountry.iso}
+                      initial={{ opacity: 0, scale: 0.9, y: 5 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: -5 }}
+                      className="flex items-center gap-2.5 px-4 py-2 bg-white/60 border border-white/80 shadow-sm rounded-full"
+                    >
+                      <div className="w-8 h-5 overflow-hidden rounded-sm border border-slate-200/60 flex-shrink-0 bg-slate-50 flex items-center justify-center p-0.5">
+                        <img 
+                          src={`https://flagcdn.com/w40/${displayCountry.iso.toLowerCase()==="il"?"ps":displayCountry.iso.toLowerCase()}.png`} 
+                          alt={displayCountry.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                        {displayCountry.name === "Israel" ? "Occupied Palestine" : displayCountry.name}
+                      </span>
+                    </motion.div>
+                  ) : selectedCountries.length > 1 ? (
+                    <div className="relative">
+                      <motion.button
+                        key="multi-country"
+                        initial={{ opacity: 0, scale: 0.9, y: 5 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: -5 }}
+                        onClick={() => setIsCountriesListOpen(!isCountriesListOpen)}
+                        className="flex items-center gap-2 px-4 py-2 bg-white/60 hover:bg-white/80 border border-white/80 shadow-sm rounded-full transition-colors cursor-pointer group"
+                      >
+                        <span className="text-sm font-black text-slate-900 uppercase tracking-tight">
+                          {selectedCountries.length} Countries Selected
+                        </span>
+                        <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-300 ${isCountriesListOpen ? 'rotate-180' : ''}`} />
+                      </motion.button>
+
+                      <AnimatePresence>
+                        {isCountriesListOpen && (
+                          <motion.div
+                            ref={countriesListRef}
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                            className="absolute top-full left-0 mt-2 w-64 bg-white/95 backdrop-blur-3xl border border-white/60 shadow-2xl rounded-2xl overflow-hidden z-[100] border-slate-200/60"
+                          >
+                            <div className="p-3 border-b border-slate-100 bg-slate-50/50">
+                              <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Active Selection</h3>
+                            </div>
+                            <div className="max-h-64 overflow-y-auto custom-scrollbar">
+                              {selectedCountries.map(iso => {
+                                const country = searchableCountries.find(c => c.iso === iso);
+                                if (!country) return null;
+                                return (
+                                  <div
+                                    key={iso}
+                                    className="px-4 py-3 flex items-center gap-3 border-b border-slate-50 last:border-none hover:bg-slate-50/80 transition-colors"
+                                  >
+                                    <div className="w-7 h-4.5 overflow-hidden rounded-sm border border-slate-200/60 bg-slate-100 flex items-center justify-center p-0.5">
+                                      <img 
+                                        src={`https://flagcdn.com/w40/${country.iso.toLowerCase()==="il"?"ps":country.iso.toLowerCase()}.png`} 
+                                        alt={country.name}
+                                        className="w-full h-full object-cover"
+                                      />
+                                    </div>
+                                    <span className="text-xs font-bold text-slate-800">
+                                      {country.name === "Israel" ? "Occupied Palestine" : country.name}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                    <span className="text-sm font-black text-slate-900 uppercase tracking-tight">
-                      {currentCountry.name === "Israel" ? "Occupied Palestine" : currentCountry.name}
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                  ) : null}
+                </AnimatePresence>
+
+                {/* Clear Selection Button */}
+                <AnimatePresence>
+                  {hasCountrySelection && (
+                    <motion.button
+                      key="clear-selection"
+                      initial={{ opacity: 0, scale: 0.7 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.7 }}
+                      transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+                      onClick={handleClearCountrySelection}
+                      title="Clear country selection"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 hover:bg-red-50 border border-slate-200/80 hover:border-red-200 text-slate-500 hover:text-red-500 transition-all duration-200 text-xs font-bold cursor-pointer shadow-sm group"
+                    >
+                      <XCircle className="w-3.5 h-3.5 group-hover:rotate-90 transition-transform duration-300" />
+                      <span>Clear</span>
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </div>
 
               {/* Right: Search & Close */}
               <div className="flex items-center gap-3">

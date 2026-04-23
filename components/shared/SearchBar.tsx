@@ -43,8 +43,11 @@ export function SearchBar() {
   if (viewState === 'CARD_FOCUS') return null;
 
   return (
-    <div 
+    <motion.div 
       ref={containerRef}
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 1.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={`absolute top-8 left-1/2 -translate-x-1/2 z-[100] w-[400px] transition-all duration-300 pointer-events-auto ${isFocused ? 'scale-105' : 'scale-100'}`}
     >
       <div className="relative flex items-center bg-white/40 backdrop-blur-xl border border-white/60 shadow-xl rounded-full overflow-hidden px-4 py-2 group hover:bg-white/60 transition-all cursor-text">
@@ -93,6 +96,6 @@ export function SearchBar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }

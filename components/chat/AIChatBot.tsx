@@ -191,7 +191,7 @@ export function AIChatBot() {
   return (
     <div 
       className={cn(
-        "fixed bottom-6 z-[9999] flex flex-col pointer-events-auto transition-all duration-500 ease-in-out left-7",
+        "fixed bottom-6 z-[9999] flex flex-col pointer-events-auto transition-all duration-500 ease-in-out left-9",
       )}
     >  {/* add ispanelopen to move it right based on panel state */}
       <AnimatePresence>

@@ -26,6 +26,8 @@ export interface KpiInsightData {
     historical: { confidence: string; delta: string };
     forecast: { confidence: string; delta: string };
   };
+  outlookAndDrivers?: string[];
+  interpretation?: string;
 }
 
 interface KpiInsightOverlayProps {
@@ -170,6 +172,10 @@ export function KpiInsightOverlay({
               </div>
             ) : (
               <div className="p-10 flex flex-col gap-8">
+                {(() => {
+                  const inferredUnit = kpi.unit || kpi.value.replace(/[\d.$,]/g, '');
+                  return (
+                    <>
                 <div className="flex justify-between items-start">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
@@ -177,24 +183,22 @@ export function KpiInsightOverlay({
                       <span className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em]">Institutional Deep-Dive</span>
                     </div>
                     <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
-                      {viewMode === 'historical' 
-                        ? kpi.value 
-                        : (() => {
-                            // Priority: Use the actual last point of the forecast data array
-                            if (kpi.forecastData && kpi.forecastData.length > 0) {
-                              const lastVal = kpi.forecastData[kpi.forecastData.length - 1];
-                              return `~${kpi.value.startsWith('$') ? '$' : ''}${lastVal}${kpi.unit || ''}`;
-                            }
-                            
-                            // Fallback: Safe numeric multiplier
-                            const numericPart = kpi.value.match(/[\d.]+/);
-                            if (!numericPart) return kpi.value;
-                            const val = parseFloat(numericPart[0]);
-                            const projected = (val * 1.2).toFixed(1);
-                            return `~${kpi.value.startsWith('$') ? '$' : ''}${projected}${kpi.unit || ''}`;
-                          })()
-                      } 
-                      <span className="text-indigo-500 ml-2">↑</span>
+                      {(() => {
+                        if (viewMode === 'historical') return kpi.value;
+                        
+                        // Priority: Use the actual last point of the forecast data array
+                        if (kpi.forecastData && kpi.forecastData.length > 0) {
+                          const lastVal = kpi.forecastData[kpi.forecastData.length - 1];
+                          return `~${kpi.value.startsWith('$') ? '$' : ''}${lastVal}${inferredUnit}`;
+                        }
+                        
+                        // Fallback: Safe numeric multiplier
+                        const numericPart = kpi.value.match(/[\d.]+/);
+                        if (!numericPart) return kpi.value;
+                        const val = parseFloat(numericPart[0]);
+                        const projected = (val * 1.2).toFixed(1);
+                        return `~${kpi.value.startsWith('$') ? '$' : ''}${projected}${inferredUnit}`;
+                      })()}
                     </h2>
                     <p className="text-[12px] font-black text-slate-400 uppercase tracking-widest">
                       {kpi.title} - {kpi.org} Matrix ({viewMode === 'historical' ? 'Audited' : 'Projected'})
@@ -236,11 +240,11 @@ export function KpiInsightOverlay({
                     mode={viewMode} 
                     data={viewMode === 'historical' ? kpi.historicalData : kpi.forecastData}
                     labels={viewMode === 'historical' ? kpi.labels.historical : kpi.labels.forecast}
-                    unit={kpi.unit}
+                    unit={inferredUnit}
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
+                {/* <div className="grid grid-cols-2 gap-6">
                   <div className="p-5 bg-white border border-slate-100 rounded-2xl shadow-sm">
                     <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-1">
                       {viewMode === 'historical' ? 'Audit Confidence' : 'Prediction Reliability'}
@@ -263,7 +267,38 @@ export function KpiInsightOverlay({
                       <span className="text-[8px] font-bold text-slate-400 uppercase">vs Baseline</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
+
+                {/* Outlook & Drivers Section */}
+                {viewMode === 'forecast' && kpi.outlookAndDrivers && kpi.outlookAndDrivers.length > 0 && (
+                  <div className="p-8 bg-slate-50/50 border border-slate-100 rounded-3xl space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Zap className="w-4 h-4 text-amber-500" />
+                      <span className="text-[10px] font-black text-slate-800 uppercase tracking-[0.2em]">Outlook & Structural Drivers</span>
+                    </div>
+                    <ul className="grid grid-cols-1 gap-2">
+                      {kpi.outlookAndDrivers.map((driver, idx) => (
+                        <li key={idx} className="flex gap-3 text-[13px] font-bold text-slate-600 leading-tight">
+                          <span className="text-amber-500 mt-0.5">•</span>
+                          {driver}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Interpretation Section (Forecast Only) */}
+                {viewMode === 'forecast' && kpi.interpretation && (
+                  <div className="p-8 bg-blue-50/30 border border-blue-100 rounded-3xl space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Activity className="w-4 h-4 text-blue-600" />
+                      <span className="text-[10px] font-black text-blue-800 uppercase tracking-[0.2em]">Strategic Interpretation</span>
+                    </div>
+                    <p className="text-[14px] font-bold text-slate-700 leading-relaxed tracking-tight italic">
+                      " {kpi.interpretation} "
+                    </p>
+                  </div>
+                )}
 
                 <div className="pt-6 border-t border-slate-100 flex flex-col items-center gap-4">
                   <button 
@@ -287,6 +322,9 @@ export function KpiInsightOverlay({
                     Institutional deep-dive powered by Z-Model Distributed Core
                   </p>
                 </div>
+                </>
+                  );
+                })()}
               </div>
             )}
           </motion.div>

@@ -18,3 +18,12 @@ export interface UISection<T extends BaseDataPoint> {
   items: T[];
   defaultTarget?: GlobeTarget;
 }
+
+export interface GlobePoint {
+  lat: number;
+  lng: number;
+  size: number;
+  color: string;
+  label: string;
+  isBestTarget?: boolean; // Optional property for special styling
+}

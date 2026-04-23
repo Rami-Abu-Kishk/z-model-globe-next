@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import { GlobeControls } from "./GlobeControls";
 
 // z model landing page link
-const LANDING_PAGE_URL = "http://192.168.1.131:5173";
+const LANDING_PAGE_URL = process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "http://localhost:5173";
 
 const NAV_ITEMS: { id: ModuleId; label: string; icon: any }[] = [
   { id: "economy", label: "Economy", icon: BarChart3 },
@@ -37,11 +37,39 @@ export function ModuleNav() {
 
   return (
     <motion.div
-      initial={{ x: -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ type: "spring", damping: 25, stiffness: 120, delay: 0.5 }}
+      initial={{ x: -100, opacity: 0, filter: "blur(10px)" }}
+      animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+      transition={{ type: "spring", damping: 30, stiffness: 100, delay: 1.4 }}
       className="absolute left-8 top-1/2 -translate-y-1/2 z-50 pointer-events-auto"
     >
+      <div className="flex flex-col gap-3">
+        <button
+          className={`
+            group relative flex items-center justify-center
+            w-14 h-14 rounded-2xl
+            bg-white/40 backdrop-blur-2xl 
+            border border-white/60
+            shadow-[0_8px_32px_rgba(0,0,0,0.1)]
+            transition-all duration-300
+            hover:bg-white/60 hover:scale-105 active:scale-95 cursor-pointer
+            m-3
+          `}
+        >
+          <div className="relative">
+            <motion.div>
+              <h1 className="hover:bg-white/60 hover:scale-105 active:scale-95 cursor-pointer">
+                Ar
+              </h1>
+            </motion.div>
+          </div>
+
+          {/* Tooltip */}
+          <div className="absolute left-20 px-3 py-1 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 -translate-x-2 group-hover:translate-x-0 whitespace-nowrap shadow-xl border border-white/10 flex items-center gap-2">
+            Switch Language Ar/En
+          </div>
+        </button>
+      </div>
+
       <div className="flex flex-col items-center gap-2 p-1.5 bg-white/20 backdrop-blur-2xl border border-white/40 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
         {NAV_ITEMS.map((item, index) => {
           const isActive = activeModule === item.id;
@@ -52,7 +80,7 @@ export function ModuleNav() {
               key={item.id}
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 0.6 + index * 0.05 }}
+              transition={{ delay: 1.6 + index * 0.08, ease: "easeOut" }}
               onClick={() => {
                 const redirectItems: ModuleId[] = [
                   "research",

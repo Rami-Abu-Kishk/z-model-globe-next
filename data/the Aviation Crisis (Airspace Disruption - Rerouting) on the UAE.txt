@@ -1,0 +1,110 @@
+﻿First: Impact of the Aviation Crisis (Airspace Disruption / Rerouting) on the UAE (2026)
+1) Security and Geopolitical Impact
+The war in Lebanon and the accompanying regional instability lead to:
+* Redrawing of flight routes across the Eastern Mediterranean and the Gulf 
+* Increased risks in airspace near conflict zones 
+* Higher likelihood of electronic interference or airspace restrictions 
+ Quantitative assessment:
+Security impact on the UAE: 78% (High)
+Reason: The UAE is not directly in the war zone but is closely connected to the affected regional airspace
+
+
+2) Economic Impact (Aviation + Tourism + Logistics)
+* Increased fuel costs due to longer rerouted flight paths 
+* Higher operational costs for UAE airlines 
+* Impact on tourism and passenger transit (Dubai Hub) 
+* Pressure on air cargo operations 
+Quantitative assessment:
+Economic impact: 83% (Very High)
+Reason: The UAE is a global aviation and connectivity hub
+
+
+3) Strategic Impact
+* Reassessment of regional flight networks 
+* Strengthening aviation emergency and alternative routing plans 
+* Increased regional airspace coordination 
+Quantitative assessment:
+Strategic impact: 75% (High)
+
+
+UAE Summary
+Component
+	Score
+	Security impact
+	78%
+	Economic impact
+	83%
+	Strategic impact
+	75%
+	Overall average impact
+	79% (High)
+	
+
+ Second: Impact of the Aviation Crisis on the Region (Eastern Mediterranean + Gulf + Wider Region)
+1) Regional Security Impact
+* Major disruption in airspace between Lebanon – Syria – Palestine – Israel 
+* Redistribution of flight routes toward the Gulf and Turkey 
+* Increased operational risks for civil aviation 
+ Quantitative assessment:
+86% (Very High)
+2) Geopolitical Impact
+* Use of airspace as an indirect pressure tool in the conflict 
+* Regulatory interventions by neighboring countries to manage air traffic 
+* Tensions between airlines and affected states 
+ Quantitative assessment:
+82% (Very High)
+3) Regional Economic Impact
+* Higher air transport costs across the region 
+* Decline in tourism activity in the Eastern Mediterranean 
+* Increased aviation insurance costs 
+Quantitative assessment:
+80% (High)
+Regional Summary
+Component
+	Score
+	Security impact
+	86%
+	Geopolitical impact
+	82%
+	Economic impact
+	80%
+	Overall average impact
+	83% (Very High)
+	Third: Classification of the Event (2026 Aviation Crisis)
+1) Severity (S)
+🔴 Result: ~81% → High Severity
+
+
+2) Sensitivity
+* UAE: 80% 
+* Region: 86% 
+🔴 Result: ~83% → Very High Sensitivity
+3) Complexity
+* Multiple countries and overlapping airspaces 
+* Direct impact on global airlines 
+* Intersection of aviation security + economy + regional war 
+Estimate:
+87% (Very High / Multi-airspace disruption system)
+
+
+ Final Summary
+Indicator
+	UAE
+	Region
+	Severity
+	81%
+	83%
+	Sensitivity
+	83%
+	86%
+	Complexity
+	87%
+	87%
+	
+
+ Analytical Conclusion
+The aviation crisis resulting from the Lebanon war is not a local issue, but:
+A regional disruption of the Middle East air transport system, reshaping flight routes and operational costs.
+For the UAE specifically:
+* It is not at the center of the conflict 
+* But it is a major operationally affected hub due to its role as a global aviation center

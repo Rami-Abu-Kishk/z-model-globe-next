@@ -30,6 +30,8 @@ export interface KpiReport {
       historical: { confidence: string; delta: string };
       forecast: { confidence: string; delta: string };
     };
+    outlookAndDrivers?: string[];
+    interpretation?: string;
   };
 }
 
@@ -54,148 +56,184 @@ export interface EconomyData {
 export const economyDataStore: Record<string, EconomyData> = {
   GLOBAL: {
     positiveTrends: [
-      { 
-        label: "Global AI Sector", 
-        value: 34.5, 
-        dataPoints: [10, 15, 22, 28, 34.5],
-        description: "Exponential acceleration in LLM deployment and enterprise AI integration is driving unprecedented capital allocation. This vector represents the strongest productivity shift in the digital era.",
-        relatedCountries: ["US", "CN", "GB", "AE", "IN"],
-        countryValues: { "US": 42.5, "CN": 38.2, "GB": 28.4, "AE": 45.1, "IN": 35.7 }
+      {
+        label: "Technology and AI Sector",
+        value: 27.5,
+        dataPoints: [8.5, 12.0, 15.5, 20.8, 27.5],
+        description: "Driven by generative AI, cloud infrastructure, and semiconductors. This sector is the fastest-growing globally with massive capital allocation toward digital transformation.",
+        relatedCountries: ["AE", "US", "CN", "TW", "KR", "SA"],
+        countryValues: { "AE": 40.0, "US": 28.0, "CN": 24.0, "TW": 30.0, "KR": 22.0, "SA": 32.5 }
       },
-      { 
-        label: "Green Energy Sector", 
-        value: 18.2, 
-        dataPoints: [5, 8, 12, 15, 18.2],
-        description: "Decarbonization mandates are fueling a massive transition toward renewable infrastructure. Sovereign funds are pivoting heavily toward sustainable assets to hedge against long-term climate risk.",
-        relatedCountries: ["CN", "US", "DE", "DK", "AE"],
-        countryValues: { "CN": 24.5, "US": 18.1, "DE": 22.8, "DK": 31.4, "AE": 25.6 }
+      {
+        label: "Clean Energy Sector",
+        value: 15.0,
+        dataPoints: [9.4, 11.2, 12.8, 13.5, 15.0],
+        description: "Expansion driven by the global transition toward solar, wind, and smart grids. Sovereign funds are pivoting heavily toward carbon neutrality and sustainable assets.",
+        relatedCountries: ["AE", "CN", "BR", "US", "IN", "SA"],
+        countryValues: { "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0, "SA": 20.5 }
       },
-      { 
-        label: "Emerging Markets Sector", 
-        value: 12.4, 
-        dataPoints: [2, 4, 7, 10, 12.4],
-        description: "Rapid digitization in Southeast Asia and Africa is creating new consumer markets. Local fintech and logistics startups are capturing significant share from traditional global incumbents.",
-        relatedCountries: ["IN", "ID", "VN", "BR", "MX"],
-        countryValues: { "IN": 18.2, "ID": 14.5, "VN": 16.8, "BR": 10.2, "MX": 11.5 }
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 8.0,
+        dataPoints: [4.5, 5.8, 6.2, 7.4, 8.0],
+        description: "Focus on industrial automation, robotics, and supply chain restructuring. High-tech manufacturing is becoming a key pillar for high-value economic models.",
+        relatedCountries: ["AE", "CN", "US", "DE", "IN", "SA"],
+        countryValues: { "AE": 22.0, "CN": 8.0, "US": 7.0, "DE": 6.0, "IN": 9.0, "SA": 12.4 }
       }
     ],
     negativeTrends: [
-      { 
-        label: "Commercial Real Estate Sector", 
-        value: -8.5, 
-        dataPoints: [0, -2, -4, -6, -8.5],
-        description: "The remote work paradigm shift continues to erode office valuations in major financial hubs. Debt restructuring in this sector remains a significant systemic risk for regional banks.",
-        relatedCountries: ["US", "GB", "DE", "FR", "AU"],
-        countryValues: { "US": -12.4, "GB": -10.1, "DE": -8.5, "FR": -6.2, "AU": -5.8 }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -1.0,
+        dataPoints: [-0.2, -0.5, -0.7, -0.9, -1.0],
+        description: "Facing headwinds from high interest rates and slowing demand in advanced economies. Systemic risk remains high for legacy property financing models.",
+        relatedCountries: ["US", "GB", "DE", "FR", "IT"],
+        countryValues: { "US": -2.2, "GB": -4.0, "DE": -2.0, "FR": -1.5, "IT": -1.4 }
       },
-      { 
-        label: "Legacy Supply Chain Sector", 
-        value: -4.2, 
-        dataPoints: [-1, -2, -3, -4, -4.2],
-        description: "Traditional logistical frameworks are struggling with rising fuel costs and geopolitical friction. Decoupling from high-risk manufacturing nodes is causing short-term friction and margin compression.",
-        relatedCountries: ["CN", "DE", "JP", "KR", "TW"],
-        countryValues: { "CN": -6.8, "DE": -5.2, "JP": -3.5, "KR": -4.1, "TW": -3.8 }
+      {
+        label: "Heavy Industry Sector",
+        value: -0.4,
+        dataPoints: [-0.1, -0.2, -0.3, -0.3, -0.4],
+        description: "Slowdown in international trade and rising production costs are impacting traditional manufacturing bases in Europe and North America.",
+        relatedCountries: ["US", "DE", "GB", "IT", "JP"],
+        countryValues: { "US": -1.0, "DE": -2.0, "GB": -1.5, "IT": -1.0, "JP": -0.3 }
       },
-      { 
-        label: "Global Inflation Drag Sector", 
-        value: -2.1, 
-        dataPoints: [-0.5, -1, -1.5, -2, -2.1],
-        description: "Persistent core inflation is forcing central banks to maintain restrictive monetary policies. This sustained high-rate environment is dampening consumer demand and stretching corporate balance sheets.",
-        relatedCountries: ["AR", "TR", "GB", "US", "DE"],
-        countryValues: { "AR": -15.2, "TR": -10.5, "GB": -3.2, "US": -2.4, "DE": -2.1 }
+      {
+        label: "Global Agriculture Sector",
+        value: -0.5,
+        dataPoints: [-0.1, -0.2, -0.3, -0.4, -0.5],
+        description: "Climate change and drought conditions are causing significant fluctuations in global food production and grain exports.",
+        relatedCountries: ["US", "BR", "IN", "AR", "ZA"],
+        countryValues: { "US": -1.0, "BR": -0.5, "IN": -0.6, "AR": -4.0, "ZA": -3.0 }
       }
     ],
     kpisAndReports: [
-      { 
-        title: "Global GDP Growth", 
-        impact: "High", 
-        value: "2.9%", 
-        rep: "Kristalina Georgieva", 
+      {
+        title: "Global GDP Growth",
+        impact: "High",
+        value: "3.1%",
+        rep: "Kristalina Georgieva",
         org: "IMF",
         insightData: {
-          historicalData: [2.4, 2.1, -1.2, 1.8, 2.6],
-          forecastData: [2.9, 3.2, 4.8, 6.5, 8.8],
+          // Historical: 2021 (Rebound), 2022 (War/Energy), 2023 (Tightening), 2024 (Resilience), 2025 (Steady)
+          historicalData: [5.9, 3.2, 3.3, 3.2, 3.0],
+          forecastData: [3.1, 3.0, 3.2, 3.3, 3.4],
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
-            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+            forecast: ['2026', '2027', '2028', '2029', '2030']
           },
           analysis: {
-            historical: "Audit records from 2021-2025 confirm a recovery trajectory following global disruptions. Verification via Z-Model ledger nodes indicates high correlation between regional fiscal stimulus and the current 2.9% baseline.",
-            forecast: "The projected 8.8% growth is driven by three convergent vectors: wide-scale industrial GenAI integration, a massive capital pivot towards decentralized energy grids, and reduced cross-border friction via Z-Model protocols."
+            historical: "Global growth saw a massive 5.9% rebound in 2021 post-pandemic, followed by a slowdown to the 3.0-3.3% range through 2025 as central banks raised rates to combat inflation and geopolitical tensions fragmented trade.",
+            forecast: "A 2026-27 slowdown driven by geopolitical shocks and restrictive conditions leads into a 2028-30 re-acceleration. Growth is powered by AI productivity gains and energy market stabilization via renewables."
           },
           stats: {
-            historical: { confidence: "99.8%", delta: "+0.8%" },
-            forecast: { confidence: "94.2%", delta: "+6.2%" }
-          }
+            historical: { confidence: "99.8%", delta: "+0.4%" },
+            forecast: { confidence: "94.2%", delta: "+0.5%" }
+          },
+          outlookAndDrivers: [
+            "2026–2027 slowdown phase: geopolitical shocks and energy volatility",
+            "Productivity gains from AI diffusion and automation",
+            "Stabilization of energy markets via renewables + nuclear expansion",
+            "Partial normalization of trade flows after fragmentation shock"
+          ],
+          interpretation: "Slowdown phase followed by AI-led re-acceleration. Geopolitical volatility remains a persistent anchor on baseline growth.",
+          unit: "%"
         }
       },
-      { 
-        title: "Global Trade Volume", 
-        impact: "Medium", 
-        value: "$32T", 
-        rep: "Ngozi Okonjo-Iweala", 
+      {
+        title: "Global Trade Volume",
+        impact: "Medium",
+        value: "$35.1 T",
+        rep: "Ngozi Okonjo-Iweala",
         org: "WTO",
         insightData: {
-          historicalData: [98, 102, 95, 101, 104.5],
-          forecastData: [104.5, 108.2, 112.5, 118, 125],
+          // Data in USD Trillion (approximate based on UNCTAD/WTO reports)
+          historicalData: [28.5, 32.2, 30.5, 32.8, 35.1],
+          forecastData: [33.5, 34.8, 36.4, 38.1, 40.0],
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
-            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+            forecast: ['2026', '2027', '2028', '2029', '2030']
           },
           analysis: {
-            historical: "Global trade volumes shifted toward digital services and fragmented manufacturing hubs. Regional trade agreements in Asia-Pacific compensated for contractions in Atlantic corridors.",
-            forecast: "Z-Model indicates a 'Great Acceleration' in cross-border settlement speeds as DLT-based trade finance reaches 40% adoption among top-tier exporters by 2026."
+            historical: "Trade hit a milestone $35T in 2025. Despite a slight stagnation in 2023 due to falling commodity prices, volumes recovered in 2024-2025, driven by electronics and AI-related manufacturing demand.",
+            forecast: "Steady expansion despite structural fragmentation and friend-shoring. Growth is driven by the India-Gulf-Africa axis and AI-enabled services trade, outpacing GDP after 2027."
           },
           stats: {
-            historical: { confidence: "98.1%", delta: "+6.5" },
-            forecast: { confidence: "89.4%", delta: "+20.5" }
-          }
+            historical: { confidence: "98.1%", delta: "+7.0%" },
+            forecast: { confidence: "89.4%", delta: "+6.5%" }
+          },
+          outlookAndDrivers: [
+            "Supply-chain regionalization (“friend-shoring”) increases costs/redundancy",
+            "India–Gulf–Africa logistics axis becomes a new accelerator",
+            "AI-enabled services trade becomes a major contributor",
+            "Reconfiguration of global value chains"
+          ],
+          interpretation: "Moderate but structurally re-routed trade expansion rather than hyper-globalization. Trade grows faster than GDP due to structural reconfiguration.",
+          unit: " T"
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "High", 
-        value: "3.4%", 
-        rep: "Jerome Powell", 
+      {
+        title: "Inflation Rate",
+        impact: "High",
+        value: "4.2%",
+        rep: "Jerome Powell",
         org: "OECD",
         insightData: {
-          historicalData: [4.7, 7.1, 5.8, 3.9, 3.4],
-          forecastData: [3.2, 2.8, 2.4, 2.1, 2.0],
+          // Historical global averages: 2022 peak followed by gradual cooling
+          historicalData: [4.7, 8.7, 6.8, 5.8, 4.2],
+          forecastData: [4.2, 3.8, 3.3, 3.0, 2.8],
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
-            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+            forecast: ['2026', '2027', '2028', '2029', '2030']
           },
           analysis: {
-            historical: "Global inflation peaked in 2022 due to supply chain disruptions and energy shocks. Aggressive monetary tightening and improved logistics have since driven a steady decline.",
-            forecast: "Z-Model projects a return to long-term stability as AI-driven efficiency gains offset commodity volatility. A terminal rate of 2.0% is expected by 2031."
+            historical: "Global inflation peaked at a staggering 8.7% in 2022 following energy shocks and supply chain disruptions. Aggressive policy tightening successfully cooled the rate to approximately 3.5% by late 2025.",
+            forecast: "Relatively sticky inflation through 2027 due to energy volatility and supply-chain restructuring. Gradual disinflation follows as AI productivity gains materialize unevenly."
           },
           stats: {
-            historical: { confidence: "98.5%", delta: "-1.3%" },
+            historical: { confidence: "98.5%", delta: "-2.3%" },
             forecast: { confidence: "87.2%", delta: "-1.4%" }
-          }
+          },
+          outlookAndDrivers: [
+            "Ongoing pressures from energy volatility and geopolitical tensions",
+            "Supply-chain restructuring increases structural production costs",
+            "Expansionary fiscal policies in major economies support demand",
+            "AI and automation productivity gains (gradual disinflation)"
+          ],
+          interpretation: "Phase of sticky inflation followed by gradual but uneven disinflation. Prices remain structurally higher than previous decades.",
+          unit: "%"
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "Medium", 
-        value: "5.1%", 
-        rep: "Gilbert Houngbo", 
+      {
+        title: "Unemployment Rate",
+        impact: "Medium",
+        value: "5.2%",
+        rep: "Gilbert Houngbo",
         org: "ILO",
         insightData: {
-          historicalData: [6.2, 5.9, 5.5, 5.3, 5.1],
-          forecastData: [5.0, 4.8, 4.5, 4.2, 3.8],
+          // Historical: 2021 (Recovery), 2022-2024 (Record lows), 2025 (Stabilization)
+          historicalData: [6.2, 5.3, 5.1, 5.0, 5.2],
+          forecastData: [5.2, 5.3, 5.1, 4.9, 4.8],
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
-            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+            forecast: ['2026', '2027', '2028', '2029', '2030']
           },
           analysis: {
-            historical: "Labor markets displayed remarkable resilience post-pandemic. Structural shifts toward digital work and services have maintained steady participation rates.",
-            forecast: "Technological displacement is projected to be outweighed by new role creation in the green economy and AI maintenance sectors, leading to a long-term decline in global unemployment."
+            historical: "Global unemployment reached a record low of 5.0% in 2024. Labor markets proved remarkably resilient to high interest rates, though youth and informal employment remained persistent challenges into 2025.",
+            forecast: "Short-term rise through 2027 caused by AI displacement and industrial restructuring. Long-term improvement follows as green infrastructure and AI ecosystems absorb labor."
           },
           stats: {
-            historical: { confidence: "97.8%", delta: "-1.1%" },
-            forecast: { confidence: "84.5%", delta: "-1.3%" }
-          }
+            historical: { confidence: "97.8%", delta: "-0.1%" },
+            forecast: { confidence: "84.5%", delta: "-0.4%" }
+          },
+          outlookAndDrivers: [
+            "Industrial restructuring in manufacturing and fossil fuel sectors",
+            "Productivity shock from AI → short-term labor displacement",
+            "Job creation in AI services, green infrastructure, and cybersecurity",
+            "Emerging markets absorb labor via industrial relocation"
+          ],
+          interpretation: "Labor markets become more polarized but not structurally weaker. “Job churn increases” while aggregate unemployment gradually improves.",
+          unit: "%"
         }
       }
     ],
@@ -213,148 +251,194 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   AE: { // United Arab Emirates Specific Data
     positiveTrends: [
-      { 
-        label: "Non-Oil GDP Surge", 
-        value: 45.2, 
-        dataPoints: [20, 25, 30, 40, 45.2],
-        description: "Massive diversification efforts under Vision 2031 are yielding record results. The UAE is successfully repositioning as a global hub for aviation, logistics, and digital services.",
-        relatedCountries: ["AE", "SA", "QA", "OM", "KW"],
-        countryValues: { "AE": 45.2, "SA": 12.4, "QA": 8.5, "OM": 5.2, "KW": 4.1 }
+      {
+        label: "Technology and AI Sector",
+        value: 40.0,
+        dataPoints: [15.0, 22.0, 30.0, 35.0, 40.0],
+        description: "Leading global hub for AI. Growth driven by sovereign investment in data centers, digital infrastructure, and advanced government adoption of AI technologies.",
+        relatedCountries: ["AE", "US", "CN", "TW", "KR"],
+        countryValues: { "AE": 40.0, "US": 28.0, "CN": 24.0, "SA": 32.5, "TW": 30.0 }
       },
-      { 
-        label: "FDI Tech Inflows", 
-        value: 28.4, 
-        dataPoints: [10, 15, 20, 25, 28.4],
-        description: "Business-friendly regulations and golden visa programs are attracting world-class AI and robotics firms. The 'We the UAE 2031' strategy is driving high-fidelity tech investments.",
-        relatedCountries: ["AE", "SG", "IE", "CH", "LU"],
-        countryValues: { "AE": 28.4, "SG": 15.2, "IE": 12.1, "CH": 10.5, "LU": 9.8 }
+      {
+        label: "Clean Energy Sector",
+        value: 28.0,
+        dataPoints: [10.0, 15.0, 20.0, 24.0, 28.0],
+        description: "Rapid expansion of low-cost solar projects and integration of AI in grid management. Implementing carbon neutrality strategies with high execution speed.",
+        relatedCountries: ["AE", "CN", "BR", "US", "IN"],
+        countryValues: { "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0 }
       },
-      { 
-        label: "Tourism Revenue", 
-        value: 15.6, 
-        dataPoints: [8, 10, 12, 14, 15.6],
-        description: "Major global events and luxury hospitality expansion are driving double-digit growth. UAE remains the premier destination for regional and international high-net-worth travelers.",
-        relatedCountries: ["AE", "ES", "FR", "IT", "SA"],
-        countryValues: { "AE": 15.6, "ES": 12.4, "FR": 10.2, "IT": 9.5, "SA": 8.1 }
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 22.0,
+        dataPoints: [8.0, 12.0, 15.0, 18.0, 22.0],
+        description: "Development of smart industrial zones. Shift toward high-value manufacturing like aerospace and precision electronics while leveraging global logistics connectivity.",
+        relatedCountries: ["AE", "CN", "US", "DE", "IN"],
+        countryValues: { "AE": 22.0, "CN": 8.0, "US": 7.0, "DE": 6.0, "IN": 9.0 }
       }
     ],
     negativeTrends: [
-      { 
-        label: "Legacy Retail Decline", 
-        value: -3.2, 
-        dataPoints: [0, -1, -2, -3, -3.2],
-        description: "Hyper-growth in e-commerce is putting pressure on traditional local malls. Retailers must adapt to omnichannel strategies to survive the digital-first consumer shift.",
-        relatedCountries: ["AE", "SA", "US", "GB", "CA"],
-        countryValues: { "AE": -3.2, "SA": -2.8, "US": -1.5, "GB": -1.2, "CA": -0.8 }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -0.2,
+        dataPoints: [-0.1, -0.1, -0.1, -0.2, -0.2],
+        description: "Resilient compared to global peers but facing minor headwinds from high interest rates affecting long-term financing costs.",
+        relatedCountries: ["US", "GB", "DE", "AE", "SA"],
+        countryValues: { "AE": -0.2, "US": -2.2, "GB": -4.0, "DE": -2.0, "SA": -0.5 }
       },
-      { 
-        label: "Traditional Media Spend", 
-        value: -5.1, 
-        dataPoints: [-1, -2, -3, -4, -5.1],
-        description: "Advertising budgets are migrating rapidly to social platforms and influencer marketing. Legacy print and television outlets are facing significant revenue headwinds.",
-        relatedCountries: ["AE", "US", "GB", "DE", "FR"],
-        countryValues: { "AE": -5.1, "US": -4.2, "GB": -3.8, "DE": -3.5, "FR": -3.1 }
+      {
+        label: "Heavy Industry Sector",
+        value: -0.5,
+        dataPoints: [-0.2, -0.3, -0.4, -0.5, -0.5],
+        description: "Exposure to global demand fluctuations and rising production costs in legacy segments.",
+        relatedCountries: ["AE", "DE", "JP", "CN", "IN"],
+        countryValues: { "AE": -0.5, "DE": -2.0, "JP": -0.3, "CN": -1.2, "IN": -0.8 }
       },
-      { 
-        label: "Unoptimized Logistics", 
-        value: -1.8, 
-        dataPoints: [-0.5, -1, -1.2, -1.5, -1.8],
-        description: "Last-mile delivery inefficiencies in some regions are causing minor margin erosion. Strategic investments in AI-driven routing are required for optimization.",
-        relatedCountries: ["AE", "SA", "IN", "EG", "ZA"],
-        countryValues: { "AE": -1.8, "SA": -1.5, "IN": -1.2, "EG": -0.9, "ZA": -0.7 }
+      {
+        label: "Global Agriculture Sector",
+        value: -0.4,
+        dataPoints: [-0.2, -0.3, -0.4, -0.4, -0.4],
+        description: "Fluctuations in global food production affect import costs even as local food security initiatives expand.",
+        relatedCountries: ["AE", "US", "BR", "IN", "AR"],
+        countryValues: { "AE": -0.4, "US": -1.0, "BR": -0.5, "IN": -0.6, "AR": -4.0 }
       }
     ],
     kpisAndReports: [
-      { 
-        title: "UAE GDP Growth", 
-        impact: "High", 
-        value: "4.2%", 
-        rep: "Abdulla bin Touq", 
+      {
+        title: "UAE GDP Growth",
+        impact: "High",
+        value: "5.3%",
+        rep: "Abdulla bin Touq",
         org: "Ministry of Economy",
         insightData: {
-          historicalData: [3.1, 7.6, 3.4, 3.8, 4.2],
-          forecastData: [4.2, 4.8, 5.5, 6.2, 7.5],
+          // Historical: 2021(post-covid rebound), 2022(energy windfall), 2023(normalization), 2024(non-oil drive), 2025(stabilization)
+          historicalData: [3.8, 7.4, 3.3, 4.0, 4.5],
+          // Forecast from uae.txt: 2026-2030
+          forecastData: [5.3, 5.0, 5.2, 5.4, 5.6],
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
-            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+            forecast: ['2026', '2027', '2028', '2029', '2030']
           },
           analysis: {
-            historical: "The UAE non-oil sector has demonstrated exceptional growth, significantly outpacing global averages. Strategic diversification efforts under Vision 2031 have created a resilient economic foundation.",
-            forecast: "Aggressive pivot toward AI-driven industries and advanced manufacturing is expected to accelerate growth. The Z-Model forecasts non-oil GDP to reach 7.5% by 2031."
+            historical: "The UAE economy demonstrated exceptional resilience, rebounding strongly through 2022's energy windfall before normalizing toward its 3.3–4.5% non-oil growth range by 2025. Vision 2031 diversification milestones have been consistently met.",
+            forecast: "A stable, high-growth hub economy profile (5.0–5.6%) is projected. Re-acceleration in 2028–2030 is driven by AI and digital economy scaling, premium tourism expansion, D33 real estate mega-projects, and deepening financial hub dynamics. The UAE's growth floor rises structurally above global peers."
           },
           stats: {
-            historical: { confidence: "99.2%", delta: "+1.1%" },
-            forecast: { confidence: "92.5%", delta: "+3.3%" }
-          }
+            historical: { confidence: "99.2%", delta: "+0.7%" },
+            forecast: { confidence: "93.5%", delta: "+1.1%" }
+          },
+          outlookAndDrivers: [
+            "2026–2027: normalization after strong expansion cycle (~5% baseline)",
+            "2028–2030: re-acceleration driven by structural forces",
+            "AI + digital economy scaling across government and private sector",
+            "Tourism expansion (premium + long-stay residency model)",
+            "Real estate + infrastructure mega-project cycle (D33 agenda)",
+            "Financial hub deepening (wealth migration, capital inflows)",
+            "Energy stability (oil + gas remains fiscal anchor but declining GDP share)"
+          ],
+          interpretation: "UAE does not decouple from global cycles, but its growth floor rises. Economy behaves like a “managed high-growth hub economy” (5–5.6%)"
         }
       },
-      { 
-        title: "UAE Trade Volume", 
-        impact: "High", 
-        value: "$1.2T", 
-        rep: "Thani Al Zeyoudi", 
+      {
+        title: "UAE Trade Volume",
+        impact: "High",
+        value: "$1.62 T",
+        rep: "Thani Al Zeyoudi",
         org: "Ministry of Economy",
         insightData: {
-          historicalData: [680, 750, 820, 1050, 1200],
-          forecastData: [1200, 1450, 1780, 2100, 2500],
+          // Historical data in USD Billion, calibrated to reach ~$1.50T by 2025
+          historicalData: [730, 890, 1050, 1280, 1500],
+          // Forecast from uae.txt (in $B): 2026=1620, 2027=1710, 2028=1820, 2029=1950, 2030=2100
+          forecastData: [1620, 1710, 1820, 1950, 2100],
+          unit: "$B",
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
-            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+            forecast: ['2026', '2027', '2028', '2029', '2030']
           },
           analysis: {
-            historical: "The expansion of the CEPA program has radically enlarged the UAE's trade footprint. Re-export hubs in Jebel Ali and Khalifa Port have seen record-breaking container throughput.",
-            forecast: "Strategic corridors with India, Indonesia, and Turkey are projected to drive volumes toward the $2.5T milestone. Digital trade infrastructure will be a key multiplier."
+            historical: "The UAE's CEPA program and re-export ecosystem drove trade from $730B in 2021 to $1.5T by 2025. Jebel Ali and Khalifa Port achieved record container throughput, positioning the UAE as the neutral hub for India-Gulf-Africa commerce.",
+            forecast: "Trade is projected to expand toward $2.1T by 2030, growing faster than GDP — a structural confirmation of the UAE's role as a global re-export and services hub. Non-oil trade increasingly dominates value creation as rising services exports (finance, tourism, AI, digital) complement the physical logistics base."
           },
           stats: {
-            historical: { confidence: "98.9%", delta: "+15.4%" },
-            forecast: { confidence: "88.4%", delta: "+108%" }
-          }
+            historical: { confidence: "98.9%", delta: "+19.1%" },
+            forecast: { confidence: "91.2%", delta: "+40.0%" }
+          },
+          outlookAndDrivers: [
+            "Expansion of Dubai–Abu Dhabi logistics + re-export ecosystems",
+            "Growth of India–Gulf–Africa trade corridor",
+            "Rising share of services exports (finance, tourism, AI, digital services)",
+            "Continued role as a neutral trade intermediary amid global fragmentation"
+          ],
+          interpretation: "Trade grows faster than GDP, reinforcing UAE’s position as a global re-export and services hub. Non-oil trade increasingly dominates value creation."
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "Medium", 
-        value: "2.1%", 
-        rep: "Issam Abousleiman", 
+      {
+        title: "Inflation Rate",
+        impact: "Medium",
+        value: "1.8%",
+        rep: "Issam Abousleiman",
         org: "FCSC",
         insightData: {
-          historicalData: [2.5, 4.8, 3.2, 2.5, 2.1],
-          forecastData: [2.1, 2.0, 2.0, 1.9, 1.8],
+          // Historical: low UAE inflation; 2022 spike, gradual easing
+          historicalData: [0.2, 4.8, 3.4, 2.3, 1.8],
+          // Forecast from uae.txt: 2026=1.8%, 2027=2.1%, 2028=2.3%, 2029=2.5%, 2030=2.7%
+          forecastData: [1.8, 2.1, 2.3, 2.5, 2.7],
+          unit: "%",
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
-            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+            forecast: ['2026', '2027', '2028', '2029', '2030']
           },
           analysis: {
-            historical: "UAE successfully insulated its domestic economy from global hyperinflation through strategic reserve management and price monitoring. Core inflation remains well within target bounds.",
-            forecast: "Z-Model anticipates sustained low inflation as digital retail efficiency and optimized energy grids reduce cost-push pressures across the domestic market."
+            historical: "The UAE's currency peg to the USD and efficient import logistics kept inflation near zero in 2021. A supply-side spike in 2022 was swiftly contained. By 2025, inflation had eased to a structurally low 1.6%, well below global peers.",
+            forecast: "Inflation trends gradually upward (1.8% → 2.7%) as housing demand, high-skilled immigration, and service-sector normalization apply gentle upward pressure. Productivity gains from automation and the currency peg act as structural dampeners. The UAE transitions from 'ultra-low' to 'mild inflation growth hub' — contained but not negligible."
           },
           stats: {
-            historical: { confidence: "98.7%", delta: "-0.4%" },
-            forecast: { confidence: "90.1%", delta: "-0.3%" }
-          }
+            historical: { confidence: "98.7%", delta: "+1.4%" },
+            forecast: { confidence: "91.0%", delta: "+0.9%" }
+          },
+          outlookAndDrivers: [
+            "Strong import efficiency via logistics hubs",
+            "Currency peg to USD ensures monetary stability",
+            "Productivity gains from automation and AI",
+            "Housing + real estate demand (population inflows)",
+            "High-skilled labor immigration",
+            "Service-sector price normalization (tourism, healthcare, education)"
+          ],
+          interpretation: "Inflation remains contained but not ultra-low. UAE transitions from “price-stable emerging economy” → “mild inflation growth hub economy”"
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "Medium", 
-        value: "2.8%", 
-        rep: "Abdulrahman Al Awar", 
+      {
+        title: "Unemployment Rate",
+        impact: "Medium",
+        value: "2.3%",
+        rep: "Abdulrahman Al Awar",
         org: "MOHRE",
         insightData: {
-          historicalData: [3.4, 3.2, 3.0, 2.9, 2.8],
-          forecastData: [2.8, 2.6, 2.4, 2.2, 2.0],
+          // Historical: stable low UAE unemployment anchored by labor-import equilibrium
+          historicalData: [2.8, 2.7, 2.6, 2.5, 2.4],
+          // Forecast from uae.txt: 2026=2.3%, 2027=2.4%, 2028=2.2%, 2029=2.1%, 2030=2.0%
+          forecastData: [2.3, 2.4, 2.2, 2.1, 2.0],
+          unit: "%",
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
-            forecast: ['2027', '2028', '2029', '2030', '2031 (Est)']
+            forecast: ['2026', '2027', '2028', '2029', '2030']
           },
           analysis: {
-            historical: "The private sector has absorbed record numbers of skilled professionals following golden visa reforms. Emiratization targets are being met through high-value tech and finance roles.",
-            forecast: "Full employment in key sectors is projected as the knowledge economy reaches maturity. Z-Model highlights a surge in R&D and specialized engineering roles."
+            historical: "UAE unemployment is structurally among the lowest globally, underpinned by a large, flexible expatriate labor market and continuous high-skilled migrant inflows. Emiratization reforms have maintained stability without disrupting labor absorption capacity.",
+            forecast: "UAE unemployment behaves as a 'labor-import equilibrium system' — anchored near 2% regardless of global cycles. AI productivity gains create offsetting high-skill roles in construction, logistics, finance, and tech. Free zone expansion and startup ecosystems provide additional absorption capacity, with the rate converging toward a structural 2.0% floor by 2030."
           },
           stats: {
             historical: { confidence: "99.1%", delta: "-0.1%" },
-            forecast: { confidence: "93.4%", delta: "-0.8%" }
-          }
+            forecast: { confidence: "94.2%", delta: "-0.3%" }
+          },
+          outlookAndDrivers: [
+            "Large expatriate labor market with flexible absorption",
+            "High labor mobility (no rigid unemployment cycles)",
+            "Continuous inflow of skilled migrants",
+            "AI increases productivity but creates offsetting high-skill jobs",
+            "Growth in construction, logistics, tourism, finance, and tech",
+            "Expansion of free zones and startup ecosystems"
+          ],
+          interpretation: "UAE unemployment is not cyclical in the traditional sense. It behaves more like a “labor-import equilibrium system”. Structural unemployment remains anchored near 2%"
         }
       }
     ],
@@ -372,63 +456,63 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   US: { // United States Specific Data
     positiveTrends: [
-      { 
-        label: "Domestic Semiconductor Mfg", 
-        value: 22.1, 
-        dataPoints: [5, 10, 15, 18, 22.1],
-        description: "The CHIPS Act is triggering a massive resurgence in onshoring critical tech manufacturing. Billions in CAPEX are allocated to building leading-edge foundries on US soil.",
-        relatedCountries: ["US", "JP", "NL", "TW", "KR"],
-        countryValues: { "US": 22.1, "JP": 15.2, "NL": 12.8, "TW": 18.5, "KR": 14.2 }
+      {
+        label: "Technology and AI Sector",
+        value: 28.0,
+        dataPoints: [10.0, 15.0, 20.0, 24.0, 28.0],
+        description: "Key growth driver through major technology companies. Dominating generative AI, cloud computing, and semiconductor designs.",
+        relatedCountries: ["US", "AE", "CN", "TW", "KR"],
+        countryValues: { "US": 28.0, "AE": 40.0, "CN": 24.0, "TW": 30.0, "KR": 22.0 }
       },
-      { 
-        label: "AI Enterprise Adoption", 
-        value: 41.5, 
-        dataPoints: [15, 22, 30, 38, 41.5],
-        description: "S&P 500 companies are racing to integrate generative AI into core operations. This trend reflects a broad mandate for operational efficiency and automated discovery.",
-        relatedCountries: ["US", "GB", "CA", "IL", "IN"],
-        countryValues: { "US": 41.5, "GB": 35.2, "CA": 32.8, "IL": 38.4, "IN": 30.1 }
+      {
+        label: "Clean Energy Sector",
+        value: 15.0,
+        dataPoints: [5.0, 8.0, 11.0, 13.0, 15.0],
+        description: "Supported by massive government incentives and investments in solar and wind infrastructure modernization.",
+        relatedCountries: ["US", "CN", "AE", "DE", "IN"],
+        countryValues: { "US": 15.0, "CN": 18.0, "AE": 28.0, "DE": 12.0, "IN": 16.0 }
       },
-      { 
-        label: "Renewable Grid Expansion", 
-        value: 14.2, 
-        dataPoints: [6, 8, 10, 12, 14.2],
-        description: "Federal tax incentives are accelerating the modernization of the energy grid. Large-scale utility solar and wind projects are reaching grid parity across the Midwest.",
-        relatedCountries: ["US", "CN", "DE", "ES", "DK"],
-        countryValues: { "US": 14.2, "CN": 18.5, "DE": 12.4, "ES": 10.8, "DK": 15.2 }
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 7.0,
+        dataPoints: [2.0, 3.5, 5.0, 6.0, 7.0],
+        description: "Driven by reshoring of strategic industries and adoption of industrial robotics and AI integration.",
+        relatedCountries: ["US", "CN", "DE", "JP", "IN"],
+        countryValues: { "US": 7.0, "CN": 8.0, "DE": 6.0, "JP": 5.0, "IN": 9.0 }
       }
     ],
     negativeTrends: [
-      { 
-        label: "Downtown Office Occupancy", 
-        value: -15.4, 
-        dataPoints: [-5, -8, -10, -12, -15.4],
-        description: "Major metropolitan areas are facing 'urban doom loop' risks as office vacancies remain at historic highs. Tax bases in cities like San Francisco and Chicago are under pressure.",
-        relatedCountries: ["US", "GB", "CA", "DE", "FR"],
-        countryValues: { "US": -15.4, "GB": -12.1, "CA": -10.5, "DE": -9.2, "FR": -8.4 }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -2.2,
+        dataPoints: [-0.5, -1.0, -1.5, -2.0, -2.2],
+        description: "Largest global negative contributor. High interest rates have collapsed mortgage demand and slowed commercial projects.",
+        relatedCountries: ["US", "GB", "DE", "FR", "IT"],
+        countryValues: { "US": -2.2, "GB": -4.0, "DE": -2.0, "FR": -1.5, "IT": -1.4 }
       },
-      { 
-        label: "Consumer Debt Default Rate", 
-        value: -4.8, 
-        dataPoints: [-1, -2, -3, -4, -4.8],
-        description: "Rising interest rates are beginning to stress household finances. Credit card and auto loan delinquencies are edging toward pre-pandemic norms, indicating potential cooling.",
-        relatedCountries: ["US", "GB", "CA", "AU", "NZ"],
-        countryValues: { "US": -4.8, "GB": -4.2, "CA": -3.5, "AU": -3.2, "NZ": -2.8 }
+      {
+        label: "Heavy Industry Sector",
+        value: -1.0,
+        dataPoints: [-0.2, -0.4, -0.6, -0.8, -1.0],
+        description: "Slowdown in industrial tech sector and lower demand for capital goods amid supply chain restructuring.",
+        relatedCountries: ["US", "DE", "GB", "IT", "JP"],
+        countryValues: { "US": -1.0, "DE": -2.0, "GB": -1.5, "IT": -1.0, "JP": -0.3 }
       },
-      { 
-        label: "Regional Bank Deposits", 
-        value: -6.2, 
-        dataPoints: [-2, -3, -4, -5, -6.2],
-        description: "Competition for deposits from money market funds is squeezing bank margins. Smaller institutions are facing capital flight as clients seek higher-yield, low-risk alternatives.",
-        relatedCountries: ["US", "CH", "DE", "IT", "FR"],
-        countryValues: { "US": -6.2, "CH": -5.5, "DE": -4.8, "IT": -4.2, "FR": -3.8 }
+      {
+        label: "Global Agriculture Sector",
+        value: -1.0,
+        dataPoints: [-0.2, -0.4, -0.6, -0.8, -1.0],
+        description: "Drought in key agricultural states impacting corn and wheat production volumes.",
+        relatedCountries: ["US", "BR", "IN", "AR", "ZA"],
+        countryValues: { "US": -1.0, "BR": -0.5, "IN": -0.6, "AR": -4.0, "ZA": -3.0 }
       }
     ],
     kpisAndReports: [
-      { 
-        title: "US GDP Growth", 
-        impact: "High", 
-        value: "2.1%", 
-        rep: "Jerome Powell", 
+      {
+        title: "US GDP Growth",
+        impact: "High",
+        value: "2.1%",
+        rep: "Jerome Powell",
         org: "Federal Reserve",
         insightData: {
           historicalData: [5.9, 2.1, 2.4, 2.2, 2.1],
@@ -447,11 +531,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "US Trade Volume", 
-        impact: "Medium", 
-        value: "$5.4T", 
-        rep: "Gina Raimondo", 
+      {
+        title: "US Trade Volume",
+        impact: "Medium",
+        value: "$5.4T",
+        rep: "Gina Raimondo",
         org: "Dept of Commerce",
         insightData: {
           historicalData: [4.2, 4.8, 5.1, 5.2, 5.4],
@@ -470,11 +554,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "High", 
-        value: "2.4%", 
-        rep: "Jerome Powell", 
+      {
+        title: "Inflation Rate",
+        impact: "High",
+        value: "2.4%",
+        rep: "Jerome Powell",
         org: "Federal Reserve",
         insightData: {
           historicalData: [7.0, 6.5, 3.4, 2.8, 2.4],
@@ -493,11 +577,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "Medium", 
-        value: "3.7%", 
-        rep: "Erika McEntarfer", 
+      {
+        title: "Unemployment Rate",
+        impact: "Medium",
+        value: "3.7%",
+        rep: "Erika McEntarfer",
         org: "BLS",
         insightData: {
           historicalData: [3.9, 3.6, 3.7, 3.8, 3.7],
@@ -521,33 +605,63 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   JO: {
     positiveTrends: [
-      { 
-        label: "Amman Tech Hub Growth", 
-        value: 18.5, 
-        dataPoints: [5, 8, 12, 15, 18.5],
-        description: "Jordan is emerging as a regional software development powerhouse. High talent density and competitive costs are attracting global tech outsourcing mandates.",
+      {
+        label: "Technology and AI Sector",
+        value: 18.5,
+        dataPoints: [5.0, 8.0, 12.0, 15.0, 18.5],
+        description: "Emerging regional software powerhouse. Growth driven by talent density and competitive outsourcing mandates.",
         relatedCountries: ["JO", "AE", "SA", "EG", "LB"],
         countryValues: { "JO": 18.5, "AE": 12.4, "SA": 10.2, "EG": 8.5, "LB": 5.1 }
       },
-      { 
-        label: "Tourism Resilience", 
-        value: 24.2, 
-        dataPoints: [10, 15, 18, 20, 24.2],
-        description: "Post-pandemic travel surge to Petra and Wadi Rum remains strong. National marketing campaigns are successfully diversifying the visitor base beyond regional markets.",
+      {
+        label: "Clean Energy Sector",
+        value: 12.0,
+        dataPoints: [4.0, 6.0, 8.0, 10.0, 12.0],
+        description: "Expansion in solar and wind projects to reduce energy import reliance and support industrial growth.",
         relatedCountries: ["JO", "EG", "MA", "TR", "AE"],
-        countryValues: { "JO": 24.2, "EG": 18.5, "MA": 15.2, "TR": 12.8, "AE": 10.5 }
+        countryValues: { "JO": 12.0, "EG": 18.5, "MA": 15.2, "TR": 12.8, "AE": 10.5 }
+      },
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 9.5,
+        dataPoints: [3.0, 5.0, 7.0, 8.5, 9.5],
+        description: "Focus on pharmaceuticals and high-value chemical manufacturing for regional export markets.",
+        relatedCountries: ["JO", "SA", "AE", "IQ", "EG"],
+        countryValues: { "JO": 9.5, "SA": 12.0, "AE": 22.0, "IQ": 6.5, "EG": 7.0 }
       }
     ],
     negativeTrends: [
-      { label: "Energy Import Costs", value: -12.4, dataPoints: [-2, -5, -8, -10, -12.4], description: "Reliance on external energy sources creates budget vulnerability.", relatedCountries: ["JO", "EG", "IQ", "LB", "MA"], countryValues: { "JO": -12.4, "EG": -8.5, "IQ": -6.2, "LB": -15.1, "MA": -5.2 } },
-      { label: "Water Scarcity Impact", value: -15.1, dataPoints: [-5, -8, -10, -12, -15.1], description: "Severe water stress is impacting agricultural output and municipal planning.", relatedCountries: ["JO", "EG", "IQ", "SY", "AE"], countryValues: { "JO": -15.1, "EG": -12.4, "IQ": -10.2, "SY": -18.5, "AE": -5.1 } }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -1.2,
+        dataPoints: [-0.3, -0.5, -0.8, -1.0, -1.2],
+        description: "Slowdown in residential development due to high financing costs and regional economic uncertainty.",
+        relatedCountries: ["JO", "EG", "LB", "SY", "AE"],
+        countryValues: { "JO": -1.2, "EG": -0.8, "LB": -2.5, "SY": -3.0, "AE": -0.2 }
+      },
+      {
+        label: "Heavy Industry Sector",
+        value: -2.1,
+        dataPoints: [-0.5, -1.0, -1.5, -1.8, -2.1],
+        description: "Facing pressure from rising energy import costs and logistics friction in the Levant region.",
+        relatedCountries: ["JO", "EG", "IQ", "LB", "TR"],
+        countryValues: { "JO": -2.1, "EG": -1.5, "IQ": -1.2, "LB": -3.5, "TR": -0.8 }
+      },
+      {
+        label: "Global Agriculture Sector",
+        value: -1.8,
+        dataPoints: [-0.4, -0.8, -1.2, -1.5, -1.8],
+        description: "Water scarcity and climate volatility impacting local crop yields and agricultural stability.",
+        relatedCountries: ["JO", "EG", "IQ", "SY", "SA"],
+        countryValues: { "JO": -1.8, "EG": -1.2, "IQ": -1.0, "SY": -2.5, "SA": -0.3 }
+      }
     ],
     kpisAndReports: [
-      { 
-        title: "Jordan GDP Growth", 
-        impact: "High", 
-        value: "2.4%", 
-        rep: "Z-Model Analyst", 
+      {
+        title: "Jordan GDP Growth",
+        impact: "High",
+        value: "2.4%",
+        rep: "Z-Model Analyst",
         org: "CBJ",
         insightData: {
           historicalData: [2.0, 2.2, 2.1, 2.3, 2.4],
@@ -566,11 +680,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Jordan Trade Volume", 
-        impact: "Medium", 
-        value: "$18.5B", 
-        rep: "Dir of Tourism", 
+      {
+        title: "Jordan Trade Volume",
+        impact: "Medium",
+        value: "$18.5B",
+        rep: "Dir of Tourism",
         org: "JTB",
         insightData: {
           historicalData: [14.2, 15.5, 16.8, 17.5, 18.5],
@@ -589,11 +703,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "Medium", 
-        value: "2.8%", 
-        rep: "Central Bank Lead", 
+      {
+        title: "Inflation Rate",
+        impact: "Medium",
+        value: "2.8%",
+        rep: "Central Bank Lead",
         org: "CBJ",
         insightData: {
           historicalData: [3.2, 4.5, 3.8, 3.0, 2.8],
@@ -612,11 +726,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "High", 
-        value: "18.2%", 
-        rep: "Z-Model Analyst", 
+      {
+        title: "Unemployment Rate",
+        impact: "High",
+        value: "18.2%",
+        rep: "Z-Model Analyst",
         org: "Gov of Jordan",
         insightData: {
           historicalData: [22.4, 21.8, 20.5, 19.2, 18.2],
@@ -640,19 +754,63 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   CN: {
     positiveTrends: [
-      { label: "EV Export Dominance", value: 52.1, dataPoints: [10, 20, 35, 45, 52.1], description: "Unmatched scale in battery production is giving Chinese EV makers a decisive global cost advantage.", relatedCountries: ["CN", "DE", "JP", "KR", "US"] },
-      { label: "Clean Tech Capex", value: 38.6, dataPoints: [15, 20, 28, 32, 38.6], description: "China continues to lead the world in solar and wind capacity additions to power its industrial core.", relatedCountries: ["CN", "US", "IN", "DE", "BR"] }
+      {
+        label: "Technology and AI Sector",
+        value: 24.0,
+        dataPoints: [10.0, 15.0, 18.0, 21.0, 24.0],
+        description: "Driven by expansion of domestic chip manufacturing and development of national AI systems.",
+        relatedCountries: ["CN", "TW", "KR", "US", "AE"],
+        countryValues: { "CN": 24.0, "TW": 30.0, "KR": 22.0, "US": 28.0, "AE": 40.0 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 18.0,
+        dataPoints: [8.0, 11.0, 14.0, 16.0, 18.0],
+        description: "Leads global production of solar panels and battery technologies. Core engine for green industrial growth.",
+        relatedCountries: ["CN", "BR", "US", "IN", "DE"],
+        countryValues: { "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0, "DE": 12.0 }
+      },
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 8.0,
+        dataPoints: [4.0, 5.5, 6.5, 7.5, 8.0],
+        description: "Massive industrial base expansion in industrial robotics and high-tech supply chain automation.",
+        relatedCountries: ["CN", "US", "DE", "JP", "IN"],
+        countryValues: { "CN": 8.0, "US": 7.0, "DE": 6.0, "JP": 5.0, "IN": 9.0 }
+      }
     ],
     negativeTrends: [
-      { label: "Property Sector Drag", value: -18.4, dataPoints: [-5, -10, -12, -15, -18.4], description: "Ongoing deleveraging in the real estate market is dampening consumer confidence and local gov revenue.", relatedCountries: ["CN", "HK", "AU", "SG", "VN"] },
-      { label: "Demographic Aging", value: -4.2, dataPoints: [-1, -2, -3, -4, -4.2], description: "A shrinking workforce is increasing labor costs and long-term social welfare obligations.", relatedCountries: ["CN", "JP", "KR", "IT", "DE"] }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -1.5,
+        dataPoints: [-0.5, -0.8, -1.0, -1.3, -1.5],
+        description: "Ongoing deleveraging in the real estate market is dampening consumer confidence and local gov revenue.",
+        relatedCountries: ["CN", "HK", "AU", "SG", "VN"],
+        countryValues: { "CN": -1.5, "HK": -2.0, "AU": -0.8, "SG": -0.5, "VN": -0.4 }
+      },
+      {
+        label: "Heavy Industry Sector",
+        value: -1.2,
+        dataPoints: [-0.4, -0.6, -0.8, -1.0, -1.2],
+        description: "Slowdown in traditional heavy manufacturing due to energy costs and cooling demand in export markets.",
+        relatedCountries: ["CN", "DE", "JP", "KR", "US"],
+        countryValues: { "CN": -1.2, "DE": -2.0, "JP": -0.3, "KR": -0.8, "US": -1.0 }
+      },
+      {
+        label: "Global Agriculture Sector",
+        value: -0.2,
+        dataPoints: [-0.1, -0.1, -0.2, -0.2, -0.2],
+        description: "Climate fluctuations affecting crop consistency, though offset by expansive domestic food security reserves.",
+        relatedCountries: ["CN", "US", "BR", "IN", "AR"],
+        countryValues: { "CN": -0.2, "US": -1.0, "BR": -0.5, "IN": -0.6, "AR": -4.0 }
+      }
     ],
     kpisAndReports: [
-      { 
-        title: "China GDP Growth", 
-        impact: "High", 
-        value: "4.8%", 
-        rep: "Pan Gongsheng", 
+      {
+        title: "China GDP Growth",
+        impact: "High",
+        value: "4.8%",
+        rep: "Pan Gongsheng",
         org: "PBOC",
         insightData: {
           historicalData: [8.1, 3.0, 5.2, 4.5, 4.8],
@@ -671,11 +829,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "China Trade Volume", 
-        impact: "High", 
-        value: "$6.1T", 
-        rep: "MOFCOM Spokesperson", 
+      {
+        title: "China Trade Volume",
+        impact: "High",
+        value: "$6.1T",
+        rep: "MOFCOM Spokesperson",
         org: "MOFCOM",
         insightData: {
           historicalData: [5.2, 5.8, 5.9, 6.0, 6.1],
@@ -694,11 +852,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "Medium", 
-        value: "1.2%", 
-        rep: "NBS Spokesperson", 
+      {
+        title: "Inflation Rate",
+        impact: "Medium",
+        value: "1.2%",
+        rep: "NBS Spokesperson",
         org: "NBS",
         insightData: {
           historicalData: [0.9, 2.0, 0.2, 0.8, 1.2],
@@ -717,11 +875,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "Medium", 
-        value: "5.0%", 
-        rep: "MIIT Spokesperson", 
+      {
+        title: "Unemployment Rate",
+        impact: "Medium",
+        value: "5.0%",
+        rep: "MIIT Spokesperson",
         org: "MIIT",
         insightData: {
           historicalData: [5.1, 5.5, 5.2, 5.1, 5.0],
@@ -732,7 +890,7 @@ export const economyDataStore: Record<string, EconomyData> = {
           },
           analysis: {
             historical: "Urban unemployment has stabilized, although youth unemployment remains a focal point for policy intervention. The manufacturing core continues to see high labor absorption.",
-            forecast: "Z-Model highlights a surge in advanced manufacturing and green energy maintenance roles. Demographic tightening will naturally lead to a lower long-term unemployment baseline."
+            forecast: "Z-Model highlights a surge in Advanced Manufacturing Sector and green energy maintenance roles. Demographic tightening will naturally lead to a lower long-term unemployment baseline."
           },
           stats: {
             historical: { confidence: "98.1%", delta: "-0.2%" },
@@ -745,19 +903,63 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   IN: {
     positiveTrends: [
-      { label: "Mobile Manufacturing", value: 42.5, dataPoints: [20, 25, 30, 38, 42.5], description: "The 'Make in India' initiative has transformed the country into the world's second-largest mobile producer.", relatedCountries: ["IN", "VN", "CN", "MX", "TH"] },
-      { label: "Service Export Surplus", value: 22.8, dataPoints: [10, 15, 18, 20, 22.8], description: "High-end software and consultancy exports are driving record-high service trade surpluses.", relatedCountries: ["IN", "US", "GB", "AE", "SG"] }
+      {
+        label: "Technology and AI Sector",
+        value: 35.7,
+        dataPoints: [15.0, 20.0, 25.0, 30.0, 35.7],
+        description: "Rapid transformation through digital infrastructure scaling and emerging status as a global AI services hub.",
+        relatedCountries: ["IN", "US", "GB", "AE", "SG"],
+        countryValues: { "IN": 35.7, "US": 28.0, "GB": 25.0, "AE": 40.0, "SG": 22.0 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 16.0,
+        dataPoints: [6.0, 9.0, 12.0, 14.5, 16.0],
+        description: "Significant expansion in solar energy projects and modernization of the national electricity grid.",
+        relatedCountries: ["IN", "CN", "AE", "US", "BR"],
+        countryValues: { "IN": 16.0, "CN": 18.0, "AE": 28.0, "US": 15.0, "BR": 17.0 }
+      },
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 9.0,
+        dataPoints: [3.0, 5.0, 6.5, 8.0, 9.0],
+        description: "Expansion of the industrial base supported by national manufacturing programs and industrial automation.",
+        relatedCountries: ["IN", "CN", "US", "DE", "JP"],
+        countryValues: { "IN": 9.0, "CN": 8.0, "US": 7.0, "DE": 6.0, "JP": 5.0 }
+      }
     ],
     negativeTrends: [
-      { label: "Infrastructure Bottlenecks", value: -6.4, dataPoints: [-1, -2, -4, -5, -6.4], description: "Logistical delays and power grid inconsistencies are limiting industrial throughput in some corridors.", relatedCountries: ["IN", "BD", "PK", "EG", "NG"] },
-      { label: "Air Quality Economic Loss", value: -3.8, dataPoints: [-0.5, -1, -2, -3, -3.8], description: "High pollution levels in industrial hubs are causing health-related labor shortages and higher insurance costs.", relatedCountries: ["IN", "CN", "PK", "BD", "NP"] }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -0.8,
+        dataPoints: [-0.2, -0.4, -0.6, -0.7, -0.8],
+        description: "Infrastructure bottlenecks and high financing costs impacting large-scale residential projects.",
+        relatedCountries: ["IN", "US", "GB", "CN", "AE"],
+        countryValues: { "IN": -0.8, "US": -2.2, "GB": -4.0, "CN": -1.5, "AE": -0.2 }
+      },
+      {
+        label: "Heavy Industry Sector",
+        value: -1.0,
+        dataPoints: [-0.3, -0.5, -0.7, -0.9, -1.0],
+        description: "Logistical delays and rising operational overhead affecting traditional heavy industrial corridors.",
+        relatedCountries: ["IN", "CN", "DE", "JP", "US"],
+        countryValues: { "IN": -1.0, "CN": -1.2, "DE": -2.0, "JP": -0.3, "US": -1.0 }
+      },
+      {
+        label: "Global Agriculture Sector",
+        value: -0.6,
+        dataPoints: [-0.2, -0.3, -0.4, -0.5, -0.6],
+        description: "Monsoon variability and climate stress affecting consistency of rice and wheat production.",
+        relatedCountries: ["IN", "US", "BR", "AR", "ZA"],
+        countryValues: { "IN": -0.6, "US": -1.0, "BR": -0.5, "AR": -4.0, "ZA": -3.0 }
+      }
     ],
     kpisAndReports: [
-      { 
-        title: "India GDP Growth", 
-        impact: "High", 
-        value: "7.0%", 
-        rep: "Shaktikanta Das", 
+      {
+        title: "India GDP Growth",
+        impact: "High",
+        value: "7.0%",
+        rep: "Shaktikanta Das",
         org: "RBI",
         insightData: {
           historicalData: [8.7, 7.2, 8.2, 7.5, 7.0],
@@ -776,11 +978,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "India Trade Volume", 
-        impact: "High", 
-        value: "$850B", 
-        rep: "NPCI Chief", 
+      {
+        title: "India Trade Volume",
+        impact: "High",
+        value: "$850B",
+        rep: "NPCI Chief",
         org: "Ministry of Commerce",
         insightData: {
           historicalData: [620, 710, 780, 810, 850],
@@ -799,11 +1001,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "Medium", 
-        value: "4.8%", 
-        rep: "RBI Governor", 
+      {
+        title: "Inflation Rate",
+        impact: "Medium",
+        value: "4.8%",
+        rep: "RBI Governor",
         org: "RBI",
         insightData: {
           historicalData: [5.5, 6.7, 5.4, 5.0, 4.8],
@@ -822,11 +1024,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "High", 
-        value: "7.2%", 
-        rep: "Z-Model Analyst", 
+      {
+        title: "Unemployment Rate",
+        impact: "High",
+        value: "7.2%",
+        rep: "Z-Model Analyst",
         org: "Ministry of Labour",
         insightData: {
           historicalData: [8.5, 7.8, 7.5, 7.4, 7.2],
@@ -848,20 +1050,65 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     reports: []
   },
-  SA: {
+  SA: { // Saudi Arabia Specific Data
     positiveTrends: [
-      { label: "Mining Sector Revenue", value: 31.2, dataPoints: [10, 15, 22, 28, 31.2], description: "New mineral deposit discoveries are attracting massive FDI under the Vision 2030 mining framework.", relatedCountries: ["SA", "AU", "CA", "CL", "ZA"] },
-      { label: "Gaming Hub Expansion", value: 14.5, dataPoints: [2, 5, 8, 12, 14.5], description: "Strategic investments in e-sports and game development are capturing the regional youth demographic.", relatedCountries: ["SA", "AE", "KR", "US", "JP"] }
+      {
+        label: "Technology and AI Sector",
+        value: 32.5,
+        dataPoints: [10.0, 15.0, 22.0, 28.0, 32.5],
+        description: "Vision 2030 digital core expansion. Massive investment in AI gaming hubs, regional data centers, and digital government infrastructure.",
+        relatedCountries: ["SA", "AE", "US", "CN", "TW"],
+        countryValues: { "SA": 32.5, "AE": 40.0, "US": 28.0, "CN": 24.0, "TW": 30.0 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 20.5,
+        dataPoints: [5.0, 9.0, 14.0, 18.0, 20.5],
+        description: "Strategic pivot toward solar, green hydrogen, and circular economy projects under the Saudi Green Initiative.",
+        relatedCountries: ["SA", "AE", "CN", "BR", "US"],
+        countryValues: { "SA": 20.5, "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0 }
+      },
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 12.4,
+        dataPoints: [3.0, 5.5, 8.0, 10.5, 12.4],
+        description: "Mining sector expansion and downstream petrochemical Advanced Manufacturing Sector. Localizing critical supply chains for the MENA region.",
+        relatedCountries: ["SA", "AE", "CN", "DE", "IN"],
+        countryValues: { "SA": 12.4, "AE": 22.0, "CN": 8.0, "DE": 6.0, "IN": 9.0 }
+      }
     ],
     negativeTrends: [
-      { label: "Global Oil Volatility", value: -8.2, dataPoints: [-2, -4, -6, -7, -8.2], description: "Fluctuating Brent prices are creating uncertainty in projected fiscal surpluses for the next quarter.", relatedCountries: ["SA", "RU", "IQ", "AE", "KW"] }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -0.5,
+        dataPoints: [-0.1, -0.2, -0.3, -0.4, -0.5],
+        description: "Massive project demand offset by higher capital costs. Strategic realignment of giga-projects to manage fiscal liquidity.",
+        relatedCountries: ["SA", "AE", "US", "GB", "DE"],
+        countryValues: { "SA": -0.5, "AE": -0.2, "US": -1.0, "GB": -1.5, "DE": -1.2 }
+      },
+      {
+        label: "Heavy Industry Sector",
+        value: -0.8,
+        dataPoints: [-0.2, -0.4, -0.6, -0.7, -0.8],
+        description: "Exposure to global demand fluctuations in traditional petrochemical cycles and rising operational overhead.",
+        relatedCountries: ["SA", "DE", "CN", "JP", "US"],
+        countryValues: { "SA": -0.8, "DE": -2.0, "CN": -1.2, "JP": -0.3, "US": -1.0 }
+      },
+      {
+        label: "Global Agriculture Sector",
+        value: -0.3,
+        dataPoints: [-0.1, -0.2, -0.3, -0.3, -0.3],
+        description: "High reliance on international food chains making fiscal spend sensitive to global grain price volatility.",
+        relatedCountries: ["SA", "AE", "US", "BR", "IN"],
+        countryValues: { "SA": -0.3, "AE": -0.4, "US": -1.0, "BR": -0.5, "IN": -0.6 }
+      }
     ],
     kpisAndReports: [
-      { 
-        title: "Saudi Arabia GDP Growth", 
-        impact: "High", 
-        value: "4.5%", 
-        rep: "PIF Strategy Lead", 
+      {
+        title: "Saudi Arabia GDP Growth",
+        impact: "High",
+        value: "4.5%",
+        rep: "PIF Strategy Lead",
         org: "PIF",
         insightData: {
           historicalData: [3.2, 8.7, -0.8, 1.3, 4.5],
@@ -880,11 +1127,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Saudi Arabia Trade Volume", 
-        impact: "High", 
-        value: "$620B", 
-        rep: "Project CEO", 
+      {
+        title: "Saudi Arabia Trade Volume",
+        impact: "High",
+        value: "$620B",
+        rep: "Project CEO",
         org: "NEOM",
         insightData: {
           historicalData: [380, 450, 520, 580, 620],
@@ -903,11 +1150,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "Medium", 
-        value: "2.1%", 
-        rep: "General Authority for Statistics", 
+      {
+        title: "Inflation Rate",
+        impact: "Medium",
+        value: "2.1%",
+        rep: "General Authority for Statistics",
         org: "GASTAT",
         insightData: {
           historicalData: [3.1, 2.5, 2.3, 2.2, 2.1],
@@ -926,11 +1173,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "High", 
-        value: "7.7%", 
-        rep: "Vision 2030 Office", 
+      {
+        title: "Unemployment Rate",
+        impact: "High",
+        value: "7.7%",
+        rep: "Vision 2030 Office",
         org: "Vision 2030",
         insightData: {
           historicalData: [11.3, 9.7, 8.6, 8.0, 7.7],
@@ -954,19 +1201,63 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   RU: { // Russia Specific Data
     positiveTrends: [
-      { label: "Agricultural Self-Sufficiency", value: 12.4, dataPoints: [5, 7, 9, 11, 12.4], description: "Massive state subsidies are driving a record-breaking harvest and food security autonomy.", relatedCountries: ["RU", "BR", "AR", "US", "CA"] },
-      { label: "LNG Arctic Expansion", value: 18.2, dataPoints: [10, 12, 14, 16, 18.2], description: "New northern sea route infrastructure is enabling record LNG exports to Asian partners.", relatedCountries: ["RU", "CN", "IN", "QA", "US"] }
+      {
+        label: "Technology and AI Sector",
+        value: 12.0,
+        dataPoints: [3.0, 6.0, 8.0, 10.0, 12.0],
+        description: "Focus on domestic tech self-reliance and cloning of global platforms for the regional market.",
+        relatedCountries: ["RU", "CN", "IR", "TR", "IN"],
+        countryValues: { "RU": 12.0, "CN": 24.0, "IR": 15.2, "TR": 10.5, "IN": 35.7 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 8.5,
+        dataPoints: [2.0, 4.0, 6.0, 7.5, 8.5],
+        description: "Expansion in Arctic energy infrastructure and regional grid adaptation strategies.",
+        relatedCountries: ["RU", "CN", "IN", "QA", "AE"],
+        countryValues: { "RU": 8.5, "CN": 18.0, "IN": 16.0, "QA": 10.2, "AE": 28.0 }
+      },
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 10.2,
+        dataPoints: [3.0, 5.0, 7.0, 9.0, 10.2],
+        description: "Industrial core expansion in Aerospace and defense-adjacent high-tech segments.",
+        relatedCountries: ["RU", "CN", "IN", "US", "DE"],
+        countryValues: { "RU": 10.2, "CN": 8.0, "IN": 9.0, "US": 7.0, "DE": 6.0 }
+      }
     ],
     negativeTrends: [
-      { label: "SWIFT Disconnection Impact", value: -25.6, dataPoints: [-10, -15, -20, -22, -25.6], description: "Isolation from global payment systems continues to increase transaction costs for import/export.", relatedCountries: ["RU", "IR", "KP", "VE", "CU"] },
-      { label: "CBR Interest Rate Drag", value: -16.0, dataPoints: [-8, -10, -12, -14, -16.0], description: "Emergency double-digit rates are suppressing domestic credit growth and automotive sales.", relatedCountries: ["RU", "TR", "AR", "NG", "EG"] }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -2.5,
+        dataPoints: [-0.5, -1.0, -1.5, -2.0, -2.5],
+        description: "Housing sector contraction due to rising financing costs and material supply chain friction.",
+        relatedCountries: ["RU", "DE", "GB", "CN", "AE"],
+        countryValues: { "RU": -2.5, "DE": -2.0, "GB": -1.5, "CN": -1.5, "AE": -0.2 }
+      },
+      {
+        label: "Heavy Industry Sector",
+        value: -1.8,
+        dataPoints: [-0.4, -0.8, -1.2, -1.5, -1.8],
+        description: "Decline in European demand for industrial machinery and rising specialized production costs.",
+        relatedCountries: ["RU", "DE", "IT", "JP", "CN"],
+        countryValues: { "RU": -1.8, "DE": -2.0, "IT": -1.0, "JP": -0.3, "CN": -1.2 }
+      },
+      {
+        label: "Global Agriculture Sector",
+        value: -0.1,
+        dataPoints: [-0.1, -0.1, -0.1, -0.1, -0.1],
+        description: "Consistent yield volumes offset by logistical friction in international grain export channels.",
+        relatedCountries: ["RU", "BR", "IN", "AR", "ZA"],
+        countryValues: { "RU": -0.1, "BR": -0.5, "IN": -0.6, "AR": -4.0, "ZA": -3.0 }
+      }
     ],
     kpisAndReports: [
-      { 
-        title: "Russia GDP Growth", 
-        impact: "High", 
-        value: "2.3%", 
-        rep: "Elvira Nabiullina", 
+      {
+        title: "Russia GDP Growth",
+        impact: "High",
+        value: "2.3%",
+        rep: "Elvira Nabiullina",
         org: "CBR",
         insightData: {
           historicalData: [4.7, -2.1, 3.6, 2.5, 2.3],
@@ -985,11 +1276,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Russia Trade Volume", 
-        impact: "Medium", 
-        value: "$710B", 
-        rep: "Energy Minister", 
+      {
+        title: "Russia Trade Volume",
+        impact: "Medium",
+        value: "$710B",
+        rep: "Energy Minister",
         org: "Rosneft",
         insightData: {
           historicalData: [780, 850, 720, 690, 710],
@@ -1008,11 +1299,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "High", 
-        value: "7.4%", 
-        rep: "Central Bank Lead", 
+      {
+        title: "Inflation Rate",
+        impact: "High",
+        value: "7.4%",
+        rep: "Central Bank Lead",
         org: "CBR",
         insightData: {
           historicalData: [6.7, 11.9, 7.4, 7.8, 7.4],
@@ -1031,11 +1322,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "Medium", 
-        value: "2.9%", 
-        rep: "Z-Model Analyst", 
+      {
+        title: "Unemployment Rate",
+        impact: "Medium",
+        value: "2.9%",
+        rep: "Z-Model Analyst",
         org: "Federal Service",
         insightData: {
           historicalData: [4.8, 3.9, 3.2, 3.0, 2.9],
@@ -1059,21 +1350,63 @@ export const economyDataStore: Record<string, EconomyData> = {
   },
   IR: { // Iran Specific Data
     positiveTrends: [
-      { label: "Eurasian Customs Pivot", value: 24.5, dataPoints: [8, 12, 16, 20, 24.5], description: "New trade agreements with regional neighbors are opening alternative routes for industrial exports.", relatedCountries: ["IR", "RU", "AM", "BY", "KZ"] },
-      { label: "Domestic Tech Self-Reliance", value: 15.2, dataPoints: [5, 8, 10, 12, 15.2], description: "Local startups are successfully cloning global platform models for the insulated domestic market.", relatedCountries: ["IR", "RU", "CN", "TR", "IN"] },
-      { label: "Regional Energy Corridor", value: 11.4, dataPoints: [2, 5, 8, 9, 11.4], description: "Increased gas exports to Iraq and Turkey are providing critical hard currency inflows.", relatedCountries: ["IR", "IQ", "TR", "PK", "TM"], countryValues: { "IR": 11.4, "IQ": 8.5, "TR": 7.2, "PK": 5.1, "TM": 4.8 } }
+      {
+        label: "Technology and AI Sector",
+        value: 15.2,
+        dataPoints: [5.0, 8.0, 10.0, 12.0, 15.2],
+        description: "Local startups successfully adapting global models for the insulated domestic market and regional corridors.",
+        relatedCountries: ["IR", "RU", "CN", "TR", "IN"],
+        countryValues: { "IR": 15.2, "RU": 12.0, "CN": 24.0, "TR": 10.5, "IN": 35.7 }
+      },
+      {
+        label: "Clean Energy Sector",
+        value: 11.4,
+        dataPoints: [2.0, 5.0, 8.0, 9.5, 11.4],
+        description: "Growth in regional energy bridges and increased gas exports providing critical hard currency inflows.",
+        relatedCountries: ["IR", "IQ", "TR", "PK", "TM"],
+        countryValues: { "IR": 11.4, "IQ": 8.5, "TR": 7.2, "PK": 5.1, "TM": 4.8 }
+      },
+      {
+        label: "Advanced Manufacturing Sector",
+        value: 8.5,
+        dataPoints: [2.0, 4.0, 6.0, 7.5, 8.5],
+        description: "Focus on domestic industrial self-reliance and specialized component manufacturing for the regional market.",
+        relatedCountries: ["IR", "RU", "CN", "AE", "SA"],
+        countryValues: { "IR": 8.5, "RU": 10.2, "CN": 8.0, "AE": 22.0, "SA": 12.4 }
+      }
     ],
     negativeTrends: [
-      { label: "Exchange Rate Devaluation", value: -42.1, dataPoints: [-10, -20, -30, -38, -42.1], description: "Sustained inflationary pressure is eroding purchasing power for the middle class.", relatedCountries: ["IR", "AR", "TR", "LB", "SY"], countryValues: { "IR": -42.1, "AR": -115.2, "TR": -65.4, "LB": -82.1, "SY": -54.2 } },
-      { label: "Capital Infrastructure Aging", value: -18.2, dataPoints: [-5, -8, -12, -15, -18.2], description: "Limited access to international spare parts is causing maintenance backlogs in the aviation and energy sectors.", relatedCountries: ["IR", "RU", "VE", "CU", "SD"], countryValues: { "IR": -18.2, "RU": -15.4, "VE": -22.1, "CU": -12.8, "SD": -25.4 } },
-      { label: "Cross-Border Banking Friction", value: -22.5, dataPoints: [-10, -15, -18, -20, -22.5], description: "Non-standard payment channels are causing significant delays in settling international trade balances.", relatedCountries: ["IR", "RU", "KP", "IQ", "AF"], countryValues: { "IR": -22.5, "RU": -18.4, "KP": -15.2, "IQ": -12.1, "AF": -20.5 } }
+      {
+        label: "Construction & Real Estate Sector",
+        value: -3.2,
+        dataPoints: [-0.5, -1.2, -1.8, -2.5, -3.2],
+        description: "Slowdown in urban development due to financing friction and extreme currency volatility.",
+        relatedCountries: ["IR", "AR", "TR", "LB", "SY"],
+        countryValues: { "IR": -3.2, "AR": -4.0, "TR": -1.5, "LB": -2.5, "SY": -3.0 }
+      },
+      {
+        label: "Heavy Industry Sector",
+        value: -2.8,
+        dataPoints: [-0.5, -1.2, -1.8, -2.4, -2.8],
+        description: "Maintenance backlogs in aviation and energy sectors due to limited access to global supply chains.",
+        relatedCountries: ["IR", "RU", "VE", "CU", "SD"],
+        countryValues: { "IR": -2.8, "RU": -1.8, "VE": -2.2, "CU": -1.2, "SD": -2.5 }
+      },
+      {
+        label: "Global Agriculture Sector",
+        value: -1.5,
+        dataPoints: [-0.3, -0.6, -0.9, -1.2, -1.5],
+        description: "Environmental stress and climate fluctuations affecting crop yields in regional agricultural hubs.",
+        relatedCountries: ["IR", "IQ", "AF", "SY", "SA"],
+        countryValues: { "IR": -1.5, "IQ": -1.0, "AF": -2.0, "SY": -2.5, "SA": -0.3 }
+      }
     ],
     kpisAndReports: [
-      { 
-        title: "Iran GDP Growth", 
-        impact: "High", 
-        value: "3.2%", 
-        rep: "Central Bank Lead", 
+      {
+        title: "Iran GDP Growth",
+        impact: "High",
+        value: "3.2%",
+        rep: "Central Bank Lead",
         org: "CBI",
         insightData: {
           historicalData: [4.5, 3.8, 3.5, 3.0, 3.2],
@@ -1092,11 +1425,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Iran Trade Volume", 
-        impact: "Medium", 
-        value: "$112B", 
-        rep: "Oil Ministry Rep", 
+      {
+        title: "Iran Trade Volume",
+        impact: "Medium",
+        value: "$112B",
+        rep: "Oil Ministry Rep",
         org: "NIOC",
         insightData: {
           historicalData: [85, 92, 101, 105, 112],
@@ -1115,11 +1448,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Inflation Rate", 
-        impact: "High", 
-        value: "45.8%", 
-        rep: "Z-Model Analyst", 
+      {
+        title: "Inflation Rate",
+        impact: "High",
+        value: "45.8%",
+        rep: "Z-Model Analyst",
         org: "CBI",
         insightData: {
           historicalData: [40.2, 45.1, 48.2, 46.5, 45.8],
@@ -1138,11 +1471,11 @@ export const economyDataStore: Record<string, EconomyData> = {
           }
         }
       },
-      { 
-        title: "Unemployment Rate", 
-        impact: "Medium", 
-        value: "9.2%", 
-        rep: "Z-Model Analyst", 
+      {
+        title: "Unemployment Rate",
+        impact: "Medium",
+        value: "9.2%",
+        rep: "Z-Model Analyst",
         org: "Gov of Iran",
         insightData: {
           historicalData: [10.5, 9.8, 9.5, 9.4, 9.2],
@@ -1176,7 +1509,7 @@ export interface EconomicKpi {
 
 export const economicKpis: EconomicKpi[] = [
   { label: "Global GDP Growth", value: "2.9%", change: "+0.2%", trend: "up", organization: "IMF" },
-  { label: "Global Trade Volume", value: "$32T", change: "+1.5%", trend: "up", organization: "WTO" },
+  { label: "Global Trade Volume", value: "$32 T", change: "+1.5%", trend: "up", organization: "WTO" },
   { label: "Inflation Rate", value: "3.4%", change: "-1.3%", trend: "up", organization: "OECD" },
   { label: "Unemployment Rate", value: "5.1%", change: "-1.1%", trend: "up", organization: "ILO" }
 ];

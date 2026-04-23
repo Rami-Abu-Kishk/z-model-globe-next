@@ -141,6 +141,16 @@ export const chatbotData: Record<string, Record<string, ChatBotResponse>> = {
       }
     },
     // MEDIA TRIGGERS
+    "MENA CLOUD INFRASTRUCTURE EXPANSION": {
+      text: "A massive expansion of the sovereign cloud infrastructure across the MENA region, focusing on Al safety and data residency.\n\nStrategic intelligence reports indicate that this development will have significant implications for regional sovereignty and digital infrastructure. Our analysis suggests a 15% increase in operational efficiency across relevant sectors within the next fiscal quarter.",
+      insightData: {
+        title: "MENA Cloud Expansion",
+        kpis: [
+          { label: "Operational Efficiency", value: "+15%" },
+          { label: "Sector Focus", value: "AI & Data" }
+        ]
+      }
+    },
     "GLOBAL SUMMIT ON AI ETHICS": {
       text: "Sentiment Analysis: 85% Positive / 15% Skeptical. Media consensus suggests this summit is a pivot point for harmonized global regulation. Public impact is high, with 'Trust' metrics for big-tech entities seeing a 12-point recovery following the transparency pledge.",
       insightData: {

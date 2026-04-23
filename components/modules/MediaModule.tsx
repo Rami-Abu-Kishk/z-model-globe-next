@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from '@/lib/utils';
 import { SharedArticleView } from '@/components/shared/SharedArticleView';
+import { MediaArticleView } from '@/components/shared/MediaArticleView';
 import { useZModelStore } from '@/lib/store';
 import { useAIChat } from '../context/AIChatContext';
 import { AiBadge } from '../shared/AiBadge';
@@ -53,7 +54,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
   const [videoSource, setVideoSource] = useState<'SKY' | 'CNN'>('SKY');
   
   const videoSources = {
-    SKY: 'Cw2gP01LhQ0',
+    SKY: 'YDvsBbKfLPA',
     CNN: 'U--OjmpjF5o'
   };
   const handleAiTrigger = (e: React.MouseEvent, news: NewsItem) => {
@@ -102,7 +103,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
       <div className="flex flex-col gap-8 pb-4 relative min-h-[700px]">
         {/* TOP: 3-Column Performance Grid - Hidden when an article is focused */}
         <AnimatePresence>
-          {!mediaSelectedArticle && (
+          {/* {!mediaSelectedArticle && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -122,7 +123,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               ))}
             </motion.div>
-          )}
+          )} */}
         </AnimatePresence>
         {/* VIDEO: Signal Intelligence Terminal */}
         {!mediaSelectedArticle && (
@@ -151,7 +152,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 <button 
                   onClick={() => setVideoSource('SKY')}
                   className={cn(
-                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all",
+                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all cursor-pointer",
                     videoSource === 'SKY' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
                   )}
                 >
@@ -160,7 +161,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 <button 
                   onClick={() => setVideoSource('CNN')}
                   className={cn(
-                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all",
+                    "px-3 py-1 text-[9px] font-black rounded-lg transition-all cursor-pointer",
                     videoSource === 'CNN' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
                   )}
                 >
@@ -222,7 +223,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                   
                   <ScrollArea className="flex-1">
                     <div className="p-4 space-y-4">
-                      {data.breaking.map((news) => (
+                      {data.breaking.map((news, i) => (
                         <div 
                           key={news.id} 
                           onClick={() => handleNewsClick(news)}
@@ -234,11 +235,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                                <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
                              </div>
                              <div className="flex items-center gap-2">
-                               <AiBadge 
-                                 onClick={(e) => handleAiTrigger(e, news)}
-                                 className="!relative !w-6 !h-6 !static border-rose-100 bg-rose-50/30 shadow-none hover:bg-rose-50 hover:scale-110"
-                                 tooltipText="Sentiment Audit"
-                               />
+                              
                                <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-rose-500" />
                              </div>
                           </div>
@@ -292,13 +289,24 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                           <h4 className="text-[15px] font-black text-slate-900 group-hover:text-sky-600 transition-colors leading-tight mb-3">
                             {news.headline}
                           </h4>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5">
-                               <div className="w-24 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                 <div className="h-full bg-sky-500 w-3/4" />
-                               </div>
-                               <span className="text-[9px] font-bold text-slate-400 uppercase">Impact</span>
-                            </div>
+                           <div className="flex items-center justify-between">
+                             <div className="flex items-center gap-1.5">
+                                <div className="w-24 h-1.5 bg-slate-100/50 rounded-full overflow-hidden relative">
+                                  <motion.div 
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${news.impact || (60 + (parseInt(news.id.replace(/\D/g, '')) || (news.headline.length)) % 35)}%` }}
+                                    transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
+                                    className="h-full bg-sky-500 rounded-full relative"
+                                  >
+                                    <motion.div 
+                                      animate={{ x: ["-100%", "100%"] }}
+                                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                                    />
+                                  </motion.div>
+                                </div>
+                                <span className="text-[9px] font-bold text-slate-400 uppercase">Impact</span>
+                             </div>
                             <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-sky-500" />
                           </div>
                         </div>
@@ -360,7 +368,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               </motion.div>
             ) : (
-              <SharedArticleView
+              <MediaArticleView
                 article={{
                   title: mediaSelectedArticle.headline,
                   subtitle: `${mediaSelectedArticle.time} • ${mediaSelectedArticle.category}`,
@@ -374,7 +382,8 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                     description: 'Primary Source',
                     initial: mediaSelectedArticle.source[0]
                   },
-                  links: mediaSelectedArticle.links
+                  links: mediaSelectedArticle.links,
+                  aiInsights: mediaSelectedArticle.aiInsights
                 }}
                 onBack={handleBack}
               />

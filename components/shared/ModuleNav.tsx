@@ -90,7 +90,10 @@ export function ModuleNav() {
                 ];
 
                 if (redirectItems.includes(item.id)) {
-                  window.open(`${LANDING_PAGE_URL}/${item.id}`, "_blank");
+                  window.open(
+                    `https://zmodel.ai-zfollowup.net/${item.id}`,
+                    "_blank",
+                  );
                   return;
                 }
 

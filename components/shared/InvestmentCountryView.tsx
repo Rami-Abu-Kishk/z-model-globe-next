@@ -126,18 +126,18 @@ export function InvestmentCountryView({
   const handleAiBadgeClick = () => {
     setIsOpen(true);
     setIsMinimized(false);
-    
+
     const userQuery = `Analyze Investment Potential: ${data.title}`;
     sendMessage(userQuery, "user");
   };
 
   const handleButtonClick = (id: string) => {
     if (id === activeButton) return;
-    
+
     if (id !== 'details' && !loadedSections.has(id)) {
       setIsLoading(true);
       setActiveButton(id);
-      
+
       const phrases = INVESTMENT_LOADING_PHRASES[id] || ["Initializing Z-Model Core...", "Synthesizing Data...", "Finalizing..."];
       let phraseIndex = 0;
       setLoadingPhrase(phrases[0]);
@@ -170,11 +170,7 @@ export function InvestmentCountryView({
   const active = INVESTMENT_AI_BUTTONS.find(b => b.id === activeButton);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.97, y: 16 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.97, y: 16 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+    <div
       className={cn(
         "bg-white/50 backdrop-blur-3xl border border-white/80 rounded-[36px] shadow-2xl overflow-hidden flex flex-col border-b-4 border-b-slate-900",
         className
@@ -192,20 +188,20 @@ export function InvestmentCountryView({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none" />
 
-        <button
+        {/* <button
           onClick={onBack}
           className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/40 transition-all cursor-pointer"
         >
           <ChevronLeft className="w-3 h-3" />
           Back
-        </button>
+        </button> */}
 
-        <button
+        {/* <button
           onClick={onBack}
           className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center hover:bg-white/40 transition-all cursor-pointer"
         >
           <Minimize2 className="w-3.5 h-3.5 text-white" />
-        </button>
+        </button> */}
 
         <div className="absolute bottom-0 left-0 right-0 p-6 flex items-end justify-between">
           <div className="flex-1 min-w-0 pr-4">
@@ -223,11 +219,11 @@ export function InvestmentCountryView({
           </div>
 
           <div className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25">
-             <TrendingUp className="w-4 h-4 text-emerald-400" />
-             <div className="text-right">
-                <p className="text-[9px] font-black text-white uppercase leading-none">Investment Grade</p>
-                <p className="text-[8px] font-bold text-white/60 uppercase leading-none mt-0.5">Top Choice</p>
-             </div>
+            <TrendingUp className="w-4 h-4 text-emerald-400" />
+            <div className="text-right">
+              <p className="text-[9px] font-black text-white uppercase leading-none">Investment Grade</p>
+              <p className="text-[8px] font-bold text-white/60 uppercase leading-none mt-0.5">Top Choice</p>
+            </div>
           </div>
         </div>
       </div>
@@ -284,7 +280,7 @@ export function InvestmentCountryView({
 
                       <div className="space-y-3 text-center z-10">
                         <div className="flex items-center justify-center gap-2">
-                           <div className="flex gap-1">
+                          <div className="flex gap-1">
                             {[0, 1, 2].map((i) => (
                               <motion.div
                                 key={i}
@@ -306,7 +302,7 @@ export function InvestmentCountryView({
                         >
                           {loadingPhrase}
                         </motion.p>
-                        
+
                         <p className="text-[10px] text-slate-300 font-bold uppercase tracking-widest">
                           Sovereign Intelligence • Node {Math.floor(Math.random() * 90) + 10}
                         </p>
@@ -378,7 +374,7 @@ export function InvestmentCountryView({
         {/* RIGHT: AI Analysis Panel */}
         <div className="w-[200px] shrink-0 flex flex-col bg-slate-50/60 border-l border-slate-100">
           <div className="px-4 pt-5 pb-4 border-b border-slate-100">
-            <div 
+            <div
               onClick={handleAiBadgeClick}
               className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 shadow-lg shadow-emerald-200/40 cursor-pointer hover:shadow-xl hover:scale-105 active:scale-95 transition-all"
             >
@@ -444,6 +440,6 @@ export function InvestmentCountryView({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

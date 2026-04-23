@@ -74,7 +74,7 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
         const lowerText = text.toLowerCase();
 
         if (lowerText.includes('strait of hormuz') || lowerText.includes('hormuz closure')) {
-          botText = "Sovereign Intelligence Briefing: The potential closure of the Strait of Hormuz is categorized as an 'EXTREME SEVERITY' (93%) scenario. For the UAE, security impact is near maximum (95%), directly threatening maritime hubs in Jebel Ali and Abu Dhabi. We estimate a 92% economic impact due to UAE's role as a global logistics and re-export hub. Would you like a deeper dive into the regional vs global complexity scores?";
+          botText = "Sovereign Intelligence Briefing: The potential closure of the Strait of Hormuz is categorized as an 'EXTREME SEVERITY' (93%) scenario. For the region, security impact is near maximum (95%), directly threatening major maritime trade hubs. We estimate a 92% economic impact due to the region's central role as a global logistics and energy export hub. Would you like a deeper dive into the regional vs global complexity scores?";
         } else if (lowerText.includes('red sea maritime security')) {
           botText = "Sovereign Intelligence Report: Red Sea Maritime Security is currently categorized as 'CRITICAL'. The Bab-el-Mandeb strait is seeing a 45% increase in insurance premiums for all commercial freight. Our neural engine suggests escalation risks are mounting due to asymmetrical threat vectors. Would you like a breakdown of the specific involved parties?";
         } else if (lowerText.includes('tell me more') || lowerText.includes('give more info')) {
@@ -83,9 +83,9 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
           const context = lastBotMessage?.text.toLowerCase() || '';
 
           if (context.includes('strait of hormuz')) {
-            botText = "Geopolitical Deep-Dive: A closure would disrupt approximately 20% of global LNG and oil trade. Analysis shows regional security impact at 94%, while global geopolitical complexity reaches a staggering 98%. As a premier maritime state, the UAE is structurally the most exposed globally. Strategic acceleration of alternative export routes (pipelines and non-Gulf ports) is currently the primary defensive counter-measure.";
+            botText = "Geopolitical Deep-Dive: A closure would disrupt approximately 20% of global LNG and oil trade. Analysis shows regional security impact at 94%, while global geopolitical complexity reaches a staggering 98%. As a critical global chokepoint, the region is structurally the most exposed. Strategic acceleration of alternative export routes (pipelines and bypass ports) is currently the primary defensive counter-measure.";
           } else if (context.includes('red sea')) {
-            botText = "Deep-Dive Analysis: The primary drivers of instability in the Red Sea sector are a combination of local kinetic shifts and global energy price volatility. Specifically, we are tracking a mobilization of strategic assets in the Gulf of Aden. Impact on UAE strategic trade corridors is estimated at -2.4% annually if security is not normalized by Q3 2026.";
+            botText = "Deep-Dive Analysis: The primary drivers of instability in the Red Sea sector are a combination of local kinetic shifts and global energy price volatility. Specifically, we are tracking a mobilization of strategic assets in the Gulf of Aden. Impact on international strategic trade corridors is estimated at -2.4% annually if security is not normalized by Q3 2026.";
           } else {
             botText = "Beyond the primary metrics, we are seeing a shift in multi-lateral alignment. Both regional and global powers are recalibrating their deterrence frameworks. Would you like me to analyze the specific impact on your active investment portfolio or current geopolitical files?";
           }

@@ -325,8 +325,8 @@ export const politicalDataStore: Record<string, PoliticalData> = {
     news: [
       {
         id: "N1", headline: "UNSC Drafts New Maritime Security Protocol",
-        time: "2h ago", category: "Security", 
-        source: "Intelligence Desk", 
+        time: "2h ago", category: "Security",
+        source: "Intelligence Desk",
         summary: "A new draft resolution aims to establish enhanced security zones in critical transit chokepoints."
       },
       { id: "N2", headline: "G7 Summit Reaffirms Commitment to Indo-Pacific", time: "5h ago", category: "Diplomatic", source: "Diplomatic Core", summary: "Leaders have pledged increased cooperation on maritime defense and digital governance standards." }

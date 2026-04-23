@@ -178,7 +178,7 @@ function InvestmentReportCard({ report, onClick }: { report: InvestmentReport, o
 function LiveCapitalInflow({ value: initialValue }: { value: string }) {
   const [currentValue, setCurrentValue] = useState(initialValue);
   const [trend, setTrend] = useState<'up' | 'down' | 'neutral'>('neutral');
-  
+
   useState(() => {
     // Component level state to keep track of the numeric value across renders
   });
@@ -187,24 +187,24 @@ function LiveCapitalInflow({ value: initialValue }: { value: string }) {
     // Parse value like "+$23B" or "-$5B"
     const match = initialValue.match(/([+-]?)\$([\d.]+)([BMT]?)/);
     if (!match) return;
-    
+
     let [_, sign, numStr, unit] = match;
     let num = parseFloat(numStr);
-    
+
     const interval = setInterval(() => {
       // Simulate market volatility
       const change = (Math.random() * 1.5) - 0.7; // -0.7 to +0.8 to lean slightly positive
       const newNum = Math.max(0.1, num + change);
       const newTrend = newNum > num ? 'up' : 'down';
-      
+
       num = newNum;
       setTrend(newTrend);
       setCurrentValue(`${sign}$${newNum.toFixed(1)}${unit}`);
-      
+
       // Reset trend after a moment to allow for subsequent color flashes if needed
       // but here we just leave it for the next tick
     }, 1000);
-    
+
     return () => clearInterval(interval);
   }, [initialValue]);
 
@@ -216,16 +216,15 @@ function LiveCapitalInflow({ value: initialValue }: { value: string }) {
             key={currentValue}
             initial={{ y: trend === 'up' ? 2 : -2, opacity: 0.5 }}
             animate={{ y: 0, opacity: 1 }}
-            className={`font-black text-[13px] tabular-nums transition-colors duration-300 ${
-              trend === 'up' ? 'text-emerald-600' : 
-              trend === 'down' ? 'text-rose-600' : 
-              'text-emerald-600'
-            }`}
+            className={`font-black text-[13px] tabular-nums transition-colors duration-300 ${trend === 'up' ? 'text-emerald-600' :
+                trend === 'down' ? 'text-rose-600' :
+                  'text-emerald-600'
+              }`}
           >
             {currentValue}
           </motion.span>
         </AnimatePresence>
-        
+
         <div className="w-4 h-4 flex items-center justify-center">
           {trend === 'up' && (
             <motion.div
@@ -290,13 +289,62 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
   const data = investmentDataStore[currentDataKey];
 
+  // Stable data reference for UAE view to prevent reset loops in child useEffect
+  const uaeDetailData = useMemo(() => ({
+    title: "Executive Brief: UAE Investment Landscape",
+    subtitle: "Sovereign Strategic Briefing • 2026",
+    category: "Investment Strategy",
+    badgeText: "TOP STRATEGIC TARGET",
+    badgeClassName: "bg-emerald-600",
+    imageUrl: "/assets/images/mock/uae_investment_hero.png",
+    summary: data.bestTarget.pdfReportData?.summary || "The UAE's evolution into a premier global investment destination is driven by strategic foresight, world-class infrastructure, and a robust regulatory framework.",
+    aiInsights: data.aiInsights,
+    content: (
+      <div className="space-y-8 mt-12 pb-12">
+        {data.bestTarget.pdfReportData?.highlights.map((point, i) => (
+          <div key={i} className="flex gap-6 group">
+            <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+            <div>
+              <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-1">{point.title}</h4>
+              <p className="text-[15px] text-slate-600 font-medium leading-relaxed text-justify">{point.detail}</p>
+            </div>
+          </div>
+        ))}
+        <div className="flex justify-center pt-8">
+          <Button
+            variant="outline"
+            className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+            onClick={() => {
+              if (data.bestTarget.pdfReportData?.downloadUrl) {
+                setSelectedReportForPreview({
+                  id: 'best-target-report',
+                  title: 'Executive Briefing: ' + data.bestTarget.name,
+                  org: 'Z-Model Strategy',
+                  author: 'AI Core',
+                  date: '2026',
+                  fileUrl: data.bestTarget.pdfReportData.downloadUrl,
+                  description: 'Executive Briefing for ' + data.bestTarget.name
+                } as InvestmentReport);
+              }
+            }}
+          >
+            <ExternalLink className="w-4 h-4" /> View Full Report
+          </Button>
+        </div>
+      </div>
+    )
+  }), [data, data.bestTarget.pdfReportData, data.aiInsights]);
+
   const handleTargetClick = () => {
     setActiveModule('investment');
-    if (data.bestTarget.iso) {
+    // Ensure we have an ISO even if the specific mock (like AE) doesn't have it on bestTarget
+    const targetIso = data.bestTarget.iso || (currentDataKey === 'AE' ? 'AE' : 'AE'); 
+    
+    if (targetIso) {
       setSelectedCountry(null);
       // Increased zoom for Best Target (altitude from 1.5 to 0.8)
-      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 0.8 }); 
-      setSelectedCountries([data.bestTarget.iso]);
+      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 0.8 });
+      setSelectedCountries([targetIso]);
       setShowBestTargetPoint(true);
 
       if (isExpanded) {
@@ -369,23 +417,16 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
       setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 });
       setSelectedCountries(['AE']);
     }
-    
+
     setSelectedReportForPreview(report);
   };
 
   if (isExpanded) {
     return (
       <div className="flex flex-col gap-6 md:gap-10 pb-12 w-full max-w-full overflow-x-hidden relative min-h-[800px]">
-        <AnimatePresence mode="wait">
+        <div className="flex-1 w-full h-full">
           {investmentActiveDetail === 'NONE' ? (
-            <motion.div
-              key="main-view"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.4 }}
-              className="flex flex-col gap-6 md:gap-10 w-full"
-            >
+            <div className="flex flex-col gap-6 md:gap-10 w-full">
               {/* FIRST SECTION: Top 3 Strategic Opportunities */}
               <div className="space-y-6">
                 <SectionHeader
@@ -409,18 +450,19 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   ))}
                 </div>
               </div>
+
               <SectionHeader
                 title={data.bestTarget.label}
                 icon={Zap}
                 subtitle="Real-time volatility tracking and expected yield forecasts, Last Update : 13hrs ago"
               />
+
               {/* SECOND SECTION: Hero Target & Multi-Series Chart */}
               <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
                 <div
                   className="xl:col-span-2 glass-card p-6 md:p-8 cursor-pointer hover:shadow-emerald-200/40 transition-all group flex flex-col justify-between relative overflow-hidden"
                   onClick={handleTargetClick}
                 >
-                  {/* Subtle background image */}
                   <div className="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 transition-opacity">
                     <img
                       src={data.bestTarget.imageUrl || "/assets/images/branding/fallback.png"}
@@ -434,7 +476,6 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
                   <h1 className="text-2xl lg:text-4xl font-black text-slate-900 leading-[1.1] tracking-tighter mt-1">Best Country to Invest in</h1>
 
-                  {/* Subtle holographic background texture/glow */}
                   <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-100/30 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-200/40 transition-colors z-0" />
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-6">
@@ -457,17 +498,6 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   </div>
 
                   <div className="mt-8 flex items-end justify-between border-t border-slate-200/50 pt-6 relative z-10">
-                    {/* <div className="flex flex-col min-w-0">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-4xl lg:text-6xl font-black text-slate-900 leading-none tracking-tighter">
-                          {data.bestTarget.score}
-                        </span>
-                      </div>
-                      <span className="text-[9px] text-black font-black uppercase tracking-[0.2em] mt-2">
-                        Investment Rating
-                      </span>
-                    </div> */}
-
                     <div className="flex flex-col items-end gap-2 text-right shrink-0">
                       <p className="text-[9px]  font-bold uppercase tracking-widest">
                         Sync: {data.bestTarget.timestamp}
@@ -476,7 +506,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   </div>
                 </div>
 
-                <motion.div
+                <div
                   className="xl:col-span-3 p-6 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl flex flex-col min-h-[400px] transition-all hover:border-emerald-300/50"
                   onMouseEnter={() => setShowInvestmentPoints(true)}
                   onMouseLeave={() => setShowInvestmentPoints(false)}
@@ -489,12 +519,11 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   <div className="flex-1 mt-6 min-h-0">
                     <InvestmentChart3D />
                   </div>
-                </motion.div>
+                </div>
               </div>
 
               {/* BOTTOM SECTION: Institutional KPIs & Strategic Reports */}
               <div className="space-y-12">
-                {/* INSTITUTIONAL KPIS SECTION */}
                 <div className="space-y-6">
                   <SectionHeader
                     title="Global Kpis"
@@ -512,7 +541,6 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   </div>
                 </div>
 
-                {/* STRATEGIC REPORTS SECTION */}
                 <div className="space-y-6">
                   <SectionHeader
                     title="Strategic Intelligence Reports"
@@ -554,9 +582,9 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                                 {row.rating}
                               </Badge>
                             </TableCell>
-                             <TableCell className="text-center font-black">
-                               <LiveCapitalInflow value={row.inflow} />
-                             </TableCell>
+                            <TableCell className="text-center font-black">
+                              <LiveCapitalInflow value={row.inflow} />
+                            </TableCell>
                             <TableCell className="text-center">
                               <Badge className={`text-[9px] font-black uppercase px-2 shadow-sm ${row.risk === 'Low' ? 'bg-emerald-100 text-emerald-700' :
                                 row.risk === 'Medium' ? 'bg-amber-100 text-amber-700' :
@@ -574,7 +602,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ) : investmentActiveDetail === 'UAE' ? (
             <div className="w-full">
               <InvestmentCountryView
@@ -584,50 +612,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   setActiveEconomyTrend(null);
                   setShowBestTargetPoint(false);
                 }}
-                data={{
-                  title: "Executive Brief: UAE Investment Landscape",
-                  subtitle: "Sovereign Strategic Briefing • 2026",
-                  category: "Investment Strategy",
-                  badgeText: "TOP STRATEGIC TARGET",
-                  badgeClassName: "bg-emerald-600",
-                  imageUrl: "/assets/images/mock/uae_investment_hero.png",
-                  summary: data.bestTarget.pdfReportData?.summary || "The UAE's evolution into a premier global investment destination is driven by strategic foresight, world-class infrastructure, and a robust regulatory framework.",
-                  aiInsights: data.aiInsights,
-                  content: (
-                    <div className="space-y-8 mt-12 pb-12">
-                      {data.bestTarget.pdfReportData?.highlights.map((point, i) => (
-                        <div key={i} className="flex gap-6 group">
-                          <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0 group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-                          <div>
-                            <h4 className="text-lg font-black text-slate-900 uppercase tracking-tighter mb-1">{point.title}</h4>
-                            <p className="text-[15px] text-slate-600 font-medium leading-relaxed text-justify">{point.detail}</p>
-                          </div>
-                        </div>
-                      ))}
-                      <div className="flex justify-center pt-8">
-                        <Button
-                          variant="outline"
-                          className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
-                          onClick={() => {
-                            if (data.bestTarget.pdfReportData?.downloadUrl) {
-                              setSelectedReportForPreview({
-                                id: 'best-target-report',
-                                title: 'Executive Briefing: ' + data.bestTarget.name,
-                                org: 'Z-Model Strategy',
-                                author: 'AI Core',
-                                date: '2026',
-                                fileUrl: data.bestTarget.pdfReportData.downloadUrl,
-                                description: 'Executive Briefing for ' + data.bestTarget.name
-                              } as InvestmentReport);
-                            }
-                          }}
-                        >
-                          <ExternalLink className="w-4 h-4" /> View Full Report
-                        </Button>
-                      </div>
-                    </div>
-                  )
-                }}
+                data={uaeDetailData}
               />
             </div>
           ) : (
@@ -697,7 +682,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
               />
             </div>
           )}
-        </AnimatePresence>
+        </div>
 
         {/* Reusable KPI Deep-Dive Overlay */}
         <KpiInsightOverlay
@@ -729,7 +714,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
         />
 
         {/* PDF Report Preview Modal */}
-        <PdfPreviewModal 
+        <PdfPreviewModal
           isOpen={!!selectedReportForPreview}
           onClose={() => setSelectedReportForPreview(null)}
           title={selectedReportForPreview?.title || ''}
@@ -844,7 +829,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
             />
 
             {/* PDF Report Preview Modal */}
-            <PdfPreviewModal 
+            <PdfPreviewModal
               isOpen={!!selectedReportForPreview}
               onClose={() => setSelectedReportForPreview(null)}
               title={selectedReportForPreview?.title || ''}

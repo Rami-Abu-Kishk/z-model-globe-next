@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import { GlobeControls } from "./GlobeControls";
 
 // z model landing page link
-const LANDING_PAGE_URL = process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "http://localhost:5173";
+const LANDING_PAGE_URL = process.env.NEXT_PUBLIC_LANDING_PAGE_URL;
 
 const NAV_ITEMS: { id: ModuleId; label: string; icon: any }[] = [
   { id: "economy", label: "Economy", icon: BarChart3 },

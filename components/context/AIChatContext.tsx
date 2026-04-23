@@ -73,12 +73,12 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
 
         const lowerText = text.toLowerCase();
 
-        if (lowerText.includes('russia') || lowerText.includes('ukraine')) {
+        if (lowerText.includes('iran-israel-us') || (lowerText.includes('iran') && lowerText.includes('israel'))) {
+          botText = "Sovereign Intelligence Report: The Iran–Israel–US confrontation is currently our HIGHEST PRIORITY 'CRITICAL' multi-domain conflict (97% Complexity). It poses high-intensity risks to Strait of Hormuz freedom of navigation and regional energy infrastructure. Stakeholders including the UAE and Saudi Arabia are strategically exposed to potential kinetic spillovers. Would you like a deep-dive into the maritime security vectors?";
+        } else if (lowerText.includes('russia') || lowerText.includes('ukraine')) {
           botText = "Sovereign Intelligence Briefing: The Russia–Ukraine Conflict is categorized as 'CRITICAL' (95% Severity). It represents a systemic threat to global energy systems and agricultural supply chains. Beyond the kinetic front, our neural engine tracks a 98% complexity score due to hybrid warfare and NATO-bloc strategic decoupling. Would you like a breakdown of the impact on European energy flows?";
         } else if (lowerText.includes('trump') || lowerText.includes('domestic policy')) {
           botText = "Strategic Assessment: US Domestic Policy Protests are currently in the 'WARNING' category. While the case highlights deep ideological polarization, U.S. institutional frameworks remain resilient. We estimate a moderate (65%) impact on near-term market sentiment. Our focus is on regulatory predictability and capital flow continuity. Shall I analyze the specific sectors most exposed to these policy shifts?";
-        } else if (lowerText.includes('iran-israel-us') || (lowerText.includes('iran') && lowerText.includes('israel'))) {
-          botText = "Sovereign Intelligence Report: The Iran–Israel–US confrontation is a 'CRITICAL' multi-domain conflict (97% Complexity). It poses high-intensity risks to Strait of Hormuz freedom of navigation and regional energy infrastructure. Stakeholders including the UAE and Saudi Arabia are strategically exposed to potential kinetic spillovers. Would you like a deep-dive into the maritime security vectors?";
         } else if (lowerText.includes('israel-lebanon') || (lowerText.includes('israel') && lowerText.includes('lebanon'))) {
           botText = "Geopolitical Briefing: The Israel–Lebanon conflict reflects a volatile and asymmetric confrontation with high (88%) escalation potential. The involvement of regional state and non-state actors (Hezbollah/Iran) positions this as a central front in the Eastern Mediterranean security architecture. Would you like to review the specific implications for regional investor risk perception?";
         } else if (lowerText.includes('tell me more') || lowerText.includes('give more info')) {

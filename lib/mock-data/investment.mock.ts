@@ -145,7 +145,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         org: "World Bank",
         insightData: {
           org: "World Bank",
-          unit: "T",
+          unit: " T",
           historicalData: [16.2, 16.8, 17.5, 17.9, 18.5],
           forecastData: [18.5, 19.4, 20.8, 22.5, 24.8],
           labels: {
@@ -209,7 +209,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         org: "UNCTAD",
         insightData: {
           org: "UNCTAD",
-          unit: "T",
+          unit: " T",
           historicalData: [1.2, 1.3, 1.5, 1.4, 1.4],
           forecastData: [1.4, 1.6, 1.9, 2.3, 2.8],
           labels: {
@@ -241,7 +241,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         org: "IIF",
         insightData: {
           org: "IIF",
-          unit: "T",
+          unit: " T",
           historicalData: [84, 86, 89, 91, 92],
           forecastData: [92, 94, 95, 96, 97],
           labels: {

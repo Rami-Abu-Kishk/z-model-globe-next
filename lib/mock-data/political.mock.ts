@@ -74,6 +74,25 @@ export interface PoliticalKpi {
 
 export const politicalCases: PoliticalCase[] = [
   {
+    id: "C3",
+    name: "Iran–Israel–US War",
+    region: "Middle East",
+    severity: "Critical",
+    severityScore: 94,
+    sensitivityScore: 96,
+    complexityScore: 97,
+    coordinates: [53.6880, 32.4279],
+    description: "Multi-layered, high-intensity confrontation centered on the strategic rivalry between Iran and Israel, with the US as a decisive military backer, involving direct deterrence and proxy arenas.",
+    involvedParties: ["Iran", "Israel", "United States", "United Arab Emirates", "Saudi Arabia", "Hezbollah"],
+    isoCodes: ["IR", "IL", "US", "AE", "SA", "LB", "IQ", "YE"],
+    files: [
+      { name: "Regional_Security_Architecture_2026.pdf", size: "3.8 MB" },
+      { name: "Strait_of_Hormuz_Risk_Assessment.pdf", size: "5.2 MB" }
+    ],
+    summary: "Strategic significance of chokepoints like the Strait of Hormuz amplifies the economic stakes. The case is critical due to its high probability of rapid escalation and systemic implications for global energy markets.",
+    imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a9a37?auto=format&fit=crop&q=80&w=1200"
+  },
+  {
     id: "C1",
     name: "Russia–Ukraine Conflict",
     region: "Eastern Europe",
@@ -108,25 +127,6 @@ export const politicalCases: PoliticalCase[] = [
       { name: "US_Policy_Predictability_Risk.pdf", size: "1.2 MB" }
     ],
     summary: "While institutionally resilient, the situation carries moderate risks to market sentiment, capital flows, and policy predictability. It reflects deep ideological polarization affecting governance continuity."
-  },
-  {
-    id: "C3",
-    name: "Iran–Israel–US War",
-    region: "Middle East",
-    severity: "Critical",
-    severityScore: 94,
-    sensitivityScore: 96,
-    complexityScore: 97,
-    coordinates: [53.6880, 32.4279],
-    description: "Multi-layered, high-intensity confrontation centered on the strategic rivalry between Iran and Israel, with the US as a decisive military backer, involving direct deterrence and proxy arenas.",
-    involvedParties: ["Iran", "Israel", "United States", "United Arab Emirates", "Saudi Arabia", "Hezbollah"],
-    isoCodes: ["IR", "IL", "US", "AE", "SA", "LB", "IQ", "YE"],
-    files: [
-      { name: "Regional_Security_Architecture_2026.pdf", size: "3.8 MB" },
-      { name: "Strait_of_Hormuz_Risk_Assessment.pdf", size: "5.2 MB" }
-    ],
-    summary: "Strategic significance of chokepoints like the Strait of Hormuz amplifies the economic stakes. The case is critical due to its high probability of rapid escalation and systemic implications for global energy markets.",
-    imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a9a37?auto=format&fit=crop&q=80&w=1200"
   },
   {
     id: "C4",

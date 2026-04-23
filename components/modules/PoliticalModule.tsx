@@ -72,13 +72,28 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
   );
 
   // Maps a crisis/case region name to the matching politicalCrisisRings label(s)
-  const getRingLabelsForRegion = (region: string): string[] => {
-    if (region.includes('Levant') || region.includes('Lebanon')) return ['Levant Corridor'];
-    if (region.includes('Bab-el-Mandeb') || region.includes('Red Sea') || region.includes('Maritime Security')) return ['Bab-el-Mandeb'];
-    if (region.includes('Sudan') || region.includes('Heartland')) return ['Sudan'];
-    if (region.includes('Hormuz') || region.includes('Straits') || region.includes('Arabian Gulf') || region.includes('Nuclear') || region.includes('Gulf')) return ['Straits of Hormuz'];
-    if (region.includes('Aviation') || region.includes('Airspace')) return ['Levant Corridor', 'Straits of Hormuz']; // Impacting multiple regions
-    return []; // No matching ring — hide all rings
+  const getRingLabelsForRegion = (inputText: string): string[] => {
+    const text = inputText.toLowerCase();
+    const matches: string[] = [];
+
+    // Direct Name Matches (Prioritize these)
+    if (text.includes('russia') || text.includes('ukraine')) matches.push('Russia–Ukraine Conflict');
+    if (text.includes('trump') || text.includes('domestic policy')) matches.push('Trump Domestic Policy Protests');
+    if (text.includes('iran') && text.includes('israel')) matches.push('Iran–Israel–US War');
+    if (text.includes('lebanon')) matches.push('Israel–Lebanon Conflict');
+
+    // Region / Cluster Matches
+    if (text.includes('levant') || text.includes('corridor')) matches.push('Levant Corridor');
+    if (text.includes('bab-el-mandeb') || text.includes('red sea') || text.includes('maritime security')) matches.push('Bab-el-Mandeb');
+    if (text.includes('sudan') || text.includes('heartland')) matches.push('Sudan Heartland');
+    if (text.includes('hormuz') || text.includes('straits') || text.includes('gulf')) matches.push('Hormuz Straits');
+    
+    // Cross-region triggers
+    if (text.includes('aviation') || text.includes('airspace')) {
+      matches.push('Levant Corridor', 'Hormuz Straits');
+    }
+
+    return matches;
   };
 
   const handleCrisisClick = (crisis: RegionalCrisis) => {

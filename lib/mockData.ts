@@ -362,10 +362,17 @@ export const investmentGlobePoints = [
 ];
 
 export const politicalCrisisRings = [
+  // Major Cases
+  { lat: 48.3794, lng: 31.1656, maxR: 12, color: '#ef4444', label: 'Russia–Ukraine Conflict' },
+  { lat: 37.0902, lng: -95.7129, maxR: 7, color: '#f59e0b', label: 'Trump Domestic Policy Protests' },
+  { lat: 32.4279, lng: 53.6880, maxR: 9, color: '#ef4444', label: 'Iran–Israel–US War' },
+  { lat: 33.5, lng: 35.5, maxR: 6, color: '#ef4444', label: 'Israel–Lebanon Conflict' },
+
+  // Regional Crises
   { lat: 31.0461, lng: 34.8516, maxR: 6, color: '#ef4444', label: 'Levant Corridor' },
   { lat: 12.58, lng: 43.34, maxR: 8, color: '#ef4444', label: 'Bab-el-Mandeb' },
-  { lat: 15.5007, lng: 32.5599, maxR: 10, color: '#f59e0b', label: 'Sudan' },
-  { lat: 26.56, lng: 56.25, maxR: 5, color: '#3b82f6', label: 'Straits of Hormuz' }
+  { lat: 15.5007, lng: 32.5599, maxR: 10, color: '#f59e0b', label: 'Sudan Heartland' },
+  { lat: 26.56, lng: 56.25, maxR: 5, color: '#3b82f6', label: 'Hormuz Straits' }
 ];
 
 export const politicalArcs = [

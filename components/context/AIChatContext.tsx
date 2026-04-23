@@ -73,19 +73,27 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
 
         const lowerText = text.toLowerCase();
 
-        if (lowerText.includes('strait of hormuz') || lowerText.includes('hormuz closure')) {
-          botText = "Sovereign Intelligence Briefing: The potential closure of the Strait of Hormuz is categorized as an 'EXTREME SEVERITY' (93%) scenario. For the region, security impact is near maximum (95%), directly threatening major maritime trade hubs. We estimate a 92% economic impact due to the region's central role as a global logistics and energy export hub. Would you like a deeper dive into the regional vs global complexity scores?";
-        } else if (lowerText.includes('red sea maritime security')) {
-          botText = "Sovereign Intelligence Report: Red Sea Maritime Security is currently categorized as 'CRITICAL'. The Bab-el-Mandeb strait is seeing a 45% increase in insurance premiums for all commercial freight. Our neural engine suggests escalation risks are mounting due to asymmetrical threat vectors. Would you like a breakdown of the specific involved parties?";
+        if (lowerText.includes('russia') || lowerText.includes('ukraine')) {
+          botText = "Sovereign Intelligence Briefing: The Russia–Ukraine Conflict is categorized as 'CRITICAL' (95% Severity). It represents a systemic threat to global energy systems and agricultural supply chains. Beyond the kinetic front, our neural engine tracks a 98% complexity score due to hybrid warfare and NATO-bloc strategic decoupling. Would you like a breakdown of the impact on European energy flows?";
+        } else if (lowerText.includes('trump') || lowerText.includes('domestic policy')) {
+          botText = "Strategic Assessment: US Domestic Policy Protests are currently in the 'WARNING' category. While the case highlights deep ideological polarization, U.S. institutional frameworks remain resilient. We estimate a moderate (65%) impact on near-term market sentiment. Our focus is on regulatory predictability and capital flow continuity. Shall I analyze the specific sectors most exposed to these policy shifts?";
+        } else if (lowerText.includes('iran-israel-us') || (lowerText.includes('iran') && lowerText.includes('israel'))) {
+          botText = "Sovereign Intelligence Report: The Iran–Israel–US confrontation is a 'CRITICAL' multi-domain conflict (97% Complexity). It poses high-intensity risks to Strait of Hormuz freedom of navigation and regional energy infrastructure. Stakeholders including the UAE and Saudi Arabia are strategically exposed to potential kinetic spillovers. Would you like a deep-dive into the maritime security vectors?";
+        } else if (lowerText.includes('israel-lebanon') || (lowerText.includes('israel') && lowerText.includes('lebanon'))) {
+          botText = "Geopolitical Briefing: The Israel–Lebanon conflict reflects a volatile and asymmetric confrontation with high (88%) escalation potential. The involvement of regional state and non-state actors (Hezbollah/Iran) positions this as a central front in the Eastern Mediterranean security architecture. Would you like to review the specific implications for regional investor risk perception?";
         } else if (lowerText.includes('tell me more') || lowerText.includes('give more info')) {
           // Context-aware deep dive
           const lastBotMessage = messages.filter(m => m.sender === 'bot').reverse()[0];
           const context = lastBotMessage?.text.toLowerCase() || '';
 
-          if (context.includes('strait of hormuz')) {
-            botText = "Geopolitical Deep-Dive: A closure would disrupt approximately 20% of global LNG and oil trade. Analysis shows regional security impact at 94%, while global geopolitical complexity reaches a staggering 98%. As a critical global chokepoint, the region is structurally the most exposed. Strategic acceleration of alternative export routes (pipelines and bypass ports) is currently the primary defensive counter-measure.";
-          } else if (context.includes('red sea')) {
-            botText = "Deep-Dive Analysis: The primary drivers of instability in the Red Sea sector are a combination of local kinetic shifts and global energy price volatility. Specifically, we are tracking a mobilization of strategic assets in the Gulf of Aden. Impact on international strategic trade corridors is estimated at -2.4% annually if security is not normalized by Q3 2026.";
+          if (context.includes('russia') || context.includes('ukraine')) {
+            botText = "Geopolitical Deep-Dive: The conflict has triggered a structural shift in global defense spending cycles and energy architecture. We are tracking a 92% sensitivity core among Eastern European energy stakeholders. Strategic emphasis is now on LNG terminal expansion and agricultural supply route diversification to mitigate the 'Critical' status impact.";
+          } else if (context.includes('trump')) {
+            botText = "Policy Analysis: The primary drivers of domestic tension are shifts in taxation, trade regulation, and immigration policy. While governance continuity is expected, international investors are monitoring political stability indicators. Neural forecasts suggest that while 'Warning' levels persist, the structural resilience of the US economy caps systemic downside.";
+          } else if (context.includes('iran')) {
+            botText = "Strategic Deep-Dive: The confrontation operates across direct deterrence and indirect proxy arenas. A key risk factor is the disruption of approximately 20% of global oil and LNG trade via the Strait of Hormuz. We project a +15% geopolitical risk premium on regional energy assets if security is not normalized by Q3 2026.";
+          } else if (context.includes('lebanon')) {
+            botText = "Conflict Analysis: Dynamics include cross-border missile exchanges and targeted strikes. The core risk is an escalation into a multi-front regional war. This affects Eastern Mediterranean energy infrastructure and maritime shipping routes. We recommend a high-vigilance posture for all regional logistics operations.";
           } else {
             botText = "Beyond the primary metrics, we are seeing a shift in multi-lateral alignment. Both regional and global powers are recalibrating their deterrence frameworks. Would you like me to analyze the specific impact on your active investment portfolio or current geopolitical files?";
           }

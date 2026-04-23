@@ -73,7 +73,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0, "SA": 20.5 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 8.0,
         dataPoints: [4.5, 5.8, 6.2, 7.4, 8.0],
         description: "Focus on industrial automation, robotics, and supply chain restructuring. High-tech manufacturing is becoming a key pillar for high-value economic models.",
@@ -83,7 +83,7 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -1.0,
         dataPoints: [-0.2, -0.5, -0.7, -0.9, -1.0],
         description: "Facing headwinds from high interest rates and slowing demand in advanced economies. Systemic risk remains high for legacy property financing models.",
@@ -91,7 +91,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "US": -2.2, "GB": -4.0, "DE": -2.0, "FR": -1.5, "IT": -1.4 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -0.4,
         dataPoints: [-0.1, -0.2, -0.3, -0.3, -0.4],
         description: "Slowdown in international trade and rising production costs are impacting traditional manufacturing bases in Europe and North America.",
@@ -99,7 +99,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "US": -1.0, "DE": -2.0, "GB": -1.5, "IT": -1.0, "JP": -0.3 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -0.5,
         dataPoints: [-0.1, -0.2, -0.3, -0.4, -0.5],
         description: "Climate change and drought conditions are causing significant fluctuations in global food production and grain exports.",
@@ -136,13 +136,14 @@ export const economyDataStore: Record<string, EconomyData> = {
             "Stabilization of energy markets via renewables + nuclear expansion",
             "Partial normalization of trade flows after fragmentation shock"
           ],
-          interpretation: "Slowdown phase followed by AI-led re-acceleration. Geopolitical volatility remains a persistent anchor on baseline growth."
+          interpretation: "Slowdown phase followed by AI-led re-acceleration. Geopolitical volatility remains a persistent anchor on baseline growth.",
+          unit: "%"
         }
       },
       {
         title: "Global Trade Volume",
         impact: "Medium",
-        value: "$35.1T",
+        value: "$35.1 T",
         rep: "Ngozi Okonjo-Iweala",
         org: "WTO",
         insightData: {
@@ -167,7 +168,8 @@ export const economyDataStore: Record<string, EconomyData> = {
             "AI-enabled services trade becomes a major contributor",
             "Reconfiguration of global value chains"
           ],
-          interpretation: "Moderate but structurally re-routed trade expansion rather than hyper-globalization. Trade grows faster than GDP due to structural reconfiguration."
+          interpretation: "Moderate but structurally re-routed trade expansion rather than hyper-globalization. Trade grows faster than GDP due to structural reconfiguration.",
+          unit: " T"
         }
       },
       {
@@ -198,7 +200,8 @@ export const economyDataStore: Record<string, EconomyData> = {
             "Expansionary fiscal policies in major economies support demand",
             "AI and automation productivity gains (gradual disinflation)"
           ],
-          interpretation: "Phase of sticky inflation followed by gradual but uneven disinflation. Prices remain structurally higher than previous decades."
+          interpretation: "Phase of sticky inflation followed by gradual but uneven disinflation. Prices remain structurally higher than previous decades.",
+          unit: "%"
         }
       },
       {
@@ -229,7 +232,8 @@ export const economyDataStore: Record<string, EconomyData> = {
             "Job creation in AI services, green infrastructure, and cybersecurity",
             "Emerging markets absorb labor via industrial relocation"
           ],
-          interpretation: "Labor markets become more polarized but not structurally weaker. “Job churn increases” while aggregate unemployment gradually improves."
+          interpretation: "Labor markets become more polarized but not structurally weaker. “Job churn increases” while aggregate unemployment gradually improves.",
+          unit: "%"
         }
       }
     ],
@@ -264,7 +268,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 22.0,
         dataPoints: [8.0, 12.0, 15.0, 18.0, 22.0],
         description: "Development of smart industrial zones. Shift toward high-value manufacturing like aerospace and precision electronics while leveraging global logistics connectivity.",
@@ -274,7 +278,7 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -0.2,
         dataPoints: [-0.1, -0.1, -0.1, -0.2, -0.2],
         description: "Resilient compared to global peers but facing minor headwinds from high interest rates affecting long-term financing costs.",
@@ -282,7 +286,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "AE": -0.2, "US": -2.2, "GB": -4.0, "DE": -2.0, "SA": -0.5 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -0.5,
         dataPoints: [-0.2, -0.3, -0.4, -0.5, -0.5],
         description: "Exposure to global demand fluctuations and rising production costs in legacy segments.",
@@ -290,7 +294,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "AE": -0.5, "DE": -2.0, "JP": -0.3, "CN": -1.2, "IN": -0.8 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -0.4,
         dataPoints: [-0.2, -0.3, -0.4, -0.4, -0.4],
         description: "Fluctuations in global food production affect import costs even as local food security initiatives expand.",
@@ -337,7 +341,7 @@ export const economyDataStore: Record<string, EconomyData> = {
       {
         title: "UAE Trade Volume",
         impact: "High",
-        value: "$1.62T",
+        value: "$1.62 T",
         rep: "Thani Al Zeyoudi",
         org: "Ministry of Economy",
         insightData: {
@@ -469,7 +473,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "US": 15.0, "CN": 18.0, "AE": 28.0, "DE": 12.0, "IN": 16.0 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 7.0,
         dataPoints: [2.0, 3.5, 5.0, 6.0, 7.0],
         description: "Driven by reshoring of strategic industries and adoption of industrial robotics and AI integration.",
@@ -479,7 +483,7 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -2.2,
         dataPoints: [-0.5, -1.0, -1.5, -2.0, -2.2],
         description: "Largest global negative contributor. High interest rates have collapsed mortgage demand and slowed commercial projects.",
@@ -487,7 +491,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "US": -2.2, "GB": -4.0, "DE": -2.0, "FR": -1.5, "IT": -1.4 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -1.0,
         dataPoints: [-0.2, -0.4, -0.6, -0.8, -1.0],
         description: "Slowdown in industrial tech sector and lower demand for capital goods amid supply chain restructuring.",
@@ -495,7 +499,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "US": -1.0, "DE": -2.0, "GB": -1.5, "IT": -1.0, "JP": -0.3 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -1.0,
         dataPoints: [-0.2, -0.4, -0.6, -0.8, -1.0],
         description: "Drought in key agricultural states impacting corn and wheat production volumes.",
@@ -618,7 +622,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "JO": 12.0, "EG": 18.5, "MA": 15.2, "TR": 12.8, "AE": 10.5 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 9.5,
         dataPoints: [3.0, 5.0, 7.0, 8.5, 9.5],
         description: "Focus on pharmaceuticals and high-value chemical manufacturing for regional export markets.",
@@ -628,7 +632,7 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -1.2,
         dataPoints: [-0.3, -0.5, -0.8, -1.0, -1.2],
         description: "Slowdown in residential development due to high financing costs and regional economic uncertainty.",
@@ -636,7 +640,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "JO": -1.2, "EG": -0.8, "LB": -2.5, "SY": -3.0, "AE": -0.2 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -2.1,
         dataPoints: [-0.5, -1.0, -1.5, -1.8, -2.1],
         description: "Facing pressure from rising energy import costs and logistics friction in the Levant region.",
@@ -644,7 +648,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "JO": -2.1, "EG": -1.5, "IQ": -1.2, "LB": -3.5, "TR": -0.8 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -1.8,
         dataPoints: [-0.4, -0.8, -1.2, -1.5, -1.8],
         description: "Water scarcity and climate volatility impacting local crop yields and agricultural stability.",
@@ -767,7 +771,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "CN": 18.0, "BR": 17.0, "US": 15.0, "IN": 16.0, "DE": 12.0 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 8.0,
         dataPoints: [4.0, 5.5, 6.5, 7.5, 8.0],
         description: "Massive industrial base expansion in industrial robotics and high-tech supply chain automation.",
@@ -777,7 +781,7 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -1.5,
         dataPoints: [-0.5, -0.8, -1.0, -1.3, -1.5],
         description: "Ongoing deleveraging in the real estate market is dampening consumer confidence and local gov revenue.",
@@ -785,7 +789,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "CN": -1.5, "HK": -2.0, "AU": -0.8, "SG": -0.5, "VN": -0.4 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -1.2,
         dataPoints: [-0.4, -0.6, -0.8, -1.0, -1.2],
         description: "Slowdown in traditional heavy manufacturing due to energy costs and cooling demand in export markets.",
@@ -793,7 +797,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "CN": -1.2, "DE": -2.0, "JP": -0.3, "KR": -0.8, "US": -1.0 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -0.2,
         dataPoints: [-0.1, -0.1, -0.2, -0.2, -0.2],
         description: "Climate fluctuations affecting crop consistency, though offset by expansive domestic food security reserves.",
@@ -886,7 +890,7 @@ export const economyDataStore: Record<string, EconomyData> = {
           },
           analysis: {
             historical: "Urban unemployment has stabilized, although youth unemployment remains a focal point for policy intervention. The manufacturing core continues to see high labor absorption.",
-            forecast: "Z-Model highlights a surge in advanced manufacturing and green energy maintenance roles. Demographic tightening will naturally lead to a lower long-term unemployment baseline."
+            forecast: "Z-Model highlights a surge in Advanced Manufacturing Sector and green energy maintenance roles. Demographic tightening will naturally lead to a lower long-term unemployment baseline."
           },
           stats: {
             historical: { confidence: "98.1%", delta: "-0.2%" },
@@ -916,7 +920,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "IN": 16.0, "CN": 18.0, "AE": 28.0, "US": 15.0, "BR": 17.0 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 9.0,
         dataPoints: [3.0, 5.0, 6.5, 8.0, 9.0],
         description: "Expansion of the industrial base supported by national manufacturing programs and industrial automation.",
@@ -926,7 +930,7 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -0.8,
         dataPoints: [-0.2, -0.4, -0.6, -0.7, -0.8],
         description: "Infrastructure bottlenecks and high financing costs impacting large-scale residential projects.",
@@ -934,7 +938,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "IN": -0.8, "US": -2.2, "GB": -4.0, "CN": -1.5, "AE": -0.2 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -1.0,
         dataPoints: [-0.3, -0.5, -0.7, -0.9, -1.0],
         description: "Logistical delays and rising operational overhead affecting traditional heavy industrial corridors.",
@@ -942,7 +946,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "IN": -1.0, "CN": -1.2, "DE": -2.0, "JP": -0.3, "US": -1.0 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -0.6,
         dataPoints: [-0.2, -0.3, -0.4, -0.5, -0.6],
         description: "Monsoon variability and climate stress affecting consistency of rice and wheat production.",
@@ -1065,17 +1069,17 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "SA": 20.5, "AE": 28.0, "CN": 18.0, "BR": 17.0, "US": 15.0 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 12.4,
         dataPoints: [3.0, 5.5, 8.0, 10.5, 12.4],
-        description: "Mining sector expansion and downstream petrochemical advanced manufacturing. Localizing critical supply chains for the MENA region.",
+        description: "Mining sector expansion and downstream petrochemical Advanced Manufacturing Sector. Localizing critical supply chains for the MENA region.",
         relatedCountries: ["SA", "AE", "CN", "DE", "IN"],
         countryValues: { "SA": 12.4, "AE": 22.0, "CN": 8.0, "DE": 6.0, "IN": 9.0 }
       }
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -0.5,
         dataPoints: [-0.1, -0.2, -0.3, -0.4, -0.5],
         description: "Massive project demand offset by higher capital costs. Strategic realignment of giga-projects to manage fiscal liquidity.",
@@ -1083,7 +1087,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "SA": -0.5, "AE": -0.2, "US": -1.0, "GB": -1.5, "DE": -1.2 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -0.8,
         dataPoints: [-0.2, -0.4, -0.6, -0.7, -0.8],
         description: "Exposure to global demand fluctuations in traditional petrochemical cycles and rising operational overhead.",
@@ -1091,7 +1095,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "SA": -0.8, "DE": -2.0, "CN": -1.2, "JP": -0.3, "US": -1.0 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -0.3,
         dataPoints: [-0.1, -0.2, -0.3, -0.3, -0.3],
         description: "High reliance on international food chains making fiscal spend sensitive to global grain price volatility.",
@@ -1214,7 +1218,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "RU": 8.5, "CN": 18.0, "IN": 16.0, "QA": 10.2, "AE": 28.0 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 10.2,
         dataPoints: [3.0, 5.0, 7.0, 9.0, 10.2],
         description: "Industrial core expansion in Aerospace and defense-adjacent high-tech segments.",
@@ -1224,7 +1228,7 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -2.5,
         dataPoints: [-0.5, -1.0, -1.5, -2.0, -2.5],
         description: "Housing sector contraction due to rising financing costs and material supply chain friction.",
@@ -1232,7 +1236,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "RU": -2.5, "DE": -2.0, "GB": -1.5, "CN": -1.5, "AE": -0.2 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -1.8,
         dataPoints: [-0.4, -0.8, -1.2, -1.5, -1.8],
         description: "Decline in European demand for industrial machinery and rising specialized production costs.",
@@ -1240,7 +1244,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "RU": -1.8, "DE": -2.0, "IT": -1.0, "JP": -0.3, "CN": -1.2 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -0.1,
         dataPoints: [-0.1, -0.1, -0.1, -0.1, -0.1],
         description: "Consistent yield volumes offset by logistical friction in international grain export channels.",
@@ -1363,7 +1367,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "IR": 11.4, "IQ": 8.5, "TR": 7.2, "PK": 5.1, "TM": 4.8 }
       },
       {
-        label: "Advanced Manufacturing",
+        label: "Advanced Manufacturing Sector",
         value: 8.5,
         dataPoints: [2.0, 4.0, 6.0, 7.5, 8.5],
         description: "Focus on domestic industrial self-reliance and specialized component manufacturing for the regional market.",
@@ -1373,7 +1377,7 @@ export const economyDataStore: Record<string, EconomyData> = {
     ],
     negativeTrends: [
       {
-        label: "Construction & Real Estate",
+        label: "Construction & Real Estate Sector",
         value: -3.2,
         dataPoints: [-0.5, -1.2, -1.8, -2.5, -3.2],
         description: "Slowdown in urban development due to financing friction and extreme currency volatility.",
@@ -1381,7 +1385,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "IR": -3.2, "AR": -4.0, "TR": -1.5, "LB": -2.5, "SY": -3.0 }
       },
       {
-        label: "Heavy Industry",
+        label: "Heavy Industry Sector",
         value: -2.8,
         dataPoints: [-0.5, -1.2, -1.8, -2.4, -2.8],
         description: "Maintenance backlogs in aviation and energy sectors due to limited access to global supply chains.",
@@ -1389,7 +1393,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         countryValues: { "IR": -2.8, "RU": -1.8, "VE": -2.2, "CU": -1.2, "SD": -2.5 }
       },
       {
-        label: "Global Agriculture",
+        label: "Global Agriculture Sector",
         value: -1.5,
         dataPoints: [-0.3, -0.6, -0.9, -1.2, -1.5],
         description: "Environmental stress and climate fluctuations affecting crop yields in regional agricultural hubs.",
@@ -1505,7 +1509,7 @@ export interface EconomicKpi {
 
 export const economicKpis: EconomicKpi[] = [
   { label: "Global GDP Growth", value: "2.9%", change: "+0.2%", trend: "up", organization: "IMF" },
-  { label: "Global Trade Volume", value: "$32T", change: "+1.5%", trend: "up", organization: "WTO" },
+  { label: "Global Trade Volume", value: "$32 T", change: "+1.5%", trend: "up", organization: "WTO" },
   { label: "Inflation Rate", value: "3.4%", change: "-1.3%", trend: "up", organization: "OECD" },
   { label: "Unemployment Rate", value: "5.1%", change: "-1.1%", trend: "up", organization: "ILO" }
 ];

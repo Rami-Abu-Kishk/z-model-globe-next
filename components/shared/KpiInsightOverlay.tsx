@@ -172,6 +172,10 @@ export function KpiInsightOverlay({
               </div>
             ) : (
               <div className="p-10 flex flex-col gap-8">
+                {(() => {
+                  const inferredUnit = kpi.unit || kpi.value.replace(/[\d.$,]/g, '');
+                  return (
+                    <>
                 <div className="flex justify-between items-start">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
@@ -179,24 +183,22 @@ export function KpiInsightOverlay({
                       <span className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em]">Institutional Deep-Dive</span>
                     </div>
                     <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
-                      {viewMode === 'historical' 
-                        ? kpi.value 
-                        : (() => {
-                            // Priority: Use the actual last point of the forecast data array
-                            if (kpi.forecastData && kpi.forecastData.length > 0) {
-                              const lastVal = kpi.forecastData[kpi.forecastData.length - 1];
-                              return `~${kpi.value.startsWith('$') ? '$' : ''}${lastVal}${kpi.unit || ''}`;
-                            }
-                            
-                            // Fallback: Safe numeric multiplier
-                            const numericPart = kpi.value.match(/[\d.]+/);
-                            if (!numericPart) return kpi.value;
-                            const val = parseFloat(numericPart[0]);
-                            const projected = (val * 1.2).toFixed(1);
-                            return `~${kpi.value.startsWith('$') ? '$' : ''}${projected}${kpi.unit || ''}`;
-                          })()
-                      } 
-                      {/* <span className="text-indigo-500 ml-2">↑</span> */}
+                      {(() => {
+                        if (viewMode === 'historical') return kpi.value;
+                        
+                        // Priority: Use the actual last point of the forecast data array
+                        if (kpi.forecastData && kpi.forecastData.length > 0) {
+                          const lastVal = kpi.forecastData[kpi.forecastData.length - 1];
+                          return `~${kpi.value.startsWith('$') ? '$' : ''}${lastVal}${inferredUnit}`;
+                        }
+                        
+                        // Fallback: Safe numeric multiplier
+                        const numericPart = kpi.value.match(/[\d.]+/);
+                        if (!numericPart) return kpi.value;
+                        const val = parseFloat(numericPart[0]);
+                        const projected = (val * 1.2).toFixed(1);
+                        return `~${kpi.value.startsWith('$') ? '$' : ''}${projected}${inferredUnit}`;
+                      })()}
                     </h2>
                     <p className="text-[12px] font-black text-slate-400 uppercase tracking-widest">
                       {kpi.title} - {kpi.org} Matrix ({viewMode === 'historical' ? 'Audited' : 'Projected'})
@@ -238,7 +240,7 @@ export function KpiInsightOverlay({
                     mode={viewMode} 
                     data={viewMode === 'historical' ? kpi.historicalData : kpi.forecastData}
                     labels={viewMode === 'historical' ? kpi.labels.historical : kpi.labels.forecast}
-                    unit={kpi.unit}
+                    unit={inferredUnit}
                   />
                 </div>
 
@@ -320,6 +322,9 @@ export function KpiInsightOverlay({
                     Institutional deep-dive powered by Z-Model Distributed Core
                   </p>
                 </div>
+                </>
+                  );
+                })()}
               </div>
             )}
           </motion.div>

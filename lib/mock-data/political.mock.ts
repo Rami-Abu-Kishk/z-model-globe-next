@@ -75,74 +75,75 @@ export interface PoliticalKpi {
 export const politicalCases: PoliticalCase[] = [
   {
     id: "C1",
-    name: "Closing the Strait of Hormuz",
-    region: "Gulf / Global",
+    name: "Russia–Ukraine Conflict",
+    region: "Eastern Europe",
     severity: "Critical",
-    severityScore: 93,
-    sensitivityScore: 93.5,
+    severityScore: 95,
+    sensitivityScore: 92,
     complexityScore: 98,
-    coordinates: [56.25, 26.56],
-    description: "Scenario of partial disruption of the global energy economic system, directly threatening UAE maritime security and energy trade.",
-    involvedParties: ["UAE", "Iran", "Saudi Arabia", "United States", "China"],
-    isoCodes: ["AE", "IR", "SA", "OM", "US", "CN", "KW", "QA"],
+    coordinates: [31.1656, 48.3794],
+    description: "A prolonged, high-intensity interstate war driven by competing strategic objectives over territory, security influence, and geopolitical alignment, involving conventional military operations, cyber warfare, and economic sanctions.",
+    involvedParties: ["Russia", "Ukraine", "United States", "NATO", "European Union"],
+    isoCodes: ["RU", "UA", "US", "DE", "FR", "GB", "PL"],
     files: [
-      { name: "Hormuz_Closure_Impact_2026.pdf", size: "3.2 MB" },
-      { name: "Global_Oil_Trade_Disruption.docx", size: "1.5 MB" }
+      { name: "Russia_Ukraine_Energy_Impact.pdf", size: "4.5 MB" },
+      { name: "NATO_Defense_Spending_Trends.docx", size: "2.1 MB" }
     ],
-    summary: "The closure of the Strait of Hormuz is considered one of the highest-risk geopolitical escalation scenarios, severely disrupting around 20% of global oil trade, triggering financial market instability, and reshaping global energy security architecture.",
-    imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a9a37?auto=format&fit=crop&q=80&w=1200"
+    summary: "The conflict's global relevance stems from its impact on energy systems, agricultural exports, and defense spending cycles worldwide. It is classified as critical due to its escalation risks and systemic influence on global inflation and supply chains.",
+    imageUrl: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1200"
   },
   {
     id: "C2",
-    name: "Iranian Nuclear File",
-    region: "Middle East / Global",
-    severity: "Critical",
-    severityScore: 84,
-    sensitivityScore: 83,
-    complexityScore: 90,
-    coordinates: [51.4215, 35.6944],
-    description: "A structural factor reshaping the security architecture of the Gulf, creating an unstable deterrence balance, an indirect arms race, and tension in spheres of influence.",
-    involvedParties: ["Iran", "United States", "Palestinian Occupied Territories", "Gulf States"],
-    isoCodes: ["IR", "US", "PS", "AE", "SA"],
+    name: "Trump Domestic Policy Protests",
+    region: "United States",
+    severity: "Warning",
+    severityScore: 65,
+    sensitivityScore: 78,
+    complexityScore: 82,
+    coordinates: [-95.7129, 37.0902],
+    description: "Significant domestic political tension centered around policy decisions and political dynamics associated with Donald Trump, characterized by large-scale protests and legal disputes.",
+    involvedParties: ["US Government", "Opposition Parties", "Advocacy Groups", "Civil Society"],
+    isoCodes: ["US"],
     files: [
-      { name: "Nuclear_Deterrence_Balance_2026.pdf", size: "2.8 MB" }
+      { name: "US_Policy_Predictability_Risk.pdf", size: "1.2 MB" }
     ],
-    summary: "The Iranian nuclear file presents a multi-layer geopolitical conflict, driving oil price volatility, increasing cybersecurity threats, and demanding strengthened defensive deterrence in the region."
+    summary: "While institutionally resilient, the situation carries moderate risks to market sentiment, capital flows, and policy predictability. It reflects deep ideological polarization affecting governance continuity."
   },
   {
     id: "C3",
-    name: "Expansion of the Lebanon War",
-    region: "Eastern Mediterranean / Gulf",
-    severity: "Warning",
-    severityScore: 77,
-    sensitivityScore: 81,
-    complexityScore: 89,
-    coordinates: [33.8547, 35.8623],
-    description: "Prolonged regional conflict dynamic reshaping Middle Eastern balances gradually. Impacting geopolitical risk premiums and tourism.",
-    involvedParties: ["Lebanon", "Palestinian Occupied Territories", "Syria", "Iraq", "UAE"],
-    isoCodes: ["LB", "PS", "SY", "IQ", "AE"],
+    name: "Iran–Israel–US War",
+    region: "Middle East",
+    severity: "Critical",
+    severityScore: 94,
+    sensitivityScore: 96,
+    complexityScore: 97,
+    coordinates: [53.6880, 32.4279],
+    description: "Multi-layered, high-intensity confrontation centered on the strategic rivalry between Iran and Israel, with the US as a decisive military backer, involving direct deterrence and proxy arenas.",
+    involvedParties: ["Iran", "Israel", "United States", "United Arab Emirates", "Saudi Arabia", "Hezbollah"],
+    isoCodes: ["IR", "IL", "US", "AE", "SA", "LB", "IQ", "YE"],
     files: [
-      { name: "Lebanon_War_Spillover_2026.pdf", size: "4.1 MB" }
+      { name: "Regional_Security_Architecture_2026.pdf", size: "3.8 MB" },
+      { name: "Strait_of_Hormuz_Risk_Assessment.pdf", size: "5.2 MB" }
     ],
-    summary: "The continued expansion of the Lebanon war extends regional instability, indirectly affecting the UAE through interconnected regional markets, fluctuating energy prices, and geopolitical polarization.",
-    imageUrl: "https://images.unsplash.com/photo-1444723121867-7a241cacace9?auto=format&fit=crop&q=80&w=1200"
+    summary: "Strategic significance of chokepoints like the Strait of Hormuz amplifies the economic stakes. The case is critical due to its high probability of rapid escalation and systemic implications for global energy markets.",
+    imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a9a37?auto=format&fit=crop&q=80&w=1200"
   },
   {
     id: "C4",
-    name: "Aviation Crisis & Airspace Disruption",
-    region: "Middle East Airspace",
-    severity: "Warning",
-    severityScore: 81,
-    sensitivityScore: 83,
-    complexityScore: 87,
-    coordinates: [25.2532, 55.3657],
-    description: "Regional disruption of the Middle East air transport system, reshaping flight routes and escalating operational costs.",
-    involvedParties: ["UAE", "Aviation Authorities", "Eastern Mediterranean States"],
-    isoCodes: ["AE", "LB", "SY", "PS", "JO", "TR"],
+    name: "Israel–Lebanon Conflict",
+    region: "Middle East",
+    severity: "Critical",
+    severityScore: 88,
+    sensitivityScore: 85,
+    complexityScore: 90,
+    coordinates: [35.5, 33.5],
+    description: "Volatile and asymmetric conflict driven by military confrontations between Israeli forces and Hezbollah, operating within a broader regional power struggle backed by Iran.",
+    involvedParties: ["Israel", "Lebanon", "Hezbollah", "Iran", "United States", "European Powers"],
+    isoCodes: ["IL", "LB", "IR", "US", "FR"],
     files: [
-      { name: "Aviation_Rerouting_Impact.pdf", size: "1.9 MB" }
+      { name: "Lebanon_Conflict_Escalation_Models.pdf", size: "2.4 MB" }
     ],
-    summary: "The Lebanon war resulted in airspace disruptions across the Eastern Mediterranean and the Gulf. As a global aviation connectivity hub, the UAE faces increased operational and fuel costs, alongside strategic reassessments of regional flight networks."
+    summary: "Reflects high escalation potential and broader implications for regional security, energy infrastructure, and investor risk perception in the Eastern Mediterranean."
   }
 ];
 
@@ -325,8 +326,8 @@ export const politicalDataStore: Record<string, PoliticalData> = {
     news: [
       {
         id: "N1", headline: "UNSC Drafts New Maritime Security Protocol",
-        time: "2h ago", category: "Security",
-        source: "Intelligence Desk",
+        time: "2h ago", category: "Security", 
+        source: "Intelligence Desk", 
         summary: "A new draft resolution aims to establish enhanced security zones in critical transit chokepoints."
       },
       { id: "N2", headline: "G7 Summit Reaffirms Commitment to Indo-Pacific", time: "5h ago", category: "Diplomatic", source: "Diplomatic Core", summary: "Leaders have pledged increased cooperation on maritime defense and digital governance standards." }

@@ -12,6 +12,7 @@ import {
   Landmark,
   Calendar,
 } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { GlobeControls } from "./GlobeControls";
 
@@ -34,6 +35,7 @@ export function ModuleNav() {
   const setActiveModule = useZModelStore((s) => s.setActiveModule);
   const setFocusedCardId = useZModelStore((s) => s.setFocusedCardId);
   const setViewState = useZModelStore((s) => s.setViewState);
+  const pathname = usePathname();
 
   return (
     <motion.div
@@ -101,6 +103,10 @@ export function ModuleNav() {
                 setActiveModule(newId);
                 setFocusedCardId(newId);
                 setViewState(newId ? "CARD_FOCUS" : "ORBITAL");
+
+                // Update URL path without triggering a refresh
+                const path = newId ? `/${newId}` : "/";
+                window.history.pushState(null, "", path);
               }}
               className={`
                 cursor-pointer group relative flex flex-col items-center justify-center w-16 h-16 rounded-2xl transition-all duration-300

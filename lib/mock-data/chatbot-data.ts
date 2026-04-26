@@ -1,5 +1,6 @@
 export interface ChatBotResponse {
   text: string;
+  status?: string;
   insightData?: any;
   event?: {
     type: 'MAP_NAVIGATE' | 'FILTER_DASHBOARD' | 'HIGHLIGHT_GRID';

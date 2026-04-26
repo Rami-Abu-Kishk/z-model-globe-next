@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAIChat } from '../context/AIChatContext';
 import { AIInsightContent } from './AIInsightContent';
-import { MarkdownText } from './MarkdownText';
 import { chatbotData, ChatBotResponse, COUNTRY_DATA } from '@/lib/mock-data/chatbot-data';
 import { useZModelStore } from '@/lib/store';
 import { 
@@ -30,9 +29,12 @@ export function AIChatBot() {
     history,
     isOpen, 
     isMinimized, 
+    isTyping,
+    statusMessage,
     setIsOpen, 
     setIsMinimized, 
     sendMessage, 
+    setStatus,
     clearChat,
     deleteHistoryItem,
     loadHistoryItem 
@@ -65,16 +67,29 @@ export function AIChatBot() {
       text.startsWith('Generate');
 
     if (isTrigger) {
+      setStatus("I'm processing that request. Analyzing relevant geopolitical and economic vectors...");
       const timer = setTimeout(() => {
         const response = getMockResponse(text);
-        sendMessage(response.text, 'bot', response.insightData);
+        
+        if (response.status) {
+          setStatus(response.status);
+          setTimeout(() => {
+            if (response.text) {
+               sendMessage(response.text, 'bot', response.insightData);
+            }
+            setStatus(null);
+          }, 2000);
+        } else {
+          sendMessage(response.text, 'bot', response.insightData);
+          setStatus(null);
+        }
         
         if (response.event) {
           window.dispatchEvent(new CustomEvent(response.event.type, { 
             detail: response.event.payload 
           }));
         }
-      }, 1000);
+      }, 1500);
       return () => clearTimeout(timer);
     }
   }, [messages]);
@@ -83,7 +98,7 @@ export function AIChatBot() {
     if (isOpen && !isMinimized && !showHistory) {
       scrollToBottom();
     }
-  }, [messages, isOpen, isMinimized, showHistory]);
+  }, [messages, isOpen, isMinimized, showHistory, isTyping]);
 
   /**
    * PURE DATA FUNCTION
@@ -106,7 +121,6 @@ export function AIChatBot() {
     let label = '';
     for (const prefix of triggerPrefixes) {
       if (input.startsWith(prefix)) {
-        // Extract label: everything after prefix, but before any value in parens if applicable
         const rawLabel = input.replace(prefix, '').split(' (')[0];
         label = rawLabel.trim().toUpperCase();
         break;
@@ -117,7 +131,6 @@ export function AIChatBot() {
       return chatbotData.TRIGGERS[label];
     }
 
-    // Fuzzy matching for labels if direct hit fails (common for Economy which includes values)
     if (label) {
       const bestMatch = Object.keys(chatbotData.TRIGGERS).find(key => 
         label.includes(key.toUpperCase()) || key.toUpperCase().includes(label)
@@ -125,13 +138,12 @@ export function AIChatBot() {
       if (bestMatch) return chatbotData.TRIGGERS[bestMatch];
     }
 
-    // --- PRIORITY 2: Global Context (Explicit mention of Globe or World) ---
+    // --- PRIORITY 2: Global Context ---
     if (lowerInput.includes('global') || lowerInput.includes('globe') || lowerInput.includes('world') || lowerInput.includes('international')) {
       return COUNTRY_DATA["GLOBAL"];
     }
 
     // --- PRIORITY 3: Supported Country Logic ---
-    // Check stores first, then text detection
     const countryContext = activeCountryCode || (
       lowerInput.includes('uae') || lowerInput.includes('emirates') ? 'AE' :
       lowerInput.includes('saudi') || lowerInput.includes('ksa') ? 'SA' :
@@ -144,9 +156,7 @@ export function AIChatBot() {
     }
 
     // --- PRIORITY 4: Fallback for Unsupported Countries ---
-    // Try to extract a potential country name if it's a short query
     const words = input.split(' ');
-    // Simple extraction: look for capitalized words that aren't common English or prefixes
     const potentialCountry = words.find(w => 
       w.length > 2 && 
       w[0] === w[0].toUpperCase() && 
@@ -156,7 +166,8 @@ export function AIChatBot() {
     const extractedName = activeCountryName || potentialCountry || "this region";
     
     return {
-      text: `I am currently gathering more data on ${extractedName}. Please check back later for a full analysis.`
+      text: "", 
+      status: `I am currently gathering more data on ${extractedName}. Please check back later for a full analysis.`
     };
   };
 
@@ -167,21 +178,33 @@ export function AIChatBot() {
     sendMessage(userMessage, 'user');
     setInputValue('');
 
+    // Set initial status
+    setStatus("I'm processing that request. Analyzing relevant geopolitical and economic vectors...");
+
     // Process Bot Response after short delay
     setTimeout(() => {
       const response = getMockResponse(userMessage);
       
-      // 1. Update Chat UI with text and optional insight data
-      sendMessage(response.text, 'bot', response.insightData);
+      if (response.status) {
+        setStatus(response.status);
+        // If it's a "tell me more" or gathering data case, keep status then clear
+        setTimeout(() => {
+          if (response.text) {
+             sendMessage(response.text, 'bot', response.insightData);
+          }
+          setStatus(null);
+        }, 2000);
+      } else {
+        sendMessage(response.text, 'bot', response.insightData);
+        setStatus(null);
+      }
 
-      // 2. SIDE EFFECT: Execute window.dispatchEvent for module interactivity
       if (response.event) {
-        console.log(`[AIChatBot] Dispatching Event: ${response.event.type}`, response.event.payload);
         window.dispatchEvent(new CustomEvent(response.event.type, { 
           detail: response.event.payload 
         }));
       }
-    }, 800);
+    }, 1500);
   };
 
   const startNewChat = () => {
@@ -194,7 +217,7 @@ export function AIChatBot() {
       className={cn(
         "fixed bottom-6 z-[9999] flex flex-col pointer-events-auto transition-all duration-500 ease-in-out left-9",
       )}
-    >  {/* add ispanelopen to move it right based on panel state */}
+    >
       <AnimatePresence>
         {isOpen && !isMinimized && (
           <motion.div
@@ -315,7 +338,7 @@ export function AIChatBot() {
                   >
                     <div className={`flex items-end gap-2 max-w-[85%]`}>
                       {msg.sender === 'bot' && (
-                        <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0 animate-in zoom-in duration-300">
+                        <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0">
                           <Bot className="w-5 h-5 text-white" />
                         </div>
                       )}
@@ -354,6 +377,33 @@ export function AIChatBot() {
                     </div>
                   </motion.div>
                 ))}
+
+                {/* Status Indicator */}
+                <AnimatePresence>
+                  {isTyping && statusMessage && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className="flex justify-start mb-4"
+                    >
+                      <div className="flex items-end gap-2 max-w-[85%]">
+                        <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center flex-shrink-0 animate-pulse">
+                          <Bot className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="p-4 rounded-2xl text-xs font-medium bg-slate-100 text-slate-500 border border-slate-200 rounded-bl-none shadow-sm flex items-center gap-3 italic">
+                          <div className="flex gap-1">
+                            <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                            <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                            <span className="w-1 h-1 bg-slate-400 rounded-full animate-bounce" />
+                          </div>
+                          {statusMessage}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <div ref={messagesEndRef} />
               </div>
             </div>
@@ -394,7 +444,6 @@ export function AIChatBot() {
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button */}
       <motion.button
         onClick={() => {
           if (isMinimized) setIsMinimized(false);
@@ -435,8 +484,6 @@ export function AIChatBot() {
             </motion.div>
           )}
         </AnimatePresence>
-        
-        {/* Pulsing indicator */}
         {!isOpen && (
           <div className="absolute -top-1 -right-1 w-4 h-4 bg-orange-500 rounded-full border-2 border-white shadow-[0_0_10px_rgba(249,115,22,0.8)] animate-pulse" />
         )}

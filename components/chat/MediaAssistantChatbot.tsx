@@ -41,6 +41,7 @@ export function MediaChatView({ className }: { className?: string }) {
     }
   ]);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
@@ -77,20 +78,18 @@ export function MediaChatView({ className }: { className?: string }) {
         (lowerInput.includes('best practices') && lowerInput.includes('uae'));
 
       if (isAllegationQuery) {
-        botText = `### Best practices for responding to media allegations against the United Arab Emirates:
-
-*   **Disciplined Response**: Maintain precise messaging and clear lines of authority; avoid emotional reactions.
-*   **Strategic Assessment**: Assess seriousness and impact before responding; do not amplify marginal claims.
-*   **Federal Coordination**: Coordinate with competent authorities on diplomatic or security matters to ensure a unified message.
-*   **Factual Integrity**: Use documented facts and attributable figures; avoid accusatory language.
-*   **Judicial Sensitivity**: Separate description from investigation; use cautious formulations for active court matters.
-*   **Right of Reply**: Request clarifications be published with the same prominence and timing as the original allegation.
-*   **Proportional Representation**: Designate an appropriate spokesperson; avoid unnecessarily elevating the platform.
-*   **Deliberate Timing**: Respond fast enough to preempt narratives without rushing before information into complete.
-*   **Core Messaging**: Use a single core message supported by two secondary points; do not repeat allegations in headlines.
-*   **Balanced Tone**: Reflect state values of respect, tolerance, and non-escalation.
-*   **Legal Review**: Conduct prior legal review for defamation or contractual risks.
-*   **Impact Monitoring**: Follow up on media impact and update messages as new information emerges.`;
+        botText = `Best practices rest on a disciplined, rapid response, with precise messaging and clear lines of authority, without lapsing into emotional reactions.
+* Assess seriousness and impact before responding; avoid amplifying a marginal claim.
+* Prior federal coordination with the competent authorities on diplomatic or security matters to ensure a unified message.
+* Documented facts and attributable figures, avoiding value-laden or accusatory language.
+* Separate description from investigation: use cautious formulations in matters currently before the courts.
+* Exercise the right of reply and correction by requesting the clarification be published with the same prominence and timing.
+* Designate the appropriate spokesperson for the level and avoid unnecessarily elevating the level of spokesperson or platform.
+* Deliberate timing: fast enough to preempt the narrative’s spread without rushing before the information is complete.
+* A single core message supported by two secondary points; do not repeat the allegation verbatim in the headline.
+* A balanced tone that reflects the state’s values of respect, tolerance, and non-escalation.
+* Prior legal review for anything that may entail defamation or contractual risks.
+* Monitor and follow up on media impact and update messages when new information emerges.`;
       }
 
       const botResponse: Message = {
@@ -104,10 +103,16 @@ export function MediaChatView({ className }: { className?: string }) {
   };
 
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
-    }
-  }, [messages]);
+    if (!messagesContainerRef.current || !scrollAreaRef.current) return;
+
+    const scrollArea = scrollAreaRef.current;
+    const observer = new ResizeObserver(() => {
+      scrollArea.scrollTop = scrollArea.scrollHeight;
+    });
+
+    observer.observe(messagesContainerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className={cn("flex flex-col h-full", className)}>
@@ -115,7 +120,7 @@ export function MediaChatView({ className }: { className?: string }) {
         ref={scrollAreaRef}
         className="flex-1 overflow-y-auto p-6 custom-scrollbar scroll-smooth"
       >
-        <div className="space-y-6 max-w-4xl mx-auto">
+        <div ref={messagesContainerRef} className="space-y-6 max-w-4xl mx-auto">
           {messages.map((msg) => (
             <div
               key={msg.id}

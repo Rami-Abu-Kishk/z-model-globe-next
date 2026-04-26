@@ -49,9 +49,9 @@ export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) 
         }
       },
       grid3D: {
-        boxWidth: 90,
-        boxDepth: 90,
-        boxHeight: 100,
+        boxWidth: 120,
+        boxDepth: 120,
+        boxHeight: 120,
         viewControl: {
           autoRotate: false,
           autoRotateSpeed: 5,
@@ -85,27 +85,27 @@ export default function PoliticalChart3D({ cases }: { cases: PoliticalCase[] }) 
       },
       xAxis3D: {
         name: 'SEVERITY (%)',
-        min: 0, max: 100,
+        min: 0, max: 120,
         nameTextStyle: { color: '#64748b', fontSize: 10, fontWeight: 'bold' },
         axisLabel: { color: '#94a3b8', fontSize: 9 },
         axisLine: { lineStyle: { color: '#e2e8f0' } }
       },
       yAxis3D: {
         name: 'COMPLEXITY (%)',
-        min: 0, max: 100,
+        min: 0, max: 120,
         nameTextStyle: { color: '#64748b', fontSize: 10, fontWeight: 'bold' },
         axisLabel: { color: '#94a3b8', fontSize: 9 },
         axisLine: { lineStyle: { color: '#e2e8f0' } }
       },
       zAxis3D: {
         name: 'IMPACT MAGNITUDE',
-        min: 0, max: 100,
+        min: 0, max: 120,
         nameTextStyle: { color: '#64748b', fontSize: 10, fontWeight: 'bold' },
         axisLabel: { color: '#94a3b8', fontSize: 9 },
         axisLine: { lineStyle: { color: '#e2e8f0' } }
       },
       visualMap: {
-        max: 100,
+        max: 120,
         min: 0,
         dimension: 2, // Map to Height (Impact)
         inRange: {

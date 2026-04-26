@@ -6,6 +6,8 @@ import { HologramEarth } from '@/components/3d/HologramEarth';
 import { CameraController } from '@/components/3d/CameraController';
 import { useZModelStore } from '@/lib/store';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 import { ReturnHUD } from '@/components/shared/ReturnHUD';
 import { ExpandedDataPanel } from '@/components/shared/ExpandedDataPanel';
@@ -30,6 +32,36 @@ function CanvasLoader() {
 import { AIChatBot } from '@/components/chat/AIChatBot';
 
 export default function Home() {
+  const pathname = usePathname();
+  const resetView = useZModelStore(s => s.resetView);
+
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const path = window.location.pathname.replace('/', '');
+      const validModules = [
+        'economy', 'investment', 'political', 'media', 
+        'research', 'companies', 'masterObserver', 
+        'abudhabi', 'calendar'
+      ];
+
+      if (path === '') {
+        resetView();
+      } else if (validModules.includes(path)) {
+        useZModelStore.getState().setActiveModule(path as any);
+        useZModelStore.getState().setFocusedCardId(path as any);
+        useZModelStore.getState().setViewState('CARD_FOCUS');
+      }
+    };
+
+    // Listen for back/forward buttons
+    window.addEventListener('popstate', handleUrlChange);
+    
+    // Check on mount for direct links
+    handleUrlChange();
+
+    return () => window.removeEventListener('popstate', handleUrlChange);
+  }, [resetView]);
+
   return (
     <main className="fixed inset-0 w-screen h-screen bg-[#faf9f6] overflow-hidden">
 
@@ -80,7 +112,10 @@ export default function Home() {
            initial={{ x: -100, opacity: 0, filter: 'blur(10px)' }}
            animate={{ x: 0, opacity: 1, filter: 'blur(0px)' }}
            transition={{ delay: 0.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-           onClick={() => useZModelStore.getState().resetView()}
+           onClick={() => {
+             useZModelStore.getState().resetView();
+             window.history.pushState(null, "", "/");
+           }}
          >
            <h1 className="text-3xl tracking-tight bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-300 font-black uppercase leading-none">
              Z-MODEL

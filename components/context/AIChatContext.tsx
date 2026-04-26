@@ -32,9 +32,12 @@ interface AIChatContextType {
   history: ChatHistoryItem[];
   isOpen: boolean;
   isMinimized: boolean;
+  isTyping: boolean;
+  statusMessage: string | null;
   setIsOpen: (isOpen: boolean) => void;
   setIsMinimized: (isMinimized: boolean) => void;
   sendMessage: (text: string, sender: 'user' | 'bot', insightData?: any) => void;
+  setStatus: (message: string | null) => void;
   triggerChatFromCard: (context: ChatTriggerContext) => void;
   clearChat: () => void;
   deleteHistoryItem: (id: string) => void;
@@ -55,6 +58,13 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
   const [history, setHistory] = useState<ChatHistoryItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  const setStatus = (message: string | null) => {
+    setStatusMessage(message);
+    setIsTyping(!!message);
+  };
 
   const sendMessage = (text: string, sender: 'user' | 'bot', insightData?: any) => {
     const newMessage: ChatMessage = {
@@ -68,9 +78,10 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
 
     // Simple Mock Response Logic
     if (sender === 'user') {
+      setStatus("I'm processing that request. Analyzing relevant geopolitical and economic vectors...");
+      
       setTimeout(() => {
-        let botText = "I'm processing that request. Analyzing relevant geopolitical and economic vectors...";
-
+        let botText = "";
         const lowerText = text.toLowerCase();
 
         if (lowerText.includes('iran-israel-us') || (lowerText.includes('iran') && lowerText.includes('israel'))) {
@@ -101,14 +112,20 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
           botText = "Neural Analysis complete. The target shows a high alpha score with significant regulatory tailwinds. However, exposure to regional currency volatility remains a Tier-2 risk. I recommend a weighted allocation strategy focusing on infrastructure-backed sovereign bonds.";
         }
 
-        const botMessage: ChatMessage = {
-          id: (Date.now() + 1).toString(),
-          text: botText,
-          sender: 'bot',
-          timestamp: new Date(),
-        };
-        setMessages(prev => [...prev, botMessage]);
-      }, 1000);
+        if (botText) {
+          const botMessage: ChatMessage = {
+            id: (Date.now() + 1).toString(),
+            text: botText,
+            sender: 'bot',
+            timestamp: new Date(),
+          };
+          setMessages(prev => [...prev, botMessage]);
+          setStatus(null);
+        } else {
+          // If no specific response, still clear the status after a bit
+          setStatus(null);
+        }
+      }, 1500);
     }
   };
 
@@ -170,9 +187,12 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
       history,
       isOpen,
       isMinimized,
+      isTyping,
+      statusMessage,
       setIsOpen,
       setIsMinimized,
       sendMessage,
+      setStatus,
       triggerChatFromCard,
       clearChat,
       deleteHistoryItem,

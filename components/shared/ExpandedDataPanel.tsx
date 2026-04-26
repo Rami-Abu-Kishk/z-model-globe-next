@@ -364,7 +364,14 @@ export function ExpandedDataPanel() {
                 <div className="w-px h-6 bg-slate-200/60 mx-1" />
 
                 <button
-                  onClick={showBackButton ? handleModuleBack : resetView}
+                  onClick={() => {
+                    if (showBackButton) {
+                      handleModuleBack();
+                    } else {
+                      resetView();
+                      window.history.pushState(null, "", "/");
+                    }
+                  }}
                   className="group w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/5 hover:bg-slate-900 hover:text-white text-slate-600 transition-all duration-300 shadow-sm cursor-pointer"
                   aria-label={showBackButton ? "Go back" : "Close panel"}
                 >

@@ -397,13 +397,13 @@ export const mediaDataStore: Record<string, MediaData> = {
     regional: [
       {
         id: "R-AE-1",
-        headline: "Dubai Financial Market Witnesses Record IPO Over-subscription",
-        source: "Khaleej Times",
-        time: "5h ago",
+        headline: "Abu Dhabi Global Market Records 245% Surge in Assets Under Management",
+        source: "ADGM Intelligence",
+        time: "3h ago",
         category: "Local",
         sentiment: "positive",
         countries: ["AE"],
-        imageUrl: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1000"
+        imageUrl: "https://images.unsplash.com/photo-1512453979798-5ea4e7ed58e3?auto=format&fit=crop&q=80&w=1000"
       },
       ...localRegionalNews.filter(n => n.countries?.includes('AE'))
     ]

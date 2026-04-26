@@ -16,6 +16,8 @@ import { DroModule } from '@/components/modules/DroModule';
 import { CalendarModule } from '@/components/modules/CalendarModule';
 import { ResearchModule } from '@/components/modules/ResearchModule';
 import { AbuDhabiGovModule } from '@/components/modules/AbuDhabiGovModule';
+import { MediaAssistantChatbot } from '@/components/chat/MediaAssistantChatbot';
+import { MessageSquare } from 'lucide-react';
 
 const MODULE_COMPONENTS: Record<string, React.ComponentType<{ isExpanded?: boolean }>> = {
   economy: EconomyModule,
@@ -73,6 +75,8 @@ export function ExpandedDataPanel() {
   const setActiveEconomyTrend = useZModelStore(s => s.setActiveEconomyTrend);
   const politicalSelectedCase = useZModelStore(s => s.politicalSelectedCase);
   const setPoliticalSelectedCase = useZModelStore(s => s.setPoliticalSelectedCase);
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const showBackButton = (focusedCardId === 'investment' && investmentActiveDetail !== 'NONE') || 
                        (focusedCardId === 'media' && mediaActiveNewsId !== null) ||
@@ -176,6 +180,8 @@ export function ExpandedDataPanel() {
           }}
           className="absolute top-0 right-0 w-[55%] max-w-4xl h-full bg-white/70 backdrop-blur-3xl border-l border-white/60 shadow-[-30px_0_60px_rgba(0,0,0,0.08)] overflow-hidden z-40 pointer-events-auto flex flex-col"
         >
+          {/* Stability Wrapper for Drag Constraints */}
+          <div ref={containerRef} className="absolute inset-0 pointer-events-none" />
           {/* Sticky Header */}
           <div className="px-8 py-6 border-b border-slate-200/60 bg-white/40 backdrop-blur-md shrink-0 z-20">
             <div className="flex items-center justify-between gap-4">
@@ -389,13 +395,12 @@ export function ExpandedDataPanel() {
             </div>
           </div>
           
-          {/* Scrollable Module Content */}
           <motion.div 
             ref={scrollRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex-1 w-full text-slate-800 overflow-y-auto p-10 custom-scrollbar relative scroll-smooth"
+            className="flex-1 w-full bg-white/50 text-slate-800 overflow-y-auto p-10 pt-5 custom-scrollbar relative scroll-smooth"
           >
             {React.createElement(MODULE_COMPONENTS[focusedCardId], { isExpanded: true })}
           </motion.div>

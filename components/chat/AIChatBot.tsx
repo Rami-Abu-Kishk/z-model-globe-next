@@ -21,6 +21,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { FormattedText } from './FormattedText';
 
 
 export function AIChatBot() {
@@ -325,9 +326,11 @@ export function AIChatBot() {
                           : 'bg-white text-slate-700 border border-slate-100 rounded-bl-none'
                         }
                       `}>
-                        <MarkdownText 
-                          content={msg.text} 
+                        <FormattedText 
+                          text={msg.text} 
                           className={msg.sender === 'user' ? 'text-white' : 'text-slate-700'} 
+                          stream={msg.sender === 'bot'}
+                          speed={10}
                         />
                         {msg.insightData && (
                           <div className="mt-4 p-4 bg-white rounded-xl border border-slate-100 text-slate-800 overflow-hidden min-w-[240px]">

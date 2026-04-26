@@ -87,7 +87,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     if (text.includes('bab-el-mandeb') || text.includes('red sea') || text.includes('maritime security')) matches.push('Bab-el-Mandeb');
     if (text.includes('sudan') || text.includes('heartland')) matches.push('Sudan Heartland');
     if (text.includes('hormuz') || text.includes('straits') || text.includes('gulf')) matches.push('Hormuz Straits');
-    
+
     // Cross-region triggers
     if (text.includes('aviation') || text.includes('airspace')) {
       matches.push('Levant Corridor', 'Hormuz Straits');
@@ -145,7 +145,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     setSelectedCountries([]);
     setActiveEconomyTrend(null);
     setPoliticalActiveRingLabels(null); // Restore all rings
-    
+
     // If a country was previously selected (e.g. UAE), refocus on it
     if (selectedCountry) {
       setSelectedCountry(selectedCountry);
@@ -198,8 +198,8 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                             <TableCell className="text-[11px] font-bold text-slate-500">{pc.region}</TableCell>
                             <TableCell className="text-center">
                               <Badge className={`text-[9px] font-black px-2 py-0.5 shadow-none ${pc.severity === 'Critical' ? 'bg-rose-500 text-white' :
-                                  pc.severity === 'Warning' ? 'bg-amber-100 text-amber-700' :
-                                    'bg-emerald-100 text-emerald-700'
+                                pc.severity === 'Warning' ? 'bg-amber-100 text-amber-700' :
+                                  'bg-emerald-100 text-emerald-700'
                                 }`}>
                                 {pc.severity}
                               </Badge>
@@ -299,7 +299,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
 
               <section className="space-y-6">
                 <SectionHeader
-                  title="KPIs & Reports"
+                  title={`${selectedCountry && selectedCountry.length > 1 ? "UAE" : "Global"} Kpis and reports`}
                   icon={Activity}
                   subtitle="Executive stability indices & predictive matrix"
                 />
@@ -386,7 +386,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                       </div>
                     </div>
                   )}
-                  
+
                   {'involvedParties' in politicalSelectedCase && (
                     <div className="space-y-4">
                       <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Involved Parties & Stakeholders</h5>

@@ -2,18 +2,18 @@ import React, { useEffect, useRef, useMemo, useState } from 'react';
 import * as echarts from 'echarts';
 import { motion } from 'framer-motion';
 import { SectionHeader } from '@/components/shared/SectionHeader';
-import { 
-  TrendingUp, 
-  TrendingDown, 
-  LayoutGrid, 
-  BarChart3, 
+import {
+  TrendingUp,
+  TrendingDown,
+  LayoutGrid,
+  BarChart3,
   Globe,
-  Zap, 
-  Clock, 
+  Zap,
+  Clock,
   Building2,
   User,
   Sparkle,
-  FileText, 
+  FileText,
   ArrowRight,
 } from 'lucide-react';
 import { economyDataStore, TrendData, KpiReport, InvestmentReport } from '@/lib/mock-data/economy.mock';
@@ -38,8 +38,8 @@ function TrendSparkline({ data, color, labels = ['2021', '2022', '2023', '2024',
 
     chart.setOption({
       grid: { left: 0, right: 0, top: 5, bottom: 20 },
-      xAxis: { 
-        type: 'category', 
+      xAxis: {
+        type: 'category',
         show: true,
         data: labels,
         axisLine: { show: false },
@@ -111,8 +111,8 @@ function TrendCard({ trend, type }: { trend: TrendData, type: 'positive' | 'nega
           }
         }}
       >
-        <AiBadge 
-          className="-bottom-4 cursor-pointer left-1/2 -translate-x-1/2" 
+        <AiBadge
+          className="-bottom-4 cursor-pointer left-1/2 -translate-x-1/2"
           onClick={handleAiTrigger}
         />
         <div className="flex flex-col gap-2 mb-4">
@@ -264,8 +264,8 @@ function KpiReportCard({ kpi, onOpen }: { kpi: KpiReport, onOpen: (kpi: KpiRepor
     >
       <div className="w-full h-full transform transition-transform duration-500 group-hover:scale-[1.02]">
         <div className="absolute inset-0 p-6 backdrop-blur-2xl border border-white/60 bg-white/40 rounded-2xl shadow-xl hover:shadow-2xl flex flex-col transition-all duration-300 group-hover:bg-white/60">
-          <AiBadge 
-            className="-bottom-4 cursor-pointer left-1/2 -translate-x-1/2" 
+          <AiBadge
+            className="-bottom-4 cursor-pointer left-1/2 -translate-x-1/2"
             onClick={handleAiTrigger}
           />
 
@@ -351,7 +351,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
     const handleFilterDashboard = (event: any) => {
       const data = event.detail;
       console.log("[EconomyModule] Caught FILTER_DASHBOARD:", data);
-      
+
       // Example: If chatbot filters to a specific country
       if (data.country === 'UAE') {
         setSelectedCountry('AE');
@@ -437,16 +437,16 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
         {/* Global Organization KPIs */}
         <div className="space-y-8 mt-4">
           <SectionHeader
-            title="Global Kpis"
+            title={`${selectedCountry && selectedCountry.length > 1 ? "UAE" : "Global"} Kpis`}
             icon={LayoutGrid}
             subtitle="Real-time audits from IMF, World Bank, and WTO delegates"
           />
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             {data.kpisAndReports.map((k, i) => (
-              <KpiReportCard 
-                key={i} 
-                kpi={k} 
-                onOpen={(k) => k.insightData && setSelectedKpi(k)} 
+              <KpiReportCard
+                key={i}
+                kpi={k}
+                onOpen={(k) => k.insightData && setSelectedKpi(k)}
               />
             ))}
           </div>
@@ -469,7 +469,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
         )}
 
         {/* Reusable KPI Deep-Dive Overlay */}
-        <KpiInsightOverlay 
+        <KpiInsightOverlay
           isOpen={!!selectedKpi}
           onClose={() => setSelectedKpi(null)}
           kpi={selectedKpi ? {
@@ -481,9 +481,9 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             forecastData: selectedKpi.insightData?.forecastData || [],
             labels: selectedKpi.insightData?.labels || { historical: [], forecast: [] },
             analysis: selectedKpi.insightData?.analysis || { historical: '', forecast: '' },
-            stats: selectedKpi.insightData?.stats || { 
-              historical: { confidence: '', delta: '' }, 
-              forecast: { confidence: '', delta: '' } 
+            stats: selectedKpi.insightData?.stats || {
+              historical: { confidence: '', delta: '' },
+              forecast: { confidence: '', delta: '' }
             },
             outlookAndDrivers: selectedKpi.insightData?.outlookAndDrivers,
             interpretation: selectedKpi.insightData?.interpretation
@@ -494,10 +494,10 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             "Processing 2028 Horizon KPIs...",
             "Calibrating Hockeystick Acceleration Models...",
             "Finalizing AI Synthesis..."
-            ]}
+          ]}
         />
         {/* PDF Report Preview Modal */}
-        <PdfPreviewModal 
+        <PdfPreviewModal
           isOpen={!!selectedReport}
           onClose={() => setSelectedReport(null)}
           title={selectedReport?.title || ''}
@@ -549,10 +549,10 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             </div>
             <div className="grid grid-cols-1 gap-4">
               {data.kpisAndReports.slice(0, 4).map((k, i) => (
-                <KpiReportCard 
-                  key={i} 
-                  kpi={k} 
-                  onOpen={(k) => k.insightData && setSelectedKpi(k)} 
+                <KpiReportCard
+                  key={i}
+                  kpi={k}
+                  onOpen={(k) => k.insightData && setSelectedKpi(k)}
                 />
               ))}
             </div>
@@ -585,7 +585,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
       </ScrollArea>
 
       {/* Reusable KPI Deep-Dive Overlay */}
-      <KpiInsightOverlay 
+      <KpiInsightOverlay
         isOpen={!!selectedKpi}
         onClose={() => setSelectedKpi(null)}
         kpi={selectedKpi ? {
@@ -603,9 +603,9 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
             historical: "Audit records from 2021-2025 confirm a recovery trajectory following global disruptions. Verification via Z-Model ledger nodes indicates high correlation between regional fiscal stimulus and the current 2.9% baseline.",
             forecast: "The projected 8.8% growth is driven by three convergent vectors: wide-scale industrial GenAI integration, a massive capital pivot towards decentralized energy grids, and reduced cross-border friction via Z-Model protocols."
           },
-          stats: selectedKpi.insightData?.stats || { 
-            historical: { confidence: '', delta: '' }, 
-            forecast: { confidence: '', delta: '' } 
+          stats: selectedKpi.insightData?.stats || {
+            historical: { confidence: '', delta: '' },
+            forecast: { confidence: '', delta: '' }
           },
           outlookAndDrivers: selectedKpi.insightData?.outlookAndDrivers,
           interpretation: selectedKpi.insightData?.interpretation
@@ -619,7 +619,7 @@ export function EconomyModule({ isExpanded }: { isExpanded?: boolean }) {
         ]}
       />
       {/* PDF Report Preview Modal */}
-      <PdfPreviewModal 
+      <PdfPreviewModal
         isOpen={!!selectedReport}
         onClose={() => setSelectedReport(null)}
         title={selectedReport?.title || ''}

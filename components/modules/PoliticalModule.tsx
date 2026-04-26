@@ -299,7 +299,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
 
               <section className="space-y-6">
                 <SectionHeader
-                  title={`${selectedCountry && selectedCountry.length > 1 ? "UAE" : "Global"} Kpis and reports`}
+                  title={`${selectedCountry && selectedCountry.length > 1 ? "UAE" : "Global"} Kpis`}
                   icon={Activity}
                   subtitle="Executive stability indices & predictive matrix"
                 />

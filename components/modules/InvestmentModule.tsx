@@ -526,7 +526,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
               <div className="space-y-12">
                 <div className="space-y-6">
                   <SectionHeader
-                    title={`${selectedCountry && selectedCountry.length > 1 ? "UAE" : "Global"} Kpis and reports`}
+                    title={`${selectedCountry && selectedCountry.length > 1 ? "UAE" : "Global"} Kpis`}
                     icon={Award}
                     subtitle="Consolidated real-time briefings from UNCTAD, Global SWF, and IMF delegates, Last Update : 3hrs ago"
                   />

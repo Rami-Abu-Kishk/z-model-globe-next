@@ -668,7 +668,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                               org: 'Z-Model Intelligence',
                               author: 'Global Strategy Unit',
                               date: '2026',
-                              fileUrl: '/files/full analysis of High Yield government.pdf',
+                              fileUrl: '/files/full-analysis-of-high-yield-government.pdf',
                               description: 'Detailed investment analysis for ' + investmentSelectedOpportunity!.title
                             } as InvestmentReport);
                           }}

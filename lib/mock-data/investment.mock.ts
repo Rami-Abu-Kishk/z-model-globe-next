@@ -104,7 +104,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           { label: "Unemployment", value: "2.13%", trend: "down" },
           { label: "FDI Interest", value: "8.5%", trend: "up" }
         ],
-        downloadUrl: "/files/Report - Country Card for UAE.pdf"
+        downloadUrl: "/files/report-country-card-for-uae.pdf"
       }
     },
     topOpportunities: [
@@ -345,7 +345,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
           { label: "Unemployment", value: "2.13%", trend: "down" },
           { label: "FDI Interest", value: "8.5%", trend: "up" }
         ],
-        downloadUrl: "/files/Report - Country Card for UAE.pdf"
+        downloadUrl: "/files/report-country-card-for-uae.pdf"
       }
     },
     topOpportunities: [
@@ -554,7 +554,7 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         id: "rep-uae-1",
         title: "Report - Country Card for UAE",
         description: "Official investment profile: GDP $504B, Growth 4.0%, and strategic sector analysis.",
-        fileUrl: "/files/Report - Country Card for UAE.pdf",
+        fileUrl: "/files/report-country-card-for-uae.pdf",
         org: "Z-Model Research",
         author: "AI Analyst",
         date: "Apr 2026"

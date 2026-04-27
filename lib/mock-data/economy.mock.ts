@@ -447,7 +447,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         id: "uae-econ-1",
         title: "UAE Economic Vision 2031 Audit",
         description: "Deep-dive assessment of non-oil GDP performance and diversification milestones in the Emirates.",
-        fileUrl: "/files/Report - Country Card for UAE.pdf",
+        fileUrl: "/files/report-country-card-for-uae.pdf",
         org: "Z-Model Research",
         author: "AI Analyst",
         date: "Apr 2026"

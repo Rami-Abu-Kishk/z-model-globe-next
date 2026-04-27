@@ -93,7 +93,7 @@ export function ModuleNav() {
 
                 if (redirectItems.includes(item.id)) {
                   window.open(
-                    `https://zmodel.ai-zfollowup.net/${item.id}`,
+                    `https://zmodel.itc-testing.net/${item.id}`,
                     "_blank",
                   );
                   return;

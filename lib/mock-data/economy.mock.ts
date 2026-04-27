@@ -242,7 +242,7 @@ export const economyDataStore: Record<string, EconomyData> = {
         id: "econ-rep-1",
         title: "Global Economic Prospects, January 2026",
         description: "Comprehensive analysis of global growth trajectories, downside risks, and sovereign policy recommendations for 2026-2028.",
-        fileUrl: "/files/Global Economic Prospects, January 2026.pdf",
+        fileUrl: "/files/Global-Economic-Prospects-January-2026.pdf",
         org: "World Bank",
         author: "Chief Economist Unit",
         date: "Jan 2026"

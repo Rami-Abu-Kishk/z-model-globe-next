@@ -1,6 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { chatbotData } from '@/lib/mock-data/chatbot-data';
+
 
 export interface ChatMessage {
   id: string;
@@ -108,8 +110,25 @@ export function AIChatProvider({ children }: { children: ReactNode }) {
           } else {
             botText = "Beyond the primary metrics, we are seeing a shift in multi-lateral alignment. Both regional and global powers are recalibrating their deterrence frameworks. Would you like me to analyze the specific impact on your active investment portfolio or current geopolitical files?";
           }
-        } else if (lowerText.includes('analyze investment potential')) {
-          botText = "Neural Analysis complete. The target shows a high alpha score with significant regulatory tailwinds. However, exposure to regional currency volatility remains a Tier-2 risk. I recommend a weighted allocation strategy focusing on infrastructure-backed sovereign bonds.";
+        } else if (lowerText.includes('analyze investment potential') || lowerText.includes('india investment landscape')) {
+          botText = `Neural Synthesis complete. 
+
+**Executive Strategic Briefing: Republic of India**
+India has solidified its position as the world's primary growth engine, with a projected GDP expansion of **7.6% for FY26**. Our audit indicates a structural shift from consumption-led to investment-led growth, underpinned by the **PM Gati Shakti National Master Plan**.
+
+**Core Alpha Drivers:**
+1. **Compute Sovereignty:** The semiconductor ecosystem (SemiCon India) is seeing massive CAPEX from global leaders, positioning India as a critical node in the global silicon supply chain.
+2. **Infrastructure Multiplier:** Cumulative infrastructure spending is expected to hit **$1.4 Trillion** by 2030, creating a massive tailwind for industrial and logistics sectors.
+3. **Digital Public Infrastructure (DPI):** India's 'Tech Stack' provides a unique data-rich environment for AI-driven logistics and fintech scaling that is unmatched in other emerging markets.
+
+**Strategic Recommendation:**
+We recommend a high-conviction 'Overweight' stance. Capital allocation should prioritize **Digital Infrastructure**, **High-Tech Manufacturing (PLI-backed)**, and **Green Hydrogen** sectors. While regional currency volatility exists, the structural resilience and regulatory reforms (GST, IBC) provide a robust risk-adjusted floor.`;
+        } else {
+          // Check for other triggers in chatbotData
+          const trigger = Object.keys(chatbotData.TRIGGERS).find(t => lowerText.includes(t.toLowerCase()));
+          if (trigger) {
+            botText = chatbotData.TRIGGERS[trigger].text;
+          }
         }
 
         if (botText) {

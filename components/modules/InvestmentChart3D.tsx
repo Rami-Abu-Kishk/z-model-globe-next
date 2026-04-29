@@ -12,39 +12,44 @@ export default function InvestmentChart3D() {
 
     const myChart = echarts.init(chartRef.current);
 
-    const countries = ['UAE', 'China', 'South Korea', 'India', 'USA'];
+    const countries = ['India', 'China', 'South Korea', 'UAE', 'USA'];
     const metrics = ['FDI %', 'Savings %', 'Investment %'];
 
-    // Raw Data
+    // Raw Data (Index 0 is India, Index 3 is UAE)
     const rawData = [
-      [0, 0, 7.8], [0, 1, 40.5], [0, 2, 28.5], // UAE
+      [0, 0, 7.6], [0, 1, 43.3], [0, 2, 32.0], // India (Official Data)
       [1, 0, 4.5], [1, 1, 39.0], [1, 2, 30.0], // China
       [2, 0, 3.8], [2, 1, 36.0], [2, 2, 27.0], // South Korea
-      [3, 0, 3.5], [3, 1, 30.0], [3, 2, 32.0], // India
+      [3, 0, 4.0], [3, 1, 35.2], [3, 2, 28.5], // UAE
       [4, 0, 3.2], [4, 1, 19.0], [4, 2, 24.0], // USA
     ];
 
     // Helper to determine color based on the metric type and value
-    const getColor = (metricIndex: number, value: number) => {
-      // 1. Logic JUST for FDI (Metric Index 0)
+    const getColor = (countryIndex: number, metricIndex: number, value: number) => {
+      // 1. Highlight Top Country (India at index 0)
+      if (countryIndex === 0) {
+        return '#10b981'; // Emerald highlight for Best Country
+      }
+
+      // 2. Logic JUST for FDI (Metric Index 0)
       if (metricIndex === 0) {
-        if (value > 7) return '#10b981';    // UAE - Green (High for FDI)
-        if (value > 4) return '#f59e0b';    // China - Amber/Yellow
-        return '#ef4444';                   // Others - Red
+        if (value > 7) return '#10b981';    
+        if (value > 4) return '#f59e0b';    
+        return '#ef4444';                   
       }
       
-      // 2. Logic for Savings & Investment (Metric Index 1 & 2) - "As Is"
-      if (value > 35) return '#059669';     // Darker Green
-      if (value > 25) return '#10b981';     // Regular Green
-      if (value > 20) return '#fbbf24';     // Yellow
-      return '#be123c';                      // Red
+      // 3. Logic for Savings & Investment (Metric Index 1 & 2)
+      if (value > 35) return '#059669';     
+      if (value > 25) return '#10b981';     
+      if (value > 20) return '#fbbf24';     
+      return '#be123c';                      
     };
 
     // Map raw data to ECharts format with individual itemStyles
     const chartData = rawData.map(item => ({
       value: item,
       itemStyle: {
-        color: getColor(item[1], item[2])
+        color: getColor(item[0], item[1], item[2])
       }
     }));
 

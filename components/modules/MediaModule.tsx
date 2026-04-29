@@ -51,7 +51,8 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
     setMediaActiveNewsId,
     mediaSelectedArticle,
     setMediaSelectedArticle,
-    setActiveEconomyTrend
+    setActiveEconomyTrend,
+    setAutoRotate
   } = useZModelStore();
   const { triggerChatFromCard } = useAIChat();
   const [videoSource, setVideoSource] = useState<'SKY' | 'CNN'>('SKY');
@@ -99,6 +100,9 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
     setMediaActiveNewsId(null);
     setSelectedCountries([]);
     setActiveEconomyTrend(null);
+    setActiveTarget(null);
+    setAutoRotate(true);
+    setSelectedCountry(null);
   };
 
   if (isExpanded) {

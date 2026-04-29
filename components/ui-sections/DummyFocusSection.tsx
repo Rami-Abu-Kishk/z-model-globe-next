@@ -1,5 +1,6 @@
 import React from 'react';
 import { useZModelStore } from '@/lib/store';
+import { applyZoom } from '@/lib/constants';
 import type { BaseDataPoint, UISection } from '@/lib/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -13,21 +14,21 @@ const dummyData: UISection<BaseDataPoint> = {
       id: 'red-sea-01',
       title: 'Red Sea Maritime Conflict',
       description: 'Strategic instability impacting global shipping lanes.',
-      target: { lat: 15.3229, lng: 38.9251, zoomLevel: 1.5 },
+      target: { lat: 15.3229, lng: 38.9251, zoomLevel: applyZoom(0.8) },
       countries: ['EG', 'SA', 'YE', 'SD', 'ER', 'DJ'] // Egypt, Saudi, Yemen, Sudan, Eritrea, Djibouti
     },
     {
       id: 'uae-01',
       title: 'UAE Emerging Tech Sector',
       description: 'Capital investments surge by 40%.',
-      target: { lat: 23.4241, lng: 53.8478, zoomLevel: 1.5 },
+      target: { lat: 23.4241, lng: 53.8478, zoomLevel: applyZoom(0.8) },
       countries: ['AE']
     },
     {
       id: 'uk-01',
       title: 'UK Financial Policy Changes',
       description: 'New regulations impact trading bounds.',
-      target: { lat: 55.3781, lng: -3.4360, zoomLevel: 1.5 },
+      target: { lat: 55.3781, lng: -3.4360, zoomLevel: applyZoom(0.8) },
       countries: ['GB']
     }
   ]

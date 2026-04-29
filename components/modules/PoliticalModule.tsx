@@ -32,6 +32,7 @@ import {
   type PoliticalKpi
 } from '@/lib/mock-data/political.mock';
 import { useZModelStore } from '@/lib/store';
+import { applyZoom } from '@/lib/constants';
 import { useAIChat } from '../context/AIChatContext';
 import { AiBadge } from '../shared/AiBadge';
 import { Button } from '@/components/ui/button';
@@ -50,7 +51,8 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     setActiveEconomyTrend,
     politicalSelectedCase,
     setPoliticalSelectedCase,
-    setPoliticalActiveRingLabels
+    setPoliticalActiveRingLabels,
+    setAutoRotate
   } = useZModelStore();
 
   const [selectedKpi, setSelectedKpi] = useState<PoliticalKpi | null>(null);
@@ -98,7 +100,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
 
   const handleCrisisClick = (crisis: RegionalCrisis) => {
     const [lat, lng] = crisis.coordinates;
-    setActiveTarget({ lat, lng, zoomLevel: 1.5 });
+    setActiveTarget({ lat, lng, zoomLevel: applyZoom(0.8) }); // Increased zoom (was 1.5)
 
     // Show only the rings relevant to this crisis
     setPoliticalActiveRingLabels(getRingLabelsForRegion(crisis.region));
@@ -120,7 +122,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
 
   const handleCaseClick = (pc: PoliticalCase) => {
     const [lng, lat] = pc.coordinates;
-    setActiveTarget({ lat, lng, zoomLevel: 1.2 });
+    setActiveTarget({ lat, lng, zoomLevel: applyZoom(1.0) }); // Increased zoom (was 1.2)
 
     // Show only the rings relevant to this case
     setPoliticalActiveRingLabels(getRingLabelsForRegion(pc.region + ' ' + pc.name));
@@ -145,11 +147,9 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
     setSelectedCountries([]);
     setActiveEconomyTrend(null);
     setPoliticalActiveRingLabels(null); // Restore all rings
-
-    // If a country was previously selected (e.g. UAE), refocus on it
-    if (selectedCountry) {
-      setSelectedCountry(selectedCountry);
-    }
+    setActiveTarget(null);
+    setAutoRotate(true);
+    setSelectedCountry(null);
   };
 
   if (isExpanded) {

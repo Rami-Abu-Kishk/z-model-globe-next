@@ -26,7 +26,7 @@ export const chatbotData: Record<string, Record<string, ChatBotResponse>> = {
       event: { type: 'HIGHLIGHT_GRID', payload: { module: 'investment', priority: 'high' } }
     },
     DEFAULT: {
-      text: "I am the Z-Model AI. I can provide insights on Global, UAE, USA, Japan, and Germany markets. Try asking about 'UAE economy' or 'USA investments'."
+      text: "I am the Z-Model AI. I can provide insights on Global, India, UAE, USA, Japan, and Germany markets. Try asking about 'India GDP growth' or 'UAE investments'."
     }
   },
   TRIGGERS: {
@@ -279,6 +279,17 @@ export const COUNTRY_DATA: Record<string, ChatBotResponse> = {
       ]
     },
     event: { type: 'MAP_NAVIGATE', payload: { countryCode: 'JO', zoom: 6 } }
+  },
+  "IN": {
+    text: "India Strategic Briefing: The nation is currently the fastest-growing major economy (7.6% FY26 projection). The 'PM Gati Shakti' master plan and PLI manufacturing schemes are driving a structural pivot toward high-tech exports. Digital Public Infrastructure (DPI) remains a core competitive advantage.",
+    insightData: {
+      title: "India Growth Alpha",
+      kpis: [
+        { label: "Proj. GDP Growth", value: "7.6%" },
+        { label: "Savings Rate", value: "30.3%" }
+      ]
+    },
+    event: { type: 'MAP_NAVIGATE', payload: { countryCode: 'IN', zoom: 3.5 } }
   },
   "GLOBAL": {
     text: "Global Executive Overview: The macro landscape is defined by three converging vectors: the AI efficiency multiplier, the global energy transition, and a transition from globalized to regionalized trade corridors. Stability remains the primary KPI for sovereign forecasting.",

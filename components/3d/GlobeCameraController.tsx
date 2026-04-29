@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useZModelStore } from '@/lib/store';
+import { applyZoom } from '@/lib/constants';
 
 interface GlobeCameraControllerProps {
   globeRef: React.MutableRefObject<any>;
@@ -66,7 +67,7 @@ export function GlobeCameraController({ globeRef, polygonsData }: GlobeCameraCon
             globeRef.current.pointOfView({
                 lat: avgLat,
                 lng: avgLng,
-                altitude: 1.8
+                altitude: applyZoom(1.2) // Increased zoom (was 1.8)
             }, 1000);
         }
     }

@@ -1,4 +1,5 @@
 import type { GlobeTarget } from '../types';
+import { applyZoom } from '../constants';
 
 export interface NewsItem {
   id: string;
@@ -50,7 +51,7 @@ export const breakingNews: NewsItem[] = [
     sentiment: "positive",
     summary: "A massive expansion of the sovereign cloud infrastructure across the MENA region, focusing on Al safety and data residency.",
     countries: ["AE", "US"],
-    target: { lat: 25.0, lng: 55.0, zoomLevel: 2.0 },
+    target: { lat: 25.0, lng: 55.0, zoomLevel: applyZoom(0.8) },
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000",
     links: [
       { label: "Official Press Release", url: "#" },
@@ -77,7 +78,7 @@ export const breakingNews: NewsItem[] = [
     sentiment: "negative",
     summary: "Maritime insurance premiums spike as alternative routes add 10 days to standard delivery times for European imports.",
     countries: ["YE", "EG", "SA"],
-    target: { lat: 15.0, lng: 42.0, zoomLevel: 1.8 },
+    target: { lat: 15.0, lng: 42.0, zoomLevel: applyZoom(0.8) },
     imageUrl: "/assets/images/mock/red_sea_logistics.png",
     links: [
       { label: "Maritime Logistics Report", url: "#" },
@@ -93,7 +94,7 @@ export const breakingNews: NewsItem[] = [
     sentiment: "positive",
     summary: "Inflation cooling faster than anticipated triggers major market rally across Asian and GCC indices.",
     countries: ["US", "EU", "AE", "SA"],
-    target: { lat: 30.0, lng: 20.0, zoomLevel: 2.5 },
+    target: { lat: 30.0, lng: 20.0, zoomLevel: applyZoom(1.2) },
     imageUrl: "/assets/images/mock/financial_rates.png"
   },
   {
@@ -105,7 +106,7 @@ export const breakingNews: NewsItem[] = [
     sentiment: "positive",
     summary: "Abu Dhabi showcases a comprehensive edge-computing autonomous drone network to secure maritime trade routes.",
     countries: ["AE"],
-    target: { lat: 24.5, lng: 54.4, zoomLevel: 3.0 },
+    target: { lat: 24.5, lng: 54.4, zoomLevel: applyZoom(0.8) },
     imageUrl: "https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80&w=1000"
   },
   {
@@ -117,7 +118,7 @@ export const breakingNews: NewsItem[] = [
     sentiment: "positive",
     summary: "New sovereign wealth initiative targeting the localization of aerospace and EV component manufacturing in the Kingdom.",
     countries: ["SA"],
-    target: { lat: 24.7, lng: 46.7, zoomLevel: 2.5 },
+    target: { lat: 24.7, lng: 46.7, zoomLevel: applyZoom(1.0) },
     imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000",
     aiInsights: {
       summary: "Saudi PIF has announced a staggering $50 billion fund exclusively focused on advanced materials, particularly aerospace alloys and EV battery components.",
@@ -139,7 +140,7 @@ export const trendingNews: NewsItem[] = [
     impact: 94,
     summary: "Nations are increasingly building local GPU clusters to ensure digital sovereignty and protection against global API reliance.",
     countries: ["AE", "IN", "SG", "KR"],
-    target: { lat: 20.0, lng: 70.0, zoomLevel: 2.5 },
+    target: { lat: 20.0, lng: 70.0, zoomLevel: applyZoom(1.2) },
     imageUrl: "/assets/images/mock/sovereign_ai_brain.png"
   },
   {
@@ -152,7 +153,7 @@ export const trendingNews: NewsItem[] = [
     impact: 86,
     summary: "A $10B subsidy package announced for 2nm fabrication plant in Gujarat, aiming for production by 2028.",
     countries: ["IN"],
-    target: { lat: 22.0, lng: 72.0, zoomLevel: 1.5 },
+    target: { lat: 22.0, lng: 72.0, zoomLevel: applyZoom(0.8) },
     imageUrl: "/assets/images/mock/semiconductor_fab.png"
   },
   {
@@ -165,7 +166,7 @@ export const trendingNews: NewsItem[] = [
     impact: 72,
     summary: "SMR technology gains traction as a viable 'always-on' alternative to bridge renewable intermittency in heavy industrial zones.",
     countries: ["US", "FR", "AE", "CN"],
-    target: { lat: 40.0, lng: -40.0, zoomLevel: 2.8 },
+    target: { lat: 40.0, lng: -40.0, zoomLevel: applyZoom(1.2) },
     imageUrl: "http://googleusercontent.com/image_collection/image_retrieval/576214024933720820_0"
   },
   {
@@ -178,7 +179,7 @@ export const trendingNews: NewsItem[] = [
     impact: 89,
     summary: "Urban air mobility takes a quantum leap as full-scale commercial testing begins in the Gulf.",
     countries: ["SA", "DE"],
-    target: { lat: 28.0, lng: 35.0, zoomLevel: 2.5 },
+    target: { lat: 28.0, lng: 35.0, zoomLevel: applyZoom(1.0) },
     imageUrl: "https://images.unsplash.com/photo-1541857754-ae0411ed0262?auto=format&fit=crop&q=80&w=1000"
   },
   {
@@ -191,7 +192,7 @@ export const trendingNews: NewsItem[] = [
     impact: 62,
     summary: "Institutional adoption of AI trading bots on the DFM highlights rapid digital transformation in regional finance.",
     countries: ["AE"],
-    target: { lat: 25.2, lng: 55.3, zoomLevel: 2.5 },
+    target: { lat: 25.2, lng: 55.3, zoomLevel: applyZoom(1.0) },
     imageUrl: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1000"
   }
 ];
@@ -205,7 +206,7 @@ export const localRegionalNews: NewsItem[] = [
     category: "Local",
     sentiment: "positive",
     countries: ["AE"],
-    target: { lat: 24.4539, lng: 54.3773, zoomLevel: 1.2 },
+    target: { lat: 24.4539, lng: 54.3773, zoomLevel: applyZoom(0.8) },
     imageUrl: "https://images.unsplash.com/photo-1549413247-4979e2f89c49?auto=format&fit=crop&q=80&w=1000"
   },
   {
@@ -216,7 +217,7 @@ export const localRegionalNews: NewsItem[] = [
     category: "Regional",
     sentiment: "positive",
     countries: ["SA"],
-    target: { lat: 28.5, lng: 35.0, zoomLevel: 1.2 },
+    target: { lat: 28.5, lng: 35.0, zoomLevel: applyZoom(0.8) },
     imageUrl: "https://images.unsplash.com/photo-1521791136064-7986c295944b?auto=format&fit=crop&q=80&w=1000"
   },
   {
@@ -227,7 +228,7 @@ export const localRegionalNews: NewsItem[] = [
     category: "Regional",
     sentiment: "positive",
     countries: ["AE", "OM"],
-    target: { lat: 24.0, lng: 56.0, zoomLevel: 1.5 },
+    target: { lat: 24.0, lng: 56.0, zoomLevel: applyZoom(0.8) },
     imageUrl: "http://googleusercontent.com/image_collection/image_retrieval/3985455145555052574_0"
   },
   {
@@ -238,7 +239,7 @@ export const localRegionalNews: NewsItem[] = [
     category: "Regional",
     sentiment: "neutral",
     countries: ["QA"],
-    target: { lat: 25.2769, lng: 51.5200, zoomLevel: 1.2 },
+    target: { lat: 25.2769, lng: 51.5200, zoomLevel: applyZoom(0.8) },
     imageUrl: "/assets/images/mock/qatar_green_energy.png"
   },
   {
@@ -249,7 +250,7 @@ export const localRegionalNews: NewsItem[] = [
     category: "Local",
     sentiment: "positive",
     countries: ["AE"],
-    target: { lat: 24.4, lng: 54.4, zoomLevel: 2.0 },
+    target: { lat: 24.4, lng: 54.4, zoomLevel: applyZoom(1.0) },
     imageUrl: "https://images.unsplash.com/photo-1621501103258-3e0b7880b91e?auto=format&fit=crop&q=80&w=1000"
   },
   {
@@ -260,7 +261,7 @@ export const localRegionalNews: NewsItem[] = [
     category: "Regional",
     sentiment: "positive",
     countries: ["SA"],
-    target: { lat: 24.71, lng: 46.67, zoomLevel: 2.0 },
+    target: { lat: 24.71, lng: 46.67, zoomLevel: applyZoom(1.0) },
     imageUrl: "https://images.unsplash.com/photo-1614729188057-a36746817743?auto=format&fit=crop&q=80&w=1000"
   }
 ];
@@ -301,7 +302,7 @@ export const mediaDataStore: Record<string, MediaData> = {
         sentiment: "positive",
         summary: "Major infrastructure projects in Jordan securing long-term regional stability.",
         countries: ["JO"],
-        target: { lat: 31.9, lng: 35.9, zoomLevel: 1.5 },
+        target: { lat: 31.9, lng: 35.9, zoomLevel: applyZoom(0.8) },
         imageUrl: "/assets/images/mock/jordan_desalination.png"
       }
     ],
@@ -334,7 +335,7 @@ export const mediaDataStore: Record<string, MediaData> = {
         sentiment: "positive",
         summary: "Nations are increasingly building local GPU clusters to ensure digital sovereignty.",
         countries: ["IN"],
-        target: { lat: 12.97, lng: 77.59, zoomLevel: 1.8 },
+        target: { lat: 12.97, lng: 77.59, zoomLevel: applyZoom(0.8) },
         imageUrl: "/assets/images/mock/india_tech_hub.png"
       }
     ],
@@ -368,7 +369,7 @@ export const mediaDataStore: Record<string, MediaData> = {
         sentiment: "positive",
         summary: "Technology Innovation Institute releases open-source LLM rivaling top global models, reinforcing UAE's position as an AI powerhouse.",
         countries: ["AE"],
-        target: { lat: 24.4539, lng: 54.3773, zoomLevel: 2.5 },
+        target: { lat: 24.4539, lng: 54.3773, zoomLevel: applyZoom(0.8) },
         imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1000",
         aiInsights: {
           summary: "The Technology Innovation Institute (TII) has officially released Falcon 3.0, the latest iteration of its flagship open-source LLM.",
@@ -389,7 +390,7 @@ export const mediaDataStore: Record<string, MediaData> = {
         sentiment: "positive",
         summary: "Mubadala and ADQ pool resources to accelerate global investments in green hydrogen and next-gen solar technologies.",
         countries: ["AE"],
-        target: { lat: 24.4539, lng: 54.3773, zoomLevel: 2.0 },
+        target: { lat: 24.4539, lng: 54.3773, zoomLevel: applyZoom(1.0) },
         imageUrl: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=1000"
       },
       ...trendingNews.filter(n => n.countries?.includes('AE'))
@@ -424,7 +425,7 @@ export const mediaDataStore: Record<string, MediaData> = {
         sentiment: "positive",
         summary: "A $38 billion commitment to transform Riyadh into the global capital for competitive gaming and AI-driven entertainment.",
         countries: ["SA"],
-        target: { lat: 24.7136, lng: 46.6753, zoomLevel: 2.2 },
+        target: { lat: 24.7136, lng: 46.6753, zoomLevel: applyZoom(1.0) },
         imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1000",
         aiInsights: {
           summary: "Saudi Arabia's Public Investment Fund (PIF) has launched a massive initiative to build an unprecedented Esports and AI gaming ecosystem in Riyadh.",
@@ -445,7 +446,7 @@ export const mediaDataStore: Record<string, MediaData> = {
         sentiment: "positive",
         summary: "The foundational infrastructure for THE LINE's pervasive AI cognitive system begins deployment.",
         countries: ["SA"],
-        target: { lat: 28.0, lng: 35.0, zoomLevel: 2.0 },
+        target: { lat: 28.0, lng: 35.0, zoomLevel: applyZoom(1.0) },
         imageUrl: "https://images.unsplash.com/photo-1481437156560-3205f6a55735?auto=format&fit=crop&q=80&w=1000"
       },
       ...trendingNews.filter(n => n.countries?.includes('SA'))

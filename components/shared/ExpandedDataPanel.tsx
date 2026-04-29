@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
+import { applyZoom } from '@/lib/constants';
 import { X, Layers, Search, ChevronDown, Minimize2, ArrowLeft, XCircle } from 'lucide-react';
 import { searchableCountries } from '@/lib/mockData';
 
@@ -46,16 +47,28 @@ const MODULE_LABELS: Record<string, string> = {
 };
 
 export function ExpandedDataPanel() {
-  const viewState = useZModelStore(s => s.viewState);
-  const focusedCardId = useZModelStore(s => s.focusedCardId);
-  const resetView = useZModelStore(s => s.resetView);
-  const selectedCountry = useZModelStore(s => s.selectedCountry);
-  const setSelectedCountry = useZModelStore(s => s.setSelectedCountry);
-  const selectedCountries = useZModelStore(s => s.selectedCountries);
-  const setSelectedCountries = useZModelStore(s => s.setSelectedCountries);
-  const setActiveCountry = useZModelStore(s => s.setActiveCountry);
-  const setActiveTarget = useZModelStore(s => s.setActiveTarget);
-  const setViewState = useZModelStore(s => s.setViewState);
+  const {
+    viewState,
+    focusedCardId,
+    resetView,
+    selectedCountry,
+    setSelectedCountry,
+    selectedCountries,
+    setSelectedCountries,
+    setActiveCountry,
+    setActiveTarget,
+    setViewState,
+    setAutoRotate,
+    investmentActiveDetail,
+    setInvestmentActiveDetail,
+    setInvestmentSelectedOpportunity,
+    mediaActiveNewsId,
+    setMediaActiveNewsId,
+    setMediaSelectedArticle,
+    setActiveEconomyTrend,
+    politicalSelectedCase,
+    setPoliticalSelectedCase
+  } = useZModelStore();
 
   const hasCountrySelection = !!selectedCountry || selectedCountries.length > 0;
 
@@ -63,18 +76,10 @@ export function ExpandedDataPanel() {
     setSelectedCountry(null);
     setSelectedCountries([]);
     setActiveCountry(null);
+    setActiveTarget(null);
+    setActiveEconomyTrend(null);
+    setPoliticalSelectedCase(null);
   };
-
-  // Detail states for back button
-  const investmentActiveDetail = useZModelStore(s => s.investmentActiveDetail);
-  const setInvestmentActiveDetail = useZModelStore(s => s.setInvestmentActiveDetail);
-  const setInvestmentSelectedOpportunity = useZModelStore(s => s.setInvestmentSelectedOpportunity);
-  const mediaActiveNewsId = useZModelStore(s => s.mediaActiveNewsId);
-  const setMediaActiveNewsId = useZModelStore(s => s.setMediaActiveNewsId);
-  const setMediaSelectedArticle = useZModelStore(s => s.setMediaSelectedArticle);
-  const setActiveEconomyTrend = useZModelStore(s => s.setActiveEconomyTrend);
-  const politicalSelectedCase = useZModelStore(s => s.politicalSelectedCase);
-  const setPoliticalSelectedCase = useZModelStore(s => s.setPoliticalSelectedCase);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -88,6 +93,10 @@ export function ExpandedDataPanel() {
     // Shared Resets
     setSelectedCountries([]);
     setActiveEconomyTrend(null);
+    setActiveTarget(null);
+    setAutoRotate(true);
+    setSelectedCountry(null);
+    setActiveCountry(null);
 
     if (focusedCardId === 'investment') {
       setInvestmentActiveDetail('NONE');
@@ -97,11 +106,6 @@ export function ExpandedDataPanel() {
       setMediaSelectedArticle(null);
     } else if (focusedCardId === 'political') {
       setPoliticalSelectedCase(null);
-    }
-
-    // Refocus on country if selection exists
-    if (selectedCountry) {
-      setSelectedCountry(selectedCountry);
     }
   };
 
@@ -160,7 +164,7 @@ export function ExpandedDataPanel() {
     setSelectedCountry(country.iso);
     setSelectedCountries([]); // Clear any multi-country group highlights 
     setActiveCountry(country.name);
-    setActiveTarget({ lat: country.lat, lng: country.lng, zoomLevel: 1.5 });
+    setActiveTarget({ lat: country.lat, lng: country.lng, zoomLevel: applyZoom(0.8) }); // Increased zoom (was 1.5)
     setLocalQuery('');
     setIsSearchOpen(false);
   };

@@ -12,7 +12,7 @@ export type ModuleId =
   | 'abudhabi'
   | 'calendar';
 
-export type InvestmentDetailView = 'NONE' | 'UAE' | 'OPPORTUNITY';
+export type InvestmentDetailView = 'NONE' | 'INDIA' | 'OPPORTUNITY';
 
 export type ViewState = 'ORBITAL' | 'EARTH_FOCUS' | 'CARD_FOCUS';
 

@@ -10,6 +10,7 @@ import { TrendingUp, TrendingDown, Globe, Building2, User, Zap, Briefcase, Award
 import dynamic from 'next/dynamic';
 import { investmentDataStore, KpiReport, Opportunity, InvestmentReport } from '@/lib/mock-data/investment.mock';
 import { useZModelStore } from '@/lib/store';
+import { applyZoom } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { searchableCountries } from '@/lib/mockData';
@@ -217,8 +218,8 @@ function LiveCapitalInflow({ value: initialValue }: { value: string }) {
             initial={{ y: trend === 'up' ? 2 : -2, opacity: 0.5 }}
             animate={{ y: 0, opacity: 1 }}
             className={`font-black text-[13px] tabular-nums transition-colors duration-300 ${trend === 'up' ? 'text-emerald-600' :
-                trend === 'down' ? 'text-rose-600' :
-                  'text-emerald-600'
+              trend === 'down' ? 'text-rose-600' :
+                'text-emerald-600'
               }`}
           >
             {currentValue}
@@ -270,7 +271,8 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
     setInvestmentSelectedOpportunity,
     setActiveEconomyTrend,
     setShowInvestmentPoints,
-    setShowBestTargetPoint
+    setShowBestTargetPoint,
+    setAutoRotate
   } = useZModelStore();
 
   const [selectedKpi, setSelectedKpi] = useState<KpiReport | null>(null);
@@ -289,15 +291,15 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
   const data = investmentDataStore[currentDataKey];
 
-  // Stable data reference for UAE view to prevent reset loops in child useEffect
-  const uaeDetailData = useMemo(() => ({
-    title: "Executive Brief: UAE Investment Landscape",
+  // Stable data reference for India view to prevent reset loops in child useEffect
+  const indiaDetailData = useMemo(() => ({
+    title: "Executive Brief: India Investment Landscape",
     subtitle: "Sovereign Strategic Briefing • 2026",
     category: "Investment Strategy",
     badgeText: "TOP STRATEGIC TARGET",
     badgeClassName: "bg-emerald-600",
-    imageUrl: "/assets/images/mock/uae_investment_hero.png",
-    summary: data.bestTarget.pdfReportData?.summary || "The UAE's evolution into a premier global investment destination is driven by strategic foresight, world-class infrastructure, and a robust regulatory framework.",
+    imageUrl: "/assets/images/mock/india.jpg",
+    summary: data.bestTarget.pdfReportData?.summary || "India's emergence as a premier global investment destination is driven by massive infrastructure expansion, a structural pivot to high-tech manufacturing, and its status as the world's fastest-growing major economy.",
     aiInsights: data.aiInsights,
     content: (
       <div className="space-y-8 mt-12 pb-12">
@@ -337,19 +339,19 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
   const handleTargetClick = () => {
     setActiveModule('investment');
-    // Ensure we have an ISO even if the specific mock (like AE) doesn't have it on bestTarget
-    const targetIso = data.bestTarget.iso || (currentDataKey === 'AE' ? 'AE' : 'AE'); 
-    
+    // For India, we use the 'IN' ISO
+    const targetIso = data.bestTarget.iso || (currentDataKey === 'GLOBAL' ? 'IN' : 'AE');
+
     if (targetIso) {
       setSelectedCountry(null);
-      // Increased zoom for Best Target (altitude from 1.5 to 0.8)
-      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 0.8 });
+      // Increased zoom for Best Target (altitude from 1.5 to 0.8) - Focusing on India
+      setActiveTarget({ lat: 20.5937, lng: 78.9629, zoomLevel: applyZoom(0.8) });
       setSelectedCountries([targetIso]);
       setShowBestTargetPoint(true);
 
       if (isExpanded) {
         setInvestmentSelectedOpportunity(null);
-        setInvestmentActiveDetail('UAE');
+        setInvestmentActiveDetail('INDIA');
       }
     }
   };
@@ -367,7 +369,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
         setActiveTarget({
           lat: country.lat,
           lng: country.lng,
-          zoomLevel: 1.8
+          zoomLevel: applyZoom(1.0) // Increased zoom (was 1.8)
         });
       }
 
@@ -401,7 +403,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
       setActiveTarget({
         lat: country.lat,
         lng: country.lng,
-        zoomLevel: 1.8
+        zoomLevel: applyZoom(1.0) // Increased zoom (was 1.8)
       });
     }
   };
@@ -409,12 +411,12 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
   const handleReportClick = (report: InvestmentReport) => {
     setActiveModule('investment');
 
-    // If it's the "Accelerating Investment" report, fly to the UAE hub viewpoint
-    if (report.title.includes('Accelerating Investment')) {
-      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.3 });
-      setSelectedCountries(['AE']);
+    // If it's the "Accelerating Investment" report or India report, fly to India hub
+    if (report.title.includes('Accelerating Investment') || report.id.includes('india')) {
+      setActiveTarget({ lat: 20.5937, lng: 78.9629, zoomLevel: applyZoom(0.8) }); 
+      setSelectedCountries(['IN']);
     } else if (report.id.includes('uae')) {
-      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: 1.5 });
+      setActiveTarget({ lat: 23.4, lng: 53.8, zoomLevel: applyZoom(0.8) }); 
       setSelectedCountries(['AE']);
     }
 
@@ -603,7 +605,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
               </div>
             </div>
-          ) : investmentActiveDetail === 'UAE' ? (
+          ) : investmentActiveDetail === 'INDIA' ? (
             <div className="w-full">
               <InvestmentCountryView
                 onBack={() => {
@@ -611,8 +613,11 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   setSelectedCountries([]);
                   setActiveEconomyTrend(null);
                   setShowBestTargetPoint(false);
+                  setActiveTarget(null);
+                  setAutoRotate(true);
+                  setSelectedCountry(null);
                 }}
-                data={uaeDetailData}
+                data={indiaDetailData}
               />
             </div>
           ) : (
@@ -623,6 +628,9 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   setInvestmentSelectedOpportunity(null);
                   setSelectedCountries([]);
                   setActiveEconomyTrend(null);
+                  setActiveTarget(null);
+                  setAutoRotate(true);
+                  setSelectedCountry(null);
                 }}
                 article={{
                   title: investmentSelectedOpportunity!.title,

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search } from 'lucide-react';
 import { useZModelStore } from '@/lib/store';
+import { applyZoom } from '@/lib/constants';
 import { searchableCountries } from '@/lib/mockData';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -31,7 +32,7 @@ export function SearchBar() {
     setIsFocused(false);
     
     // Set globe behavior
-    setActiveTarget({ lat: country.lat, lng: country.lng, zoomLevel: 1.5 });
+    setActiveTarget({ lat: country.lat, lng: country.lng, zoomLevel: applyZoom(0.8) }); // Increased zoom (was 1.5)
     setSelectedCountry(country.iso);
     setSelectedCountries([]); // Clear group highlights
     

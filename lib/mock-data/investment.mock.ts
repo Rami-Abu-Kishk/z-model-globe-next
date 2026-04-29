@@ -83,28 +83,28 @@ export const investmentDataStore: Record<string, InvestmentData> = {
   GLOBAL: {
     bestTarget: {
       label: "Best Country to Invest In",
-      name: "United Arab Emirates",
-      iso: "AE",
-      score: 98.5,
-      details: "Top FDI destination driven by zero corporate tax zones, golden visa programs, and massive infrastructure spending.",
+      name: "India",
+      iso: "IN",
+      score: 99.2,
+      details: "World's fastest-growing major economy, supported by the PM Gati Shakti infrastructure plan and high-tech manufacturing rotation via PLI schemes.",
       timestamp: "Updated: Live 24/7",
-      imageUrl: "/assets/images/mock/uae_investment_hero.png",
+      imageUrl: "/assets/images/mock/india.jpg",
       pdfReportData: {
-        summary: "The United Arab Emirates (UAE) presents a highly attractive, affluent investment landscape characterized by strong government support, a low-tax environment, and world-class infrastructure. While the overall investment climate is robust, investors should diversify across sectors to mitigate localized risks such as slowing consumption and export growth.",
+        summary: "India presents the most compelling growth story of the decade. With a projected GDP growth of 7.6% for FY26 and a structural pivot toward high-tech manufacturing, the nation is absorbing massive global capital flight. The 'PM Gati Shakti' Master Plan and 'Make in India' initiatives are creating a world-class infrastructure and manufacturing ecosystem.",
         highlights: [
-          { title: "Macroeconomic Profile", detail: "GDP & Wealth: $504.17 Billion (Per Capita: ~$53,000) across a population of 9.52 Million. Growth & Stability: Projected GDP growth of 4.0% for 2024, supported by a highly stable inflation rate of 1.66% and low unemployment at 2.13%. Foreign Direct Investment (FDI): Strong international footprint with an FDI rate of 8.5%." },
-          { title: "Investment Climate & Key Trends", detail: "The UAE scores a strong 81.4 on the Investment Climate index, bolstered by perfect scores in transportation infrastructure, telecommunications, and tax burden. Positive KPI Trends: Significant improvements in Digitalization (↑13.75%) and massive drops in Crime (↓85.15%) and Government Debt Growth (↓99.48%). The Business Environment Index remains highly stable." },
-          { title: "Strategic Risks & Watch-Outs", detail: "The report warns of challenges regarding investment growth momentum and potential currency depreciation. Corresponding KPIs also show sharp declines in Consumption Growth (↓88.98%) and Export Growth (↓75.54%)." },
-          { title: "Top Strategic Opportunities", detail: "The highest-value sector for capital allocation is Financial Services, though high-yield opportunities span multiple industries. Industry & Manufacturing: EDB Industrial Mobilization Program — $16.34B pipeline | 8-14% ROI. Financial Services (Top Value Sector): EDB Industrial & Green Financing Pipeline — $16.30B | 5-9% ROI. UAE National Investment Fund — $10.00B | 6-12% ROI. Infrastructure: Abu Dhabi Multi-Project PPP — $12.80B | 5-12% ROI, Dubai Strategic Sewerage Tunnel — 6-10% ROI. Renewable Energy: Masdar + EWEC Solar PV + BESS Gigascale Project — 6-12% ROI." },
-          { title: "Strategic Takeaway", detail: "The UAE offers fertile ground for investors. Capitalizing on infrastructure and green financing pipelines while maintaining a diversified portfolio is the optimal strategy to navigate the slight dips in localized consumption and export momentum." }
+          { title: "Macroeconomic Profile", detail: "GDP Growth: Estimated at 7.6% for FY26 (RBI/IMF/World Bank). India remains the fastest-growing major economy globally. Wealth & Stability: Resilient domestic demand and a stable inflation outlook (Target 4.0%). Gross Savings: Robust at 30.3% of GNDI, providing a massive domestic capital pool." },
+          { title: "Strategic Infrastructure", detail: "The PM Gati Shakti National Master Plan is a ₹15 lakh crore initiative for multi-modal connectivity. It integrates 1,600+ data layers for real-time project monitoring, significantly reducing logistics costs and improving supply chain efficiency." },
+          { title: "Manufacturing Mobilization", detail: "The Production Linked Incentive (PLI) Schemes have attracted ₹2.16 lakh crore in investment across 14 strategic sectors, including electronics, pharma, and EVs. Over ₹20 lakh crore in cumulative sales recorded as of mid-2025." },
+          { title: "Investment Climate", detail: "India has recorded $70.95 billion in FDI inflows (FY24), with a structural shift toward electronics, renewables, and digital infrastructure. The relaxation of FDI rules in defense and space is attracting a new wave of high-conviction capital." },
+          { title: "Strategic Takeaway", detail: "India offers unparalleled scale and hyper-growth potential. Capitalizing on the infrastructure build-out and manufacturing incentives while leveraging the world's largest young workforce is the optimal alpha strategy." }
         ],
         metrics: [
-          { label: "GDP growth", value: "4.0%", trend: "up" },
-          { label: "Inflation rate", value: "1.66%", trend: "stable" },
-          { label: "Unemployment", value: "2.13%", trend: "down" },
-          { label: "FDI Interest", value: "8.5%", trend: "up" }
+          { label: "GDP growth", value: "7.6%", trend: "up" },
+          { label: "Inflation rate", value: "4.8%", trend: "stable" },
+          { label: "FDI Inflow", value: "$71B", trend: "up" },
+          { label: "Savings Rate", value: "30.3%", trend: "up" }
         ],
-        downloadUrl: "/files/report-country-card-for-uae.pdf"
+        downloadUrl: "/files/report-country-card-for-india.pdf"
       }
     },
     topOpportunities: [
@@ -310,16 +310,16 @@ export const investmentDataStore: Record<string, InvestmentData> = {
       }
     ],
     tableData: [
-      { id: "1", entity: "UAE", rating: "Aa2", inflow: "+$23B", risk: "Low", yield: "4.1%" },
-      { id: "2", entity: "USA", rating: "AA+", inflow: "+$120B", risk: "Low", yield: "4.2%" },
-      { id: "3", entity: "Canada", rating: "Aaa", inflow: "+$15B", risk: "Low", yield: "3.9%" },
-      { id: "4", entity: "Japan", rating: "Aaa", inflow: "+$18B", risk: "Low", yield: "3.8%" },
-      { id: "5", entity: "China", rating: "A+", inflow: "+$65B", risk: "Medium", yield: "2.5%" }
+      { id: "1", entity: "India", rating: "Aa3", inflow: "+$82B", risk: "Low", yield: "7.2%" },
+      { id: "2", entity: "UAE", rating: "Aa2", inflow: "+$23B", risk: "Low", yield: "4.1%" },
+      { id: "3", entity: "USA", rating: "AA+", inflow: "+$120B", risk: "Low", yield: "4.2%" },
+      { id: "4", entity: "Canada", rating: "Aaa", inflow: "+$15B", risk: "Low", yield: "3.9%" },
+      { id: "5", entity: "Japan", rating: "Aaa", inflow: "+$18B", risk: "Low", yield: "3.8%" }
     ],
     aiInsights: {
-      summary: "Global investment landscapes in 2026 are defined by a massive rotation into 'Sovereign Alpha'—high-conviction targets backed by direct state policy and AI-driven industrialization. The UAE, USA, and India emerge as the primary beneficiaries of this capital flight, offering a blend of regulatory stability and hyper-growth potential in digital infrastructure.",
-      opportunities: "1. **Sovereign Cloud & Data Sovereignty**: Massive build-out of localized compute clusters across the GCC and SE Asia.\n2. **Energy Transition Arbitrage**: Capitalizing on the volatility of the green energy shift via high-yield sovereign bonds.\n3. **AI-Enabled Manufacturing**: Direct FDI into semi-automated 'Giga-factories' in North America and India.",
-      tactical: "• **Immediate Action**: Overweight UAE sovereign-linked entities targeting the 'D33' expansion.\n• **Risk Hedge**: Neutralize US interest rate volatility via long-term green infrastructure play.\n• **Emerging Alpha**: Monitor Indian digital stack exports to frontier markets for high-growth entry points."
+      summary: "Global investment landscapes in 2026 are defined by a massive rotation into 'Sovereign Alpha'—high-conviction targets backed by direct state policy and AI-driven industrialization. India, the UAE, and the USA emerge as the primary beneficiaries of this capital flight, with India offering the highest growth multiplier through its 'PM Gati Shakti' master plan.",
+      opportunities: "1. **Infrastructure Connectivity (Gati Shakti)**: Massive build-out of multi-modal logistics across the Indian subcontinent.\n2. **Manufacturing PLI Schemes**: Direct FDI into semi-automated 'Giga-factories' for electronics and EVs in India and North America.\n3. **Energy Transition Arbitrage**: Capitalizing on the volatility of the green energy shift via high-yield sovereign bonds.",
+      tactical: "• **Immediate Action**: Overweight Indian infrastructure and manufacturing-linked entities targeting the 'Make in India' expansion.\n• **Strategic Move**: Leverage UAE's stable regulatory environment for regional capital de-risking.\n• **Tech Play**: Monitor Indian digital stack exports for high-growth entry points in frontier markets."
     }
   },
   AE: {
@@ -1081,10 +1081,10 @@ export const investmentDataStore: Record<string, InvestmentData> = {
   },
   IN: {
     bestTarget: {
-      label: "High-Growth Target",
-      name: "Renewable Energy Grid",
-      score: 96.8,
-      details: "World-leading solar capacity expansion and green hydrogen ecosystem development.",
+      label: "Prime Investment Target",
+      name: "Gati Shakti Multi-Modal Grid",
+      score: 99.2,
+      details: "National master plan for multi-modal connectivity across 14 strategic industrial sectors.",
       timestamp: "Updated: Daily"
     },
     topOpportunities: [
@@ -1133,52 +1133,52 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         }
       },
       {
-        title: "India Investment Growth",
+        title: "India GDP Growth",
         impact: "High",
-        value: "7.0%",
+        value: "7.6%",
         rep: "Nirmala Sitharaman",
         org: "MoF",
         insightData: {
-          org: "Finance Ministry",
+          org: "Finance Ministry / RBI / IMF",
           unit: "%",
-          historicalData: [6.1, 6.5, 6.8, 6.9, 7.0],
-          forecastData: [7.0, 7.2, 7.5, 7.8, 8.2],
+          historicalData: [6.1, 6.8, 7.2, 7.5, 7.6],
+          forecastData: [7.6, 7.2, 6.9, 6.7, 6.5],
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
             forecast: ['2026', '2027', '2028', '2029', '2030 (Est)']
           },
           analysis: {
-            historical: "The world's fastest-growing major economy, supported by demographics and massive service exports.",
-            forecast: "Continued fiscal consolidation and focus on 'Make in India' are expected to maintain growth above 7%."
+            historical: "The world's fastest-growing major economy, driven by robust domestic demand and structural manufacturing shifts.",
+            forecast: "While global headwinds persist, India's focus on 'PM Gati Shakti' and 'PLI Schemes' maintains a high growth floor above 6.5%."
           },
           stats: {
-            historical: { confidence: "98.8%", delta: "+14.8%" },
-            forecast: { confidence: "91.2%", delta: "+17.1%" }
+            historical: { confidence: "99.2%", delta: "+24.6%" },
+            forecast: { confidence: "94.5%", delta: "-14.5%" }
           }
         }
       },
       {
         title: "India FDI Inflows",
         impact: "High",
-        value: "$82 Billion",
+        value: "$71 Billion",
         rep: "Rajesh Kumar Singh",
         org: "DPIIT",
         insightData: {
-          org: "UNCTAD",
+          org: "DPIIT / RBI",
           unit: "$B",
-          historicalData: [65, 72, 78, 80, 82],
-          forecastData: [82, 95, 115, 145, 190],
+          historicalData: [65, 72, 78, 70.9, 71],
+          forecastData: [71, 85, 105, 130, 160],
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
             forecast: ['2026', '2027', '2028', '2029', '2030 (Est)']
           },
           analysis: {
-            historical: "Record inflows in the tech and renewables sectors as global firms seek to diversify their India-centric supply chains.",
-            forecast: "The relaxation of FDI rules in space and defense is expected to attract a new wave of high-tech capital."
+            historical: "Record inflows in tech and renewables (FY24 total FDI at $70.95B) despite global liquidity tightening.",
+            forecast: "Official targets aim for $100B+ annual FDI as the PLI manufacturing schemes reach critical mass."
           },
           stats: {
-            historical: { confidence: "99.4%", delta: "+26.2%" },
-            forecast: { confidence: "89.5%", delta: "+131.7%" }
+            historical: { confidence: "99.4%", delta: "+9.2%" },
+            forecast: { confidence: "89.5%", delta: "+125.4%" }
           }
         }
       },
@@ -1208,27 +1208,27 @@ export const investmentDataStore: Record<string, InvestmentData> = {
         }
       },
       {
-        title: "India Savings",
+        title: "India Savings Rate",
         impact: "High",
-        value: "30.2%",
+        value: "30.3%",
         rep: "Z-Model Analyst",
         org: "MoStats",
         insightData: {
-          org: "World Bank",
+          org: "MoSPI / World Bank",
           unit: "%",
-          historicalData: [28.5, 29.1, 29.6, 30.0, 30.2],
-          forecastData: [30.2, 31.5, 33.2, 35.8, 39.5],
+          historicalData: [28.5, 29.1, 29.6, 30.2, 30.3],
+          forecastData: [30.3, 31.5, 33.0, 35.0, 38.0],
           labels: {
             historical: ['2021', '2022', '2023', '2024', '2025'],
             forecast: ['2026', '2027', '2028', '2029', '2030 (Est)']
           },
           analysis: {
-            historical: "Household savings have traditionally been the bedrock of India's domestic investment pool.",
-            forecast: "The transition to formal banking and digital economy is projected to capture a higher share of the huge unorganized sector savings."
+            historical: "Gross Savings at 30.3% of GNDI, with the household sector remaining the primary driver (59% share).",
+            forecast: "Financialization of savings and expansion of formal equity markets are projected to sustain the 30%+ threshold."
           },
           stats: {
-            historical: { confidence: "99.3%", delta: "+6.0%" },
-            forecast: { confidence: "91.8%", delta: "+30.8%" }
+            historical: { confidence: "99.8%", delta: "+6.3%" },
+            forecast: { confidence: "91.2%", delta: "+25.4%" }
           }
         }
       }

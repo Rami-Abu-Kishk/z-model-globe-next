@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
 import { useZModelStore } from '@/lib/store';
+import { applyZoom } from '@/lib/constants';
 import { GlobeCameraController } from './GlobeCameraController';
 import { economyGlobeData, investmentGlobePoints, politicalCrisisRings, mediaNewsItems, groupsArcs, searchableCountries, politicalArcs } from '@/lib/mockData';
 import {
@@ -38,7 +39,7 @@ const globeMaterial = new THREE.MeshStandardMaterial({
   metalness: 0.1
 });
 const ORBITAL_ALTITUDE = 3.5;
-const FOCUS_ALTITUDE = 2.8;
+const FOCUS_ALTITUDE = applyZoom(1.8); // Use ratio (base was 1.8)
 
 export const HologramEarth = forwardRef((props, ref) => {
   const globeRef = useRef<any>(null);
@@ -77,7 +78,7 @@ export const HologramEarth = forwardRef((props, ref) => {
     setIsFocused(false);
 
     // Set globe behavior
-    setActiveTarget({ lat: country.lat, lng: country.lng, zoomLevel: 1.5 });
+    setActiveTarget({ lat: country.lat, lng: country.lng, zoomLevel: applyZoom(0.8) }); // Much closer zoom (was 1.5)
     setSelectedCountry(country.iso);
     setSelectedCountries([]); // Clear any multi-country group highlights
 
@@ -176,10 +177,10 @@ export const HologramEarth = forwardRef((props, ref) => {
     
     // Add Best Target Point if enabled
     if (isInvestment && showBestTargetPoint) {
-      // UAE Coordinates for the special marker
+      // India Coordinates for the special marker
       points.push({
-        lat: 23.4241,
-        lng: 53.8478,
+        lat: 20.5937,
+        lng: 78.9629,
         size: 1.8, // Slightly reduced
         color: '#fbbf24', // Premium Gold
         label: 'Best Country to Invest In',
@@ -334,26 +335,26 @@ export const HologramEarth = forwardRef((props, ref) => {
             const flagCode = (d.iso || '').toLowerCase();
             el.innerHTML = `
               <div style="
-                background: rgba(255, 255, 255, 0.9);
+                background: rgba(255, 255, 255, 0.95);
                 backdrop-filter: blur(12px);
                 border: 1px solid rgba(255, 255, 255, 1);
-                border-radius: 40px;
-                padding: 6px 14px 6px 10px;
+                border-radius: 60px;
+                padding: 10px 24px 10px 16px;
                 color: #0f172a;
                 font-family: sans-serif;
-                font-size: 11px;
+                font-size: 18px;
                 font-weight: 900;
                 text-transform: uppercase;
-                letter-spacing: 0.08em;
+                letter-spacing: 0.1em;
                 white-space: nowrap;
                 transform: translate(-50%, -50%);
-                box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+                box-shadow: 0 15px 45px rgba(0,0,0,0.15);
                 pointer-events: none;
                 display: flex;
                 align-items: center;
-                gap: 8px;
+                gap: 12px;
               ">
-                <img src="https://flagcdn.com/w40/${flagCode}.png" style="width: 18px; height: 12px; border-radius: 2px; object-fit: cover; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" />
+                <img src="https://flagcdn.com/w80/${flagCode}.png" style="width: 32px; height: 20px; border-radius: 4px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.15);" />
                 ${d.label}
               </div>
             `;
@@ -361,26 +362,26 @@ export const HologramEarth = forwardRef((props, ref) => {
             // Sleek, glassmorphic data label
             el.innerHTML = `
               <div style="
-                background: rgba(15, 23, 42, 0.85);
+                background: rgba(15, 23, 42, 0.9);
                 backdrop-filter: blur(8px);
                 border: 1px solid ${d.color || '#10b981'};
-                border-radius: 6px;
-                padding: 4px 8px;
+                border-radius: 10px;
+                padding: 8px 16px;
                 color: white;
                 font-family: sans-serif;
-                font-size: 10px;
+                font-size: 14px;
                 font-weight: bold;
                 white-space: nowrap;
                 transform: translate(-50%, -100%);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.3);
                 display: flex;
                 align-items: center;
-                gap: 6px;
+                gap: 10px;
                 pointer-events: none;
               ">
-                <span style="display:block; width:6px; height:6px; border-radius:50%; background:${d.color || '#10b981'};"></span>
+                <span style="display:block; width:10px; height:10px; border-radius:50%; background:${d.color || '#10b981'};"></span>
                 ${d.label || 'Data Point'}
-                <span style="color: ${d.color || '#10b981'}; margin-left: 4px;">${d.size * 10}%</span>
+                <span style="color: ${d.color || '#10b981'}; margin-left: 6px;">${d.size * 10}%</span>
               </div>
             `;
           }
@@ -617,7 +618,7 @@ export const HologramEarth = forwardRef((props, ref) => {
           } else {
             // Fallback logic if the country isn't in your searchable list
             setSelectedCountry(iso);
-            setActiveTarget({ lat, lng, zoomLevel: FOCUS_ALTITUDE });
+            setActiveTarget({ lat, lng, zoomLevel: applyZoom(0.8) }); // Use ratio (base was 0.8)
             if (!activeModule) {
               setViewState('EARTH_FOCUS');
             }

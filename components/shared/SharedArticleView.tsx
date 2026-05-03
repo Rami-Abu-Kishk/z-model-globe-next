@@ -86,7 +86,7 @@ export function SharedArticleView({
           )}>
             {article.badgeText || article.category}
           </Badge>
-          <h2 className="text-3xl lg:text-5xl font-black text-white leading-tight tracking-tighter drop-shadow-2xl">
+          <h2 className="text-2xl lg:text-4xl font-black text-white leading-tight tracking-tighter drop-shadow-2xl">
             {article.title}
           </h2>
         </div>

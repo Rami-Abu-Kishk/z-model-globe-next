@@ -75,7 +75,7 @@ export interface PoliticalKpi {
 export const politicalCases: PoliticalCase[] = [
   {
     id: "C3",
-    name: "Iran–Israel–US War",
+    name: "Iran – Israel – US War",
     region: "Middle East",
     severity: "Critical",
     severityScore: 94,
@@ -90,7 +90,7 @@ export const politicalCases: PoliticalCase[] = [
       { name: "Strait_of_Hormuz_Risk_Assessment.pdf", size: "5.2 MB" }
     ],
     summary: "Strategic significance of chokepoints like the Strait of Hormuz amplifies the economic stakes. The case is critical due to its high probability of rapid escalation and systemic implications for global energy markets.",
-    imageUrl: "https://images.unsplash.com/photo-1590644365607-1c5a519a9a37?auto=format&fit=crop&q=80&w=1200"
+    imageUrl: "/assets/images/mock/us-iran-israel-war.png"
   },
   {
     id: "C1",

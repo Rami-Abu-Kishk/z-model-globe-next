@@ -143,7 +143,7 @@ export function KpiInsightOverlay({
                         />
                       ))}
                     </div>
-                    <span className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.3em]">AI Synthesis Core</span>
+                    <span className="text-[12px] font-black text-indigo-600 uppercase tracking-[0.3em]">AI Synthesis Core</span>
                   </div>
 
                   <motion.p
@@ -156,7 +156,7 @@ export function KpiInsightOverlay({
                     {loadingPhrase}
                   </motion.p>
 
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                  <p className="text-[12px] text-slate-400 font-bold uppercase tracking-widest">
                     Z-Model Distributed Analytical Intelligence
                   </p>
                 </div>
@@ -180,7 +180,7 @@ export function KpiInsightOverlay({
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-indigo-500" />
-                      <span className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em]">Institutional Deep-Dive</span>
+                      <span className="text-[12px] font-black text-indigo-600 uppercase tracking-[0.2em]">Institutional Deep-Dive</span>
                     </div>
                     <h2 className="text-4xl font-black text-slate-900 tracking-tighter">
                       {(() => {
@@ -200,7 +200,7 @@ export function KpiInsightOverlay({
                         return `~${kpi.value.startsWith('$') ? '$' : ''}${projected}${inferredUnit}`;
                       })()}
                     </h2>
-                    <p className="text-[12px] font-black text-slate-400 uppercase tracking-widest">
+                    <p className="text-[14px] font-black text-slate-400 uppercase tracking-widest">
                       {kpi.title} - {kpi.org} Matrix ({viewMode === 'historical' ? 'Audited' : 'Projected'})
                     </p>
                   </div>
@@ -217,7 +217,7 @@ export function KpiInsightOverlay({
                   <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500/20" />
                   <div className="flex items-center gap-2 mb-4">
                     <Sparkle className="w-4 h-4 text-indigo-600" />
-                    <span className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.2em]">
+                    <span className="text-[12px] font-black text-indigo-600 uppercase tracking-[0.2em]">
                       {viewMode === 'historical' ? 'Executive Audit Summary' : 'AI Predictive Synthesis'}
                     </span>
                   </div>
@@ -229,10 +229,10 @@ export function KpiInsightOverlay({
                 <div className="bg-indigo-50/30 border border-indigo-100/50 p-6 rounded-3xl relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-400/5 blur-3xl -translate-y-1/2 translate-x-1/2" />
                   <div className="flex justify-between items-center mb-4">
-                    <h4 className="text-[10px] font-black text-indigo-700 uppercase tracking-[0.2em]">
+                    <h4 className="text-[12px] font-black text-indigo-700 uppercase tracking-[0.2em]">
                       {viewMode === 'historical' ? 'Historical Performance Benchmarks' : 'Hockeystick Acceleration Vector'}
                     </h4>
-                    <Badge className="bg-indigo-100/50 text-indigo-600 border-none text-[8px] font-black uppercase">
+                    <Badge className="bg-indigo-100/50 text-indigo-600 border-none text-[10px] font-black uppercase">
                       {viewMode === 'historical' ? 'Verified' : 'AI Projection'}
                     </Badge>
                   </div>
@@ -274,11 +274,11 @@ export function KpiInsightOverlay({
                   <div className="p-8 bg-slate-50/50 border border-slate-100 rounded-3xl space-y-4">
                     <div className="flex items-center gap-2">
                       <Zap className="w-4 h-4 text-amber-500" />
-                      <span className="text-[10px] font-black text-slate-800 uppercase tracking-[0.2em]">Outlook & Structural Drivers</span>
+                      <span className="text-[12px] font-black text-slate-800 uppercase tracking-[0.2em]">Outlook & Structural Drivers</span>
                     </div>
                     <ul className="grid grid-cols-1 gap-2">
                       {kpi.outlookAndDrivers.map((driver, idx) => (
-                        <li key={idx} className="flex gap-3 text-[13px] font-bold text-slate-600 leading-tight">
+                        <li key={idx} className="flex gap-3 text-[15px] font-bold text-slate-600 leading-tight">
                           <span className="text-amber-500 mt-0.5">•</span>
                           {driver}
                         </li>
@@ -292,7 +292,7 @@ export function KpiInsightOverlay({
                   <div className="p-8 bg-blue-50/30 border border-blue-100 rounded-3xl space-y-4">
                     <div className="flex items-center gap-2">
                       <Activity className="w-4 h-4 text-blue-600" />
-                      <span className="text-[10px] font-black text-blue-800 uppercase tracking-[0.2em]">Strategic Interpretation</span>
+                      <span className="text-[12px] font-black text-blue-800 uppercase tracking-[0.2em]">Strategic Interpretation</span>
                     </div>
                     <p className="text-[14px] font-bold text-slate-700 leading-relaxed tracking-tight italic">
                       " {kpi.interpretation} "
@@ -309,7 +309,7 @@ export function KpiInsightOverlay({
                       }
                       setViewMode(viewMode === 'historical' ? 'forecast' : 'historical');
                     }}
-                    className={`px-10 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-lg flex items-center gap-2 cursor-pointer ${
+                    className={`px-10 py-3 rounded-full text-[12px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-lg flex items-center gap-2 cursor-pointer ${
                       viewMode === 'forecast' 
                         ? 'bg-slate-900 text-white hover:bg-slate-800' 
                         : 'bg-indigo-600 text-white hover:bg-indigo-700'
@@ -318,7 +318,7 @@ export function KpiInsightOverlay({
                     {viewMode === 'historical' ? <Sparkles className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
                     {viewMode === 'historical' ? 'Forecast Vector' : 'Historical Audit'}
                   </button>
-                  <p className="text-[8px] text-slate-400 font-bold uppercase tracking-[0.1em]">
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.1em]">
                     Institutional deep-dive powered by Z-Model Distributed Core
                   </p>
                 </div>

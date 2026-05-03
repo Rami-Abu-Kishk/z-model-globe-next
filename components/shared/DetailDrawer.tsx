@@ -79,7 +79,7 @@ export function DetailDrawer() {
           <div className={cn("p-2 rounded-xl bg-white/80 shadow-sm transition-transform group-hover:scale-110", colorClass.split(' ')[1])}>
             <Icon className="w-4 h-4" />
           </div>
-          <h4 className="text-[11px] font-black uppercase tracking-widest text-slate-800">{title}</h4>
+          <h4 className="text-[13px] font-black uppercase tracking-widest text-slate-800">{title}</h4>
         </div>
         <Button 
           variant="ghost" 
@@ -97,20 +97,20 @@ export function DetailDrawer() {
             <h5 className="text-[15px] font-black text-slate-900 leading-tight">
               {trend.title}
             </h5>
-            <span className="text-[13px] font-black text-slate-900 ml-2">{trend.value}</span>
+            <span className="text-[15px] font-black text-slate-900 ml-2">{trend.value}</span>
           </div>
-          <p className="text-[11px] text-slate-500 font-bold leading-relaxed">
+          <p className="text-[13px] text-slate-500 font-bold leading-relaxed">
             {trend.description}
           </p>
           <button 
             onClick={() => navigateToSection(moduleId)}
-            className="flex items-center gap-2 text-[10px] font-black text-slate-900 uppercase tracking-tighter mt-2 group-hover:gap-3 transition-all"
+            className="flex items-center gap-2 text-[12px] font-black text-slate-900 uppercase tracking-tighter mt-2 group-hover:gap-3 transition-all"
           >
             Enter {title} Hub <ArrowRight className="w-3 h-3 text-sky-500" />
           </button>
         </div>
       ) : (
-        <p className="text-[11px] text-slate-400 font-bold italic">
+        <p className="text-[13px] text-slate-400 font-bold italic">
           Strategic intelligence current validating.
         </p>
       )}
@@ -145,7 +145,7 @@ export function DetailDrawer() {
                   <div className="flex items-center gap-2 mt-2">
                     <div className="flex items-center gap-1.5 px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-md">
                        <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                       <p className="text-[9px] text-emerald-600 font-black tracking-widest uppercase">Live Intelligence Hub</p>
+                       <p className="text-[11px] text-emerald-600 font-black tracking-widest uppercase">Live Intelligence Hub</p>
                     </div>
                   </div>
                 </div>
@@ -165,9 +165,9 @@ export function DetailDrawer() {
               <section className="space-y-3">
                 <div className="flex items-center gap-2 text-slate-400">
                   <Globe className="w-4 h-4" />
-                  <h4 className="text-[10px] font-black uppercase tracking-widest">Sovereign Summary</h4>
+                  <h4 className="text-[12px] font-black uppercase tracking-widest">Sovereign Summary</h4>
                 </div>
-                <p className="text-[12px] text-slate-600 leading-relaxed font-bold">
+                <p className="text-[14px] text-slate-600 leading-relaxed font-bold">
                   {countryData.summary || `Primary analysis indicates significant regional influence. Strategic data for ${countryData.name} is currently undergoing a deep-sector validation.`}
                 </p>
               </section>
@@ -210,9 +210,9 @@ export function DetailDrawer() {
               <div className="p-5 bg-slate-900/5 rounded-2xl border border-slate-900/10">
                  <div className="flex items-center gap-3 mb-2">
                     <Activity className="w-4 h-4 text-slate-400" />
-                    <span className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Global Stability Audit</span>
+                    <span className="text-[12px] font-black text-slate-900 uppercase tracking-widest">Global Stability Audit</span>
                  </div>
-                 <p className="text-[10px] text-slate-500 font-bold leading-relaxed">
+                 <p className="text-[12px] text-slate-500 font-bold leading-relaxed">
                    Real-time signals are processed via the Z-Model Core. Any variance in sovereign reporting is flagged for immediate executive review.
                  </p>
               </div>
@@ -223,12 +223,12 @@ export function DetailDrawer() {
           <div className="p-6 border-t border-slate-200/50 bg-white/40 backdrop-blur-md shrink-0">
             <Button 
                variant="outline" 
-               className="w-full rounded-2xl h-12 bg-white border-slate-200 hover:bg-slate-900 hover:text-white transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+               className="w-full rounded-2xl h-12 bg-white border-slate-200 hover:bg-slate-900 hover:text-white transition-all text-[13px] font-black uppercase tracking-widest flex items-center gap-2"
                onClick={() => navigateToSection('economy')}
             >
               <ExternalLink className="w-4 h-4" /> View Full Sovereignty Report
             </Button>
-            <p className="text-[9px] text-slate-400 font-bold tracking-widest text-center uppercase mt-6 flex items-center justify-center gap-2">
+            <p className="text-[11px] text-slate-400 font-bold tracking-widest text-center uppercase mt-6 flex items-center justify-center gap-2">
               <Shield className="w-3 h-3" />
               Secure Strategic Layer · Restricted Access
             </p>

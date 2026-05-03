@@ -55,7 +55,7 @@ function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: Kpi
       </div>
 
       <div className="flex justify-between items-start mb-6 relative z-10">
-        <span className="text-[13px] font-black text-slate-600 uppercase tracking-widest">{kpi.title}</span>
+        <span className="text-[16px] font-black text-slate-600 uppercase tracking-widest">{kpi.title}</span>
         {/* {(kpi.org.toLowerCase().includes('world bank') || kpi.rep.toLowerCase().includes('world bank')) && (
            <div className="w-12 h-12 rounded-2xl bg-white shadow-xl flex items-center justify-center border border-slate-100 -mt-2 -mr-2">
              <img src="/worldBank.svg" alt="World Bank" className="w-9 h-9 object-contain" />
@@ -65,7 +65,7 @@ function InvestmentKpiCard({ kpi, onOpen }: { kpi: KpiReport, onOpen?: (kpi: Kpi
 
       <div className="flex-1 relative z-10">
         <h3 className="text-3xl font-black text-slate-900 mb-2 tracking-tighter">{kpi.value}</h3>
-        <p className="text-[12px] font-bold text-slate-400 leading-snug mb-6 uppercase tracking-tight">{kpi.org}</p>
+        <p className="text-[14px] font-bold text-slate-400 leading-snug mb-6 uppercase tracking-tight">{kpi.org}</p>
       </div>
     </div>
   );
@@ -121,15 +121,15 @@ function OpportunityCard({
       <div className="p-5 flex flex-col flex-1">
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1 pr-2">
-            <h5 className="text-[13px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">
+            <h5 className="text-[15px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">
               {op.title}
             </h5>
-            <p className="text-[10px] text-slate-400 font-bold uppercase mt-1 flex items-center gap-1">
+            <p className="text-[12px] text-slate-400 font-bold uppercase mt-1 flex items-center gap-1">
               <Globe className="w-2 h-2" /> {op.region}
             </p>
           </div>
         </div>
-        <p className="text-[11px] text-slate-600 leading-relaxed font-medium line-clamp-3">
+        <p className="text-[13px] text-slate-600 leading-relaxed font-medium line-clamp-3">
           {op.description}
         </p>
       </div>
@@ -150,25 +150,25 @@ function InvestmentReportCard({ report, onClick }: { report: InvestmentReport, o
               <img src="/worldBank.svg" alt="World Bank" className="w-9 h-9 object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[11px] font-black text-slate-900 uppercase tracking-widest leading-none">World Bank</span>
-              <span className="text-[9px] font-bold text-slate-400 uppercase mt-1">Chief Economist Unit</span>
+              <span className="text-[13px] font-black text-slate-900 uppercase tracking-widest leading-none">World Bank</span>
+              <span className="text-[11px] font-bold text-slate-400 uppercase mt-1">Chief Economist Unit</span>
             </div>
           </div>
         ) : (
-          <Badge variant="outline" className="text-[9px] border-slate-200 text-slate-500 font-black uppercase tracking-widest">{report.org}</Badge>
+          <Badge variant="outline" className="text-[11px] border-slate-200 text-slate-500 font-black uppercase tracking-widest">{report.org}</Badge>
         )}
-        <span className="text-[9px] font-black text-slate-400 uppercase">{report.date}</span>
+        <span className="text-[11px] font-black text-slate-400 uppercase">{report.date}</span>
       </div>
 
       <div className="flex-1">
         <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-2 group-hover:text-emerald-700 transition-colors">{report.title}</h4>
-        <p className="text-[11px] text-slate-500 leading-relaxed line-clamp-2 mb-4 font-medium italic">"{report.description}"</p>
+        <p className="text-[13px] text-slate-500 leading-relaxed line-clamp-2 mb-4 font-medium italic">"{report.description}"</p>
       </div>
 
       <div className="pt-4 border-t border-slate-100 flex items-center justify-center">
         <div className="w-full py-2.5 px-2 rounded-xl bg-slate-50 group-hover:bg-emerald-50 flex items-center justify-center gap-3 transition-all border border-transparent group-hover:border-emerald-100">
           <FileText className="w-5 h-5 text-emerald-600" />
-          <span className="text-[10px] font-black text-emerald-600 uppercase tracking-widest">Open PDF Report</span>
+          <span className="text-[12px] font-black text-emerald-600 uppercase tracking-widest">Open PDF Report</span>
           <ArrowRight className="w-5 h-5 text-slate-900" />
         </div>
       </div>
@@ -217,7 +217,7 @@ function LiveCapitalInflow({ value: initialValue }: { value: string }) {
             key={currentValue}
             initial={{ y: trend === 'up' ? 2 : -2, opacity: 0.5 }}
             animate={{ y: 0, opacity: 1 }}
-            className={`font-black text-[13px] tabular-nums transition-colors duration-300 ${trend === 'up' ? 'text-emerald-600' :
+            className={`font-black text-[15px] tabular-nums transition-colors duration-300 ${trend === 'up' ? 'text-emerald-600' :
               trend === 'down' ? 'text-rose-600' :
                 'text-emerald-600'
               }`}
@@ -315,7 +315,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
         <div className="flex justify-center pt-8">
           <Button
             variant="outline"
-            className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+            className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[13px] font-black uppercase tracking-widest flex items-center gap-2"
             onClick={() => {
               if (data.bestTarget.pdfReportData?.downloadUrl) {
                 setSelectedReportForPreview({
@@ -493,7 +493,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
                     <div className="flex items-start gap-4">
                       <div className="w-0.5 bg-emerald-500/20 rounded-full h-12 self-stretch group-hover:bg-emerald-500 transition-colors" />
-                      <p className="text-[13px] md:text-sm text-slate-600 font-medium leading-relaxed max-w-[280px]">
+                      <p className="text-[15px] md:text-sm text-slate-600 font-medium leading-relaxed max-w-[280px]">
                         {data.bestTarget.details}
                       </p>
                     </div>
@@ -501,7 +501,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
 
                   <div className="mt-8 flex items-end justify-between border-t border-slate-200/50 pt-6 relative z-10">
                     <div className="flex flex-col items-end gap-2 text-right shrink-0">
-                      <p className="text-[9px]  font-bold uppercase tracking-widest">
+                      <p className="text-[11px]  font-bold uppercase tracking-widest">
                         Sync: {data.bestTarget.timestamp}
                       </p>
                     </div>
@@ -557,18 +557,18 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 </div>
 
                 <div className="p-4 md:p-8 bg-white/40 backdrop-blur-2xl border border-white/60 rounded-3xl shadow-xl overflow-x-auto">
-                  <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
+                  <h4 className="text-[13px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
                     <Building2 className="w-4 h-4" /> Entity Performance & Risk Index
                   </h4>
                   <div className="min-w-[600px]">
                     <Table>
                       <TableHeader>
                         <TableRow className="border-slate-200 hover:bg-transparent">
-                          <TableHead className="text-[11px] font-black uppercase text-slate-800 tracking-widest">Entity</TableHead>
-                          <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Credit Rating</TableHead>
-                          <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Capital Inflow</TableHead>
-                          <TableHead className="text-[11px] font-black uppercase text-slate-800 text-center tracking-widest">Risk Profile</TableHead>
-                          <TableHead className="text-[11px] font-black uppercase text-slate-800 text-right tracking-widest">Yield Spread</TableHead>
+                          <TableHead className="text-[13px] font-black uppercase text-slate-800 tracking-widest">Entity</TableHead>
+                          <TableHead className="text-[13px] font-black uppercase text-slate-800 text-center tracking-widest">Credit Rating</TableHead>
+                          <TableHead className="text-[13px] font-black uppercase text-slate-800 text-center tracking-widest">Capital Inflow</TableHead>
+                          <TableHead className="text-[13px] font-black uppercase text-slate-800 text-center tracking-widest">Risk Profile</TableHead>
+                          <TableHead className="text-[13px] font-black uppercase text-slate-800 text-right tracking-widest">Yield Spread</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -580,7 +580,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                           >
                             <TableCell className="font-extrabold text-slate-900 text-sm whitespace-nowrap">{row.entity}</TableCell>
                             <TableCell className="text-center">
-                              <Badge variant="outline" className="bg-slate-50 border-slate-200 font-black text-[10px]">
+                              <Badge variant="outline" className="bg-slate-50 border-slate-200 font-black text-[12px]">
                                 {row.rating}
                               </Badge>
                             </TableCell>
@@ -588,7 +588,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                               <LiveCapitalInflow value={row.inflow} />
                             </TableCell>
                             <TableCell className="text-center">
-                              <Badge className={`text-[9px] font-black uppercase px-2 shadow-sm ${row.risk === 'Low' ? 'bg-emerald-100 text-emerald-700' :
+                              <Badge className={`text-[11px] font-black uppercase px-2 shadow-sm ${row.risk === 'Low' ? 'bg-emerald-100 text-emerald-700' :
                                 row.risk === 'Medium' ? 'bg-amber-100 text-amber-700' :
                                   row.risk === 'Extreme' ? 'bg-slate-900 text-white animate-pulse' :
                                     'bg-rose-100 text-rose-700'
@@ -668,7 +668,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                       <div className="flex justify-center pt-8">
                         <Button
                           variant="outline"
-                          className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2"
+                          className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[13px] font-black uppercase tracking-widest flex items-center gap-2"
                           onClick={() => {
                             setSelectedReportForPreview({
                               id: 'analysis-' + investmentSelectedOpportunity!.title,
@@ -745,7 +745,7 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
         <div className="px-5 space-y-8 py-6">
           {/* FIRST: Top 3 Opportunities */}
           <div className="space-y-4">
-            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Winning Assets</h4>
+            <h4 className="text-[12px] font-black text-slate-400 uppercase tracking-widest px-1">Winning Assets</h4>
             <div className="space-y-3">
               {data.topOpportunities.map((op, i) => (
                 <div
@@ -758,10 +758,10 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                   onMouseLeave={() => setSelectedCountries([])}
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <span className="text-[11px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">{op.title}</span>
+                    <span className="text-[13px] font-black text-slate-900 uppercase tracking-tight leading-tight group-hover:text-emerald-700 transition-colors">{op.title}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-[9px] text-slate-400 font-bold uppercase">{op.region}</span>
+                    <span className="text-[11px] text-slate-400 font-bold uppercase">{op.region}</span>
                     <TrendBadge trend={op.status === 'up' ? 'up' : 'down'} value={op.status === 'up' ? 'Bullish' : 'Neutral'} />
                   </div>
                 </div>
@@ -778,19 +778,19 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
           >
             <div className="flex items-start justify-between">
               <div className="flex flex-col gap-2">
-                <span className="text-[9px] font-black text-emerald-700 uppercase tracking-widest">{data.bestTarget.label}</span>
+                <span className="text-[11px] font-black text-emerald-700 uppercase tracking-widest">{data.bestTarget.label}</span>
                 <h3 className="text-2xl font-black text-slate-900 leading-none group-hover:text-emerald-700 transition-colors">{data.bestTarget.name}</h3>
               </div>
               <div className="flex flex-col items-end">
                 <span className="text-3xl font-black text-emerald-600 leading-none">{data.bestTarget.score}</span>
-                <Badge className="bg-emerald-50 text-emerald-600 border-none text-[8px] font-black mt-2">LIVE SCORE</Badge>
+                <Badge className="bg-emerald-50 text-emerald-600 border-none text-[10px] font-black mt-2">LIVE SCORE</Badge>
               </div>
             </div>
           </div>
 
           {/* THIRD: Institutional Pulse */}
           <div className="space-y-4 pt-2">
-            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest px-1">Institutional Pulse</h4>
+            <h4 className="text-[12px] font-black text-slate-400 uppercase tracking-widest px-1">Institutional Pulse</h4>
             <div className="space-y-3">
               {data.kpis.slice(0, 3).map((kpi, idx) => (
                 <div
@@ -800,9 +800,9 @@ export function InvestmentModule({ isExpanded }: { isExpanded?: boolean }) {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <span className="text-lg font-black text-slate-900">{kpi.value}</span>
-                    <Badge variant="outline" className="text-[8px] border-slate-200 text-slate-500 uppercase">{kpi.org}</Badge>
+                    <Badge variant="outline" className="text-[10px] border-slate-200 text-slate-500 uppercase">{kpi.org}</Badge>
                   </div>
-                  <span className="text-[10px] text-slate-600 font-bold uppercase leading-tight">{kpi.title}</span>
+                  <span className="text-[12px] text-slate-600 font-bold uppercase leading-tight">{kpi.title}</span>
                 </div>
               ))}
             </div>

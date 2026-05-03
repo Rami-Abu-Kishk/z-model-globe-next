@@ -297,7 +297,7 @@ export function MediaArticleView({
         {/* Back button — top left */}
         <button
           onClick={onBack}
-          className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-black uppercase tracking-widest hover:bg-white/40 transition-all cursor-pointer"
+          className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[12px] font-black uppercase tracking-widest hover:bg-white/40 transition-all cursor-pointer"
         >
           <ChevronLeft className="w-3 h-3" />
           Back
@@ -316,7 +316,7 @@ export function MediaArticleView({
           <div className="flex-1 min-w-0 pr-4">
             <Badge
               className={cn(
-                "mb-2 text-[9px] font-black uppercase border-none h-5 px-3 shadow-lg",
+                "mb-2 text-[11px] font-black uppercase border-none h-5 px-3 shadow-lg",
                 article.badgeClassName || "bg-sky-500"
               )}
             >
@@ -330,14 +330,14 @@ export function MediaArticleView({
           {/* Source chip */}
           {article.source && (
             <div className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25">
-              <div className="w-6 h-6 rounded-full bg-slate-900 flex items-center justify-center text-white font-black text-[10px] overflow-hidden shrink-0">
+              <div className="w-6 h-6 rounded-full bg-slate-900 flex items-center justify-center text-white font-black text-[12px] overflow-hidden shrink-0">
                 {article.source.icon ? article.source.icon : (
                   <span>{article.source.initial || article.source.name?.[0] || 'Z'}</span>
                 )}
               </div>
               <div>
-                <p className="text-[9px] font-black text-white uppercase leading-none">{article.source.name}</p>
-                <p className="text-[8px] font-bold text-white/60 uppercase leading-none mt-0.5">{article.subtitle}</p>
+                <p className="text-[11px] font-black text-white uppercase leading-none">{article.source.name}</p>
+                <p className="text-[10px] font-bold text-white/60 uppercase leading-none mt-0.5">{article.subtitle}</p>
               </div>
             </div>
           )}
@@ -352,7 +352,7 @@ export function MediaArticleView({
           <ScrollArea className="flex-1" ref={scrollContainerRef as any}>
             <div className="p-8">
               {/* Subtitle / Meta */}
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-5">
+              <p className="text-[12px] font-black text-slate-400 uppercase tracking-widest mb-5">
                 {article.subtitle}
               </p>
 
@@ -414,7 +414,7 @@ export function MediaArticleView({
                               />
                             ))}
                           </div>
-                          <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Neural Synthesis Core</span>
+                          <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">Neural Synthesis Core</span>
                         </div>
 
                         <motion.p
@@ -427,7 +427,7 @@ export function MediaArticleView({
                           {loadingPhrase}
                         </motion.p>
                         
-                        <p className="text-[10px] text-slate-300 font-bold uppercase tracking-widest">
+                        <p className="text-[12px] text-slate-300 font-bold uppercase tracking-widest">
                           Distributed Intelligence • Cluster {Math.floor(Math.random() * 90) + 10}
                         </p>
                       </div>
@@ -474,10 +474,10 @@ export function MediaArticleView({
                               {active && <active.icon className="w-4 h-4 text-white" />}
                             </div>
                             <div>
-                              <h3 className="text-[12px] font-black text-slate-900 uppercase tracking-widest leading-none">
+                              <h3 className="text-[14px] font-black text-slate-900 uppercase tracking-widest leading-none">
                                 {active?.label} Analysis
                               </h3>
-                              <p className="text-[10px] font-bold text-slate-400 uppercase leading-none mt-1">
+                              <p className="text-[12px] font-bold text-slate-400 uppercase leading-none mt-1">
                                 Source: Z-Model Neural Engine
                               </p>
                             </div>
@@ -516,8 +516,8 @@ export function MediaArticleView({
             >
               <Brain className="w-3.5 h-3.5 text-white shrink-0" />
               <div className="min-w-0">
-                <p className="text-[9px] font-black text-white uppercase tracking-widest leading-none">Chat with AI</p>
-                <p className="text-[8px] font-bold text-white/60 leading-none mt-0.5 truncate">Z-Model Neural Engine</p>
+                <p className="text-[11px] font-black text-white uppercase tracking-widest leading-none">Chat with AI</p>
+                <p className="text-[10px] font-bold text-white/60 leading-none mt-0.5 truncate">Z-Model Neural Engine</p>
               </div>
               <Sparkles className="w-3 h-3 text-white/70 shrink-0 ml-auto" />
             </div>
@@ -554,13 +554,13 @@ export function MediaArticleView({
                   </div>
                   <div className="min-w-0">
                     <p className={cn(
-                      "text-[10px] font-black uppercase tracking-wide leading-none truncate",
+                      "text-[12px] font-black uppercase tracking-wide leading-none truncate",
                       isActive ? btn.activeText : "text-slate-700"
                     )}>
                       {btn.label}
                     </p>
                     <p className={cn(
-                      "text-[8px] font-bold leading-none mt-0.5 truncate",
+                      "text-[10px] font-bold leading-none mt-0.5 truncate",
                       isActive ? `${btn.activeText} opacity-70` : "text-slate-400"
                     )}>
                       {btn.description}
@@ -573,7 +573,7 @@ export function MediaArticleView({
 
           {/* Footer note */}
           <div className="px-4 py-3 border-t border-slate-100">
-            <p className="text-[8px] font-bold text-slate-300 uppercase tracking-widest text-center leading-relaxed">
+            <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest text-center leading-relaxed">
               Powered by<br />Z-Model Intelligence
             </p>
           </div>

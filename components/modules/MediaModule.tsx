@@ -124,10 +124,10 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                     <div className="w-2 h-2 rounded-full bg-rose-600 relative" />
                   </div>
                   <div>
-                    <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] leading-none mb-1">
+                    <h4 className="text-[12px] font-black text-slate-900 uppercase tracking-[0.2em] leading-none mb-1">
                       Signal Intelligence Feed
                     </h4>
-                    <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+                    <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest leading-none">
                       Source: {videoSource === 'SKY' ? 'Sky News Global' : 'Sky News Ar'} • Live
                     </p>
                   </div>
@@ -136,7 +136,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                   <button 
                     onClick={() => setVideoSource('SKY')}
                     className={cn(
-                      "px-3 py-1 text-[9px] font-black rounded-lg transition-all cursor-pointer",
+                      "px-3 py-1 text-[11px] font-black rounded-lg transition-all cursor-pointer",
                       videoSource === 'SKY' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
                     )}
                   >
@@ -145,7 +145,7 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                   <button 
                     onClick={() => setVideoSource('CNN')}
                     className={cn(
-                      "px-3 py-1 text-[9px] font-black rounded-lg transition-all cursor-pointer",
+                      "px-3 py-1 text-[11px] font-black rounded-lg transition-all cursor-pointer",
                       videoSource === 'CNN' ? "bg-slate-900 text-white shadow-lg" : "text-slate-400 hover:text-slate-600"
                     )}
                   >
@@ -201,12 +201,12 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                         onClick={() => setMediaCategoryFilter('Breaking')}
                       >
                         <div className="flex flex-col justify-center h-full">
-                          <h4 className="text-[12px] font-black text-rose-600 uppercase tracking-widest flex items-center gap-2 m-0">
+                          <h4 className="text-[14px] font-black text-rose-600 uppercase tracking-widest flex items-center gap-2 m-0">
                             <Zap className="w-4 h-4 shrink-0" /> Breaking News Feed
                           </h4>
-                          <p className="text-[10px] text-rose-400 font-bold mt-1 tracking-tighter italic m-0 pl-6 uppercase">LATEST {selectedCountry || 'GLOBAL'} INTELLIGENCE</p>
+                          <p className="text-[12px] text-rose-400 font-bold mt-1 tracking-tighter italic m-0 pl-6 uppercase">LATEST {selectedCountry || 'GLOBAL'} INTELLIGENCE</p>
                         </div>
-                        <Badge className="bg-rose-500 text-white animate-pulse text-[9px] h-6 px-3">LIVE</Badge>
+                        <Badge className="bg-rose-500 text-white animate-pulse text-[11px] h-6 px-3">LIVE</Badge>
                       </div>
                       
                       <div className="flex-1 overflow-y-auto p-4 space-y-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
@@ -219,16 +219,16 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                             <div className="flex items-center justify-between mb-3">
                                <div className="flex items-center gap-2">
                                  <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                                 <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
+                                 <span className="text-[12px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
                                </div>
                                <div className="flex items-center gap-2">
                                  <Maximize2 className="w-3 h-3 text-slate-300 opacity-0 group-hover:opacity-100 transition-all hover:text-rose-500" />
                                </div>
                             </div>
-                            <h4 className="text-[15px] font-black text-slate-900 group-hover:text-rose-600 transition-colors leading-tight mb-3">
+                            <h4 className="text-[17px] font-black text-slate-900 group-hover:text-rose-600 transition-colors leading-tight mb-3">
                               {news.headline}
                             </h4>
-                            <p className="text-[12px] text-slate-500 font-medium leading-relaxed line-clamp-2">
+                            <p className="text-[14px] text-slate-500 font-medium leading-relaxed line-clamp-2">
                               {news.summary}
                             </p>
                           </div>
@@ -248,10 +248,10 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                         onClick={() => setMediaCategoryFilter('Trending')}
                       >
                         <div className="flex flex-col justify-center h-full">
-                          <h4 className="text-[12px] font-black text-sky-600 uppercase tracking-widest flex items-center gap-2 m-0">
+                          <h4 className="text-[14px] font-black text-sky-600 uppercase tracking-widest flex items-center gap-2 m-0">
                             <TrendingUp className="w-4 h-4 shrink-0" /> Most Trending
                           </h4>
-                          <p className="text-[10px] text-sky-400 font-bold mt-1 tracking-tighter m-0 pl-6 uppercase">{selectedCountry || 'GLOBAL'} MEDIA PULSE</p>
+                          <p className="text-[12px] text-sky-400 font-bold mt-1 tracking-tighter m-0 pl-6 uppercase">{selectedCountry || 'GLOBAL'} MEDIA PULSE</p>
                         </div>
                         <Activity className="w-4 h-4 text-sky-400" />
                       </div>
@@ -264,10 +264,10 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                             className="p-5 rounded-2xl bg-white/60 border border-slate-100 hover:border-sky-300 hover:bg-white transition-all cursor-pointer group relative overflow-hidden"
                           >
                             <div className="flex items-center justify-between mb-3">
-                              <Badge className="bg-sky-50 text-sky-600 text-[9px] font-black uppercase border-none shadow-none">Trending #{news.id.replace('T', '')}</Badge>
-                              <span className="text-[10px] font-black text-slate-400 uppercase">{news.time}</span>
+                              <Badge className="bg-sky-50 text-sky-600 text-[11px] font-black uppercase border-none shadow-none">Trending #{news.id.replace('T', '')}</Badge>
+                              <span className="text-[12px] font-black text-slate-400 uppercase">{news.time}</span>
                             </div>
-                            <h4 className="text-[15px] font-black text-slate-900 group-hover:text-sky-600 transition-colors leading-tight mb-3">
+                            <h4 className="text-[17px] font-black text-slate-900 group-hover:text-sky-600 transition-colors leading-tight mb-3">
                               {news.headline}
                             </h4>
                              <div className="flex items-center justify-between">
@@ -299,12 +299,12 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                         onClick={() => setMediaCategoryFilter('Regional')}
                       >
                         <div className="flex flex-col justify-center h-full">
-                          <h4 className="text-[12px] font-black text-emerald-600 uppercase tracking-widest flex items-center gap-2 m-0">
+                          <h4 className="text-[14px] font-black text-emerald-600 uppercase tracking-widest flex items-center gap-2 m-0">
                             <Globe className="w-4 h-4 shrink-0" /> Local & Regional
                           </h4>
-                          <p className="text-[10px] text-emerald-400 font-bold mt-1 tracking-tighter m-0 pl-6 uppercase">SOVEREIGN UPDATES</p>
+                          <p className="text-[12px] text-emerald-400 font-bold mt-1 tracking-tighter m-0 pl-6 uppercase">SOVEREIGN UPDATES</p>
                         </div>
-                        <Badge className="bg-emerald-500 text-white text-[9px] h-6 px-3 uppercase">{selectedCountry || 'REGIONAL'}</Badge>
+                        <Badge className="bg-emerald-500 text-white text-[11px] h-6 px-3 uppercase">{selectedCountry || 'REGIONAL'}</Badge>
                       </div>
                       
                       <div className="flex-1 overflow-y-auto p-4 space-y-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
@@ -317,9 +317,9 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                             <div className="flex-1">
                               <div className="flex items-center gap-2 mb-2">
                                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                <span className="text-[10px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
+                                <span className="text-[12px] font-black text-slate-400 uppercase">{news.source} • {news.time}</span>
                               </div>
-                              <h4 className="text-[15px] font-black text-slate-900 group-hover:text-emerald-700 transition-colors leading-tight">
+                              <h4 className="text-[17px] font-black text-slate-900 group-hover:text-emerald-700 transition-colors leading-tight">
                                 {news.headline}
                               </h4>
                             </div>
@@ -341,10 +341,10 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                         <Sparkles className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-[13px] font-black text-slate-900 uppercase tracking-widest leading-none">
+                        <h4 className="text-[15px] font-black text-slate-900 uppercase tracking-widest leading-none">
                           Media Assistant and Advisor
                         </h4>
-                        <p className="text-[10px] font-bold text-emerald-600 uppercase tracking-tighter mt-1">
+                        <p className="text-[12px] font-bold text-emerald-600 uppercase tracking-tighter mt-1">
                           Operational Intelligence Matrix
                         </p>
                       </div>
@@ -393,9 +393,9 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
       <div className="flex-1 flex flex-col p-4 overflow-hidden">
         <Tabs defaultValue="breaking" className="flex-1 flex flex-col overflow-hidden">
           <TabsList className="grid grid-cols-3 bg-slate-100/50 p-1 rounded-lg h-auto mb-4">
-            <TabsTrigger value="breaking" className="text-[10px] py-1 font-bold uppercase">Breaking</TabsTrigger>
-            <TabsTrigger value="trending" className="text-[10px] py-1 font-bold uppercase">Trending</TabsTrigger>
-            <TabsTrigger value="regional" className="text-[10px] py-1 font-bold uppercase">Regional</TabsTrigger>
+            <TabsTrigger value="breaking" className="text-[12px] py-1 font-bold uppercase">Breaking</TabsTrigger>
+            <TabsTrigger value="trending" className="text-[12px] py-1 font-bold uppercase">Trending</TabsTrigger>
+            <TabsTrigger value="regional" className="text-[12px] py-1 font-bold uppercase">Regional</TabsTrigger>
           </TabsList>
 
           <TabsContent value="breaking" className="flex-1 overflow-hidden mt-0">
@@ -405,9 +405,9 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                   <div key={news.id} onClick={() => handleNewsClick(news)} className="group cursor-pointer p-3 bg-white/40 border border-white/60 rounded-xl hover:bg-white transition-all">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-1 h-1 rounded-full bg-rose-500 animate-pulse" />
-                      <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">{news.source} • {news.time}</span>
+                      <span className="text-[11px] font-black text-slate-400 uppercase tracking-tighter">{news.source} • {news.time}</span>
                     </div>
-                    <h4 className="text-[11px] font-bold text-slate-800 group-hover:text-rose-600 transition-colors leading-relaxed">
+                    <h4 className="text-[13px] font-bold text-slate-800 group-hover:text-rose-600 transition-colors leading-relaxed">
                       {news.headline}
                     </h4>
                   </div>
@@ -426,9 +426,9 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                   <div key={news.id} onClick={() => handleNewsClick(news)} className="group cursor-pointer p-3 bg-white/40 border border-white/60 rounded-xl hover:bg-white transition-all">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-1 h-1 rounded-full bg-sky-500" />
-                      <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">{news.source} • {news.time}</span>
+                      <span className="text-[11px] font-black text-slate-400 uppercase tracking-tighter">{news.source} • {news.time}</span>
                     </div>
-                    <h4 className="text-[11px] font-bold text-slate-800 group-hover:text-sky-600 transition-colors leading-relaxed">
+                    <h4 className="text-[13px] font-bold text-slate-800 group-hover:text-sky-600 transition-colors leading-relaxed">
                       {news.headline}
                     </h4>
                   </div>
@@ -447,9 +447,9 @@ export function MediaModule({ isExpanded }: { isExpanded?: boolean }) {
                   <div key={news.id} onClick={() => handleNewsClick(news)} className="group cursor-pointer p-3 bg-white/40 border border-white/60 rounded-xl hover:bg-white transition-all">
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-1 h-1 rounded-full bg-emerald-500" />
-                      <span className="text-[9px] font-black text-slate-400 uppercase tracking-tighter">{news.source} • {news.time}</span>
+                      <span className="text-[11px] font-black text-slate-400 uppercase tracking-tighter">{news.source} • {news.time}</span>
                     </div>
-                    <h4 className="text-[11px] font-bold text-slate-800 group-hover:text-emerald-600 transition-colors leading-relaxed">
+                    <h4 className="text-[13px] font-bold text-slate-800 group-hover:text-emerald-600 transition-colors leading-relaxed">
                       {news.headline}
                     </h4>
                   </div>

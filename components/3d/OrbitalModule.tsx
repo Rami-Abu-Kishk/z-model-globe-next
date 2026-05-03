@@ -74,11 +74,11 @@ export function OrbitalModule({ id, position, width, label, icon: Icon, isActive
             p-1.5 rounded-full transition-colors duration-300
             ${isActive ? 'bg-sky-500/10' : 'bg-slate-200/50 group-hover:bg-sky-500/10'}
           `}>
-            <Icon className={`w-4 h-4 ${isActive ? 'text-sky-600' : 'text-slate-500 group-hover:text-sky-600'}`} />
+            <Icon className={`w-5 h-5 ${isActive ? 'text-sky-600' : 'text-slate-500 group-hover:text-sky-600'}`} />
           </div>
           
           <span className={`
-            text-[12px] font-black uppercase tracking-widest transition-colors duration-300
+            text-[14px] md:text-[16px] font-black uppercase tracking-widest transition-colors duration-300
             ${isActive ? 'text-slate-900' : 'text-slate-500 group-hover:text-slate-800'}
           `}>
             {label}

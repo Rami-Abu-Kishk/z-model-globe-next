@@ -176,10 +176,10 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                     <Table>
                       <TableHeader>
                         <TableRow className="hover:bg-transparent border-slate-100">
-                          <TableHead className="text-[10px] font-black text-slate-400 uppercase">Case Name</TableHead>
-                          <TableHead className="text-[10px] font-black text-slate-400 uppercase">Region</TableHead>
-                          <TableHead className="text-[10px] font-black text-slate-400 uppercase text-center">Status</TableHead>
-                          <TableHead className="text-[10px] font-black text-slate-400 uppercase text-right">Briefing</TableHead>
+                          <TableHead className="text-[12px] font-black text-slate-400 uppercase">Case Name</TableHead>
+                          <TableHead className="text-[12px] font-black text-slate-400 uppercase">Region</TableHead>
+                          <TableHead className="text-[12px] font-black text-slate-400 uppercase text-center">Status</TableHead>
+                          <TableHead className="text-[12px] font-black text-slate-400 uppercase text-right">Briefing</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -192,12 +192,12 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                             <TableCell>
                               <div className="flex items-center gap-3">
                                 <div className={`w-1.5 h-1.5 rounded-full ${pc.severity === 'Critical' ? 'bg-rose-500 animate-pulse' : (pc.severity === 'Warning' ? 'bg-amber-500' : 'bg-emerald-500')}`} />
-                                <span className="text-[12px] font-black text-slate-900">{pc.name}</span>
+                                <span className="text-[14px] font-black text-slate-900">{pc.name}</span>
                               </div>
                             </TableCell>
-                            <TableCell className="text-[11px] font-bold text-slate-500">{pc.region}</TableCell>
+                            <TableCell className="text-[13px] font-bold text-slate-500">{pc.region}</TableCell>
                             <TableCell className="text-center">
-                              <Badge className={`text-[9px] font-black px-2 py-0.5 shadow-none ${pc.severity === 'Critical' ? 'bg-rose-500 text-white' :
+                              <Badge className={`text-[11px] font-black px-2 py-0.5 shadow-none ${pc.severity === 'Critical' ? 'bg-rose-500 text-white' :
                                 pc.severity === 'Warning' ? 'bg-amber-100 text-amber-700' :
                                   'bg-emerald-100 text-emerald-700'
                                 }`}>
@@ -249,11 +249,11 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                             onClick={() => handleCrisisClick(crisis)}
                           >
                             <div className="flex items-center justify-between mb-2">
-                              <span className="text-[12px] font-black text-slate-900 uppercase">{crisis.region}</span>
+                              <span className="text-[14px] font-black text-slate-900 uppercase">{crisis.region}</span>
                             </div>
-                            <p className="text-[11px] text-slate-500 font-medium leading-relaxed italic mb-3">{crisis.details}</p>
+                            <p className="text-[13px] text-slate-500 font-medium leading-relaxed italic mb-3">{crisis.details}</p>
                             <div className="mt-auto flex items-center justify-between">
-                              <Badge className="bg-slate-100 text-slate-600 text-[9px] font-black px-2 py-0.5 border-none shadow-none uppercase">
+                              <Badge className="bg-slate-100 text-slate-600 text-[11px] font-black px-2 py-0.5 border-none shadow-none uppercase">
                                 {crisis.status}
                               </Badge>
                               <Maximize2 className="w-3.5 h-3.5 text-slate-300 group-hover:text-rose-500" />
@@ -325,7 +325,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                       />
                       <div className="relative z-10 flex flex-col justify-between h-full">
                         <div className="flex items-center justify-between mb-4">
-                          <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">{kpi.label}</p>
+                          <p className="text-[12px] font-black text-slate-500 uppercase tracking-widest">{kpi.label}</p>
                           <div className={`p-1.5 rounded-lg ${kpi.trend === 'up' ? 'bg-emerald-500/10 text-emerald-600' : 'bg-rose-500/10 text-rose-600'}`}>
                             <Zap className="w-3.5 h-3.5" />
                           </div>
@@ -369,18 +369,18 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
                 <div className="space-y-6">
                   {politicalSelectedCase.severityScore !== undefined && (
                     <div className="space-y-3">
-                      <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Conflict Metrics Analysis</h5>
+                      <h5 className="text-[12px] font-black text-slate-400 uppercase tracking-widest">Conflict Metrics Analysis</h5>
                       <div className="grid grid-cols-3 gap-2">
                         <div className="p-3 bg-rose-50 border border-rose-100 rounded-xl flex flex-col items-center">
-                          <span className="text-[9px] font-black text-rose-500 uppercase">Severity</span>
+                          <span className="text-[11px] font-black text-rose-500 uppercase">Severity</span>
                           <span className="text-xl font-black text-rose-700">{politicalSelectedCase.severityScore}%</span>
                         </div>
                         <div className="p-3 bg-amber-50 border border-amber-100 rounded-xl flex flex-col items-center">
-                          <span className="text-[9px] font-black text-amber-500 uppercase">Sensitivity</span>
+                          <span className="text-[11px] font-black text-amber-500 uppercase">Sensitivity</span>
                           <span className="text-xl font-black text-amber-700">{politicalSelectedCase.sensitivityScore}%</span>
                         </div>
                         <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex flex-col items-center">
-                          <span className="text-[9px] font-black text-slate-500 uppercase">Complexity</span>
+                          <span className="text-[11px] font-black text-slate-500 uppercase">Complexity</span>
                           <span className="text-xl font-black text-slate-700">{politicalSelectedCase.complexityScore}%</span>
                         </div>
                       </div>
@@ -389,10 +389,10 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
 
                   {'involvedParties' in politicalSelectedCase && (
                     <div className="space-y-4">
-                      <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Involved Parties & Stakeholders</h5>
+                      <h5 className="text-[12px] font-black text-slate-400 uppercase tracking-widest">Involved Parties & Stakeholders</h5>
                       <div className="flex flex-wrap gap-2">
                         {politicalSelectedCase.involvedParties.map((party: string, i: number) => (
-                          <Badge key={i} variant="secondary" className="bg-slate-100 text-slate-600 font-bold px-3 py-1 border-none uppercase text-[9px]">
+                          <Badge key={i} variant="secondary" className="bg-slate-100 text-slate-600 font-bold px-3 py-1 border-none uppercase text-[11px]">
                             {party}
                           </Badge>
                         ))}
@@ -452,13 +452,13 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
               className="p-4 bg-white/20 border border-white/40 rounded-2xl cursor-pointer hover:bg-white/30 transition-all"
               onClick={() => handleKpiClick(kpi)}
             >
-              <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-2">{kpi.label}</p>
+              <p className="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2">{kpi.label}</p>
               <p className="text-xl font-black text-slate-900 tracking-tighter">{kpi.value}</p>
             </div>
           ))}
         </div>
 
-        <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">INTELLIGENCE BRIEFS</h4>
+        <h4 className="text-[12px] font-black text-slate-400 uppercase tracking-widest mb-4">INTELLIGENCE BRIEFS</h4>
         <div className="space-y-3 mb-6">
           {data.news.slice(0, 2).map((news) => (
             <div
@@ -466,15 +466,15 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
               className="p-3 bg-white/40 border border-white/60 rounded-2xl cursor-pointer hover:bg-white/60 transition-all"
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[8px] font-black text-sky-600 uppercase tracking-widest">{news.category}</span>
-                <span className="text-[8px] font-bold text-slate-400">{news.time}</span>
+                <span className="text-[10px] font-black text-sky-600 uppercase tracking-widest">{news.category}</span>
+                <span className="text-[10px] font-bold text-slate-400">{news.time}</span>
               </div>
-              <p className="text-[10px] font-black text-slate-900 leading-tight">{news.headline}</p>
+              <p className="text-[12px] font-black text-slate-900 leading-tight">{news.headline}</p>
             </div>
           ))}
         </div>
 
-        <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">STRATEGIC FILES</h4>
+        <h4 className="text-[12px] font-black text-slate-400 uppercase tracking-widest mb-4">STRATEGIC FILES</h4>
         <div className="space-y-3">
           {data.cases.slice(0, 3).map((pc) => (
             <div
@@ -484,7 +484,7 @@ export function PoliticalModule({ isExpanded }: { isExpanded?: boolean }) {
             >
               <div className="flex items-center gap-3">
                 <div className={`w-1.5 h-1.5 rounded-full ${pc.severity === 'Critical' ? 'bg-rose-500' : 'bg-amber-500'}`} />
-                <span className="text-[11px] font-black text-slate-900 uppercase">{pc.name}</span>
+                <span className="text-[13px] font-black text-slate-900 uppercase">{pc.name}</span>
               </div>
               <Activity className="w-3.5 h-3.5 text-slate-400" />
             </div>

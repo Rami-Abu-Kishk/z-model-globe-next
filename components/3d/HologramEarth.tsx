@@ -339,22 +339,22 @@ export const HologramEarth = forwardRef((props, ref) => {
                 backdrop-filter: blur(12px);
                 border: 1px solid rgba(255, 255, 255, 1);
                 border-radius: 60px;
-                padding: 10px 24px 10px 16px;
+                padding: 12px 28px 12px 20px;
                 color: #0f172a;
                 font-family: sans-serif;
-                font-size: 18px;
+                font-size: 20px;
                 font-weight: 900;
                 text-transform: uppercase;
-                letter-spacing: 0.1em;
+                letter-spacing: 0.12em;
                 white-space: nowrap;
                 transform: translate(-50%, -50%);
-                box-shadow: 0 15px 45px rgba(0,0,0,0.15);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.2);
                 pointer-events: none;
                 display: flex;
                 align-items: center;
-                gap: 12px;
+                gap: 14px;
               ">
-                <img src="https://flagcdn.com/w80/${flagCode}.png" style="width: 32px; height: 20px; border-radius: 4px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.15);" />
+                <img src="https://flagcdn.com/w80/${flagCode}.png" style="width: 36px; height: 24px; border-radius: 4px; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.15);" />
                 ${d.label}
               </div>
             `;
@@ -365,23 +365,23 @@ export const HologramEarth = forwardRef((props, ref) => {
                 background: rgba(15, 23, 42, 0.9);
                 backdrop-filter: blur(8px);
                 border: 1px solid ${d.color || '#10b981'};
-                border-radius: 10px;
-                padding: 8px 16px;
+                border-radius: 12px;
+                padding: 10px 20px;
                 color: white;
                 font-family: sans-serif;
-                font-size: 14px;
+                font-size: 16px;
                 font-weight: bold;
                 white-space: nowrap;
                 transform: translate(-50%, -100%);
-                box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.4);
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 12px;
                 pointer-events: none;
               ">
-                <span style="display:block; width:10px; height:10px; border-radius:50%; background:${d.color || '#10b981'};"></span>
+                <span style="display:block; width:12px; height:12px; border-radius:50%; background:${d.color || '#10b981'};"></span>
                 ${d.label || 'Data Point'}
-                <span style="color: ${d.color || '#10b981'}; margin-left: 6px;">${d.size * 10}%</span>
+                <span style="color: ${d.color || '#10b981'}; margin-left: 8px;">${Math.round(d.size * 10)}%</span>
               </div>
             `;
           }
@@ -431,13 +431,13 @@ export const HologramEarth = forwardRef((props, ref) => {
             background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2);
-            padding: 8px 12px;
-            border-radius: 8px;
+            padding: 10px 14px;
+            border-radius: 10px;
             color: white;
-            font-size: 11px;
+            font-size: 13px;
             font-weight: 800;
             white-space: nowrap;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
           ">
             ${d.sentiment === 'positive' ? '🟢' : '🔴'} ${d.name}
           </div>
@@ -541,18 +541,18 @@ export const HologramEarth = forwardRef((props, ref) => {
             const trendValue = activeTrend.countryValues?.[iso] || activeTrend.value;
             const isPos = trendValue >= 0;
             intelligenceHtml = `
-              <div class="mt-3 pt-3 border-t border-slate-200/50 flex items-center justify-between gap-6">
+              <div class="mt-4 pt-4 border-t border-slate-200/50 flex items-center justify-between gap-8">
                 <div class="flex flex-col">
-                  <span class="text-[8px] text-slate-600 uppercase font-black tracking-[0.15em] mb-0.5">${activeTrend.label}</span>
-                  <div class="flex items-center gap-1.5">
-                    <span class="text-sm font-black ${isPos ? 'text-emerald-600' : 'text-rose-600'}">
+                  <span class="text-[10px] text-slate-600 uppercase font-black tracking-[0.15em] mb-0.5">${activeTrend.label}</span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-base font-black ${isPos ? 'text-emerald-600' : 'text-rose-600'}">
                       ${isPos ? '↑' : '↓'} ${trendValue > 0 ? '+' : ''}${trendValue}%
                     </span>
                   </div>
                 </div>
                 <div class="flex flex-col items-end">
-                   <span class="text-[8px] text-slate-400 uppercase font-black tracking-[0.15em] mb-0.5">Focus</span>
-                   <div class="px-2 py-0.5 rounded-lg text-[8px] font-black uppercase ${isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}">
+                   <span class="text-[10px] text-slate-400 uppercase font-black tracking-[0.15em] mb-0.5">Focus</span>
+                   <div class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}">
                     ${isPos ? 'Advancing' : 'Under Pressure'}
                   </div>
                 </div>
@@ -563,18 +563,18 @@ export const HologramEarth = forwardRef((props, ref) => {
           else if (activeModule === 'economy' && ecoData) {
             const isPos = ecoData.status === 'positive';
             intelligenceHtml = `
-              <div class="mt-3 pt-3 border-t border-slate-200/50 flex items-center justify-between gap-6">
+              <div class="mt-4 pt-4 border-t border-slate-200/50 flex items-center justify-between gap-8">
                 <div class="flex flex-col">
-                  <span class="text-[8px] text-slate-600 uppercase font-black tracking-[0.15em] mb-0.5">Real GDP Growth</span>
-                  <div class="flex items-center gap-1.5">
-                    <span class="text-sm font-black ${isPos ? 'text-emerald-600' : 'text-rose-600'}">
+                  <span class="text-[10px] text-slate-600 uppercase font-black tracking-[0.15em] mb-0.5">Real GDP Growth</span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-base font-black ${isPos ? 'text-emerald-600' : 'text-rose-600'}">
                       ${isPos ? '↑' : '↓'} ${ecoData.growth > 0 ? '+' : ''}${ecoData.growth}%
                     </span>
                   </div>
                 </div>
                 <div class="flex flex-col items-end">
-                   <span class="text-[8px] text-slate-400 uppercase font-black tracking-[0.15em] mb-0.5">Status</span>
-                   <div class="px-2 py-0.5 rounded-lg text-[8px] font-black uppercase ${isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}">
+                   <span class="text-[10px] text-slate-400 uppercase font-black tracking-[0.15em] mb-0.5">Status</span>
+                   <div class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase ${isPos ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-rose-50 text-rose-600 border border-rose-100'}">
                     ${countryMeta?.economyStatus || (isPos ? 'Expansion' : 'Contraction')}
                   </div>
                 </div>
@@ -583,14 +583,14 @@ export const HologramEarth = forwardRef((props, ref) => {
           }
 
           return `
-          <div class="px-4 py-3.5 bg-white/90 backdrop-blur-2xl border border-white/80 rounded-2xl text-slate-800 shadow-[0_20px_40px_rgba(0,0,0,0.08)] flex flex-col min-w-[200px]">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-6 overflow-hidden rounded-lg border border-slate-100 bg-white flex-shrink-0 flex items-center justify-center shadow-sm">
+          <div class="px-5 py-4 bg-white/90 backdrop-blur-2xl border border-white/80 rounded-2xl text-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.12)] flex flex-col min-w-[240px]">
+            <div class="flex items-center gap-4">
+              <div class="w-11 h-7 overflow-hidden rounded-lg border border-slate-100 bg-white flex-shrink-0 flex items-center justify-center shadow-sm">
                 <img src="https://flagcdn.com/w40/${flagCode}.png" class="w-full h-full object-cover" />
               </div>
               <div class="flex flex-col">
-                <span class="font-black text-[14px] leading-tight tracking-tight uppercase text-slate-900">${name}</span>
-                <span class="text-[9px] text-slate-400 font-mono tracking-widest uppercase font-bold">${displayIso}</span>
+                <span class="font-black text-[16px] leading-tight tracking-tight uppercase text-slate-900">${name}</span>
+                <span class="text-[10px] text-slate-400 font-mono tracking-widest uppercase font-bold">${displayIso}</span>
               </div>
             </div>
             ${intelligenceHtml}

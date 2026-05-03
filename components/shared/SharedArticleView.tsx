@@ -81,7 +81,7 @@ export function SharedArticleView({
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
         <div className="absolute bottom-0 left-0 p-10">
           <Badge className={cn(
-            "mb-4 text-[10px] font-black uppercase border-none h-6 px-4 shadow-xl",
+            "mb-4 text-[12px] font-black uppercase border-none h-6 px-4 shadow-xl",
             article.badgeClassName || "bg-sky-500"
           )}>
             {article.badgeText || article.category}
@@ -107,10 +107,10 @@ export function SharedArticleView({
                 )}
               </div>
               <div>
-                <p className="text-[12px] font-black text-slate-900 uppercase">
+                <p className="text-[14px] font-black text-slate-900 uppercase">
                   {article.source?.name || 'Intelligence Report'}
                 </p>
-                <p className="text-[10px] font-bold text-slate-400 uppercase">
+                <p className="text-[12px] font-bold text-slate-400 uppercase">
                   {article.subtitle}
                 </p>
               </div>
@@ -154,7 +154,7 @@ export function SharedArticleView({
         <div className="mt-12 space-y-6">
           {article.links && article.links.length > 0 && (
             <div className="space-y-4">
-              <h5 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Resources & External Intelligence</h5>
+              <h5 className="text-[12px] font-black text-slate-400 uppercase tracking-widest">Resources & External Intelligence</h5>
               <div className="flex flex-wrap gap-4">
                 {article.links.map((link, i) => (
                   <a
@@ -165,7 +165,7 @@ export function SharedArticleView({
                     className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-2xl hover:border-slate-900 hover:shadow-lg transition-all group"
                   >
                     <FileText className="w-4 h-4 text-slate-400 group-hover:text-slate-900" />
-                    <span className="text-[11px] font-black text-slate-900 uppercase">{link.label}</span>
+                    <span className="text-[13px] font-black text-slate-900 uppercase">{link.label}</span>
                     <ExternalLink className="w-3.5 h-3.5 text-slate-300" />
                   </a>
                 ))}
@@ -174,11 +174,11 @@ export function SharedArticleView({
           )}
 
           <div className="flex flex-wrap gap-4 border-t border-slate-100 pt-6">
-            <Button onClick={onBack} className="rounded-2xl h-14 px-8 bg-slate-900 text-white hover:bg-slate-800 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2">
+            <Button onClick={onBack} className="rounded-2xl h-14 px-8 bg-slate-900 text-white hover:bg-slate-800 transition-all text-[13px] font-black uppercase tracking-widest flex items-center gap-2">
               <ChevronLeft className="w-4 h-4" /> Minimize Analysis
             </Button>
             {actions || (
-              <Button variant="outline" className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[11px] font-black uppercase tracking-widest flex items-center gap-2">
+              <Button variant="outline" className="rounded-2xl h-14 px-8 border-slate-200 hover:border-slate-900 transition-all text-[13px] font-black uppercase tracking-widest flex items-center gap-2">
                 <Download className="w-4 h-4" /> Export Report Audit
               </Button>
             )}

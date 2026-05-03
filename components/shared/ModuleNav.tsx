@@ -13,8 +13,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { GlobeControls } from "./GlobeControls";
+import { motion, AnimatePresence } from "framer-motion";
 
 // z model landing page link
 const LANDING_PAGE_URL = process.env.NEXT_PUBLIC_LANDING_PAGE_URL;
@@ -42,36 +41,9 @@ export function ModuleNav() {
       initial={{ x: -100, opacity: 0, filter: "blur(10px)" }}
       animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
       transition={{ type: "spring", damping: 30, stiffness: 100, delay: 1.4 }}
-      className="absolute left-8 top-1/2 -translate-y-1/2 z-50 pointer-events-auto"
+      className="absolute left-8 top-32 z-50 pointer-events-auto flex flex-col gap-4"
     >
-      <div className="flex flex-col gap-3">
-        <button
-          className={`
-            group relative flex items-center justify-center
-            w-14 h-14 rounded-2xl
-            bg-white/40 backdrop-blur-2xl 
-            border border-white/60
-            shadow-[0_8px_32px_rgba(0,0,0,0.1)]
-            transition-all duration-300
-            hover:bg-white/60 hover:scale-105 active:scale-95 cursor-pointer
-            m-3
-          `}
-        >
-          <div className="relative">
-            <motion.div>
-              <h1 className="hover:bg-white/60 hover:scale-105 active:scale-95 cursor-pointer">
-                Ar
-              </h1>
-            </motion.div>
-          </div>
-
-          {/* Tooltip */}
-          <div className="absolute left-20 px-3 py-1 bg-slate-900/90 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 -translate-x-2 group-hover:translate-x-0 whitespace-nowrap shadow-xl border border-white/10 flex items-center gap-2">
-            Switch Language Ar/En
-          </div>
-        </button>
-      </div>
-
+      {/* ── NAV ITEMS GROUP ── */}
       <div className="flex flex-col items-center gap-2 p-1.5 bg-white/20 backdrop-blur-2xl border border-white/40 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.1)]">
         {NAV_ITEMS.map((item, index) => {
           const isActive = activeModule === item.id;
@@ -136,9 +108,7 @@ export function ModuleNav() {
           );
         })}
       </div>
-      <div className="w-full flex justify-center mt-5">
-        <GlobeControls />
-      </div>
+
     </motion.div>
   );
 }

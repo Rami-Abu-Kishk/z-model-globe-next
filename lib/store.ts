@@ -111,6 +111,10 @@ interface ZModelStore {
   showBestTargetPoint: boolean;
   setShowBestTargetPoint: (active: boolean) => void;
 
+  // ── Interface Scaling (Mobile Readability) ───────────────────────
+  interfaceScale: number;
+  setInterfaceScale: (scale: number) => void;
+
   // ── Master reset ─────────────────────────────────────────────────
   resetView: () => void;
 }
@@ -213,6 +217,10 @@ export const useZModelStore = create<ZModelStore>((set) => ({
   showBestTargetPoint: false,
   setShowBestTargetPoint: (active) => set({ showBestTargetPoint: active }),
 
+  // ── Interface Scaling ─────────────────────────────────────────────
+  interfaceScale: 1.0,
+  setInterfaceScale: (scale) => set({ interfaceScale: scale }),
+
   // ── Master Reset ──────────────────────────────────────────────────
   resetView: () =>
     set({
@@ -236,5 +244,6 @@ export const useZModelStore = create<ZModelStore>((set) => ({
       showInvestmentPoints: false,
       showBestTargetPoint: false,
       autoRotate: true,
+      interfaceScale: 1.0,
     }),
 }));

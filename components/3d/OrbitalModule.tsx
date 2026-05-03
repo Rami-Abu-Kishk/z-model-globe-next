@@ -15,6 +15,7 @@ interface OrbitalModuleProps {
 }
 
 export function OrbitalModule({ id, position, width, label, icon: Icon, isActive }: OrbitalModuleProps) {
+  const interfaceScale = useZModelStore(s => s.interfaceScale);
   const billboardRef = useRef<THREE.Group>(null);
   const htmlRef = useRef<HTMLDivElement>(null);
   const worldPos = useRef(new THREE.Vector3());
@@ -68,7 +69,11 @@ export function OrbitalModule({ id, position, width, label, icon: Icon, isActive
               : 'hover:bg-white/50 hover:scale-105 hover:shadow-2xl'
             }
           `}
-          style={{ pointerEvents: 'all' }}
+          style={{ 
+            pointerEvents: 'all',
+            transform: `scale(${interfaceScale})`,
+            transformOrigin: 'center'
+          }}
         >
           <div className={`
             p-1.5 rounded-full transition-colors duration-300

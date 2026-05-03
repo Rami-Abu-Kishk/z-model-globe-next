@@ -72,6 +72,7 @@ export const HologramEarth = forwardRef((props, ref) => {
   const politicalActiveRingLabels = useZModelStore(s => s.politicalActiveRingLabels);
   const showInvestmentPoints = useZModelStore(s => s.showInvestmentPoints);
   const showBestTargetPoint = useZModelStore(s => s.showBestTargetPoint);
+  const interfaceScale = useZModelStore(s => s.interfaceScale);
 
   const handleSelect = (country: typeof searchableCountries[0]) => {
     setSearchQuery('');
@@ -347,7 +348,8 @@ export const HologramEarth = forwardRef((props, ref) => {
                 text-transform: uppercase;
                 letter-spacing: 0.1em;
                 white-space: nowrap;
-                transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%) scale(${interfaceScale});
+                transform-origin: center;
                 box-shadow: 0 15px 45px rgba(0,0,0,0.15);
                 pointer-events: none;
                 display: flex;
@@ -372,7 +374,8 @@ export const HologramEarth = forwardRef((props, ref) => {
                 font-size: 14px;
                 font-weight: bold;
                 white-space: nowrap;
-                transform: translate(-50%, -100%);
+                transform: translate(-50%, -100%) scale(${interfaceScale});
+                transform-origin: bottom center;
                 box-shadow: 0 8px 24px rgba(0,0,0,0.3);
                 display: flex;
                 align-items: center;

@@ -11,10 +11,9 @@ import { useEffect } from 'react';
 
 import { ReturnHUD } from '@/components/shared/ReturnHUD';
 import { ExpandedDataPanel } from '@/components/shared/ExpandedDataPanel';
-import { SearchBar } from '@/components/shared/SearchBar';
+import { TopUtilityBar } from '@/components/shared/TopUtilityBar';
 import { DetailDrawer } from '@/components/shared/DetailDrawer';
 import { ModuleNav } from '@/components/shared/ModuleNav';
-import { GlobeControls } from '@/components/shared/GlobeControls';
 import { DummyFocusSection } from '@/components/ui-sections/DummyFocusSection';
 
 function CanvasLoader() {
@@ -98,8 +97,7 @@ export default function Home() {
 
       {/* ── LAYER 3: Interactive Overlays ── */}
       <ModuleNav />
-
-      <SearchBar />
+      <TopUtilityBar />
       <ReturnHUD />
 
       {/* ── LAYER 4: Non-Interactive Info Overlays (z-30) ── */}
